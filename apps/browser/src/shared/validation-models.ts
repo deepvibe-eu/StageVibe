@@ -27,9 +27,10 @@ export const VENDOR_VALIDATION_MODELS: Partial<
   alibaba: ['qwen-turbo'],
   deepseek: ['deepseek-chat', 'deepseek-v4-flash'],
   'z-ai': ['glm-4.5-flash'],
-  // `MiniMax-M2` is the pay-as-you-go flagship; the newer probes may be
-  // restricted to Token/Coding plans and return `insufficient balance`.
-  minimax: ['MiniMax-M2', 'minimax-m2.7', 'MiniMax-M3'],
+  // MiniMax: M3 is the flagship, M2.7 the current predecessor. M2/M1 are
+  // end-of-life and must not be used as probes. Try the cheaper current
+  // model first, then the flagship.
+  minimax: ['minimax-m2.7', 'MiniMax-M3'],
   'xiaomi-mimo': ['mimo-v2.5'],
   mistral: ['mistral-small-latest'],
   'x-ai': ['grok-3-mini'],

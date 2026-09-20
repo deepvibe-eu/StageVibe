@@ -88,7 +88,7 @@ describe('official API providers', () => {
 
     expect(result).toEqual({ success: true });
     expect(generateText).toHaveBeenCalledTimes(2);
-    expect(generateText.mock.calls[0]?.[0].model.modelId).toBe('MiniMax-M2');
-    expect(generateText.mock.calls[1]?.[0].model.modelId).toBe('minimax-m2.7');
+    expect(generateText.mock.calls[0]?.[0].model.modelId).toBe('minimax-m2.7');
+    expect(generateText.mock.calls[1]?.[0].model.modelId).toBe('MiniMax-M3');
   });
 });
