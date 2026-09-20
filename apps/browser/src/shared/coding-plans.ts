@@ -152,15 +152,14 @@ export const CODING_PLANS: Record<CodingPlanId, CodingPlan> = {
     id: 'minimax-plan',
     provider: 'minimax',
     displayName: 'MiniMax Token Plan',
-    tagline: 'MiniMax M-series via Token Plan subscription',
+    tagline: 'MiniMax M-series via Subscription Key (quota or Credits)',
     subscribeUrl: 'https://platform.minimax.io/subscribe/token-plan',
-    apiKeyUrl:
-      'https://platform.minimax.io/user-center/basic-information/interface-key',
+    apiKeyUrl: 'https://platform.minimax.io/user-center/payment/token-plan',
     helpText:
-      'Token Plan keys start with sk-cp-. Subscribe at platform.minimax.io → Token Plan.',
+      'Subscription Key (starts with sk-cp-). Spends Token Plan quota or purchased Credits — no API balance needed. Find it under Billing → Token Plan.',
     apiKeyPattern: '^sk-cp-',
     endpointHelpText:
-      'Token Plan keys are validated against the /v1/token_plan/remains endpoint.',
+      'Subscription Keys are validated against the /v1/token_plan/remains endpoint.',
     featuredModelIds: ['minimax-m3', 'minimax-m2.7'],
   },
   'mimo-plan': {
