@@ -74,8 +74,18 @@ const VENDOR_VALIDATION_MODEL: Partial<Record<ModelProvider, string>> = {
   mistral: 'mistral-small-latest',
   'x-ai': 'grok-3-mini',
   openai: 'gpt-4o-mini',
-  google: 'gemini-2.0-flash',
+  google: 'gemini-3.1-flash-lite',
 };
+
+/**
+ * Ordered validation probes for Google. Gemini retires cheap model IDs
+ * (e.g. `gemini-2.0-flash`) without notice, which used to reject valid keys.
+ * Try the current lite model first and fall back to the previous one.
+ */
+const GOOGLE_VALIDATION_MODELS: string[] = [
+  VENDOR_VALIDATION_MODEL.google!,
+  'gemini-2.5-flash-lite',
+];
 
 // ============================================================================
 // Anthropic API type
@@ -282,27 +292,28 @@ export const googleApiType: ProviderType<OfficialApiConfig> = {
     if (!baseUrl) {
       return { success: false, error: 'No base URL configured for Google API' };
     }
-    const validationModelId = VENDOR_VALIDATION_MODEL.google!;
-    try {
-      await generateText({
-        model: createGoogleModel(apiKey, baseUrl, validationModelId),
-        messages: [
-          {
-            role: 'user',
-            content: 'What is the capital of France? Respond with one word.',
-          },
-        ],
-        abortSignal: AbortSignal.timeout(VALIDATION_TIMEOUT_MS),
-      });
-      return { success: true };
-    } catch (err) {
-      return {
-        success: false,
-        error: `Invalid Google API key: ${
-          err instanceof Error ? err.message : String(err)
-        }`,
-      };
+    const errors: string[] = [];
+    for (const validationModelId of GOOGLE_VALIDATION_MODELS) {
+      try {
+        await generateText({
+          model: createGoogleModel(apiKey, baseUrl, validationModelId),
+          messages: [
+            {
+              role: 'user',
+              content: 'What is the capital of France? Respond with one word.',
+            },
+          ],
+          abortSignal: AbortSignal.timeout(VALIDATION_TIMEOUT_MS),
+        });
+        return { success: true };
+      } catch (err) {
+        errors.push(err instanceof Error ? err.message : String(err));
+      }
     }
+    return {
+      success: false,
+      error: `Invalid Google API key: ${errors.join(' | ')}`,
+    };
   },
 
   // ── Model creation ─────────────────────────────────────────────────────
