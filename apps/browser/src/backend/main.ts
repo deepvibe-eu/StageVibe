@@ -557,6 +557,8 @@ export async function main({ launchOptions: { verbose } }: MainParameters) {
     debug: 2,
     preview: 3,
     learn: 4,
+    'mavis-team': 5,
+    'mavis-doctor': 6,
   };
 
   discoverSkills(getBuiltinSkillsPath()).then((skills: Skill[]) => {
