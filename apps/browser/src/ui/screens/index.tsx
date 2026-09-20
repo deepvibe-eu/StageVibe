@@ -25,6 +25,13 @@ const OnboardingWizard = lazy(() =>
   import('./onboarding').then((m) => ({ default: m.OnboardingWizard })),
 );
 
+/**
+ * Fork: start directly in the app instead of showing the onboarding wizard.
+ * Providers/skills/theme remain configurable in Settings. Set to `false` to
+ * restore the upstream first-run flow.
+ */
+const SKIP_ONBOARDING = true;
+
 function LoadingScreen({
   reconnectState,
 }: {
@@ -70,7 +77,7 @@ export function ScreenRouter() {
     <div className="fixed inset-0">
       {!connected || hasSeenOnboarding === null ? (
         <LoadingScreen reconnectState={reconnectState} />
-      ) : hasSeenOnboarding ? (
+      ) : hasSeenOnboarding || SKIP_ONBOARDING ? (
         <Suspense fallback={<LoadingScreen reconnectState={reconnectState} />}>
           <DefaultLayout show />
           <WebContentsBoundsSyncer />
