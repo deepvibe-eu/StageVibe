@@ -309,6 +309,116 @@ function VendorApiKeyInput({
 }
 
 // =============================================================================
+// Vendor Base URL Override (official API keys)
+// =============================================================================
+
+/**
+ * Lets a vendor API instance point at a different endpoint than the built-in
+ * default — needed for regional hosts (e.g. MiniMax CN vs international) and
+ * for self-hosted gateways. The backend already honours `config.baseUrl`, so
+ * this only surfaces it.
+ */
+function VendorBaseUrlInput({ instance }: { instance: ProviderInstance }) {
+  const updateProviderInstance = useKartonProcedure(
+    (p) => p.preferences.updateProviderInstance,
+  );
+  const refreshInstanceModels = useKartonProcedure(
+    (p) => p.preferences.refreshInstanceModels,
+  );
+  const displayInfo = getTypeDisplayInfo(instance.typeId);
+  const defaultBaseUrl = displayInfo?.defaultBaseUrl ?? '';
+  const savedBaseUrl = (instance.config as { baseUrl?: string }).baseUrl ?? '';
+  const [baseUrl, setBaseUrl] = useState(savedBaseUrl);
+  const [isSaving, setIsSaving] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => setBaseUrl(savedBaseUrl), [savedBaseUrl]);
+
+  const handleSave = async (next: string) => {
+    const trimmed = next.trim();
+    if (trimmed && !/^https?:\/\//i.test(trimmed)) {
+      setError('The base URL must start with http:// or https://.');
+      return;
+    }
+    if (trimmed === savedBaseUrl) return;
+
+    setIsSaving(true);
+    setError(null);
+    try {
+      await updateProviderInstance(instance.id, { baseUrl: trimmed });
+      await refreshInstanceModels(instance.id);
+      setBaseUrl(trimmed);
+    } catch (cause) {
+      const failureMessage =
+        cause instanceof Error
+          ? cause.message
+          : 'Failed to refresh models from this endpoint.';
+      let rollbackMessage: string | undefined;
+      try {
+        await updateProviderInstance(instance.id, { baseUrl: savedBaseUrl });
+      } catch (rollbackCause) {
+        rollbackMessage =
+          rollbackCause instanceof Error
+            ? rollbackCause.message
+            : 'unknown rollback error';
+      }
+      setBaseUrl(savedBaseUrl);
+      setError(
+        rollbackMessage
+          ? `${failureMessage} Failed to restore the previous endpoint: ${rollbackMessage}`
+          : failureMessage,
+      );
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  const isDirty = baseUrl.trim() !== savedBaseUrl;
+  return (
+    <div className="space-y-2 rounded-lg border border-derived p-3">
+      <p className="font-medium text-muted-foreground text-xs">
+        Base URL override
+      </p>
+      <div className="flex gap-2">
+        <Input
+          type="url"
+          value={baseUrl}
+          placeholder={defaultBaseUrl || 'https://api.example.com/v1'}
+          onValueChange={(value) => {
+            setBaseUrl(value);
+            setError(null);
+          }}
+          onKeyDown={(event) => {
+            if (event.key === 'Enter' && isDirty && !isSaving) {
+              void handleSave(baseUrl);
+            }
+          }}
+          disabled={isSaving}
+          size="sm"
+          style={{ maxWidth: 'none' }}
+          className="min-w-0 flex-1"
+        />
+        {isDirty && (
+          <Button
+            variant="primary"
+            size="sm"
+            disabled={isSaving}
+            onClick={() => void handleSave(baseUrl)}
+          >
+            {isSaving ? 'Saving...' : 'Save'}
+          </Button>
+        )}
+      </div>
+      <p className="text-subtle-foreground text-xs">
+        Optional. Leave empty to use this provider&apos;s default endpoint
+        {defaultBaseUrl ? ` (${defaultBaseUrl})` : ''}.
+      </p>
+      {error && <TruncatedErrorText text={error} />}
+    </div>
+  );
+}
+
+// =============================================================================
 // Provider Instance Card
 // =============================================================================
 
@@ -601,6 +711,7 @@ function AddProviderGrid({
   const [endpoint, setEndpoint] = useState('');
   const [isConnecting, setIsConnecting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [canForceConnect, setCanForceConnect] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [localAgentStatus, setLocalAgentStatus] =
     useState<LocalAgentStatus | null>(null);
@@ -636,7 +747,7 @@ function AddProviderGrid({
   }, [existingInstances]);
 
   const handleConnect = useCallback(
-    async (key: SelectionKey, value: string) => {
+    async (key: SelectionKey, value: string, force = false) => {
       const typeInfo =
         key !== 'custom' && !key.startsWith('plan:')
           ? getTypeDisplayInfo(key as ProviderInstanceTypeId)
@@ -644,6 +755,7 @@ function AddProviderGrid({
       if (!value.trim() && typeInfo?.credentialType !== 'none') return;
       setIsConnecting(true);
       setError(null);
+      setCanForceConnect(false);
       try {
         const planId = key.startsWith('plan:')
           ? (key.slice(5) as CodingPlanId)
@@ -673,9 +785,11 @@ function AddProviderGrid({
               ? { baseUrl: value.trim() }
               : {},
           validateApiKey: isSelfHosted ? undefined : value.trim(),
+          allowInvalidKey: force || undefined,
         });
         if (!result.success) {
           setError(result.error);
+          setCanForceConnect(!isSelfHosted);
           return;
         }
         onConnected(result.instanceId);
@@ -947,6 +1061,7 @@ function AddProviderGrid({
                   onValueChange={(v) => {
                     setApiKey(v);
                     setError(null);
+                    setCanForceConnect(false);
                   }}
                   onKeyDown={(e) => {
                     if (e.key === 'Enter' && apiKey.trim()) {
@@ -962,6 +1077,20 @@ function AddProviderGrid({
               )}
 
               {error && <TruncatedErrorText text={error} />}
+
+              {error && canForceConnect && (
+                <button
+                  type="button"
+                  onClick={() => void handleConnect(selected, apiKey, true)}
+                  disabled={isConnecting}
+                  className={cn(
+                    buttonVariants({ variant: 'link', size: 'xs' }),
+                    'self-start',
+                  )}
+                >
+                  Connect anyway (save key without validation)
+                </button>
+              )}
 
               {localAgent && localAgentStatus === 'missing' && (
                 <div
@@ -3682,6 +3811,10 @@ export function ModelsProvidersSection() {
                 <div className="rounded-lg border border-derived p-3">
                   <VendorApiKeyInput instance={detailInstance} />
                 </div>
+              )}
+
+              {detailInstance.typeId.endsWith('-api') && (
+                <VendorBaseUrlInput instance={detailInstance} />
               )}
 
               {detailInstance.typeId === 'coding-plan' && (
