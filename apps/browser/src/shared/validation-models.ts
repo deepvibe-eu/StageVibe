@@ -22,7 +22,14 @@ export const VENDOR_VALIDATION_MODELS: Partial<
 > = {
   anthropic: ['claude-haiku-4-5'],
   openai: ['gpt-4o-mini', 'gpt-5-nano'],
-  google: ['gemini-3.1-flash-lite', 'gemini-2.5-flash-lite'],
+  google: [
+    // Rolling alias first: it follows Google's latest lite model, so a
+    // retirement does not reject a valid key. Concrete IDs stay as fallbacks
+    // (a wrong/retired alias just falls through to the next probe).
+    'gemini-flash-lite-latest',
+    'gemini-3.1-flash-lite',
+    'gemini-2.5-flash-lite',
+  ],
   moonshotai: ['kimi-k2.6', 'kimi-k2.5'],
   alibaba: ['qwen-turbo'],
   deepseek: ['deepseek-chat', 'deepseek-v4-flash'],
