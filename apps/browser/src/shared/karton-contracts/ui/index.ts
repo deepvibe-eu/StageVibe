@@ -2195,6 +2195,8 @@ export type KartonContract = {
         name?: string;
         config: Record<string, unknown>;
         validateApiKey?: string;
+        /** Persist even when credential validation fails (connect anyway). */
+        allowInvalidKey?: boolean;
       }) => Promise<
         | {
             success: true;

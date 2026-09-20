@@ -6,6 +6,7 @@ import type {
   ProviderInstanceTypeId,
 } from '@shared/karton-contracts/ui/shared-types';
 import { PROVIDER_TYPE_DISPLAY_INFO } from '@shared/karton-contracts/ui/shared-types';
+import { getVendorValidationModels } from '@shared/validation-models';
 import type { ProviderType } from './types';
 import { generateText } from 'ai';
 import {
@@ -57,35 +58,48 @@ const VENDOR_TO_API_SPEC: Record<ModelProvider, ApiSpec> = {
   'x-ai': 'openai-chat-completions',
 };
 
-/**
- * Per-vendor model ID used for the lightweight validation probe.
- * Must be a small/cheap model that every key can access.
- */
 const VALIDATION_TIMEOUT_MS = 10_000;
 
-const VENDOR_VALIDATION_MODEL: Partial<Record<ModelProvider, string>> = {
-  anthropic: 'claude-haiku-4-5',
-  deepseek: 'deepseek-chat',
-  moonshotai: 'kimi-k2.6',
-  alibaba: 'qwen-turbo',
-  'z-ai': 'glm-4.5-flash',
-  minimax: 'minimax-m2.7',
-  'xiaomi-mimo': 'mimo-v2.5',
-  mistral: 'mistral-small-latest',
-  'x-ai': 'grok-3-mini',
-  openai: 'gpt-4o-mini',
-  google: 'gemini-3.1-flash-lite',
-};
+const VALIDATION_PROMPT =
+  'What is the capital of France? Respond with one word.';
 
 /**
- * Ordered validation probes for Google. Gemini retires cheap model IDs
- * (e.g. `gemini-2.0-flash`) without notice, which used to reject valid keys.
- * Try the current lite model first and fall back to the previous one.
+ * Probes a vendor key against its ordered validation models and succeeds on
+ * the first response. Vendors retire cheap model IDs without notice and some
+ * plans exclude the newest probes, so a single hardcoded model must not be
+ * able to reject a valid key. Errors from every failed probe are aggregated
+ * so the user sees the real reason.
  */
-const GOOGLE_VALIDATION_MODELS: string[] = [
-  VENDOR_VALIDATION_MODEL.google!,
-  'gemini-2.5-flash-lite',
-];
+async function probeVendorCredentials(
+  vendor: ModelProvider,
+  createModel: (modelId: string) => LanguageModelV3,
+): Promise<{ success: true } | { success: false; error: string }> {
+  const label = vendorMeta(vendor)?.displayName ?? vendor;
+  const validationModelIds = getVendorValidationModels(vendor);
+  if (validationModelIds.length === 0) {
+    return {
+      success: false,
+      error: `No validation model configured for ${label} API`,
+    };
+  }
+  const errors: string[] = [];
+  for (const modelId of validationModelIds) {
+    try {
+      await generateText({
+        model: createModel(modelId),
+        messages: [{ role: 'user', content: VALIDATION_PROMPT }],
+        abortSignal: AbortSignal.timeout(VALIDATION_TIMEOUT_MS),
+      });
+      return { success: true };
+    } catch (err) {
+      errors.push(err instanceof Error ? err.message : String(err));
+    }
+  }
+  return {
+    success: false,
+    error: `Invalid ${label} API key: ${errors.join(' | ')}`,
+  };
+}
 
 // ============================================================================
 // Anthropic API type
@@ -136,25 +150,9 @@ export const anthropicApiType: ProviderType<OfficialApiConfig> = {
         error: 'No base URL configured for Anthropic API',
       };
     }
-    try {
-      await generateText({
-        model: createAnthropicModel(
-          apiKey,
-          baseUrl,
-          VENDOR_VALIDATION_MODEL.anthropic!,
-        ),
-        messages: [{ role: 'user', content: 'Respond with one word.' }],
-        abortSignal: AbortSignal.timeout(VALIDATION_TIMEOUT_MS),
-      });
-      return { success: true };
-    } catch (err) {
-      return {
-        success: false,
-        error: `Invalid Anthropic API key: ${
-          err instanceof Error ? err.message : String(err)
-        }`,
-      };
-    }
+    return probeVendorCredentials('anthropic', (modelId) =>
+      createAnthropicModel(apiKey, baseUrl, modelId),
+    );
   },
 
   createLanguageModel({ modelId, apiKey, baseURL }): {
@@ -212,27 +210,9 @@ export const openaiApiType: ProviderType<OfficialApiConfig> = {
     if (!baseUrl) {
       return { success: false, error: 'No base URL configured for OpenAI API' };
     }
-    const validationModelId = VENDOR_VALIDATION_MODEL.openai!;
-    try {
-      await generateText({
-        model: createOpenAIResponsesModel(apiKey, baseUrl, validationModelId),
-        messages: [
-          {
-            role: 'user',
-            content: 'What is the capital of France? Respond with one word.',
-          },
-        ],
-        abortSignal: AbortSignal.timeout(VALIDATION_TIMEOUT_MS),
-      });
-      return { success: true };
-    } catch (err) {
-      return {
-        success: false,
-        error: `Invalid OpenAI API key: ${
-          err instanceof Error ? err.message : String(err)
-        }`,
-      };
-    }
+    return probeVendorCredentials('openai', (modelId) =>
+      createOpenAIResponsesModel(apiKey, baseUrl, modelId),
+    );
   },
 
   // ── Model creation ─────────────────────────────────────────────────────
@@ -292,28 +272,9 @@ export const googleApiType: ProviderType<OfficialApiConfig> = {
     if (!baseUrl) {
       return { success: false, error: 'No base URL configured for Google API' };
     }
-    const errors: string[] = [];
-    for (const validationModelId of GOOGLE_VALIDATION_MODELS) {
-      try {
-        await generateText({
-          model: createGoogleModel(apiKey, baseUrl, validationModelId),
-          messages: [
-            {
-              role: 'user',
-              content: 'What is the capital of France? Respond with one word.',
-            },
-          ],
-          abortSignal: AbortSignal.timeout(VALIDATION_TIMEOUT_MS),
-        });
-        return { success: true };
-      } catch (err) {
-        errors.push(err instanceof Error ? err.message : String(err));
-      }
-    }
-    return {
-      success: false,
-      error: `Invalid Google API key: ${errors.join(' | ')}`,
-    };
+    return probeVendorCredentials('google', (modelId) =>
+      createGoogleModel(apiKey, baseUrl, modelId),
+    );
   },
 
   // ── Model creation ─────────────────────────────────────────────────────
@@ -376,29 +337,9 @@ export const minimaxApiType: ProviderType<OfficialApiConfig> = {
         error: 'No base URL configured for MiniMax API',
       };
     }
-    const validationModelIds = [VENDOR_VALIDATION_MODEL.minimax!, 'MiniMax-M3'];
-    const errors: string[] = [];
-    for (const validationModelId of validationModelIds) {
-      try {
-        await generateText({
-          model: createOpenAIChatModel(apiKey, baseUrl, validationModelId),
-          messages: [
-            {
-              role: 'user',
-              content: 'What is the capital of France? Respond with one word.',
-            },
-          ],
-          abortSignal: AbortSignal.timeout(VALIDATION_TIMEOUT_MS),
-        });
-        return { success: true };
-      } catch (err) {
-        errors.push(err instanceof Error ? err.message : String(err));
-      }
-    }
-    return {
-      success: false,
-      error: `Invalid MiniMax API key: ${errors.join(' | ')}`,
-    };
+    return probeVendorCredentials('minimax', (modelId) =>
+      createOpenAIChatModel(apiKey, baseUrl, modelId),
+    );
   },
 
   // ── Model ID transforms ────────────────────────────────────────────────
@@ -473,34 +414,9 @@ function createOpenAICompatibleApiType(
           error: `No base URL configured for ${vendor} API`,
         };
       }
-      const validationModelId = VENDOR_VALIDATION_MODEL[vendor];
-      if (!validationModelId) {
-        // Should not happen for factory-created types, but guard anyway
-        return {
-          success: false,
-          error: `No validation model configured for ${vendor} API`,
-        };
-      }
-      try {
-        await generateText({
-          model: createOpenAIChatModel(apiKey, baseUrl, validationModelId),
-          messages: [
-            {
-              role: 'user',
-              content: 'What is the capital of France? Respond with one word.',
-            },
-          ],
-          abortSignal: AbortSignal.timeout(VALIDATION_TIMEOUT_MS),
-        });
-        return { success: true };
-      } catch (err) {
-        return {
-          success: false,
-          error: `Invalid ${vendor} API key: ${
-            err instanceof Error ? err.message : String(err)
-          }`,
-        };
-      }
+      return probeVendorCredentials(vendor, (modelId) =>
+        createOpenAIChatModel(apiKey, baseUrl, modelId),
+      );
     },
 
     // ── Model creation ─────────────────────────────────────────────────────

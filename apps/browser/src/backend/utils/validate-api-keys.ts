@@ -5,6 +5,7 @@ import {
   resolveCodingPlanValidationBaseUrl,
   type CodingPlan,
 } from '@shared/coding-plans';
+import { getVendorValidationModels } from '@shared/validation-models';
 import { generateText, type ModelMessage } from 'ai';
 
 export type ApiKeyProvider =
@@ -81,59 +82,64 @@ export async function validateMiniMaxTokenPlanKey(
 
 const providerConfigs: Record<
   ApiKeyProvider,
-  (apiKey: string, baseURL?: string) => ValidationModel
+  (
+    apiKey: string,
+    baseURL: string | undefined,
+    modelId: string,
+  ) => ValidationModel
 > = {
-  anthropic: (apiKey, baseURL) =>
-    createAnthropic({ apiKey, baseURL })('claude-haiku-4-5'),
-  openai: (apiKey, baseURL) => createOpenAI({ apiKey, baseURL })('gpt-5-nano'),
-  google: (apiKey, baseURL) =>
-    createGoogleGenerativeAI({ apiKey, baseURL })('gemini-3.1-flash-lite'),
+  anthropic: (apiKey, baseURL, modelId) =>
+    createAnthropic({ apiKey, baseURL })(modelId),
+  openai: (apiKey, baseURL, modelId) =>
+    createOpenAI({ apiKey, baseURL })(modelId),
+  google: (apiKey, baseURL, modelId) =>
+    createGoogleGenerativeAI({ apiKey, baseURL })(modelId),
   // OpenAI-compatible providers below must use `.chat(...)` rather than the
   // default `(id)` shorthand: `createOpenAI()(id)` targets the Responses API
   // (only OpenAI itself implements it), whereas these upstreams speak Chat
   // Completions. Without `.chat(...)`, the probe hits a non-existent endpoint
   // and valid keys get rejected.
-  moonshotai: (apiKey, baseURL) =>
+  moonshotai: (apiKey, baseURL, modelId) =>
     createOpenAI({
       apiKey,
       baseURL: baseURL ?? 'https://api.moonshot.ai/v1',
-    }).chat('kimi-k2.6'),
-  alibaba: (apiKey, baseURL) =>
+    }).chat(modelId),
+  alibaba: (apiKey, baseURL, modelId) =>
     createOpenAI({
       apiKey,
       baseURL:
         baseURL ?? 'https://dashscope-intl.aliyuncs.com/compatible-mode/v1',
-    }).chat('qwen-turbo'),
-  deepseek: (apiKey, baseURL) =>
+    }).chat(modelId),
+  deepseek: (apiKey, baseURL, modelId) =>
     createOpenAI({
       apiKey,
       baseURL: baseURL ?? 'https://api.deepseek.com/v1',
-    }).chat('deepseek-v4-flash'),
-  'z-ai': (apiKey, baseURL) =>
+    }).chat(modelId),
+  'z-ai': (apiKey, baseURL, modelId) =>
     createOpenAI({
       apiKey,
       baseURL: baseURL ?? 'https://api.z.ai/api/paas/v4',
-    }).chat('glm-4.5-flash'),
-  minimax: (apiKey, baseURL) =>
+    }).chat(modelId),
+  minimax: (apiKey, baseURL, modelId) =>
     createOpenAI({
       apiKey,
       baseURL: baseURL ?? 'https://api.minimax.io/v1',
-    }).chat('minimax-m2.7'),
-  'xiaomi-mimo': (apiKey, baseURL) =>
+    }).chat(modelId),
+  'xiaomi-mimo': (apiKey, baseURL, modelId) =>
     createOpenAI({
       apiKey,
       baseURL: baseURL ?? 'https://api.xiaomimimo.com/v1',
-    }).chat('mimo-v2.5'),
-  mistral: (apiKey, baseURL) =>
+    }).chat(modelId),
+  mistral: (apiKey, baseURL, modelId) =>
     createOpenAI({
       apiKey,
       baseURL: baseURL ?? 'https://api.mistral.ai/v1',
-    }).chat('mistral-small-latest'),
-  'x-ai': (apiKey, baseURL) =>
+    }).chat(modelId),
+  'x-ai': (apiKey, baseURL, modelId) =>
     createOpenAI({
       apiKey,
       baseURL: baseURL ?? 'https://api.x.ai/v1',
-    }).chat('grok-3-mini'),
+    }).chat(modelId),
 };
 
 async function validateModel(model: ValidationModel): Promise<void> {
@@ -141,6 +147,28 @@ async function validateModel(model: ValidationModel): Promise<void> {
     model,
     messages: validationMessages,
   });
+}
+
+/**
+ * Tries each candidate model in order and resolves with `null` on the first
+ * success, or with the aggregated error messages if every candidate fails.
+ */
+async function validateFirstWorkingModel(
+  candidates: string[],
+  createModel: (modelId: string) => ValidationModel,
+): Promise<string | null> {
+  const errors: string[] = [];
+  for (const modelId of candidates) {
+    try {
+      await validateModel(createModel(modelId));
+      return null;
+    } catch (err) {
+      errors.push(err instanceof Error ? err.message : String(err));
+    }
+  }
+  return errors.length > 0
+    ? errors.join(' | ')
+    : 'No validation model configured';
 }
 
 export async function validateCodingPlanApiKey(
@@ -189,32 +217,6 @@ export async function validateCodingPlanApiKey(
   return result ?? { success: false, error: 'Validation was skipped' };
 }
 
-async function validateMiniMaxApiKey(
-  apiKey: string,
-  baseURL?: string,
-): Promise<ApiKeyValidationResult> {
-  const provider = createOpenAI({
-    apiKey,
-    baseURL: baseURL ?? 'https://api.minimax.io/v1',
-  });
-  const models = [provider.chat('minimax-m2.7'), provider.chat('MiniMax-M3')];
-  const errors: string[] = [];
-
-  for (const model of models) {
-    try {
-      await validateModel(model);
-      return { success: true };
-    } catch (err) {
-      errors.push(err instanceof Error ? err.message : String(err));
-    }
-  }
-
-  return {
-    success: false,
-    error: `Invalid minimax provider key: ${errors.join(' | ')}`,
-  };
-}
-
 /**
  * Validate API keys by making a lightweight test request to each provider.
  * Keys that are empty/undefined are skipped (result stays `null`).
@@ -245,22 +247,16 @@ export async function validateApiKeys(
   for (const [provider, apiKey] of Object.entries(keys)) {
     if (!apiKey) continue;
     const k = provider as ApiKeyProvider;
-    if (!providerConfigs[k]) continue;
-    const p =
-      k === 'minimax'
-        ? validateMiniMaxApiKey(apiKey, baseUrl).then((result) => {
-            results[k] = result;
-          })
-        : validateModel(providerConfigs[k](apiKey, baseUrl))
-            .then(() => {
-              results[k] = { success: true };
-            })
-            .catch((err) => {
-              results[k] = {
-                success: false,
-                error: `Invalid ${k} provider key: ${err instanceof Error ? err.message : String(err)}`,
-              };
-            });
+    const createModel = providerConfigs[k];
+    if (!createModel) continue;
+    const candidates = getVendorValidationModels(k);
+    const p = validateFirstWorkingModel(candidates, (modelId) =>
+      createModel(apiKey, baseUrl, modelId),
+    ).then((error) => {
+      results[k] = error
+        ? { success: false, error: `Invalid ${k} provider key: ${error}` }
+        : { success: true };
+    });
 
     promises.push(p);
   }

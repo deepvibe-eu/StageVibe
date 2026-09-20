@@ -1898,6 +1898,13 @@ export class PreferencesService extends DisposableService {
     name?: string;
     config: Record<string, unknown>;
     validateApiKey?: string;
+    /**
+     * Persist the instance even if credential validation fails. Used by the
+     * "connect anyway" escape hatch: a probe can fail for reasons unrelated to
+     * the key (retired probe model, wrong region/base URL), and the user must
+     * be able to save the key first in order to fix the endpoint afterwards.
+     */
+    allowInvalidKey?: boolean;
   }): Promise<
     | { success: true; instanceId: string; discoveredModels: DiscoveredModel[] }
     | { success: false; error: string }
@@ -1972,7 +1979,12 @@ export class PreferencesService extends DisposableService {
         sensitiveValues,
       );
       if (result.success === false) {
-        return result;
+        if (!args.allowInvalidKey) {
+          return result;
+        }
+        this.logger.warn(
+          `[PreferencesService] Saving ${typeId} key despite failed validation: ${result.error}`,
+        );
       }
     }
 

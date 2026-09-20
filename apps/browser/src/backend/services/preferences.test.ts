@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { defaultUserPreferences } from '@shared/karton-contracts/ui/shared-types';
 import { PreferencesService } from './preferences';
 import { CODING_PLANS } from '@shared/coding-plans';
@@ -40,6 +40,13 @@ const validationMock = vi.hoisted(() => ({
 }));
 
 vi.mock('../utils/validate-api-keys', () => validationMock);
+
+const generateTextMock = vi.hoisted(() => vi.fn());
+
+vi.mock('ai', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('ai')>();
+  return { ...actual, generateText: generateTextMock };
+});
 
 const logger = {
   debug: vi.fn(),
@@ -1180,5 +1187,65 @@ describe('PreferencesService coding plan connection state', () => {
     expect(service.get().agent.modelThinkingOverrides).not.toHaveProperty(
       'openai-api-default',
     );
+  });
+});
+
+describe('PreferencesService credential validation escape hatch', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+    persistedDataMock.writePersistedData.mockResolvedValue(undefined);
+    vi.stubGlobal(
+      'fetch',
+      vi.fn().mockRejectedValue(new Error('network disabled in test')),
+    );
+  });
+
+  afterEach(() => {
+    vi.unstubAllGlobals();
+  });
+
+  it('rejects a key whose validation probe fails', async () => {
+    generateTextMock.mockRejectedValue(
+      new Error('insufficient balance (1008)'),
+    );
+    const service = await createServiceWithPreferences();
+
+    const result = await service.addProviderInstance({
+      typeId: 'minimax-api',
+      config: {},
+      validateApiKey: 'test-key',
+    });
+
+    expect(result.success).toBe(false);
+    expect(
+      service
+        .get()
+        .providerInstances.some(
+          (instance) => instance.typeId === 'minimax-api',
+        ),
+    ).toBe(false);
+  });
+
+  it('persists the key when allowInvalidKey is set', async () => {
+    generateTextMock.mockRejectedValue(
+      new Error('insufficient balance (1008)'),
+    );
+    const service = await createServiceWithPreferences();
+
+    const result = await service.addProviderInstance({
+      typeId: 'minimax-api',
+      config: {},
+      validateApiKey: 'test-key',
+      allowInvalidKey: true,
+    });
+
+    expect(result.success).toBe(true);
+    expect(
+      service
+        .get()
+        .providerInstances.some(
+          (instance) => instance.typeId === 'minimax-api',
+        ),
+    ).toBe(true);
   });
 });
