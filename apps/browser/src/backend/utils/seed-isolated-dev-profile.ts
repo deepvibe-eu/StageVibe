@@ -22,9 +22,21 @@ export function seedIsolatedDevProfile(
   if (!appBaseName.startsWith('agewise-dev-')) return 0;
 
   const markerPath = path.join(userDataDirectory, ISOLATED_DEV_SEED_MARKER);
-  const sourceUserData = path.join(appDataDirectory, 'agewise-dev');
-  const sourceDataRoot = path.join(sourceUserData, 'agewise');
-  if (fs.existsSync(markerPath) || !fs.existsSync(sourceDataRoot)) return 0;
+  // Prefer the current layout; fall back to the pre-rebrand `stagewise-dev`
+  // profile so isolated instances keep seeding after the Agewise rename.
+  const source = [
+    { userData: path.join(appDataDirectory, 'agewise-dev'), root: 'agewise' },
+    {
+      userData: path.join(appDataDirectory, 'stagewise-dev'),
+      root: 'stagewise',
+    },
+  ].find((candidate) =>
+    fs.existsSync(path.join(candidate.userData, candidate.root)),
+  );
+  if (fs.existsSync(markerPath) || !source) return 0;
+
+  const sourceUserData = source.userData;
+  const sourceDataRoot = path.join(sourceUserData, source.root);
 
   const targetDataRoot = path.join(userDataDirectory, 'agewise');
   fs.mkdirSync(targetDataRoot, { recursive: true });

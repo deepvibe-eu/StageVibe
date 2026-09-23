@@ -6,6 +6,7 @@ import started from 'electron-squirrel-startup';
 import path from 'node:path';
 import { installStartupOpenUrlListener } from './startup-url-events';
 import { applyPendingAppDataReset } from './utils/app-data-reset';
+import { migrateRenamedAppData } from './utils/migrate-renamed-app-data';
 import { seedIsolatedDevProfile } from './utils/seed-isolated-dev-profile';
 
 // CRITICAL: `main` is imported dynamically (below in the 'ready' handler)
@@ -102,6 +103,18 @@ const singleInstanceLock = app.requestSingleInstanceLock();
 if (!singleInstanceLock) {
   app.quit();
 } else if (!started) {
+  try {
+    migrateRenamedAppData(app.getPath('appData'), app.getPath('userData'), {
+      info: (message) => console.log(`[AppDataMigration] ${message}`),
+      warn: (message) => console.warn(`[AppDataMigration] ${message}`),
+    });
+  } catch (error) {
+    console.error(
+      '[AppDataMigration] Failed to migrate renamed app data',
+      error,
+    );
+  }
+
   try {
     applyPendingAppDataReset(app.getPath('userData'));
   } catch (error) {

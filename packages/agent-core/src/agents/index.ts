@@ -22,6 +22,7 @@ export {
   type AgentConfig,
   type MessageId,
   type SendUserMessageOptions,
+  type HistoryCompressionOutcome,
 } from './base-agent';
 export { ChatAgent } from './chat/chat';
 

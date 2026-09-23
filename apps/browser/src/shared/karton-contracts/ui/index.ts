@@ -13,6 +13,7 @@ import type {
   MountEntry,
   WorkspaceGitSummary,
 } from '@stagewise/agent-core/types/metadata';
+import type { HistoryCompressionOutcome } from '@stagewise/agent-core/agents';
 import type { ReactSelectedElementInfo } from '../../selected-elements/react';
 import type { ApiClient } from '@stagewise/api-client';
 import type { SelectedElement } from '../../selected-elements';
@@ -1421,14 +1422,10 @@ export type KartonContract = {
       retryLastUserMessage: (agentId: string) => Promise<void>;
       /**
        * Manually trigger history compression for an agent, bypassing the
-       * automatic token-threshold check. Mirrors `HistoryCompressionOutcome`
-       * from `@stagewise/agent-core` (inlined to avoid pulling Node-only
-       * modules into the renderer).
+       * automatic token-threshold check. Returns the agent-core outcome so
+       * the UI can report success/no-op/failure.
        */
-      compressHistory: (agentId: string) => Promise<{
-        status: 'compressed' | 'noop' | 'busy' | 'failed';
-        error?: string;
-      }>;
+      compressHistory: (agentId: string) => Promise<HistoryCompressionOutcome>;
       markAsRead: (agentId: string) => Promise<void>;
       markAsUnread: (agentId: string) => Promise<void>;
       setActiveModelId: (

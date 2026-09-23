@@ -1337,6 +1337,14 @@ export const ChatPanelFooter = memo(function ChatPanelFooter({
             type: 'info',
             actions: [],
           });
+        } else if (result.status === 'busy') {
+          toast({
+            id: `compact-context-busy-${openAgent}`,
+            title: 'Already compacting',
+            message: 'History compression is already running for this agent.',
+            type: 'info',
+            actions: [],
+          });
         }
       })
       .catch((error) => {
