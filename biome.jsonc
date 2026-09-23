@@ -4,6 +4,7 @@
     "ignoreUnknown": false,
     "includes": [
       "**",
+      "!**/.kilo/worktrees",
       "!**/pnpm-lock.yaml",
       "!**/lib/db/migrations",
       "!**/lib/editor/react-renderer.tsx",
