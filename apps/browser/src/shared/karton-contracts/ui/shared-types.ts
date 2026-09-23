@@ -1023,9 +1023,9 @@ const DEFAULT_HISTORY_COMPRESSION_ENTRIES =
 export const userPreferencesSchema = z.object({
   privacy: z
     .object({
-      telemetryLevel: z.enum(['off', 'anonymous', 'full']).default('anonymous'),
+      telemetryLevel: z.enum(['off', 'anonymous', 'full']).default('off'),
     })
-    .default({ telemetryLevel: 'anonymous' }),
+    .default({ telemetryLevel: 'off' }),
   search: z
     .object({
       /** ID of the default search engine (references keywords.id in Web Data DB) */
@@ -1364,7 +1364,7 @@ const defaultDevToolbarForUserPrefs: DevToolbarPreferences = {
 
 export const defaultUserPreferences: UserPreferences = {
   privacy: {
-    telemetryLevel: 'anonymous',
+    telemetryLevel: 'off',
   },
   search: {
     defaultEngineId: 1,

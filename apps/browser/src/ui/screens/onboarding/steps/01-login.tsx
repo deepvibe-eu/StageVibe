@@ -46,7 +46,7 @@ export function StepLogin({
   const track = useTrack();
   const authStatus = useKartonState((s) => s.userAccount.status);
   const persistedTelemetryLevel = useKartonState(
-    (s) => s.preferences?.privacy.telemetryLevel ?? 'anonymous',
+    (s) => s.preferences?.privacy.telemetryLevel ?? 'off',
   );
   const userEmail = useKartonState((s) =>
     s.userAccount.status === 'authenticated' ||
