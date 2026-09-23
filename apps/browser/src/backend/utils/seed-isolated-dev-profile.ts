@@ -19,14 +19,14 @@ export function seedIsolatedDevProfile(
   userDataDirectory: string,
   appBaseName: string,
 ): number {
-  if (!appBaseName.startsWith('stagewise-dev-')) return 0;
+  if (!appBaseName.startsWith('agewise-dev-')) return 0;
 
   const markerPath = path.join(userDataDirectory, ISOLATED_DEV_SEED_MARKER);
-  const sourceUserData = path.join(appDataDirectory, 'stagewise-dev');
-  const sourceDataRoot = path.join(sourceUserData, 'stagewise');
+  const sourceUserData = path.join(appDataDirectory, 'agewise-dev');
+  const sourceDataRoot = path.join(sourceUserData, 'agewise');
   if (fs.existsSync(markerPath) || !fs.existsSync(sourceDataRoot)) return 0;
 
-  const targetDataRoot = path.join(userDataDirectory, 'stagewise');
+  const targetDataRoot = path.join(userDataDirectory, 'agewise');
   fs.mkdirSync(targetDataRoot, { recursive: true });
 
   let copiedFileCount = 0;

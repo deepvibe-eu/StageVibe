@@ -449,7 +449,7 @@ function AppDataManagement() {
       <div className="flex flex-col gap-1">
         <h3 className="font-medium text-base text-foreground">App Data</h3>
         <p className="text-muted-foreground text-sm">
-          Open the data folder for troubleshooting or reset stagewise to a clean
+          Open the data folder for troubleshooting or reset Agewise to a clean
           setup.
         </p>
       </div>
@@ -493,15 +493,15 @@ export function AboutSection() {
           <div className="flex flex-col gap-2">
             <div className="flex items-baseline gap-2">
               <h2 className="font-bold text-3xl text-foreground leading-none">
-                stagewise
+                Agewise
               </h2>
               <p className="relative bottom-[2px] text-lg text-subtle-foreground leading-none">
                 {appInfo.version}
-                {appInfo.name !== 'stagewise' && (
+                {appInfo.name !== 'Agewise' && (
                   <span>
                     {' ('}
                     {appInfo.name
-                      .replace(/^stagewise\s*/, '')
+                      .replace(/^Agewise\s*/, '')
                       .replace(/[()]/g, '')}
                     {')'}
                   </span>
@@ -654,8 +654,8 @@ export function AboutSection() {
           name: appInfo.name,
           version: appInfo.version,
           license: 'AGPL-3.0',
-          repository: 'https://github.com/stagewise/stagewise',
-          publisher: 'stagewise Inc.',
+          repository: '',
+          publisher: 'Agewise',
           licenseText: agplLicenseText,
         }}
         open={appLicenseOpen}

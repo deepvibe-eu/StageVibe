@@ -37,14 +37,14 @@ const packageJson = JSON.parse(
 export const __APP_BASE_NAME__ = (() => {
   switch (__APP_RELEASE_CHANNEL__) {
     case 'release':
-      return 'stagewise';
+      return 'agewise';
     case 'nightly':
-      return 'stagewise-nightly';
+      return 'agewise-nightly';
     case 'prerelease':
-      return 'stagewise-prerelease';
+      return 'agewise-prerelease';
     case 'dev':
     default:
-      return devInstance ? `stagewise-dev-${devInstance}` : 'stagewise-dev';
+      return devInstance ? `agewise-dev-${devInstance}` : 'agewise-dev';
   }
 })();
 
@@ -52,30 +52,30 @@ export const __APP_BASE_NAME__ = (() => {
 export const __APP_NAME__ = (() => {
   switch (__APP_RELEASE_CHANNEL__) {
     case 'release':
-      return 'stagewise';
+      return 'Agewise';
     case 'nightly':
-      return 'stagewise Nightly';
+      return 'Agewise Nightly';
     case 'prerelease':
-      return 'stagewise (Pre-Release)';
+      return 'Agewise (Pre-Release)';
     case 'dev':
     default:
       return devInstance
-        ? `stagewise (Dev-Build ${devInstance})`
-        : 'stagewise (Dev-Build)';
+        ? `Agewise (Dev-Build ${devInstance})`
+        : 'Agewise (Dev-Build)';
   }
 })();
 
 export const __APP_BUNDLE_ID__ = (() => {
   switch (__APP_RELEASE_CHANNEL__) {
     case 'release':
-      return 'io.stagewise.app';
+      return 'io.agewise.app';
     case 'nightly':
-      return 'io.stagewise.nightly';
+      return 'io.agewise.nightly';
     case 'prerelease':
-      return 'io.stagewise.prerelease';
+      return 'io.agewise.prerelease';
     case 'dev':
     default:
-      return 'io.stagewise.dev';
+      return 'io.agewise.dev';
   }
 })();
 
@@ -138,5 +138,5 @@ export const __APP_HOMEPAGE__ = (() => {
   if (typeof homepage === 'string' && homepage.trim()) {
     return homepage;
   }
-  return 'https://ade.stagewise.io';
+  return process.env.APP_HOMEPAGE || 'https://agewise.ai';
 })();

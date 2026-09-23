@@ -48,7 +48,7 @@ export const Logo: FC<LogoProps> = ({
         }`}
         viewBox="0 0 2048 2048"
       >
-        <title>stagewise</title>
+        <title>Agewise</title>
         <ellipse
           className={`${colorStyle[color]} ${loading ? 'animate-pulse' : ''}`}
           id="path3"

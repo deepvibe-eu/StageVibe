@@ -19,7 +19,7 @@ const _appVersion = packageJson.version;
 // Release channel: 'dev' | 'prerelease' | 'release'
 const _releaseChannel = process.env.RELEASE_CHANNEL || 'dev';
 
-const pagesPort = buildConstants.__APP_BASE_NAME__.startsWith('stagewise-dev-')
+const pagesPort = buildConstants.__APP_BASE_NAME__.startsWith('agewise-dev-')
   ? 30000 +
     (Number.parseInt(buildConstants.__APP_BASE_NAME__.slice(-8), 16) % 10000)
   : 5174;

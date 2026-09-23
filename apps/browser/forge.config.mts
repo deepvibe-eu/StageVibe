@@ -59,7 +59,7 @@ const linuxMimeTypes = protocolSchemes.map(
 );
 
 // DMG volume name (shown when mounted)
-const dmgVolumeName = 'Install stagewise';
+const dmgVolumeName = 'Install Agewise';
 
 // For now, we maintain a manually updated list of dependencies and sub-dependencies that need to be copied over in order to get a working deployed app.
 // Ugly but works.
@@ -337,9 +337,9 @@ const config: ForgeConfig = {
     ],
     afterComplete: [copyVcRedist], // sources DLLs directly from VS install on the runner
     icon: `./assets/icons/${visualAssetChannel}/icon`,
-    appCopyright: `Copyright © ${new Date().getFullYear()} stagewise Inc.`,
+    appCopyright: `Copyright © ${new Date().getFullYear()} Agewise`,
     win32metadata: {
-      CompanyName: 'stagewise Inc.',
+      CompanyName: 'Agewise',
       ProductName: buildConstants.__APP_NAME__,
       FileDescription: buildConstants.__APP_NAME__,
       'requested-execution-level': 'asInvoker',
@@ -399,7 +399,7 @@ const config: ForgeConfig = {
         productName: buildConstants.__APP_NAME__,
         genericName: 'Web Browser',
         icon: `./assets/icons/${visualAssetChannel}/icon.png`,
-        homepage: 'https://ade.stagewise.io',
+        homepage: buildConstants.__APP_HOMEPAGE__,
         categories: ['Development', 'Network', 'Utility'],
         mimeType: linuxMimeTypes,
       },
@@ -411,7 +411,7 @@ const config: ForgeConfig = {
         productName: buildConstants.__APP_NAME__,
         genericName: 'Web Browser',
         icon: `./assets/icons/${visualAssetChannel}/icon.png`,
-        homepage: 'https://ade.stagewise.io',
+        homepage: buildConstants.__APP_HOMEPAGE__,
         categories: ['Development', 'Network', 'Utility'],
         section: 'devel',
         priority: 'standard',

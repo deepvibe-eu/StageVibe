@@ -3,14 +3,14 @@ import { app } from 'electron';
 import path from 'node:path';
 
 export const getDataRoot = (): string =>
-  path.join(app.getPath('userData'), 'stagewise');
+  path.join(app.getPath('userData'), 'agewise');
 
 export const getTempRoot = (): string =>
   path.join(
     app.getPath('temp'),
-    __APP_BASE_NAME__.startsWith('stagewise-dev-')
+    __APP_BASE_NAME__.startsWith('agewise-dev-')
       ? __APP_BASE_NAME__
-      : 'stagewise',
+      : 'agewise',
   );
 
 export type DbName =
