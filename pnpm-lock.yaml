@@ -369,6 +369,9 @@ importers:
       '@react-three/fiber':
         specifier: ^9.6.1
         version: 9.6.1(@types/react@19.2.14)(immer@10.2.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(three@0.182.0)
+      '@reforged/maker-appimage':
+        specifier: ^5.3.1
+        version: 5.3.1
       '@shikijs/colorized-brackets':
         specifier: 3.21.0
         version: 3.21.0
@@ -4197,6 +4200,13 @@ packages:
       react-redux:
         optional: true
 
+  '@reforged/maker-appimage@5.3.1':
+    resolution: {integrity: sha512-lJqSZO+/qZmkarZ9pKZgE5DnZxuEvRe7JXupLo6YSTEOL+bkETthWP3XCLgAxLDsLCwPuPmF1tooYCt2dcIRCQ==}
+    engines: {node: '>=19.0.0 || ^18.11.0'}
+
+  '@reforged/maker-types@2.2.0':
+    resolution: {integrity: sha512-14B5Tu6fG2AWgH+bdsfJaQkAi8Bc7YC8GmMuNEWCJupU9IhvKHrdte3GAncBYO10yqSbsQx7Pi9xpyveJ5vL+Q==}
+
   '@rolldown/pluginutils@1.0.0-beta.27':
     resolution: {integrity: sha512-+d0F4MKMCbeVUJwG96uQ4SgAznZNSq93I3V+9NHA4OpvqG8mRCpGdKmK8l/dl02h2CCDHwW2FqilnTyDcAnqjA==}
 
@@ -4584,6 +4594,9 @@ packages:
 
   '@so-ric/colorspace@1.1.6':
     resolution: {integrity: sha512-/KiKkpHNOBgkFJwu9sh48LkHSMYGyuTcSFK/qMBdnOAlrRJzRSXAOFB5qwzaVQuDl8wAvHVMkaASQDReTahxuw==}
+
+  '@spacingbat3/lss@1.2.0':
+    resolution: {integrity: sha512-aywhxHNb6l7COooF3m439eT/6QN8E/RSl5IVboSKthMHcp0GlZYMSoS7546rqDLmFRxTD8f1tu/NIS9vtDwYAg==}
 
   '@stablelib/base64@1.0.1':
     resolution: {integrity: sha512-1bnPQqSxSuc3Ii6MhBysoWCg58j97aUjuCSZrGSmDxNqtytIi0k8utUenAwTZN4V5mXXYGsVUI9zeBqy+jBOSQ==}
@@ -15321,6 +15334,18 @@ snapshots:
       react: 19.2.3
       react-redux: 9.2.0(@types/react@19.2.14)(react@19.2.3)(redux@5.0.1)
 
+  '@reforged/maker-appimage@5.3.1':
+    dependencies:
+      '@electron-forge/maker-base': 7.11.1
+      '@reforged/maker-types': 2.2.0
+      '@spacingbat3/lss': 1.2.0
+      semver: 7.8.5
+    transitivePeerDependencies:
+      - bluebird
+      - supports-color
+
+  '@reforged/maker-types@2.2.0': {}
+
   '@rolldown/pluginutils@1.0.0-beta.27': {}
 
   '@rollup/pluginutils@5.3.0(rollup@4.55.1)':
@@ -15763,6 +15788,8 @@ snapshots:
     dependencies:
       color: 5.0.3
       text-hex: 1.0.0
+
+  '@spacingbat3/lss@1.2.0': {}
 
   '@stablelib/base64@1.0.1': {}
 

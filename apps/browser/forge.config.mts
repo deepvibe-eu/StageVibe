@@ -4,6 +4,7 @@ import { MakerDeb } from '@electron-forge/maker-deb';
 import { MakerRpm } from '@electron-forge/maker-rpm';
 import { MakerDMG } from '@electron-forge/maker-dmg';
 import { MakerZIP } from '@electron-forge/maker-zip';
+import { MakerAppImage } from '@reforged/maker-appimage';
 import { VitePlugin } from '@electron-forge/plugin-vite';
 import { FusesPlugin } from '@electron-forge/plugin-fuses';
 import { FuseV1Options, FuseVersion } from '@electron/fuses';
@@ -434,6 +435,16 @@ const config: ForgeConfig = {
           name: `${buildConstants.__APP_NAME__}.app`,
         },
       ],
+    }),
+    new MakerAppImage({
+      options: {
+        name: buildConstants.__APP_BASE_NAME__,
+        bin: buildConstants.__APP_BASE_NAME__,
+        productName: buildConstants.__APP_NAME__,
+        icon: `./assets/icons/${visualAssetChannel}/icon.png`,
+        categories: ['Development', 'Network', 'Utility'],
+        mimeType: linuxMimeTypes,
+      },
     }),
     new MakerZIP({}),
   ],
