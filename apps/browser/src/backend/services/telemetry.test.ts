@@ -6,6 +6,7 @@ import type {
 import type { AuthHandoffProvider } from '@shared/karton-contracts/ui/telemetry';
 import {
   type BackendEventProperties,
+  TelemetryService,
   isUIEventName,
   parseUIEventProperties,
 } from './telemetry';
@@ -515,5 +516,53 @@ describe('auth UI telemetry schemas', () => {
         error_kind: 'backend-error',
       }),
     ).toBeNull();
+  });
+});
+
+describe('TelemetryService construction', () => {
+  function makeService(): TelemetryService {
+    return new TelemetryService(
+      { getMachineId: () => 'machine-1' } as never,
+      {
+        get: () => ({ privacy: { telemetryLevel: 'off' } }),
+        addListener: () => {},
+      } as never,
+      {
+        debug: () => {},
+        info: () => {},
+        warn: () => {},
+        error: () => {},
+      } as never,
+    );
+  }
+
+  it('stays disabled instead of throwing when POSTHOG_API_KEY is missing', () => {
+    const previous = process.env.POSTHOG_API_KEY;
+    delete process.env.POSTHOG_API_KEY;
+    try {
+      const service = makeService();
+      expect(service.posthogClient).toBeNull();
+      expect(() =>
+        service.capture('app-launched', {
+          matched_process_counts: {},
+          total_matched_processes: 0,
+        }),
+      ).not.toThrow();
+    } finally {
+      if (previous === undefined) delete process.env.POSTHOG_API_KEY;
+      else process.env.POSTHOG_API_KEY = previous;
+    }
+  });
+
+  it('constructs a client when POSTHOG_API_KEY is set', () => {
+    const previous = process.env.POSTHOG_API_KEY;
+    process.env.POSTHOG_API_KEY = 'phc_test_key';
+    try {
+      const service = makeService();
+      expect(service.posthogClient).not.toBeNull();
+    } finally {
+      if (previous === undefined) delete process.env.POSTHOG_API_KEY;
+      else process.env.POSTHOG_API_KEY = previous;
+    }
   });
 });

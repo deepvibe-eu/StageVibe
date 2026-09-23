@@ -891,7 +891,7 @@ export class TelemetryService extends DisposableService {
   private readonly logger: Logger;
   private userProperties: UserProperties = {};
   private pendingAppLaunchedCapture: Promise<void> | null = null;
-  public posthogClient: PostHog;
+  public posthogClient: PostHog | null;
 
   public constructor(
     identifierService: IdentifierService,
@@ -902,13 +902,22 @@ export class TelemetryService extends DisposableService {
     this.identifierService = identifierService;
     this.preferencesService = preferencesService;
     this.logger = logger;
-    const apiKey = process.env.POSTHOG_API_KEY ?? '';
-    this.posthogClient = new PostHog(apiKey, {
-      host: process.env.POSTHOG_HOST || 'https://eu.i.posthog.com',
-      flushAt: 1,
-      flushInterval: 0,
-      disabled: !apiKey,
-    });
+    const apiKey = process.env.POSTHOG_API_KEY?.trim() ?? '';
+    if (apiKey) {
+      this.posthogClient = new PostHog(apiKey, {
+        host: process.env.POSTHOG_HOST || 'https://eu.i.posthog.com',
+        flushAt: 1,
+        flushInterval: 0,
+      });
+    } else {
+      // No key configured (e.g. a BYOK/privacy-first build). Do NOT construct
+      // the client: `posthog-node` asserts a non-empty API key and would throw
+      // during startup, preventing the app from launching entirely.
+      this.posthogClient = null;
+      this.logger.debug(
+        '[TelemetryService] POSTHOG_API_KEY not set — telemetry disabled.',
+      );
+    }
 
     this.identifyUser();
 
@@ -946,6 +955,7 @@ export class TelemetryService extends DisposableService {
   }
 
   identifyUser() {
+    if (!this.posthogClient) return;
     if (
       this.userProperties.user_id &&
       this.userProperties.user_email &&
@@ -974,7 +984,7 @@ export class TelemetryService extends DisposableService {
     properties?: Parameters<typeof withTracing>[2],
   ): LanguageModelV3 {
     const telemetryLevel = this.getTelemetryLevel();
-    if (telemetryLevel !== 'full') return model;
+    if (telemetryLevel !== 'full' || !this.posthogClient) return model;
 
     const distinctId = this.getDistinctId();
 
@@ -1105,7 +1115,7 @@ export class TelemetryService extends DisposableService {
   ): void {
     try {
       const telemetryLevel = this.getTelemetryLevel();
-      if (telemetryLevel === 'off') return;
+      if (telemetryLevel === 'off' || !this.posthogClient) return;
 
       this.logger.debug(
         `[TelemetryService] Capturing exception: ${error.message}`,
