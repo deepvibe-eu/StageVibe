@@ -1345,6 +1345,15 @@ export const ChatPanelFooter = memo(function ChatPanelFooter({
             type: 'info',
             actions: [],
           });
+        } else if (result.status === 'compressed') {
+          toast({
+            id: `compact-context-done-${openAgent}`,
+            title: 'History compacted',
+            message:
+              'Older messages were summarised into a briefing. Recent messages are unchanged.',
+            type: 'info',
+            actions: [],
+          });
         }
       })
       .catch((error) => {

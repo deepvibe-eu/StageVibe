@@ -226,6 +226,20 @@ export class AgentManagerService extends DisposableService {
         },
       );
     }
+
+    // Fail loudly-in-the-logs when a forwarded procedure has no handler in
+    // the agent-core command registry. This is the signature of a stale
+    // `@stagewise/agent-core` build (its `dist/` predates the command), which
+    // would otherwise only surface as a silently broken UI action.
+    const missing = AGENT_RPC_COMMANDS.filter(
+      (name) => !this.commandRegistry.has(name),
+    );
+    if (missing.length > 0) {
+      console.warn(
+        `[AgentManager] No handler registered for: ${missing.join(', ')}. ` +
+          'Rebuild workspace packages (pnpm build) — @stagewise/agent-core dist is likely stale.',
+      );
+    }
   }
 
   private async collectAgentTreeIds(rootId: string): Promise<string[]> {

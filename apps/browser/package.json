@@ -18,7 +18,7 @@
     "publish": "pnpm bundle:acp && dotenv -e ../../.env -- electron-forge publish",
     "start": "pnpm bundle:acp && concurrently -n typecheck,app -c yellow,green \"pnpm typecheck\" \"dotenv -e ../../.env.dev -- electron-forge start\"",
     "start:isolated": "cross-env STAGEWISE_DEV_INSTANCE=auto pnpm start",
-    "start:fast": "pnpm bundle:acp && dotenv -e ../../.env.dev -- electron-forge start",
+    "start:fast": "pnpm -w build:packages && pnpm bundle:acp && dotenv -e ../../.env.dev -- electron-forge start",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "clean-data": "tsx scripts/clean-data.ts",
