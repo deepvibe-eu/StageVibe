@@ -26,11 +26,18 @@ export interface Notification {
 }
 
 export function toast(notification: Notification, onDismiss?: () => void) {
+  // Dismiss both the sonner toast and any caller-provided handler. Without
+  // this, the close button rendered by <Toast> called an undefined handler,
+  // so notifications could never be closed by the user.
+  const handleDismiss = () => {
+    sonnerToast.dismiss(notification.id);
+    onDismiss?.();
+  };
   return sonnerToast.custom(
-    () => <Toast notification={notification} onDismiss={onDismiss} />,
+    () => <Toast notification={notification} onDismiss={handleDismiss} />,
     {
       id: notification.id,
-      onDismiss: onDismiss,
+      onDismiss: handleDismiss,
       duration: notification.duration ?? 100000000,
     },
   );

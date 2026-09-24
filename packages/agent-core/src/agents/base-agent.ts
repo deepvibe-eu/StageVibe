@@ -2566,6 +2566,20 @@ export abstract class BaseAgent<
       const boundarySeq = this.state
         .get()
         .history.findIndex((m) => m.id === boundaryMessageId);
+
+      // Reflect the shrunken context immediately. The context-usage ring and
+      // the usage warning read `usedTokens`, which is otherwise only updated
+      // by the next model step — so without this the ring would keep showing
+      // the pre-compression size until the user sends another message.
+      const retainedHistory = this.state.get().history;
+      const estimatedRetainedTokens = retainedHistory.reduce(
+        (sum, message) => sum + estimateMessageTokens(message),
+        0,
+      );
+      this.state.commands.recordUsage({
+        totalTokens: estimatedRetainedTokens,
+      });
+
       await this.saveState(boundarySeq >= 0 ? [boundarySeq] : undefined);
       this.scheduleMemorySnapshotWrite('compression');
       return { status: 'compressed' };

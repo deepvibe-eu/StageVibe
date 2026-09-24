@@ -1336,6 +1336,7 @@ export const ChatPanelFooter = memo(function ChatPanelFooter({
               result.error ??
               'All compression models failed. Check your provider settings.',
             type: 'error',
+            duration: 20_000,
             actions: [],
           });
         } else if (result.status === 'noop') {
@@ -1344,6 +1345,7 @@ export const ChatPanelFooter = memo(function ChatPanelFooter({
             title: 'Nothing to compact',
             message: 'The conversation is already short enough.',
             type: 'info',
+            duration: 8_000,
             actions: [],
           });
         } else if (result.status === 'busy') {
@@ -1352,6 +1354,7 @@ export const ChatPanelFooter = memo(function ChatPanelFooter({
             title: 'Already compacting',
             message: 'History compression is already running for this agent.',
             type: 'info',
+            duration: 8_000,
             actions: [],
           });
         } else if (result.status === 'compressed') {
@@ -1361,6 +1364,7 @@ export const ChatPanelFooter = memo(function ChatPanelFooter({
             message:
               'Older messages were summarised into a briefing. Recent messages are unchanged.',
             type: 'info',
+            duration: 8_000,
             actions: [],
           });
         }
@@ -1371,6 +1375,7 @@ export const ChatPanelFooter = memo(function ChatPanelFooter({
           title: 'Could not compact history',
           message: error instanceof Error ? error.message : String(error),
           type: 'error',
+          duration: 20_000,
           actions: [],
         });
       })
