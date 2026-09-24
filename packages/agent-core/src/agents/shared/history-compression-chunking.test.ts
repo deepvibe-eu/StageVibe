@@ -158,8 +158,7 @@ describe('generateSimpleCompressedHistory chunked path', () => {
     expect(generateTextMock).toHaveBeenCalledTimes(3);
 
     const systemPrompts = generateTextMock.mock.calls.map(
-      (call) =>
-        (call[0] as any).messages.find((m: any) => m.role === 'system').content,
+      (call) => (call[0] as any).system,
     );
     // First two calls are segment summaries, the last one is the merge.
     expect(systemPrompts[0]).toContain('partial');

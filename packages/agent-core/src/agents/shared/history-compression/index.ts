@@ -151,42 +151,47 @@ const tryCompressWithModel = async (
       ` for agent ${agentInstanceId}.`,
   );
 
-  const abortController = new AbortController();
-  let timeout: ReturnType<typeof setTimeout> | undefined;
-  let abortGraceTimeout: ReturnType<typeof setTimeout> | undefined;
+  const runOnce = async (includeTemperature: boolean): Promise<string> => {
+    const abortController = new AbortController();
+    let timeout: ReturnType<typeof setTimeout> | undefined;
+    let abortGraceTimeout: ReturnType<typeof setTimeout> | undefined;
 
-  try {
-    const generationPromise = generateText({
-      model: modelWithOptions.model,
-      providerOptions: modelWithOptions.providerOptions,
-      headers: modelWithOptions.headers,
-      abortSignal: abortController.signal,
-      messages: [
-        {
-          role: 'system',
-          content: systemPrompt,
-        },
-        {
-          role: 'user',
-          content: userMessage,
-        },
-      ],
-      temperature: 0.1,
-      maxOutputTokens: 20000,
-    }).then((result) => result.text.trim());
+    try {
+      const generationPromise = generateText({
+        model: modelWithOptions.model,
+        providerOptions: modelWithOptions.providerOptions,
+        headers: modelWithOptions.headers,
+        abortSignal: abortController.signal,
+        // Use the dedicated `system` option instead of a system-role message:
+        // the AI SDK warns that system messages inside `messages` are a
+        // prompt-injection risk, and some providers reject them outright.
+        system: systemPrompt,
+        messages: [
+          {
+            role: 'user',
+            content: userMessage,
+          },
+        ],
+        // Omitted on the retry: reasoning-capable models may only accept a
+        // fixed temperature (e.g. "only 1 is allowed for this model").
+        ...(includeTemperature ? { temperature: 0.1 } : {}),
+        maxOutputTokens: 20000,
+      }).then((result) => result.text.trim());
 
-    const timeoutResult = Symbol('history-compression-timeout');
-    const timeoutPromise = new Promise<typeof timeoutResult>((resolve) => {
-      timeout = setTimeout(() => {
-        abortController.abort();
-        resolve(timeoutResult);
-      }, HISTORY_COMPRESSION_TIMEOUT_MS);
-    });
+      const timeoutResult = Symbol('history-compression-timeout');
+      const timeoutPromise = new Promise<typeof timeoutResult>((resolve) => {
+        timeout = setTimeout(() => {
+          abortController.abort();
+          resolve(timeoutResult);
+        }, HISTORY_COMPRESSION_TIMEOUT_MS);
+      });
 
-    const racedResult = await Promise.race([generationPromise, timeoutPromise]);
+      const racedResult = await Promise.race([
+        generationPromise,
+        timeoutPromise,
+      ]);
 
-    const compactionResult =
-      racedResult === timeoutResult
+      return racedResult === timeoutResult
         ? await Promise.race([
             generationPromise.then(
               (result) => ({ status: 'fulfilled' as const, result }),
@@ -204,24 +209,44 @@ const tryCompressWithModel = async (
             throw new HistoryCompressionUnsettledTimeoutError(entry.modelId);
           })
         : racedResult;
-
-    if (compactionResult.length < COMPRESSION_MIN_LENGTH) {
-      throw new Error(
-        `Compression too short (${compactionResult.length} chars)`,
-      );
+    } finally {
+      if (timeout) clearTimeout(timeout);
+      if (abortGraceTimeout) clearTimeout(abortGraceTimeout);
     }
+  };
 
+  let compactionResult: string;
+  try {
+    compactionResult = await runOnce(true);
+  } catch (error) {
+    if (!isTemperatureRejection(error)) throw error;
     host?.logger.debug(
-      `[history-compression] Success with model "${entry.modelId}"` +
-        ` (instance="${entry.providerInstanceId ?? 'default'}")` +
-        ` — ${compactionResult.length} chars.`,
+      `[history-compression] Model "${entry.modelId}" rejected the sampling temperature; retrying without it.`,
     );
-    return compactionResult;
-  } finally {
-    if (timeout) clearTimeout(timeout);
-    if (abortGraceTimeout) clearTimeout(abortGraceTimeout);
+    compactionResult = await runOnce(false);
   }
+
+  if (compactionResult.length < COMPRESSION_MIN_LENGTH) {
+    throw new Error(`Compression too short (${compactionResult.length} chars)`);
+  }
+
+  host?.logger.debug(
+    `[history-compression] Success with model "${entry.modelId}"` +
+      ` (instance="${entry.providerInstanceId ?? 'default'}")` +
+      ` — ${compactionResult.length} chars.`,
+  );
+  return compactionResult;
 };
+
+/**
+ * True when a provider rejected the configured sampling temperature, e.g.
+ * "invalid temperature: only 1 is allowed for this model". Such models are
+ * retried once without an explicit temperature.
+ */
+function isTemperatureRejection(error: unknown): boolean {
+  const message = error instanceof Error ? error.message : String(error);
+  return /temperature/i.test(message);
+}
 
 /**
  * Splits a block that exceeds the chunk budget at newline boundaries so no

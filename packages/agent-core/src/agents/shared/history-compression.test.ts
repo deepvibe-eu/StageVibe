@@ -1081,20 +1081,20 @@ describe('generateSimpleCompressedHistory', () => {
     await generateSimpleCompressedHistory(makeMessages(4), mps, 'agent-1');
 
     const callArgs = generateTextMock.mock.calls[0][0] as any;
-    const systemMsg = callArgs.messages.find((m: any) => m.role === 'system');
+    const systemPrompt = callArgs.system;
     // POV: second-person for agent, third-person for user
-    expect(systemMsg.content).toContain('"you"');
-    expect(systemMsg.content).toContain('"the user"');
+    expect(systemPrompt).toContain('"you"');
+    expect(systemPrompt).toContain('"the user"');
     // Should NOT use the old third-person instruction
-    expect(systemMsg.content).not.toContain(
+    expect(systemPrompt).not.toContain(
       'Refer to participants as "user" and "assistant"',
     );
     // Input format explanation for tool annotations
-    expect(systemMsg.content).toContain('[read: path]');
-    expect(systemMsg.content).toContain('[shell: label');
+    expect(systemPrompt).toContain('[read: path]');
+    expect(systemPrompt).toContain('[shell: label');
     // Structure guidance: `##` headings, recency bias
-    expect(systemMsg.content).toContain('`##` headings');
-    expect(systemMsg.content).toContain('Recency bias');
+    expect(systemPrompt).toContain('`##` headings');
+    expect(systemPrompt).toContain('Recency bias');
     // User prompt includes continuity framing
     const userMsg = callArgs.messages.find((m: any) => m.role === 'user');
     expect(userMsg.content).toContain('own memory');
@@ -1517,5 +1517,53 @@ describe('estimateMessageTokens', () => {
     } as AgentMessage;
     // 100k chars + 400 metadata overhead
     expect(estimateMessageTokens(msg)).toBe(Math.ceil((100_000 + 400) / 4));
+  });
+});
+
+describe('generateSimpleCompressedHistory temperature fallback', () => {
+  beforeEach(() => {
+    generateTextMock.mockReset();
+  });
+
+  it('retries once without temperature when the model rejects it', async () => {
+    generateTextMock
+      .mockRejectedValueOnce(
+        new Error('invalid temperature: only 1 is allowed for this model'),
+      )
+      .mockResolvedValueOnce({
+        text: 'A briefing produced without an explicit temperature value.',
+      } as any);
+
+    const hostModels = makeMockHostModels();
+    const result = await generateSimpleCompressedHistory(
+      makeMessages(4),
+      hostModels,
+      'agent-1',
+    );
+
+    expect(result).toBe(
+      'A briefing produced without an explicit temperature value.',
+    );
+    expect(generateTextMock).toHaveBeenCalledTimes(2);
+    const first = generateTextMock.mock.calls[0][0] as any;
+    const second = generateTextMock.mock.calls[1][0] as any;
+    expect(first.temperature).toBe(0.1);
+    expect(second.temperature).toBeUndefined();
+    expect(second.system).toBe(first.system);
+  });
+
+  it('does not retry for unrelated errors', async () => {
+    generateTextMock.mockRejectedValue(new Error('model overloaded'));
+
+    const hostModels = makeMockHostModels();
+    await expect(
+      generateSimpleCompressedHistory(makeMessages(4), hostModels, 'agent-1'),
+    ).rejects.toThrow();
+    // One attempt per cascade model, no temperature retries.
+    expect(
+      generateTextMock.mock.calls.every(
+        (c) => (c[0] as any).temperature === 0.1,
+      ),
+    ).toBe(true);
   });
 });
