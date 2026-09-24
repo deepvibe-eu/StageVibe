@@ -110,6 +110,47 @@ const COMPRESSION_INPUT_CHAR_BUDGET = COMPRESSION_INPUT_TOKEN_BUDGET * 4;
  */
 export const COMPRESSION_MAX_CHUNKS = 12;
 
+/**
+ * Maximum number of segment (map) / merge (reduce) calls in flight at once.
+ * Parallelising the map phase turns the total time into roughly the slowest
+ * single call instead of the sum, while the bound avoids hammering one
+ * provider with a dozen simultaneous requests.
+ */
+export const COMPRESSION_CONCURRENCY = 3;
+
+/**
+ * Runs `fn` for every item with at most `limit` calls in flight. Stops
+ * scheduling new items after the first failure and rethrows it, but lets
+ * in-flight calls finish (their results stay in the caller's cache).
+ */
+async function forEachWithConcurrency<T>(
+  items: readonly T[],
+  limit: number,
+  fn: (item: T) => Promise<void>,
+): Promise<void> {
+  if (items.length === 0) return;
+  let nextIndex = 0;
+  let failure: unknown;
+  const workers = Array.from(
+    { length: Math.max(1, Math.min(limit, items.length)) },
+    async () => {
+      while (failure === undefined) {
+        const index = nextIndex++;
+        const item = items[index];
+        if (item === undefined) return;
+        try {
+          await fn(item);
+        } catch (error) {
+          failure ??= error;
+          return;
+        }
+      }
+    },
+  );
+  await Promise.all(workers);
+  if (failure !== undefined) throw failure;
+}
+
 /** Matches one top-level serialized block (content is escaped, so no nesting). */
 const SERIALIZED_BLOCK_PATTERN =
   /<(previous-chat-history|user|assistant)>[\s\S]*?<\/\1>/g;
@@ -398,23 +439,24 @@ async function mergePartialBriefings(
   const batches = groupStringsByBudget(partials, COMPRESSION_INPUT_CHAR_BUDGET);
   const canReduce = batches.length < partials.length;
 
-  const merged: string[] = [];
-  for (const batch of batches) {
-    if (batch.length === 1) {
-      merged.push(batch[0]!);
-      continue;
-    }
-    merged.push(
-      await tryCompressWithModel(
-        entry,
-        hostModels,
-        agentInstanceId,
-        COMPRESSION_MERGE_SYSTEM_PROMPT,
-        buildCompressionMergeUserMessage(batch, previousBriefingChars),
-        host,
-      ),
-    );
-  }
+  const merged: string[] = new Array(batches.length).fill('');
+  await forEachWithConcurrency(
+    batches.map((batch, index) => ({ batch, index })),
+    COMPRESSION_CONCURRENCY,
+    async ({ batch, index }) => {
+      merged[index] =
+        batch.length === 1
+          ? batch[0]!
+          : await tryCompressWithModel(
+              entry,
+              hostModels,
+              agentInstanceId,
+              COMPRESSION_MERGE_SYSTEM_PROMPT,
+              buildCompressionMergeUserMessage(batch, previousBriefingChars),
+              host,
+            );
+    },
+  );
 
   if (!canReduce || merged.length >= partials.length) {
     return tryCompressWithModel(
@@ -470,17 +512,24 @@ async function compressWithEntry(
     `[history-compression] Compressing ${chunks.length} segments with model "${entry.modelId}".`,
   );
 
-  for (let i = 0; i < chunks.length; i++) {
-    if (partials[i] !== undefined) continue;
-    partials[i] = await tryCompressWithModel(
-      entry,
-      hostModels,
-      agentInstanceId,
-      COMPRESSION_SEGMENT_SYSTEM_PROMPT,
-      buildCompressionSegmentUserMessage(chunks[i]!),
-      host,
-    );
-  }
+  const pendingChunks = chunks
+    .map((chunk, index) => ({ chunk, index }))
+    .filter(({ index }) => partials[index] === undefined);
+
+  await forEachWithConcurrency(
+    pendingChunks,
+    COMPRESSION_CONCURRENCY,
+    async ({ chunk, index }) => {
+      partials[index] = await tryCompressWithModel(
+        entry,
+        hostModels,
+        agentInstanceId,
+        COMPRESSION_SEGMENT_SYSTEM_PROMPT,
+        buildCompressionSegmentUserMessage(chunk),
+        host,
+      );
+    },
+  );
 
   return await mergePartialBriefings(
     entry,

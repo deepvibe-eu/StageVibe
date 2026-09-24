@@ -1312,7 +1312,16 @@ export const ChatPanelFooter = memo(function ChatPanelFooter({
     if (openAgent) void flushQueue(openAgent);
   }, [flushQueue, openAgent]);
 
-  const compressHistory = useKartonProcedure((p) => p.agents.compressHistory);
+  // History compression can legitimately take minutes on large histories and
+  // slow reasoning models. The Karton default RPC timeout is 30s, which would
+  // reject the call before the backend finishes (the backend keeps working, so
+  // the user would miss the outcome). Extend it well past the backend's own
+  // per-call timeout so the backend's result/error wins over a generic RPC
+  // "connection lost" rejection.
+  const COMPACT_CONTEXT_RPC_TIMEOUT_MS = (5 * 60 + 10) * 1000; // 5 min 10 sec
+  const compressHistory = useKartonProcedure((p) =>
+    p.agents.compressHistory.withTimeout(COMPACT_CONTEXT_RPC_TIMEOUT_MS),
+  );
   const [isCompactingHistory, setIsCompactingHistory] = useState(false);
   const handleCompactContext = useCallback(() => {
     if (!openAgent || isCompactingHistory) return;
