@@ -1340,10 +1340,15 @@ export const ChatPanelFooter = memo(function ChatPanelFooter({
             actions: [],
           });
         } else if (result.status === 'noop') {
+          const alreadyCompacted = result.reason === 'already-compacted';
           toast({
             id: `compact-context-noop-${openAgent}`,
-            title: 'Nothing to compact',
-            message: 'The conversation is already short enough.',
+            title: alreadyCompacted
+              ? 'History already compacted'
+              : 'Nothing to compact',
+            message: alreadyCompacted
+              ? 'Everything before the kept messages is already summarised. New messages will use the compacted context.'
+              : 'The conversation is already short enough.',
             type: 'info',
             duration: 8_000,
             actions: [],

@@ -36,7 +36,10 @@ describe('BaseAgent manual history compression', () => {
 
     const result = await agent.requestHistoryCompression();
 
-    expect(result).toEqual({ status: 'noop' });
+    expect(result).toEqual({
+      status: 'noop',
+      reason: 'nothing-to-compact',
+    });
   });
 
   it('stores the briefing and refreshes usedTokens for the retained history', async () => {
@@ -99,7 +102,10 @@ describe('BaseAgent manual history compression', () => {
 
     const result = await agent.requestHistoryCompression();
 
-    expect(result).toEqual({ status: 'noop' });
+    expect(result).toEqual({
+      status: 'noop',
+      reason: 'already-compacted',
+    });
     expect(agent.compressHistory).not.toHaveBeenCalled();
   });
 });

@@ -462,6 +462,8 @@ export type SendUserMessageOptions = {
 export type HistoryCompressionOutcome = {
   status: 'compressed' | 'noop' | 'busy' | 'failed';
   error?: string;
+  /** Why a `noop` happened, so the UI can explain it accurately. */
+  reason?: 'already-compacted' | 'nothing-to-compact';
 };
 
 /**
@@ -1378,7 +1380,7 @@ export abstract class BaseAgent<
 
     const skills = await this.toolbox.getSkillsList(this.instanceId);
 
-    return convertAgentMessagesToModelMessages(
+    const modelMessages = await convertAgentMessagesToModelMessages(
       messages,
       systemPrompt,
       (await this.getToolsForStep()) as ToolSet,
@@ -1426,6 +1428,37 @@ export abstract class BaseAgent<
         allowedEnvDomainIds,
       },
     );
+
+    // Diagnostic: shows how much of the stored history actually reaches the
+    // model. If `boundaryIndex` stays -1 while the ring shows high usage, the
+    // compaction boundary is not being applied (or nothing was compacted yet).
+    const boundaryIndex = (() => {
+      for (let i = messages.length - 1; i >= 0; i--) {
+        if (messages[i]?.metadata?.compressedHistory !== undefined) return i;
+      }
+      return -1;
+    })();
+    const promptChars = modelMessages.reduce((sum, message) => {
+      const content = message.content;
+      if (typeof content === 'string') return sum + content.length;
+      if (Array.isArray(content)) {
+        return (
+          sum +
+          content.reduce<number>((partSum, part) => {
+            const text = (part as { text?: unknown }).text;
+            return partSum + (typeof text === 'string' ? text.length : 0);
+          }, 0)
+        );
+      }
+      return sum;
+    }, 0);
+    this.host.logger.debug(
+      `[BaseAgent:${this.instanceId}] Step prompt: history=${messages.length} msgs, ` +
+        `compactionBoundary=${boundaryIndex}, modelMessages=${modelMessages.length}, ` +
+        `~${Math.ceil(promptChars / 4)} tokens.`,
+    );
+
+    return modelMessages;
   }
 
   /**
@@ -1900,11 +1933,28 @@ export abstract class BaseAgent<
     this.stepAbortController = new AbortController();
 
     if (this._stepGeneration !== stepGen) return;
+
+    // The AI SDK warns that system messages inside `messages` are a
+    // prompt-injection risk. The conversion emits the system prompt as the
+    // first message, so move it into the dedicated `system` option.
+    const systemMessages = modelMessages.filter((m) => m.role === 'system');
+    const systemMessageContents = systemMessages
+      .map((m) => m.content)
+      .filter((content): content is string => typeof content === 'string');
+    const extractedSystemPrompt =
+      systemMessages.length > 0 &&
+      systemMessageContents.length === systemMessages.length
+        ? systemMessageContents.join('\n\n')
+        : undefined;
+
     const stream = streamText({
       model: modelWithOptions.model,
       providerOptions: modelWithOptions.providerOptions,
       headers: modelWithOptions.headers,
-      messages: modelMessages,
+      ...(extractedSystemPrompt ? { system: extractedSystemPrompt } : {}),
+      messages: extractedSystemPrompt
+        ? modelMessages.filter((m) => m.role !== 'system')
+        : modelMessages,
       tools: tools as ToolSet,
       timeout: resolvedConfig.maxTime
         ? {
@@ -2513,7 +2563,7 @@ export abstract class BaseAgent<
         }
 
         // Scanned everything, it all fits — nothing to compress
-        if (i === 0) return { status: 'noop' };
+        if (i === 0) return { status: 'noop', reason: 'nothing-to-compact' };
       }
 
       // Edge case: even the last message alone exceeds the budget
@@ -2524,7 +2574,8 @@ export abstract class BaseAgent<
         );
       }
 
-      if (boundaryIndex < 1) return { status: 'noop' }; // nothing meaningful to compress
+      if (boundaryIndex < 1)
+        return { status: 'noop', reason: 'nothing-to-compact' }; // nothing meaningful to compress
 
       const actualKept = history.length - boundaryIndex;
       if (actualKept < preferredFloor) {
@@ -2534,7 +2585,8 @@ export abstract class BaseAgent<
       }
 
       const boundaryMessageId = history[boundaryIndex]?.id;
-      if (!boundaryMessageId) return { status: 'noop' };
+      if (!boundaryMessageId)
+        return { status: 'noop', reason: 'nothing-to-compact' };
 
       // The kept side starts at a message that already carries a briefing:
       // everything before it is already covered by that briefing and new
@@ -2545,7 +2597,7 @@ export abstract class BaseAgent<
         this.host.logger.debug(
           `[BaseAgent:${this.instanceId}] History already compacted up to message ${boundaryMessageId}; skipping.`,
         );
-        return { status: 'noop' };
+        return { status: 'noop', reason: 'already-compacted' };
       }
 
       // If the boundary message has compressed history further back, that
