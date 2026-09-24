@@ -2536,9 +2536,21 @@ export abstract class BaseAgent<
       const boundaryMessageId = history[boundaryIndex]?.id;
       if (!boundaryMessageId) return { status: 'noop' };
 
-      // If the boundary message already has compressed history, the
-      // previous summary is included in messagesToCompact and will be
-      // folded into the new summary by the LLM.
+      // The kept side starts at a message that already carries a briefing:
+      // everything before it is already covered by that briefing and new
+      // messages only ever land on the kept side, so there is nothing new to
+      // compact. Without this, a second compaction re-summarises the same raw
+      // prefix from scratch (expensive and produces a different briefing).
+      if (history[boundaryIndex]?.metadata?.compressedHistory !== undefined) {
+        this.host.logger.debug(
+          `[BaseAgent:${this.instanceId}] History already compacted up to message ${boundaryMessageId}; skipping.`,
+        );
+        return { status: 'noop' };
+      }
+
+      // If the boundary message has compressed history further back, that
+      // previous summary is included in messagesToCompact and gets folded
+      // into the new summary by the LLM.
       const messagesToCompact = history.slice(0, boundaryIndex);
 
       this.host.logger.debug(

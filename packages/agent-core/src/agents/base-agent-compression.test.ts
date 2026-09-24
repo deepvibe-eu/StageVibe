@@ -80,4 +80,26 @@ describe('BaseAgent manual history compression', () => {
     const { totalTokens } = agent.state.commands.recordUsage.mock.calls[0][0];
     expect(totalTokens).toBeLessThan(originalEstimated);
   });
+
+  it('is a no-op when the kept side already starts with a briefing', async () => {
+    const agent = makeAgent();
+    const history = Array.from({ length: 40 }, (_, i) => ({
+      id: `m${i}`,
+      role: i % 2 === 0 ? 'user' : 'assistant',
+      parts: [{ type: 'text', text: 'x'.repeat(20_000) }],
+      metadata: { createdAt: new Date(), partsMetadata: [] },
+    }));
+    // The boundary walk keeps the last few messages; index 37 is the first
+    // kept message for this budget. Marking it as already compacted must
+    // short-circuit the run.
+    (history[37] as any).metadata.compressedHistory = 'prior briefing';
+
+    agent.state = { get: () => ({ history }) };
+    agent.compressHistory = vi.fn(async () => 'should not run');
+
+    const result = await agent.requestHistoryCompression();
+
+    expect(result).toEqual({ status: 'noop' });
+    expect(agent.compressHistory).not.toHaveBeenCalled();
+  });
 });
