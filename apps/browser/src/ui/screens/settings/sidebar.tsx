@@ -8,6 +8,7 @@ import {
   TITLEBAR_ICON_OPTICAL_OFFSET,
 } from '@shared/titlebar';
 import { SidebarTitlebarRow } from '../main/_components/sidebar-titlebar-row';
+import { SidebarSettingsButton } from '../main/_components/sidebar-settings-button';
 import {
   SETTINGS_NAV_GROUPS,
   getSettingsSectionLabel,
@@ -85,6 +86,8 @@ export function SettingsSidebar() {
             </div>
           ))}
         </nav>
+
+        <SidebarSettingsButton />
       </div>
     </div>
   );
