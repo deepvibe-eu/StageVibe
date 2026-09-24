@@ -97,7 +97,10 @@ describe('BaseAgent manual history compression', () => {
     // short-circuit the run.
     (history[37] as any).metadata.compressedHistory = 'prior briefing';
 
-    agent.state = { get: () => ({ history }) };
+    agent.state = {
+      get: () => ({ history }),
+      commands: { recordUsage: vi.fn() },
+    };
     agent.compressHistory = vi.fn(async () => 'should not run');
 
     const result = await agent.requestHistoryCompression();
@@ -107,5 +110,10 @@ describe('BaseAgent manual history compression', () => {
       reason: 'already-compacted',
     });
     expect(agent.compressHistory).not.toHaveBeenCalled();
+    // The retained slice after the boundary is small compared to the full
+    // history (40 × ~5.1k tokens), so the ring refreshes.
+    expect(agent.state.commands.recordUsage).toHaveBeenCalledTimes(1);
+    const { totalTokens } = agent.state.commands.recordUsage.mock.calls[0][0];
+    expect(totalTokens).toBeLessThan(50_000);
   });
 });

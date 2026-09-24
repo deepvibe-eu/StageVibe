@@ -2597,6 +2597,10 @@ export abstract class BaseAgent<
         this.host.logger.debug(
           `[BaseAgent:${this.instanceId}] History already compacted up to message ${boundaryMessageId}; skipping.`,
         );
+        // The prompt will still be truncated at this boundary, so refresh the
+        // usage estimate — otherwise the ring keeps showing the pre-compaction
+        // number (usedTokens is only otherwise updated by a model step).
+        this.refreshUsageEstimate(history.slice(boundaryIndex));
         return { status: 'noop', reason: 'already-compacted' };
       }
 
@@ -2635,14 +2639,7 @@ export abstract class BaseAgent<
       // the usage warning read `usedTokens`, which is otherwise only updated
       // by the next model step — so without this the ring would keep showing
       // the pre-compression size until the user sends another message.
-      const retainedHistory = this.state.get().history;
-      const estimatedRetainedTokens = retainedHistory.reduce(
-        (sum, message) => sum + estimateMessageTokens(message),
-        0,
-      );
-      this.state.commands.recordUsage({
-        totalTokens: estimatedRetainedTokens,
-      });
+      this.refreshUsageEstimate(this.state.get().history);
 
       await this.saveState(boundarySeq >= 0 ? [boundarySeq] : undefined);
       this.scheduleMemorySnapshotWrite('compression');
@@ -2672,6 +2669,23 @@ export abstract class BaseAgent<
    */
   public async requestHistoryCompression(): Promise<HistoryCompressionOutcome> {
     return await this.compressHistoryInternal();
+  }
+
+  /**
+   * Refreshes `usedTokens` to the estimated size of the messages that will
+   * actually reach the model. Called after a successful compaction (with the
+   * already-collapsed history) and when the history is already compacted
+   * (with the retained slice), so the context-usage ring reflects the
+   * truncated prompt immediately instead of waiting for the next model step.
+   */
+  private refreshUsageEstimate(messages: AgentMessage[]): void {
+    const estimatedTokens = messages.reduce(
+      (sum, message) => sum + estimateMessageTokens(message),
+      0,
+    );
+    this.state.commands.recordUsage({
+      totalTokens: estimatedTokens,
+    });
   }
 
   private getMemoryWriter(): AgentMemoryWriter {
