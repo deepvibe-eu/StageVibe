@@ -1352,13 +1352,15 @@ function ProviderInstancesSection({
   const instances = preferences.providerInstances ?? [];
   const [showAddProvider, setShowAddProvider] = useState(false);
 
-  // Sort: stagewise first, then coding-plan, then vendor-api, then custom
+  // BYOK-first ordering: the user's own connections (coding plans, API keys,
+  // self-hosted/custom endpoints) come first, the hosted Stagewise Inference
+  // provider last.
   const sortedInstances = useMemo(() => {
     const getOrder = (typeId: string) => {
-      if (typeId === 'stagewise') return 0;
-      if (typeId === 'coding-plan') return 1;
-      if (typeId.endsWith('-api')) return 2;
-      return 3;
+      if (typeId === 'coding-plan') return 0;
+      if (typeId.endsWith('-api')) return 1;
+      if (typeId === 'stagewise') return 3;
+      return 2;
     };
     return [...instances].sort(
       (a, b) => getOrder(a.typeId) - getOrder(b.typeId),
