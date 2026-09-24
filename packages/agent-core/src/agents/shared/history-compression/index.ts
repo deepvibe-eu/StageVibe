@@ -65,8 +65,14 @@ export const HISTORY_COMPRESSION_MODELS = [
   'claude-haiku-4.5',
 ] as const;
 
-/** Maximum time (ms) allowed for a single history compression attempt. */
-const HISTORY_COMPRESSION_TIMEOUT_MS = 30_000;
+/**
+ * Maximum time (ms) allowed for a single history compression attempt.
+ *
+ * A large segment on a reasoning-capable model (e.g. Kimi K3 with thinking
+ * enabled) routinely needs more than 30s to summarise, so the previous 30s
+ * cap aborted healthy models and made compression fail.
+ */
+export const HISTORY_COMPRESSION_TIMEOUT_MS = 120_000;
 
 /**
  * Grace period after aborting a timed-out compression request.
@@ -75,7 +81,7 @@ const HISTORY_COMPRESSION_TIMEOUT_MS = 30_000;
  * window, stop the cascade instead of starting overlapping fallback
  * requests that can continue billing in the background.
  */
-const HISTORY_COMPRESSION_ABORT_GRACE_MS = 2_000;
+export const HISTORY_COMPRESSION_ABORT_GRACE_MS = 2_000;
 
 /** Minimum acceptable compression length; shorter results trigger a fallback. */
 const COMPRESSION_MIN_LENGTH = 30;
@@ -91,7 +97,7 @@ const COMPRESSION_MIN_LENGTH = 30;
  * models. Larger inputs are compressed segment-by-segment ("map") and the
  * partial briefings merged ("reduce") so every request stays bounded.
  */
-export const COMPRESSION_INPUT_TOKEN_BUDGET = 60_000;
+export const COMPRESSION_INPUT_TOKEN_BUDGET = 24_000;
 
 /** Character equivalent of {@link COMPRESSION_INPUT_TOKEN_BUDGET}. */
 const COMPRESSION_INPUT_CHAR_BUDGET = COMPRESSION_INPUT_TOKEN_BUDGET * 4;
@@ -335,7 +341,24 @@ export function splitCompactHistoryIntoChunks(
     }
   }
   if (current.length > 0) chunks.push(current);
-  return chunks;
+
+  // Blocks are indivisible, so greedy grouping can overshoot the chunk cap
+  // (e.g. many same-sized blocks). Enforce the cap by merging neighbours;
+  // this only affects the pathological case where the budget was already
+  // raised and still could not reach the cap.
+  let capped = chunks;
+  while (capped.length > COMPRESSION_MAX_CHUNKS) {
+    const merged: string[] = [];
+    for (let i = 0; i < capped.length; i += 2) {
+      merged.push(
+        capped[i + 1]
+          ? `${capped[i]}\n${capped[i + 1]}`
+          : (capped[i] as string),
+      );
+    }
+    capped = merged;
+  }
+  return capped;
 }
 
 /** Groups consecutive strings into batches that fit within `charBudget`. */

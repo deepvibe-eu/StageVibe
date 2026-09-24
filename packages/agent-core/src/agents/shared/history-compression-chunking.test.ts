@@ -8,6 +8,7 @@ vi.mock('ai', () => ({
 
 import { generateText } from 'ai';
 import {
+  COMPRESSION_INPUT_TOKEN_BUDGET,
   COMPRESSION_MAX_CHUNKS,
   generateSimpleCompressedHistory,
   splitCompactHistoryIntoChunks,
@@ -15,7 +16,7 @@ import {
 
 const generateTextMock = vi.mocked(generateText);
 
-const CHAR_BUDGET = 240_000; // COMPRESSION_INPUT_TOKEN_BUDGET * 4
+const CHAR_BUDGET = COMPRESSION_INPUT_TOKEN_BUDGET * 4;
 
 function makeMockHostModels(): HostModels {
   return {
@@ -142,12 +143,11 @@ describe('generateSimpleCompressedHistory chunked path', () => {
       } as any);
 
     const hostModels = makeMockHostModels();
+    // Two messages, each below the per-chunk budget but together above it,
+    // produce exactly two segments and therefore one merge call.
+    const segmentChars = Math.floor(CHAR_BUDGET * 0.7);
     const result = await generateSimpleCompressedHistory(
-      [
-        makeUserMessage('a', 100_000),
-        makeUserMessage('b', 100_000),
-        makeUserMessage('c', 100_000),
-      ],
+      [makeUserMessage('a', segmentChars), makeUserMessage('b', segmentChars)],
       hostModels,
       'agent-1',
     );
