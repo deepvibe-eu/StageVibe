@@ -2,7 +2,6 @@
   "files": [],
   "references": [
     { "path": "agent/runtime-node" },
-    { "path": "apps/website" },
     { "path": "packages/stage-ui" },
     { "path": "scripts/release" }
   ]

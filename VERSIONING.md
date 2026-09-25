@@ -33,7 +33,6 @@ Scopes are auto-detected from workspace packages. Use the **exact** package name
 
 - `stagewise` - The desktop browser app (apps/browser, package name is `stagewise`)
 - `karton` - The karton package (packages/karton)
-- `website` - The website (apps/website)
 - `stage-ui` - Stage UI components (packages/stage-ui)
 
 **Important:** Sub-scopes like `stagewise-ui` are NOT valid. Use the parent package scope. Use `stagewise` (not `browser`) for changes to the Electron app — the folder is still `apps/browser` but the package, tag prefix, and scope are all `stagewise`.
