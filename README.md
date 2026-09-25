@@ -183,12 +183,32 @@ Note: the toolchain runs on Node 22+, while the packaged app runs on
 Electron's bundled Node (currently Electron 40 → Node 24.x); the About screen
 lists those runtime versions under “Other versions”.
 
+### Bundled skills
+
+The fork ships built-in skills under `apps/browser/bundled/skills/`. They are
+discovered by the agent (progressive disclosure: only the description loads
+until the skill is relevant) and can also be invoked explicitly.
+
+Re-authored for Agewise (`skill-creator` explains how to add more):
+
+- **Skill Refiner** — fix an existing skill from evidence, with the smallest patch
+- **Skill Creator** — turn a repeated workflow into a skill, with a lint script
+  (`node scripts/lint-skill.mjs <skill-dir>`)
+- **Deep Research** — a five-phase pipeline (background → direction → analysis →
+  research → writing) that ends in a sourced report
+- **Plan Mode** — settle the approach before writing code
+- **Mavis Personas** — role cards (coder, planner, verifier, generalist,
+  orchestrator, skill editor)
+- **Visual Page** — build a self-contained HTML page for diagrams, dashboards or
+  comparisons
+- plus the existing **Mavis Team** and **Mavis Doctor**
+
 ### Roadmap
 
-- **Mavis skills**: bundle the Mavis agent personas and skills as built-in
-  skills (`apps/browser/bundled/skills/…`). Skills are discovered by the agent
-  via progressive disclosure and can also be invoked explicitly. Proprietary
-  scripts are **re-implemented from scratch**, not copied.
+- **More Mavis skills**: the remaining ones are daemon/CLI-bound (`.harness`,
+  `mavis agent`, MCP/Lark tooling) or need heavy binary tooling
+  (docx/xlsx/pptx/pdf); they get Agewise-native rewrites only where they add
+  value.
 - **i18n**: extract UI strings and add a language selector (German, French,
   Russian, Chinese) under `Settings → General`.
 - **Layout**: relocate the console/terminal panel.
