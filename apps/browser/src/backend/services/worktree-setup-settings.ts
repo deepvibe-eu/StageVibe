@@ -180,7 +180,7 @@ export class WorktreeSetupSettingsService {
     const resolvedWorktreePath =
       await this.resolveManagedWorktreePath(worktreePath);
     if (!resolvedWorktreePath) {
-      return { ok: false, message: 'Worktree is not stagewise-managed.' };
+      return { ok: false, message: 'Worktree is not Agewise-managed.' };
     }
 
     const repositories = await this.resolveRepositories();

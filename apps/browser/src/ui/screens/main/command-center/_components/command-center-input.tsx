@@ -32,7 +32,7 @@ export const CommandCenterInput = forwardRef<
         placeholder={
           mode === 'files'
             ? 'Search files…'
-            : 'Search agents, tabs, terminals, settings…'
+            : 'Search mates, tabs, terminals, settings…'
         }
         className="min-w-0 flex-1 bg-transparent text-foreground text-sm outline-none placeholder:text-subtle-foreground"
       />

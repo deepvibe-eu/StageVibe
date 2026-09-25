@@ -271,10 +271,7 @@ export function useAgentCommandItems(
   const rawAgentTitles = useMemo(
     () =>
       Object.fromEntries(
-        mergedAgents.map((agent) => [
-          agent.id,
-          agent.title || 'Untitled Agent',
-        ]),
+        mergedAgents.map((agent) => [agent.id, agent.title || 'Untitled Mate']),
       ),
     [mergedAgents],
   );
@@ -291,9 +288,7 @@ export function useAgentCommandItems(
           kind: 'agent',
           mode: 'agents',
           title:
-            optimisticAgentTitles?.[agent.id] ??
-            agent.title ??
-            'Untitled Agent',
+            optimisticAgentTitles?.[agent.id] ?? agent.title ?? 'Untitled Mate',
           subtitle: agent.activityText || `${agent.messageCount} messages`,
           keywords: ['agent', agent.isLive ? 'active' : 'history'],
           agentId: agent.id,

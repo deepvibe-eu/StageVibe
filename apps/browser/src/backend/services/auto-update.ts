@@ -506,7 +506,7 @@ export class AutoUpdateService extends DisposableService {
       const { response } = await dialog.showMessageBox({
         type: 'warning',
         title: 'Install Update',
-        message: 'Agents are still working',
+        message: 'Mates are still working',
         detail: 'Restarting now will stop them. Install the update anyway?',
         buttons: ['Restart & Install', 'Cancel'],
         defaultId: 1,

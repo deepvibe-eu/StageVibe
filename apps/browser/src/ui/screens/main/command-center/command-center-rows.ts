@@ -70,7 +70,7 @@ function buildGlobalRows(items: CommandCenterItem[]): CommandCenterRenderRow[] {
 
   pushSection(
     rows,
-    'Agents',
+    'Mates',
     indexedItems.filter(({ item }) => item.kind === 'agent'),
   );
   pushSection(

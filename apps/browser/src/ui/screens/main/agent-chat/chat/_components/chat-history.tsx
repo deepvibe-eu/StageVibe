@@ -1281,7 +1281,7 @@ export const ChatHistory = ({ flushTop = false }: { flushTop?: boolean }) => {
       <MountedPathsProvider value={resolvedMounts}>
         <AttachmentMetadataProvider messages={filteredMessages}>
           <section
-            aria-label="Agent message display"
+            aria-label="Mate message display"
             className={cn(
               'pointer-events-auto block h-max min-h-[inherit] text-foreground text-sm focus-within:outline-none focus:outline-none',
             )}

@@ -33,7 +33,7 @@ export type SettingsNavItem = {
 
 export const SETTINGS_NAV_GROUPS: SettingsNavGroup[] = [
   {
-    label: 'Agent',
+    label: 'Assistant',
     items: [
       {
         section: 'agent-general',

@@ -59,9 +59,7 @@ export const __APP_NAME__ = (() => {
       return 'Agewise (Pre-Release)';
     case 'dev':
     default:
-      return devInstance
-        ? `Agewise (Dev-Build ${devInstance})`
-        : 'Agewise (Dev-Build)';
+      return devInstance ? `Agewise (Dev ${devInstance})` : 'Agewise (Dev)';
   }
 })();
 

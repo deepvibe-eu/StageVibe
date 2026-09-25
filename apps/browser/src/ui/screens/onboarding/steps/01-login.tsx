@@ -123,7 +123,7 @@ export function StepLogin({
               htmlFor="telemetry-full-checkbox"
               className="text-muted-foreground text-xs"
             >
-              Share identifiable chat and usage data with stagewise.
+              Share identifiable chat and usage data with Agewise.
             </label>
           </div>
           <p className="mt-1 max-w-sm text-center text-[11px] text-muted-foreground/80">

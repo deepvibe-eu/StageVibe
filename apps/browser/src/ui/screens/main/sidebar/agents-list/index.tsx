@@ -618,7 +618,7 @@ function WorkspaceGroupHeader({
         <Button
           variant="ghost"
           size="icon-2xs"
-          aria-label={`New agent for ${label}`}
+          aria-label={`New mate for ${label}`}
           className="size-5 shrink-0 opacity-0 transition-opacity group-hover/workspace-header:opacity-100"
           onClick={(event) => {
             event.stopPropagation();
@@ -651,7 +651,7 @@ function AgentListGroupingToggle({
         <button
           type="button"
           className="flex h-5 shrink-0 cursor-pointer items-center gap-1 rounded-md bg-transparent px-1 text-sidebar-foreground text-xs transition-colors hover:text-foreground"
-          aria-label="Change agent grouping mode"
+          aria-label="Change mate grouping mode"
         >
           <span>{label}</span>
           <IconChevronDownOutline18 className="size-3 shrink-0" />
@@ -1395,7 +1395,7 @@ export function AgentsList() {
         .filter((entry) => entry.unread && !activeAgentIdSet.has(entry.id))
         .map((entry) => ({
           id: entry.id,
-          title: entry.title || 'Untitled Agent',
+          title: entry.title || 'Untitled Mate',
           status: 'success' as const,
         })),
     [activeAgentIdSet, mergedHistoryList],
@@ -2435,7 +2435,7 @@ export function AgentsList() {
 
   return (
     <div className="flex h-full flex-col group-data-[collapsed=true]:hidden">
-      {/* Header: New Agent button + Search */}
+      {/* Header: New Mate button + Search */}
       <div className="shrink-0 pt-2">
         <Button
           variant="ghost"
@@ -2445,7 +2445,7 @@ export function AgentsList() {
         >
           <IconPenPlusOutline18 className="size-4 shrink-0" />
           <span className="min-w-0 flex-1 truncate text-left transition-[mask-image] duration-200 group-hover/new-agent:[mask-image:linear-gradient(to_right,black_calc(100%-56px),transparent_100%)]">
-            New Agent
+            New Mate
           </span>
           <HotkeyCombo
             action={HotkeyActions.NEW_CHAT}
@@ -2458,8 +2458,8 @@ export function AgentsList() {
           <IconMagnifierOutline18 className="size-3.5 shrink-0 text-sidebar-foreground" />
           <input
             type="text"
-            aria-label="Search agents"
-            placeholder="Search agents…"
+            aria-label="Search mates"
+            placeholder="Search mates…"
             value=""
             onPointerDown={(e) => {
               if (!e.isPrimary || e.button !== 0) return;
@@ -2495,7 +2495,7 @@ export function AgentsList() {
       >
         <div className="flex shrink-0 items-center pt-0 pr-0 pb-1 pl-1.5">
           <div className="min-w-0 flex-1 truncate font-normal text-sidebar-foreground text-xs">
-            {filteredPinnedAgents.length > 0 ? 'Pinned' : 'Agents'}
+            {filteredPinnedAgents.length > 0 ? 'Pinned' : 'Mates'}
           </div>
           <AgentListGroupingToggle
             mode={agentListGroupingMode}
@@ -2731,7 +2731,7 @@ export function AgentsList() {
               <span>
                 Also delete{' '}
                 {worktreeDelete.agentIds.length === 1
-                  ? 'the 1 agent'
+                  ? 'the 1 mate'
                   : `all ${worktreeDelete.agentIds.length} agents`}{' '}
                 in this worktree
               </span>

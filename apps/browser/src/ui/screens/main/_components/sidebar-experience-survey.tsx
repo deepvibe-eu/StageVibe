@@ -247,7 +247,7 @@ export function SidebarExperienceSurvey() {
         {!hasAnswered ? (
           <>
             <div className="pr-7 font-medium text-foreground text-xs leading-relaxed">
-              Do you enjoy your experience with stagewise?
+              Do you enjoy your experience with Agewise?
             </div>
             <div className="flex gap-2">
               <Button
@@ -289,7 +289,7 @@ export function SidebarExperienceSurvey() {
               ref={textareaRef}
               aria-labelledby={feedbackLabelId}
               className="scrollbar-subtle w-full resize-none rounded-md border border-derived bg-surface-1 px-2.5 py-2 text-foreground text-xs placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary-foreground"
-              placeholder="e.g. Add MCP support, let me fork agent chats, better error recovery…"
+              placeholder="e.g. Add MCP support, let me fork mate chats, better error recovery…"
               rows={3}
               value={feedback}
               onChange={(e) => {
@@ -327,8 +327,8 @@ export function SidebarExperienceSurvey() {
         onDismiss={handleDismissFounderCall}
       >
         <div className="pr-7 font-medium text-foreground text-xs leading-relaxed">
-          Tell our founders what you think about stagewise and get 1 month Pro
-          for free!
+          Tell our founders what you think about Agewise and get 1 month Pro for
+          free!
         </div>
         <Button
           variant="primary"

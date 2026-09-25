@@ -125,7 +125,7 @@ function ChatPanelInner({ agentId }: { agentId?: string }) {
   if (!requestedAgent || !openAgentExists)
     return (
       <div className="flex size-full items-center justify-center text-muted-foreground">
-        No agent selected
+        No mate selected
       </div>
     );
 

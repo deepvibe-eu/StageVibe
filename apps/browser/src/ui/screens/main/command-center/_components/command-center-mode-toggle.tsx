@@ -18,7 +18,7 @@ type ModeDefinition = {
 
 const modes: ModeDefinition[] = [
   { mode: 'global', label: 'All' },
-  { mode: 'agents', label: 'Agents', Icon: IconMsgWritingOutline18 },
+  { mode: 'agents', label: 'Mates', Icon: IconMsgWritingOutline18 },
   { mode: 'browser', label: 'Browser', Icon: IconEarthSearchOutline18 },
   {
     mode: 'terminals',

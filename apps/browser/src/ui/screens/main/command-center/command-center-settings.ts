@@ -71,8 +71,8 @@ export const commandCenterSettings: CommandCenterSettingDefinition[] = [
   },
   {
     id: 'setting:agent-general',
-    title: 'General Agent Settings',
-    subtitle: 'Configure default agent behavior',
+    title: 'General Mate Settings',
+    subtitle: 'Configure default mate behavior',
     keywords: ['agent', 'general', 'settings', 'behavior'],
     url: '',
     settingsRoute: ROUTE_AGENT_GENERAL,

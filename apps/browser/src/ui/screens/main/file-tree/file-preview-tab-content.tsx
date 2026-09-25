@@ -883,7 +883,7 @@ function FileDeletedBanner({
       <div className="flex min-w-0 items-center gap-1.5">
         <TriangleAlertIcon className="size-3.5 shrink-0" />
         <span className="truncate">
-          This file was deleted outside of stagewise.
+          This file was deleted outside of Agewise.
         </span>
       </div>
       <div className="flex shrink-0 items-center gap-1">
@@ -2429,7 +2429,7 @@ function BinaryPreview({
       <div className="flex min-h-0 flex-1 items-center justify-center">
         <div className="flex flex-col items-center gap-6 text-muted-foreground">
           <span className="font-normal text-muted-foreground text-sm">
-            Can't display this file inside stagewise
+            Can't display this file inside Agewise
           </span>
           <Button
             variant="secondary"

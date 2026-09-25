@@ -87,7 +87,7 @@ export function StepConfigureSkills({
             </h1>
             <p className="max-w-md text-muted-foreground text-sm">
               We found skills from other coding agents. Enable the sources you
-              want stagewise to use.
+              want Agewise to use.
             </p>
           </div>
 

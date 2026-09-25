@@ -906,7 +906,7 @@ export const ChatInput = memo(function ChatInput({
                 <TooltipTrigger>
                   <Button
                     onClick={onStop}
-                    aria-label="Stop agent"
+                    aria-label="Stop mate"
                     variant="secondary"
                     className="group absolute right-1 bottom-0 z-10 size-8 cursor-pointer rounded-full p-1 opacity-100! shadow-md"
                   >
@@ -915,7 +915,7 @@ export const ChatInput = memo(function ChatInput({
                 </TooltipTrigger>
                 <TooltipContent>
                   <span className="flex items-center gap-1.5">
-                    <span>Stop agent</span>
+                    <span>Stop mate</span>
                     <HotkeyCombo action={HotkeyActions.STOP_AGENT} size="xs" />
                     <ShortcutCombo value="Esc" size="xs" />
                   </span>

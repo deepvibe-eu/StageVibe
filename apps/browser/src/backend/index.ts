@@ -26,9 +26,7 @@ if (started) {
 
 // Keep the dev identity stable so isolated profiles can read safeStorage data
 // copied from the default dev profile. Window titles still use __APP_NAME__.
-app.setName(
-  __APP_RELEASE_CHANNEL__ === 'dev' ? 'Agewise (Dev-Build)' : __APP_NAME__,
-);
+app.setName(__APP_RELEASE_CHANNEL__ === 'dev' ? 'Agewise (Dev)' : __APP_NAME__);
 if (process.platform === 'win32') {
   app.setAppUserModelId(
     `com.squirrel.${__APP_BASE_NAME__}.${__APP_BASE_NAME__}`,

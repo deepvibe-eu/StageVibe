@@ -36,7 +36,7 @@ export function buildAgentAttentionEntries(
     )
     .map(([id, instance]) => ({
       id,
-      title: instance.state.title || 'Untitled Agent',
+      title: instance.state.title || 'Untitled Mate',
       status: getAgentAttentionStatus(instance, toolbox[id]),
     }));
 

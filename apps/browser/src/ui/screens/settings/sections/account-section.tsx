@@ -72,7 +72,7 @@ export function AccountSection() {
           <div className="mx-auto flex w-full max-w-3xl shrink-0 flex-col items-center">
             <SignInOptionsPanel
               title="Authenticate"
-              description="Get access to the latest models with stagewise."
+              description="Get access to the latest models with Agewise."
               sendOtp={(email, token) => sendOtp(email, token ?? '')}
               verifyOtp={verifyOtp}
               signInSocial={signInSocial}
@@ -337,7 +337,7 @@ function TelemetrySetting() {
     <div className="flex flex-col gap-4">
       <h3 className="font-medium text-foreground">Telemetry</h3>
       <p className="text-muted-foreground text-sm">
-        Control what usage data is collected to help improve stagewise.
+        Control what usage data is collected to help improve Agewise.
       </p>
 
       <div className="flex items-center gap-2">
@@ -353,7 +353,7 @@ function TelemetrySetting() {
           htmlFor="telemetry-anonymous-checkbox"
           className="text-muted-foreground text-xs"
         >
-          Help improve stagewise by sharing anonymized events.
+          Help improve Agewise by sharing anonymized events.
         </label>
       </div>
       <div
