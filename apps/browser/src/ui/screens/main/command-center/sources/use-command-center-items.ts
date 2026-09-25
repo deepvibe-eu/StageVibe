@@ -8,6 +8,7 @@ import { useSettingsCommandItems } from './use-settings-command-items';
 import { useTabCommandItems } from './use-tab-command-items';
 import { useTerminalCommandItems } from './use-terminal-command-items';
 import { useFileSearchCommandItems } from './use-file-command-items';
+import { useExportCommandItems } from './use-export-command-items';
 import type { FileSearchFilterState as FileFilterState } from './use-file-command-items';
 
 const GLOBAL_LIMIT = 30;
@@ -42,6 +43,7 @@ export function useCommandCenterItems({
   const tabs = useTabCommandItems(query);
   const terminals = useTerminalCommandItems(query);
   const settings = useSettingsCommandItems(query);
+  const exportItems = useExportCommandItems(mode === 'global' ? query : '');
   // File search runs in both "files" mode and the "all" (global) mode. In
   // global mode we always search across every connected workspace (empty
   // filter), ignoring the per-workspace selection that only applies to the
@@ -73,6 +75,7 @@ export function useCommandCenterItems({
       ...agents.items,
       ...tabs.items,
       ...terminals.items,
+      ...exportItems.items,
       ...settings.items,
     ]
       .sort((a, b) => (b.score ?? 0) - (a.score ?? 0))
@@ -82,6 +85,7 @@ export function useCommandCenterItems({
     return [...ranked, ...fileItems];
   }, [
     agents.items,
+    exportItems.items,
     fileItems,
     mode,
     settings.items,

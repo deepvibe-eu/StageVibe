@@ -19,6 +19,10 @@ import {
   useKartonState,
 } from '@ui/hooks/use-karton';
 import { useOpenAgent } from '@ui/hooks/use-open-chat';
+import {
+  copyAgentHistoryAsMarkdown,
+  saveAgentHistoryAsMarkdown,
+} from '../agent-chat/chat/_lib/export-agent-history';
 import { useTabUIState } from '@ui/hooks/use-tab-ui-state';
 import { usePendingRemovals } from '@ui/hooks/use-pending-agent-removals';
 import { useContentCollapsed } from '../_components/content-collapsed-context';
@@ -130,6 +134,14 @@ export function CommandCenter() {
   const [openAgent, setOpenAgent] = useOpenAgent();
   const { setCollapsed: setContentCollapsed } = useContentCollapsed();
   const resumeAgent = useKartonProcedure((p) => p.agents.resume);
+  const copyText = useKartonProcedure((p) => p.browser.copyText);
+  const saveTextFile = useKartonProcedure((p) => p.filePicker.saveTextFile);
+  const openAgentHistory = useKartonState((s) =>
+    openAgent ? s.agents.instances[openAgent]?.state.history : undefined,
+  );
+  const openAgentTitle = useKartonState((s) =>
+    openAgent ? s.agents.instances[openAgent]?.state.title : undefined,
+  );
   const openFileTab = useKartonProcedure((p) => p.fileTree.openFileTab);
   const setFileTreeVisible = useKartonProcedure((p) => p.fileTree.setVisible);
   const setFileTreeActiveWorkspace = useKartonProcedure(
@@ -406,14 +418,30 @@ export function CommandCenter() {
         } else if (item.url) {
           void createTab(item.url, true);
         }
+      } else if (item.kind === 'action') {
+        if (item.id === 'copy-chat-markdown') {
+          void copyAgentHistoryAsMarkdown(
+            { history: openAgentHistory, title: openAgentTitle },
+            { copyText },
+          );
+        } else if (item.id === 'export-chat-markdown') {
+          void saveAgentHistoryAsMarkdown(
+            { history: openAgentHistory, title: openAgentTitle },
+            { saveTextFile },
+          );
+        }
       }
 
       dismissCommandCenter();
     },
     [
       createTab,
+      copyText,
+      openAgentHistory,
+      openAgentTitle,
       openFileTab,
       openSettings,
+      saveTextFile,
       dismissCommandCenter,
       resumeAgent,
       setLastOpenAgentId,

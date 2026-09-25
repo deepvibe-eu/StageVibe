@@ -27,6 +27,8 @@ export type {
 } from './telemetry';
 import type {
   FilePickerRequest,
+  TextFileSaveRequest,
+  TextFileSaveResult,
   GlobalConfig,
   ModelSettings,
   ModelProvider,
@@ -1685,6 +1687,13 @@ export type KartonContract = {
     };
     filePicker: {
       createRequest: (request: FilePickerRequest) => Promise<string[]>;
+      /**
+       * Show a native save dialog and write `content` to the chosen path.
+       * Used by the chat Markdown export.
+       */
+      saveTextFile: (
+        request: TextFileSaveRequest,
+      ) => Promise<TextFileSaveResult>;
     };
     notifications: {
       triggerAction: (id: string, actionIndex: number) => Promise<void>;

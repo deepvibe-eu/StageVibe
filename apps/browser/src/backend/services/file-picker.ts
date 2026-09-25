@@ -16,8 +16,13 @@
 
 import type { Logger } from './logger';
 import type { KartonService } from './karton';
-import type { FilePickerRequest } from '@shared/karton-contracts/ui/shared-types';
+import type {
+  FilePickerRequest,
+  TextFileSaveRequest,
+  TextFileSaveResult,
+} from '@shared/karton-contracts/ui/shared-types';
 import { dialog } from 'electron';
+import fs from 'node:fs/promises';
 import { DisposableService } from './disposable';
 
 export class FilePickerService extends DisposableService {
@@ -36,6 +41,11 @@ export class FilePickerService extends DisposableService {
       async (_callingClientId: string, request: FilePickerRequest) =>
         this.createRequest(request),
     );
+    this.uiKarton.registerServerProcedureHandler(
+      'filePicker.saveTextFile',
+      async (_callingClientId: string, request: TextFileSaveRequest) =>
+        this.saveTextFile(request),
+    );
   }
 
   public static async create(
@@ -49,6 +59,7 @@ export class FilePickerService extends DisposableService {
 
   protected onTeardown(): void {
     this.uiKarton.removeServerProcedureHandler('filePicker.createRequest');
+    this.uiKarton.removeServerProcedureHandler('filePicker.saveTextFile');
     this.logger.debug('[FilePickerService] Teardown complete');
   }
 
@@ -86,5 +97,36 @@ export class FilePickerService extends DisposableService {
       });
 
     return result;
+  }
+
+  /**
+   * Show a native save dialog and write UTF-8 text to the chosen location.
+   * Never throws: cancellation and write failures are reported as a result so
+   * the renderer can react without a rejected Karton call.
+   */
+  public async saveTextFile(
+    request: TextFileSaveRequest,
+  ): Promise<TextFileSaveResult> {
+    try {
+      const result = await dialog.showSaveDialog({
+        title: request.title,
+        defaultPath: request.defaultFileName,
+        filters: request.filters,
+      });
+      if (result.canceled || !result.filePath) return { status: 'canceled' };
+      await fs.writeFile(result.filePath, request.content, 'utf-8');
+      this.logger.debug(
+        `[FilePickerService] Saved text file to ${result.filePath}`,
+      );
+      return { status: 'saved', path: result.filePath };
+    } catch (error) {
+      this.logger.error(
+        `[FilePickerService] Failed to save text file: ${error}`,
+      );
+      return {
+        status: 'failed',
+        error: error instanceof Error ? error.message : String(error),
+      };
+    }
   }
 }

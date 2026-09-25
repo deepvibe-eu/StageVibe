@@ -7,6 +7,7 @@ import { ArchiveIcon } from 'lucide-react';
 import {
   IconCopyOutline18,
   IconCopyIdOutline18,
+  IconDownload4Outline18,
   IconEnvelopeOutline18,
   IconFolderOpenOutline18,
   IconPen2Outline18,
@@ -14,16 +15,10 @@ import {
   IconPinTackSlashOutline18,
 } from '@stagewise/icons';
 import { useFloatingIsolation } from './use-floating-isolation';
-
-/**
- * Shared right-click context menu for agent cards and list rows.
- *
- * A SINGLE `<SharedAgentContextMenuHost>` is mounted per list (grid or
- * history). Rows attach a cheap `onContextMenu` handler via
- * `buildAgentContextMenuHandler(...)` that opens this one host at the
- * cursor position. This avoids allocating a base-ui `Menu.Root` per row
- * — critical for the history list which can contain hundreds of rows.
- */
+import {
+  copyAgentHistoryAsMarkdown,
+  saveAgentHistoryAsMarkdown,
+} from '../agent-chat/chat/_lib/export-agent-history';
 
 export interface AgentContextMenuTarget {
   agentId: string;
@@ -183,6 +178,35 @@ export const SharedAgentContextMenuHost = memo(
       [onClose],
     );
 
+    // ── Markdown export ────────────────────────────────────────────────
+    const copyText = useKartonProcedure((p) => p.browser.copyText);
+    const saveTextFile = useKartonProcedure((p) => p.filePicker.saveTextFile);
+    const exportAgentId = activeTarget?.agentId;
+    const exportHistory = useKartonState((s) =>
+      exportAgentId
+        ? s.agents.instances[exportAgentId]?.state.history
+        : undefined,
+    );
+    const exportTitle = useKartonState((s) =>
+      exportAgentId
+        ? s.agents.instances[exportAgentId]?.state.title
+        : undefined,
+    );
+
+    const handleCopyMarkdown = useCallback(() => {
+      void copyAgentHistoryAsMarkdown(
+        { history: exportHistory, title: exportTitle },
+        { copyText },
+      );
+    }, [copyText, exportHistory, exportTitle]);
+
+    const handleExportMarkdown = useCallback(() => {
+      void saveAgentHistoryAsMarkdown(
+        { history: exportHistory, title: exportTitle },
+        { saveTextFile },
+      );
+    }, [exportHistory, exportTitle, saveTextFile]);
+
     if (!activeTarget) return null;
     const {
       agentId,
@@ -233,6 +257,24 @@ export const SharedAgentContextMenuHost = memo(
               >
                 <IconCopyOutline18 className="size-3.5 shrink-0" />
                 <span>Fork chat</span>
+              </AgentMenuItem>
+              <AgentMenuItem
+                onClick={() => {
+                  onClose();
+                  void handleCopyMarkdown();
+                }}
+              >
+                <IconCopyOutline18 className="size-3.5 shrink-0" />
+                <span>Copy as Markdown</span>
+              </AgentMenuItem>
+              <AgentMenuItem
+                onClick={() => {
+                  onClose();
+                  void handleExportMarkdown();
+                }}
+              >
+                <IconDownload4Outline18 className="size-3.5 shrink-0" />
+                <span>Export as Markdown…</span>
               </AgentMenuItem>
               {canMarkAsUnread && (
                 <AgentMenuItem

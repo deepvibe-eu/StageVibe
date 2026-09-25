@@ -1463,6 +1463,25 @@ export type FilePickerRequest = {
   allowCreateDirectory?: boolean;
 };
 
+/**
+ * Ask the user where to save a UTF-8 text file (e.g. a Markdown export of a
+ * chat). The backend shows a native save dialog and writes the content.
+ */
+export type TextFileSaveRequest = {
+  title?: string;
+  /** Pre-filled file name including extension, e.g. `chat-title.md`. */
+  defaultFileName: string;
+  /** File contents to write as UTF-8. */
+  content: string;
+  /** Optional dialog filters, e.g. `[{ name: 'Markdown', extensions: ['md'] }]`. */
+  filters?: Array<{ name: string; extensions: string[] }>;
+};
+
+export type TextFileSaveResult =
+  | { status: 'saved'; path: string }
+  | { status: 'canceled' }
+  | { status: 'failed'; error: string };
+
 // ============================================================================
 // Permission Settings (Chrome-style model)
 // ============================================================================
