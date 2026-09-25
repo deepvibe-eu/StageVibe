@@ -655,7 +655,7 @@ export function AboutSection() {
           version: appInfo.version,
           license: 'AGPL-3.0',
           repository: '',
-          publisher: 'Agewise',
+          publisher: 'modestcoder.eu',
           licenseText: agplLicenseText,
         }}
         open={appLicenseOpen}

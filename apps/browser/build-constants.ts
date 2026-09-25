@@ -68,14 +68,14 @@ export const __APP_NAME__ = (() => {
 export const __APP_BUNDLE_ID__ = (() => {
   switch (__APP_RELEASE_CHANNEL__) {
     case 'release':
-      return 'io.agewise.app';
+      return 'eu.modestcoder.agewise';
     case 'nightly':
-      return 'io.agewise.nightly';
+      return 'eu.modestcoder.agewise.nightly';
     case 'prerelease':
-      return 'io.agewise.prerelease';
+      return 'eu.modestcoder.agewise.prerelease';
     case 'dev':
     default:
-      return 'io.agewise.dev';
+      return 'eu.modestcoder.agewise.dev';
   }
 })();
 
@@ -138,5 +138,5 @@ export const __APP_HOMEPAGE__ = (() => {
   if (typeof homepage === 'string' && homepage.trim()) {
     return homepage;
   }
-  return process.env.APP_HOMEPAGE || 'https://agewise.ai';
+  return process.env.APP_HOMEPAGE || 'https://modestcoder.eu/agewise';
 })();

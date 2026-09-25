@@ -338,7 +338,7 @@ const config: ForgeConfig = {
     ],
     afterComplete: [copyVcRedist], // sources DLLs directly from VS install on the runner
     icon: `./assets/icons/${visualAssetChannel}/icon`,
-    appCopyright: `Copyright © ${new Date().getFullYear()} Agewise`,
+    appCopyright: `Copyright © ${new Date().getFullYear()} modestcoder.eu`,
     win32metadata: {
       CompanyName: 'Agewise',
       ProductName: buildConstants.__APP_NAME__,

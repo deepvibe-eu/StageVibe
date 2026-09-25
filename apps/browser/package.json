@@ -5,8 +5,8 @@
   "keywords": [],
   "license": "AGPL-3.0-only",
   "author": {
-    "name": "Agewise",
-    "email": "support@agewise.ai"
+    "name": "moc72",
+    "email": "moc72@modestcoder.eu"
   },
   "type": "module",
   "main": ".vite/build/main.js",
