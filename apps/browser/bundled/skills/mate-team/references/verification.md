@@ -1,6 +1,6 @@
 # Verification
 
-Loaded when a Mavis Team task involves code changes. Provides code-specific
+Loaded when a Mate Team task involves code changes. Provides code-specific
 verification strategy. It has no daemon or CLI dependencies.
 
 ## Code preflight

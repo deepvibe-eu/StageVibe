@@ -1,8 +1,8 @@
 ---
-name: mavis-team
+name: mate-team
 description: >
   Coordinate a small team of sub-agents toward one deliverable. Use only when
-  the user explicitly invokes /mavis-team, or 100% unambiguously asks for an
+  the user explicitly invokes /mate-team, or 100% unambiguously asks for an
   agent team / multi-agent team. Do not infer team use from complexity,
   research depth, long-running work, parallelism, specialist value, or
   verification risk.
@@ -10,21 +10,20 @@ user-invocable: true
 agent-invocable: false
 ---
 
-# Mavis Team (Stagewise port)
+# Mate Team (Agewise port)
 
 Orchestrate a small team toward one deliverable, but only after an explicit
-`/mavis-team` invocation or a 100% unambiguous "use an agent team" request.
+`/mate-team` invocation or a 100% unambiguous "use an agent team" request.
 The owner session keeps responsibility for planning, launch, intervention,
 decisions, integration, and cleanup. Workers produce bounded deliverables and
 exit.
 
-This is the MiniMax Mavis operating model re-implemented on Stagewise
-primitives. It does **not** call the MiniMax `mavis` CLI and needs no MiniMax
-daemon. See `references/orchestration.md` for how Mavis roles map to Stagewise.
+This is the original multi-agent operating model re-implemented on Agewise
+primitives. It does **not** call the original daemon CLI and needs no external daemon. See `references/orchestration.md` for how Mate roles map to Agewise.
 
 ## Hard rules
 
-- **Explicit trigger only.** If this loaded without `/mavis-team` or an
+- **Explicit trigger only.** If this loaded without `/mate-team` or an
   unambiguous agent-team request, stop and keep working in the owner session.
 - **Use the smallest sufficient plan.** One owner plus a light verifier beats a
   broad team unless parallelism genuinely reduces time or risk.
@@ -63,9 +62,9 @@ completed by a fresh worker with its prompt plus the repository.
   "format").
 - If tracks feel coupled, write the shared contract first, then fan out.
 
-## Roles on Stagewise
+## Roles on Agewise
 
-| Mavis role | Stagewise equivalent |
+| Mate role | Agewise equivalent |
 | --- | --- |
 | Owner | this chat session (keeps final responsibility) |
 | Worker | a sub-task with a self-contained prompt, ideally run in parallel/background |

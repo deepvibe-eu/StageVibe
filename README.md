@@ -197,16 +197,16 @@ Re-authored for Agewise (`skill-creator` explains how to add more):
 - **Deep Research** — a five-phase pipeline (background → direction → analysis →
   research → writing) that ends in a sourced report
 - **Plan Mode** — settle the approach before writing code
-- **Mavis Personas** — role cards (coder, planner, verifier, generalist,
+- **Mate Personas** — role cards (coder, planner, verifier, generalist,
   orchestrator, skill editor)
 - **Visual Page** — build a self-contained HTML page for diagrams, dashboards or
   comparisons
-- plus the existing **Mavis Team** and **Mavis Doctor**
+- plus the existing **Mate Team** and **Mate Doctor**
 
 ### Roadmap
 
-- **More Mavis skills**: the remaining ones are daemon/CLI-bound (`.harness`,
-  `mavis agent`, MCP/Lark tooling) or need heavy binary tooling
+- **More skills**: the remaining ones are daemon/CLI-bound (`.harness`,
+  the daemon CLI, MCP/Lark tooling) or need heavy binary tooling
   (docx/xlsx/pptx/pdf); they get Agewise-native rewrites only where they add
   value.
 - **i18n**: extract UI strings and add a language selector (German, French,
