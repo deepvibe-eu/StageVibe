@@ -66,14 +66,14 @@ export const __APP_NAME__ = (() => {
 export const __APP_BUNDLE_ID__ = (() => {
   switch (__APP_RELEASE_CHANNEL__) {
     case 'release':
-      return 'eu.modestcoder.agewise';
+      return 'org.rheaos.agewise';
     case 'nightly':
-      return 'eu.modestcoder.agewise.nightly';
+      return 'org.rheaos.agewise.nightly';
     case 'prerelease':
-      return 'eu.modestcoder.agewise.prerelease';
+      return 'org.rheaos.agewise.prerelease';
     case 'dev':
     default:
-      return 'eu.modestcoder.agewise.dev';
+      return 'org.rheaos.agewise.dev';
   }
 })();
 
@@ -136,5 +136,5 @@ export const __APP_HOMEPAGE__ = (() => {
   if (typeof homepage === 'string' && homepage.trim()) {
     return homepage;
   }
-  return process.env.APP_HOMEPAGE || 'https://modestcoder.eu/agewise';
+  return process.env.APP_HOMEPAGE || 'https://rheaos.org';
 })();

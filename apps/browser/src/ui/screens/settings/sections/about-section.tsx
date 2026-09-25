@@ -655,7 +655,7 @@ export function AboutSection() {
           version: appInfo.version,
           license: 'AGPL-3.0',
           repository: '',
-          publisher: 'modestcoder.eu',
+          publisher: 'RheaOS',
           licenseText: agplLicenseText,
         }}
         open={appLicenseOpen}

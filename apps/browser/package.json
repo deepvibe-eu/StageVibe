@@ -5,8 +5,8 @@
   "keywords": [],
   "license": "AGPL-3.0-only",
   "author": {
-    "name": "moc72",
-    "email": "moc72@modestcoder.eu"
+    "name": "RheaOS",
+    "email": "architect@rheaos.org"
   },
   "type": "module",
   "main": ".vite/build/main.js",
