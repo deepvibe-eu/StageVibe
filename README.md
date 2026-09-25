@@ -1,9 +1,7 @@
 <div align="center">
 
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset=".github/assets/logo-combo-dark.svg">
-  <img src=".github/assets/logo-combo.svg" alt="Agewise" height="60" />
-</picture>
+<h1>Agewise</h1>
+<p><em>A personal fork of stagewise — the agentic IDE for open-source models.</em></p>
 
 <h3>The Agentic IDE for Open-Source Models</h3>
 
