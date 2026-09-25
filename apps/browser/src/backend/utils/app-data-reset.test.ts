@@ -9,11 +9,11 @@ import {
 import { ISOLATED_DEV_SEED_MARKER } from './seed-isolated-dev-profile';
 
 let userDataDirectory: string;
-const tempDirectoryPrefix = path.join(os.tmpdir(), 'stagewise-reset-');
+const tempDirectoryPrefix = path.join(os.tmpdir(), 'agewise-reset-');
 
 beforeEach(() => {
   userDataDirectory = fs.mkdtempSync(tempDirectoryPrefix);
-  fs.mkdirSync(path.join(userDataDirectory, 'stagewise'));
+  fs.mkdirSync(path.join(userDataDirectory, 'agewise'));
 });
 
 afterEach(() => {
@@ -22,7 +22,7 @@ afterEach(() => {
 
 describe('app data reset', () => {
   it('deletes user data while preserving identity and seed markers', () => {
-    const dataRoot = path.join(userDataDirectory, 'stagewise');
+    const dataRoot = path.join(userDataDirectory, 'agewise');
     const identityPath = path.join(dataRoot, 'identity.json');
     const identity = '{"machineId":"00000000-0000-4000-8000-000000000001"}';
 
@@ -51,7 +51,7 @@ describe('app data reset', () => {
   });
 
   it('deletes user data without an identity.json', () => {
-    const dataRoot = path.join(userDataDirectory, 'stagewise');
+    const dataRoot = path.join(userDataDirectory, 'agewise');
     fs.writeFileSync(path.join(dataRoot, 'preferences.json'), '{}');
     requestAppDataReset(userDataDirectory);
 

@@ -13,10 +13,10 @@ let sourceDataRoot: string;
 let userDataDirectory: string;
 
 beforeEach(() => {
-  root = fs.mkdtempSync(path.join(os.tmpdir(), 'stagewise-dev-seed-'));
+  root = fs.mkdtempSync(path.join(os.tmpdir(), 'agewise-dev-seed-'));
   appDataDirectory = path.join(root, 'app-data');
-  sourceDataRoot = path.join(appDataDirectory, 'stagewise-dev', 'stagewise');
-  userDataDirectory = path.join(appDataDirectory, 'stagewise-dev-deadbeef');
+  sourceDataRoot = path.join(appDataDirectory, 'agewise-dev', 'agewise');
+  userDataDirectory = path.join(appDataDirectory, 'agewise-dev-deadbeef');
   fs.mkdirSync(sourceDataRoot, { recursive: true });
 });
 
@@ -28,10 +28,10 @@ afterEach(() => {
 describe('seedIsolatedDevProfile', () => {
   it('copies only allowed missing files and seeds once', () => {
     vi.spyOn(process, 'platform', 'get').mockReturnValue('win32');
-    const targetDataRoot = path.join(userDataDirectory, 'stagewise');
+    const targetDataRoot = path.join(userDataDirectory, 'agewise');
     const sourceSessionRoot = path.join(
       appDataDirectory,
-      'stagewise-dev',
+      'agewise-dev',
       'session',
     );
     fs.mkdirSync(targetDataRoot, { recursive: true });
@@ -49,7 +49,7 @@ describe('seedIsolatedDevProfile', () => {
       seedIsolatedDevProfile(
         appDataDirectory,
         userDataDirectory,
-        'stagewise-dev-deadbeef',
+        'agewise-dev-deadbeef',
       ),
     ).toBe(2);
     expect(
@@ -74,7 +74,7 @@ describe('seedIsolatedDevProfile', () => {
       seedIsolatedDevProfile(
         appDataDirectory,
         userDataDirectory,
-        'stagewise-dev-deadbeef',
+        'agewise-dev-deadbeef',
       ),
     ).toBe(0);
   });
@@ -84,8 +84,36 @@ describe('seedIsolatedDevProfile', () => {
       seedIsolatedDevProfile(
         appDataDirectory,
         userDataDirectory,
-        'stagewise-dev',
+        'agewise-dev',
       ),
     ).toBe(0);
   });
+});
+
+it('falls back to the pre-rebrand stagewise-dev profile', () => {
+  fs.rmSync(path.join(appDataDirectory, 'agewise-dev'), {
+    recursive: true,
+    force: true,
+  });
+  const legacyDataRoot = path.join(
+    appDataDirectory,
+    'stagewise-dev',
+    'stagewise',
+  );
+  fs.mkdirSync(legacyDataRoot, { recursive: true });
+  fs.writeFileSync(path.join(legacyDataRoot, 'auth-session.json'), 'legacy');
+
+  const targetDataRoot = path.join(userDataDirectory, 'agewise');
+  fs.mkdirSync(targetDataRoot, { recursive: true });
+
+  expect(
+    seedIsolatedDevProfile(
+      appDataDirectory,
+      userDataDirectory,
+      'agewise-dev-deadbeef',
+    ),
+  ).toBe(1);
+  expect(
+    fs.readFileSync(path.join(targetDataRoot, 'auth-session.json'), 'utf8'),
+  ).toBe('legacy');
 });
