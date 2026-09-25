@@ -38,6 +38,11 @@
 
 ## About the project
 
+> **This repository is a personal fork of stagewise, called _Agewise_.**
+> Upstream documentation is kept below for reference. The fork focuses on a
+> BYOK-first, local-first workflow and a few quality-of-life features that are
+> documented in [Agewise fork](#agewise-fork) further down.
+
 **stagewise** is an open source agentic IDE for developers with a coding agent built right in.
 
 - **Browse and build** in the same tool — no context switching
@@ -103,6 +108,90 @@ Included models:
 - **OpenAI**: GPT-5.6 Sol, GPT-5.6 Terra, GPT-5.6 Luna, GPT-5.5, GPT-5.4, GPT-5.3 Codex, GPT-5.3 Instant, GPT-5.4 mini, GPT-5.4 nano
 - **Google**: Gemini 3.5 Flash, Gemini 3.1 Pro (Preview), Gemini 3 Flash, Gemini 3.1 Flash Lite
 - **xAI**: Grok 4.5
+
+## Agewise fork
+
+This fork is built on top of upstream stagewise. It keeps the upstream
+architecture (Electron app, Karton transport, `agent-core`) and adds the
+following, focused changes.
+
+### Bring Your Own Key first
+
+Your own connections come first: coding plans, API keys and self-hosted/custom
+endpoints are listed before the hosted Stagewise Inference provider
+(`Settings → Models & Providers`). OpenRouter and Ollama work as usual.
+
+### Manual context compaction
+
+Long conversations are compacted automatically once the context usage crosses
+a threshold, and you can also trigger it yourself:
+
+- Click the **context-usage ring** next to the chat input.
+- Or use the command center (`Ctrl/Cmd+K`).
+
+The agent then summarises older messages into a briefing and keeps the recent
+messages verbatim. All messages stay in the local SQLite database — only the
+prompt sent to the model is shortened (the briefing is marked in the UI). The
+usage ring updates immediately after a successful compaction.
+
+### Markdown export
+
+Every conversation can be exported or copied as Markdown, including tool
+calls, reasoning (optional) and a marker for compacted regions:
+
+- Right-click a chat in the sidebar → **Copy as Markdown** / **Export as Markdown…**
+- Or the command center → *Export current chat as Markdown…*
+
+File export opens a native save dialog (suggested name: `chat-title.md`).
+
+### Privacy
+
+- Telemetry defaults to **off**.
+- Builds without a PostHog key start normally (no crash) — the telemetry
+  client is not constructed at all.
+
+### Linux AppImage
+
+Besides `.rpm`/`.zip`, the fork can build a portable AppImage:
+
+```bash
+pnpm -F stagewise make --targets AppImage
+# -> apps/browser/out/dev/make/AppImage/x64/*.AppImage
+```
+
+### Data directories & migration
+
+After the Agewise rename the app uses `~/…/agewise*` profiles and an `agewise`
+data root. On first launch a one-time migration moves an existing
+`stagewise*` profile over (never clobbering existing data); isolated dev
+profiles fall back to the legacy `stagewise-dev` profile when seeding.
+
+### Development
+
+```bash
+export PATH="$HOME/.local/node22/bin:$PATH"   # Node >= 22.12 for tooling
+pnpm install
+
+pnpm -F stagewise start:fast   # build workspace packages + start the app
+pnpm -F stagewise start        # same, with typecheck first
+pnpm build                     # build all workspace packages
+pnpm -F stagewise package      # unpacked app
+pnpm -F stagewise make --targets AppImage
+```
+
+Note: the toolchain runs on Node 22+, while the packaged app runs on
+Electron's bundled Node (currently Electron 40 → Node 24.x); the About screen
+lists those runtime versions under “Other versions”.
+
+### Roadmap
+
+- **Mavis skills**: bundle the Mavis agent personas and skills as built-in
+  skills (`apps/browser/bundled/skills/…`). Skills are discovered by the agent
+  via progressive disclosure and can also be invoked explicitly. Proprietary
+  scripts are **re-implemented from scratch**, not copied.
+- **i18n**: extract UI strings and add a language selector (German, French,
+  Russian, Chinese) under `Settings → General`.
+- **Layout**: relocate the console/terminal panel.
 
 ## License
 
