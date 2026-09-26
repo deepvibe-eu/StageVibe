@@ -47,7 +47,6 @@ Stagewise is a pnpm workspace and Turborepo monorepo. The product is an open-sou
 apps/
   browser/        - Electron app and main product (package `stagewise`)
   stagewise-cli/  - Headless host for the extracted agent packages
-  update-server/  - Electron update server
 
 packages/
   agent-core/     - Host-agnostic agent runtime, state, commands, and tools
@@ -103,7 +102,6 @@ Types: `build`, `chore`, `ci`, `docs`, `feat`, `fix`, `perf`, `refactor`, `rever
 Scopes use pnpm workspace package basenames without the `@stagewise/` prefix:
 - `stagewise` - apps/browser
 - `stagewise-cli` - apps/stagewise-cli
-- `update-server` - apps/update-server
 - `agent-core` - packages/agent-core
 - `agent-shell` - packages/agent-shell
 - `agent-runtime-node` - agent/runtime-node
