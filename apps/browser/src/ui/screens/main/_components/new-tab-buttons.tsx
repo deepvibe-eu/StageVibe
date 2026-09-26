@@ -8,8 +8,6 @@ import { HotkeyActions } from '@shared/hotkeys';
 import { HotkeyCombo } from '@ui/components/hotkey-combo';
 import { GlobePlusIcon } from './globe-plus-icon';
 import { WindowPlusIcon } from '../terminal-panel/_components/window-plus-icon';
-import { MessageSquarePlusIcon } from 'lucide-react';
-import { useOpenSideChat } from '@ui/hooks/use-open-side-chat';
 
 interface NewTabButtonsProps {
   onCreateBrowserTab: () => void;
@@ -22,8 +20,6 @@ export function NewTabButtons({
   onCreateTerminalTab,
   buttonClassName,
 }: NewTabButtonsProps) {
-  const openSideChat = useOpenSideChat();
-
   return (
     <div className="flex shrink-0 flex-row items-center gap-0.5">
       <Tooltip>
@@ -64,20 +60,8 @@ export function NewTabButtons({
           </span>
         </TooltipContent>
       </Tooltip>
-      <Tooltip>
-        <TooltipTrigger>
-          <Button
-            variant="ghost"
-            size="icon-sm"
-            aria-label="Open side chat"
-            className={buttonClassName}
-            onClick={openSideChat}
-          >
-            <MessageSquarePlusIcon className="size-4" />
-          </Button>
-        </TooltipTrigger>
-        <TooltipContent>Open side chat</TooltipContent>
-      </Tooltip>
+      {/* Side chat button hidden: on the Mate footing a parallel side chat only
+          adds confusion; the feature itself is kept for later. */}
     </div>
   );
 }
