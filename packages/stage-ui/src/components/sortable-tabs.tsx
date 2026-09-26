@@ -94,6 +94,12 @@ export interface SortableTabItem {
   /** Prevent this tab from being dragged (still clickable). */
   disabled?: boolean;
   /**
+   * Keep the tab registered (stable sortable slot) but render it invisible.
+   * Used for tabs that are shown elsewhere, e.g. terminals in the bottom
+   * panel — dropping them from the list would shift the drag/order mapping.
+   */
+  hidden?: boolean;
+  /**
    * Whether a close button is shown. Defaults to `true` when `onClose` is
    * provided. Set to `false` to hide the close button on a specific tab.
    * Only relevant in the `"bar"` variant.
@@ -350,7 +356,7 @@ function SortableTrigger({
     isDragging,
   } = useSortable({
     id: item.id,
-    disabled: item.disabled,
+    disabled: item.disabled || item.hidden,
     attributes: { tabIndex: -1 },
   });
 
@@ -365,7 +371,7 @@ function SortableTrigger({
     return (
       <div
         ref={setNodeRef}
-        className="app-no-drag"
+        className={cn('app-no-drag', item.hidden && 'hidden')}
         style={{
           ...style,
           minWidth: '5rem',
@@ -380,7 +386,13 @@ function SortableTrigger({
   }
 
   return (
-    <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
+    <div
+      ref={setNodeRef}
+      className={item.hidden ? 'hidden' : undefined}
+      style={style}
+      {...attributes}
+      {...listeners}
+    >
       <PillTriggerContent item={item} />
     </div>
   );

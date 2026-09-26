@@ -521,6 +521,9 @@ export function MainSection({
               displayTitle
             ),
           icon: <TabPinIcon tab={tab} openAgent={openAgent} />,
+          // Terminals live in the bottom panel; keep their slot so the
+          // drag/order mapping stays stable, but do not show them here.
+          hidden: tab.type === 'terminal',
           onClose: () => closeTabWithUnsavedCheck(id),
           closeShortcut: (
             <HotkeyCombo action={HotkeyActions.CLOSE_TAB} size="xs" />
