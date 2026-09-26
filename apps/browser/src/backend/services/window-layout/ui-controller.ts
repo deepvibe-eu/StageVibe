@@ -574,6 +574,16 @@ export class UIController extends EventEmitter<UIControllerEventMap> {
       this.emit('uiReady');
     });
 
+    // The UI must stay at Default size (100%). Chromium persists zoom levels
+    // per origin and restores them after load, which scaled the renderer and
+    // pushed the native browser view off its cell. Reset on every load, not
+    // just at startup, because the restore happens after navigation.
+    view.webContents.on('did-finish-load', () => {
+      if (!view.webContents.isDestroyed()) {
+        view.webContents.setZoomFactor(1);
+      }
+    });
+
     // Auto-recover from renderer crashes by replacing the entire WebContentsView.
     // Reloading a crashed WebContentsView fails with "Observers can only be added once!"
     // because Chromium's internal state is corrupted after a crash.
