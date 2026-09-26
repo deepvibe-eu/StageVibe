@@ -654,7 +654,7 @@ export function AboutSection() {
           name: appInfo.name,
           version: appInfo.version,
           license: 'AGPL-3.0',
-          repository: '',
+          repository: 'https://github.com/moc72/agewise',
           publisher: 'RheaOS',
           licenseText: agplLicenseText,
         }}
