@@ -386,6 +386,15 @@ function DefaultLayoutInner({ show }: { show: boolean }) {
                       order={1}
                       className="relative h-full overflow-hidden"
                     >
+                      {/* Both panels closed leaves an empty column: keep the
+                          re-open controls reachable right here. */}
+                      {!showContent && !fileTreeVisible && (
+                        <div className="absolute top-1 right-2 z-20 flex items-center gap-0">
+                          <ContentToggleButton />
+                          <ActionDivider />
+                          <FileTreeToggleButton />
+                        </div>
+                      )}
                       <ResizablePanelGroup
                         direction="vertical"
                         autoSaveId="stagewise-content-vertical"
