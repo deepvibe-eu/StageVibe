@@ -19,7 +19,6 @@ export const WebContentsBoundsSyncer = () => {
   const uiZoomPercentage = useKartonState(
     (s) => s.preferences.general.uiZoomPercentage,
   );
-  const uiZoomPercentageRef = useRef(uiZoomPercentage);
   const sendBoundsUpdateRef = useRef<(() => void) | null>(null);
 
   useLayoutEffect(() => {
@@ -64,7 +63,6 @@ export const WebContentsBoundsSyncer = () => {
       }
 
       const rect = containerElement.getBoundingClientRect();
-      const uiZoomFactor = uiZoomPercentageRef.current / 100;
 
       if (rect.width <= 0 || rect.height <= 0) {
         // Element exists but hasn't been laid out yet (common during Electron
@@ -81,16 +79,15 @@ export const WebContentsBoundsSyncer = () => {
         return;
       }
 
-      // Electron WebContentsView bounds are in native window coordinates,
-      // while getBoundingClientRect() is reported in renderer CSS pixels.
-      // With UI zoom now applied via webContents.setZoomFactor(), convert
-      // the CSS-pixel rect back to visual/native coordinates before sending
-      // it to the backend.
+      // The browser container is counter-scaled by the UI zoom
+      // (use-ui-zoom-counter-scale), so getBoundingClientRect() already
+      // reports visual coordinates. Scaling it by the zoom again made the
+      // native view drift off its cell whenever "UI size" was not Default.
       const newBounds: Bounds = {
-        x: Math.round(rect.x * uiZoomFactor),
-        y: Math.round(rect.y * uiZoomFactor),
-        width: Math.round(rect.width * uiZoomFactor),
-        height: Math.round(rect.height * uiZoomFactor),
+        x: Math.round(rect.x),
+        y: Math.round(rect.y),
+        width: Math.round(rect.width),
+        height: Math.round(rect.height),
       };
 
       const boundsChanged =
@@ -308,7 +305,6 @@ export const WebContentsBoundsSyncer = () => {
   }, [activeTabId, appScreenMode, connected]);
 
   useLayoutEffect(() => {
-    uiZoomPercentageRef.current = uiZoomPercentage;
     sendBoundsUpdateRef.current?.();
   }, [uiZoomPercentage]);
 
