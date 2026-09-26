@@ -17,12 +17,15 @@ type AgentChatProps = {
   topRightActions?: ReactNode;
   defaultSize?: number;
   minSize?: number;
+  /** Reports the user-adjusted panel size so the layout can persist it. */
+  onPanelResize?: (size: number) => void;
 };
 
 export function AgentChat({
   topRightActions,
   defaultSize = 35,
   minSize = 20,
+  onPanelResize,
 }: AgentChatProps) {
   const panelRef = useRef<ImperativePanelHandle>(null);
   const previousSizeRef = useRef<number | null>(null);
@@ -126,7 +129,10 @@ export function AgentChat({
       minSize={minSize}
       maxSize={80}
       onResize={(size) => {
-        if (size > 0) previousSizeRef.current = size;
+        if (size > 0) {
+          previousSizeRef.current = size;
+          onPanelResize?.(size);
+        }
       }}
       className="@container group overflow-visible! relative z-10 flex h-full flex-col items-stretch justify-between bg-background"
     >

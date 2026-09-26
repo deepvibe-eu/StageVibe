@@ -62,6 +62,7 @@ import { WatcherPopover } from './_components/watcher-popover';
 const rootLayoutStorageKey = 'stagewise-panel-layout-root';
 const contentPanelSizeKey = 'stagewise-content-panel-size';
 const fileTreePanelSizeKey = 'stagewise-file-tree-panel-size';
+const chatPanelSizeKey = 'stagewise-chat-panel-size';
 const CHAT_PANEL_MIN_SIZE = 20;
 
 function readPanelSize(key: string, fallback: number): number {
@@ -135,19 +136,21 @@ function DefaultLayoutInner({ show }: { show: boolean }) {
   // content panel visible when there are visible tabs AND it's not collapsed
   const showContent = hasVisibleTabs && !contentCollapsed;
 
-  const fileTreeSizeRef = useRef(readPanelSize(fileTreePanelSizeKey, 12));
-  const contentSizeRef = useRef(readPanelSize(contentPanelSizeKey, 70));
+  const fileTreeSizeRef = useRef(readPanelSize(fileTreePanelSizeKey, 15));
+  const contentSizeRef = useRef(readPanelSize(contentPanelSizeKey, 85));
+  const chatSizeRef = useRef(readPanelSize(chatPanelSizeKey, 30));
 
-  const innerPanelLayout = useMemo(() => {
+  // Chat is its own column; the browser and file tree share a nested group.
+  // Their stored sizes are percentages of that nested group, so they are
+  // normalised against each other instead of against the full width.
+  const panelLayout = useMemo(() => {
     const fileTreeSize = fileTreeVisible ? fileTreeSizeRef.current : 0;
     const desiredContentSize = showContent ? contentSizeRef.current : 0;
-    const fixedPanelSize = fileTreeSize + desiredContentSize;
-    const chatSize = Math.max(CHAT_PANEL_MIN_SIZE, 100 - fixedPanelSize);
-    const scale =
-      chatSize + fixedPanelSize > 100 ? 100 / (chatSize + fixedPanelSize) : 1;
+    const innerTotal = fileTreeSize + desiredContentSize;
+    const scale = innerTotal > 100 ? 100 / innerTotal : 1;
 
     return {
-      chatSize: chatSize * scale,
+      chatSize: chatSizeRef.current,
       contentSize: desiredContentSize * scale,
       fileTreeSize: fileTreeSize * scale,
     };
@@ -359,91 +362,113 @@ function DefaultLayoutInner({ show }: { show: boolean }) {
                     !isMacOs && 'mt-px',
                   )}
                 >
+                  {/* Chat keeps its own column; browser and file tree share a
+                      nested group so the terminal panel below spans exactly
+                      those two, not the chat. */}
                   <ResizablePanelGroup
-                    direction="vertical"
-                    autoSaveId="stagewise-content-vertical"
+                    direction="horizontal"
                     className="h-full"
                   >
+                    <AgentChat
+                      topRightActions={chatTopRightActions}
+                      defaultSize={panelLayout.chatSize}
+                      minSize={CHAT_PANEL_MIN_SIZE}
+                      onPanelResize={(size) => {
+                        chatSizeRef.current = size;
+                        persistPanelSize(chatPanelSizeKey, size);
+                      }}
+                    />
+
+                    <ResizableHandle className="w-0.5 bg-border" />
+
                     <ResizablePanel
-                      id="workspace-panels"
-                      order={0}
-                      defaultSize={72}
-                      minSize={30}
+                      id="browser-tree-panel"
+                      order={1}
+                      className="relative h-full overflow-hidden"
                     >
                       <ResizablePanelGroup
-                        direction="horizontal"
+                        direction="vertical"
+                        autoSaveId="stagewise-content-vertical"
                         className="h-full"
                       >
-                        <AgentChat
-                          topRightActions={chatTopRightActions}
-                          defaultSize={innerPanelLayout.chatSize}
-                          minSize={CHAT_PANEL_MIN_SIZE}
-                        />
-
-                        {showContent && (
-                          <>
-                            <ResizableHandle className="w-0.5 bg-border" />
-                            <MainSection
-                              onCreateTab={handleCreateTab}
-                              pendingOmniboxFocusRequest={
-                                pendingOmniboxFocusRequest
-                              }
-                              onPendingOmniboxFocusHandled={
-                                handlePendingOmniboxFocusHandled
-                              }
-                              topRightActions={
-                                contentPanelTopRightActions ??
-                                openedContentTopRightActions
-                              }
-                              defaultSize={innerPanelLayout.contentSize}
-                              onPanelResize={(size) => {
-                                contentSizeRef.current = size;
-                                persistPanelSize(contentPanelSizeKey, size);
-                              }}
-                            />
-                          </>
-                        )}
-
-                        {fileTreeVisible && (
-                          <>
-                            <ResizableHandle className="w-0.5 bg-border" />
-                            <ResizablePanel
-                              id="file-tree-panel"
-                              order={3}
-                              defaultSize={innerPanelLayout.fileTreeSize}
-                              minSize={15}
-                              maxSize={45}
-                              onResize={(size) => {
-                                if (size > 0) {
-                                  fileTreeSizeRef.current = size;
-                                  persistPanelSize(fileTreePanelSizeKey, size);
+                        <ResizablePanel
+                          id="workspace-panels"
+                          order={0}
+                          defaultSize={72}
+                          minSize={30}
+                        >
+                          <ResizablePanelGroup
+                            direction="horizontal"
+                            className="h-full"
+                          >
+                            {showContent && (
+                              <MainSection
+                                onCreateTab={handleCreateTab}
+                                pendingOmniboxFocusRequest={
+                                  pendingOmniboxFocusRequest
                                 }
-                              }}
-                              className="relative min-w-[96px] overflow-hidden bg-background"
+                                onPendingOmniboxFocusHandled={
+                                  handlePendingOmniboxFocusHandled
+                                }
+                                topRightActions={
+                                  contentPanelTopRightActions ??
+                                  openedContentTopRightActions
+                                }
+                                defaultSize={panelLayout.contentSize}
+                                onPanelResize={(size) => {
+                                  contentSizeRef.current = size;
+                                  persistPanelSize(contentPanelSizeKey, size);
+                                }}
+                              />
+                            )}
+
+                            {fileTreeVisible && (
+                              <>
+                                {showContent && (
+                                  <ResizableHandle className="w-0.5 bg-border" />
+                                )}
+                                <ResizablePanel
+                                  id="file-tree-panel"
+                                  order={3}
+                                  defaultSize={panelLayout.fileTreeSize}
+                                  minSize={15}
+                                  maxSize={45}
+                                  onResize={(size) => {
+                                    if (size > 0) {
+                                      fileTreeSizeRef.current = size;
+                                      persistPanelSize(
+                                        fileTreePanelSizeKey,
+                                        size,
+                                      );
+                                    }
+                                  }}
+                                  className="relative min-w-[96px] overflow-hidden bg-background"
+                                >
+                                  <div className="size-full overflow-hidden">
+                                    <FileTreeSidebar />
+                                  </div>
+                                </ResizablePanel>
+                              </>
+                            )}
+                          </ResizablePanelGroup>
+                        </ResizablePanel>
+
+                        {terminalTabIds.length > 0 && (
+                          <>
+                            <ResizableHandle className="h-0.5 bg-border" />
+                            <ResizablePanel
+                              id="terminal-panel"
+                              order={1}
+                              defaultSize={28}
+                              minSize={12}
+                              className="relative overflow-hidden bg-background"
                             >
-                              <div className="size-full overflow-hidden">
-                                <FileTreeSidebar />
-                              </div>
+                              <TerminalPanelBody />
                             </ResizablePanel>
                           </>
                         )}
                       </ResizablePanelGroup>
                     </ResizablePanel>
-
-                    {terminalTabIds.length > 0 && (
-                      <>
-                        <ResizableHandle className="h-0.5 bg-border" />
-                        <ResizablePanel
-                          id="terminal-panel"
-                          order={1}
-                          defaultSize={28}
-                          minSize={12}
-                          className="relative overflow-hidden bg-background"
-                        >
-                          <TerminalPanelBody />
-                        </ResizablePanel>
-                      </>
-                    )}
                   </ResizablePanelGroup>
                 </ResizablePanel>
               </>
