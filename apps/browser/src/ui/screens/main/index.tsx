@@ -34,6 +34,7 @@ import {
   CommandCenterHotkeys,
   CommandCenterProvider,
 } from './command-center';
+import { X as XIcon } from 'lucide-react';
 import { FileTreeSidebar } from './file-tree/file-tree-sidebar';
 import { FileTreeToggleButton } from './file-tree/file-tree-toggle-button';
 import { PerTerminalContent } from './terminal-panel/_components/per-terminal-content';
@@ -462,7 +463,15 @@ function DefaultLayoutInner({ show }: { show: boolean }) {
 function TerminalPanelBody() {
   const { terminalIds, activeTerminalId, setActiveTerminalId } =
     useTerminalPanel();
+  const closeTab = useKartonProcedure((p) => p.browser.closeTab);
+  const { removeTabUiState } = useTabUIState();
   if (!activeTerminalId) return null;
+
+  const handleClose = () => {
+    const id = activeTerminalId;
+    void closeTab(id);
+    removeTabUiState(id);
+  };
 
   return (
     <div className="flex size-full flex-col">
@@ -486,6 +495,14 @@ function TerminalPanelBody() {
             {index + 1}
           </button>
         ))}
+        <button
+          type="button"
+          onClick={handleClose}
+          aria-label="Close terminal"
+          className="rounded px-1 py-0.5 text-subtle-foreground transition-colors hover:text-foreground"
+        >
+          <XIcon className="size-3.5" />
+        </button>
       </div>
       <div className="min-h-0 flex-1">
         <PerTerminalContent terminalId={activeTerminalId} isActive />
