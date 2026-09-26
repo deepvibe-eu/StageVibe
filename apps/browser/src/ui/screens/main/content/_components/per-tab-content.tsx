@@ -15,6 +15,7 @@ import { DeviceEmulationWidget } from './control-buttons/device-emulation';
 import { ChromeDevToolsWidget } from './control-buttons/chrome-devtools';
 import { DeviceEmulationFrame } from './device-emulation-frame';
 import { PerTerminalContent } from '../../terminal-panel/_components/per-terminal-content';
+import { useDockedTerminalId } from '../../_lib/docked-terminal';
 import { FilePreviewTabContent } from '../../file-tree/file-preview-tab-content';
 import { ChatPanel } from '../../agent-chat/chat/_components';
 
@@ -32,6 +33,9 @@ export const PerTabContent = forwardRef<PerTabContentRef, PerTabContentProps>(
     const tab = useKartonState((s) => s.contentTabs.tabs[tabId]) as
       | TabState
       | undefined;
+    // When this terminal is docked below the file tree, the dock owns it —
+    // rendering it here as well would duplicate the xterm instance.
+    const dockedTerminalId = useDockedTerminalId();
     const omniboxRef = useRef<OmniboxRef>(null);
     const searchBarRef = useRef<SearchBarRef>(null);
 
@@ -67,9 +71,15 @@ export const PerTabContent = forwardRef<PerTabContentRef, PerTabContentProps>(
     ) : tab?.type === 'file' ? (
       <FilePreviewTabContent tab={tab} />
     ) : tab?.type === 'terminal' ? (
-      <div className="absolute inset-0 z-10 flex flex-col">
-        <PerTerminalContent terminalId={tabId} isActive />
-      </div>
+      dockedTerminalId === tabId ? (
+        <div className="absolute inset-0 z-10 flex items-center justify-center bg-background p-6 text-center text-sm text-subtle-foreground">
+          This terminal is docked in the panel below the file tree.
+        </div>
+      ) : (
+        <div className="absolute inset-0 z-10 flex flex-col">
+          <PerTerminalContent terminalId={tabId} isActive />
+        </div>
+      )
     ) : (
       <div className="absolute inset-0 z-10 flex flex-col">
         {/* Control Bar */}
