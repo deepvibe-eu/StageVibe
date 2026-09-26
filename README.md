@@ -1,7 +1,9 @@
 <div align="center">
 
-<h1>Agewise</h1>
-<p><em>A personal fork of stagewise — the agentic IDE for open-source models.</em></p>
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset=".github/assets/logo-combo-dark.svg">
+  <img src=".github/assets/logo-combo.svg" alt="stagewise" height="60" />
+</picture>
 
 <h3>The Agentic IDE for Open-Source Models</h3>
 
@@ -28,7 +30,7 @@
 
 </div>
 
-![Agewise demo](.github/assets/full-demo-dark.webp)
+![stagewise demo](apps/website/src/app/%28home%29/_components/feature-images/full-demo-dark.webp)
 
 <br />
 
@@ -64,11 +66,11 @@ Connect any of the following subscriptions with a single API key to unlock all m
 
 | Subscription | Provider | Featured Models | Dashboard |
 | ---------------- | ------------ | ------------------- | ------------- |
-| Kimi             | [Moonshot AI](https://platform.moonshot.ai) | Kimi K3, Kimi K2.7 Code, Kimi K2.6, Kimi K2.5 | [Get API key](https://platform.moonshot.ai/console/api-keys) |
+| Kimi | [Moonshot AI](https://platform.moonshot.ai) | Kimi K3, Kimi K2.7 Code, Kimi K2.6, Kimi K2.5 | [Get API key](https://platform.moonshot.ai/console/api-keys) |
 | Qwen Coding Plan | [Alibaba DashScope](https://dashscope.console.aliyun.com) | Qwen 3-Coder 30B-A3B, Qwen 3-32B | [Get API key](https://dashscope.console.aliyun.com/apiKey) |
-| MiniMax          | [MiniMax](https://platform.minimax.io) | MiniMax M3, MiniMax M2.7 | [Get API key](https://platform.minimax.io/user-center/basic-information/interface-key) |
-| Xiaomi MiMo      | [Xiaomi MiMo](https://platform.xiaomimimo.com) | MiMo-V2.5-Pro, MiMo-V2.5               | [Get API key](https://platform.xiaomimimo.com/#/console/plan-manage) |
-| Mistral          | [Mistral](https://console.mistral.ai) | Mistral Medium 3.5, Mistral Large 3, Mistral Small 4, Codestral | [Get API key](https://console.mistral.ai/api-keys) |
+| MiniMax | [MiniMax](https://platform.minimax.io) | MiniMax M3, MiniMax M2.7 | [Get API key](https://platform.minimax.io/user-center/basic-information/interface-key) |
+| Xiaomi MiMo | [Xiaomi MiMo](https://platform.xiaomimimo.com) | MiMo-V2.5-Pro, MiMo-V2.5 | [Get API key](https://platform.xiaomimimo.com/#/console/plan-manage) |
+| Mistral | [Mistral](https://console.mistral.ai) | Mistral Medium 3.5, Mistral Large 3, Mistral Small 4, Codestral | [Get API key](https://console.mistral.ai/api-keys) |
 
 ### Bring Your Own API Key
 
@@ -76,7 +78,7 @@ Connect directly to any of the following API providers with your own key. For ma
 
 | Provider | Featured Models | Dashboard |
 | ------------- | ------------------- | ------------- |
-| OpenRouter    | Claude Opus 4.8, GPT-5.6 Sol, Gemini 3.1 Pro, DeepSeek V4 Pro | [Get API key](https://openrouter.ai/keys) |
+| OpenRouter | Claude Opus 4.8, GPT-5.6 Sol, Gemini 3.1 Pro, DeepSeek V4 Pro | [Get API key](https://openrouter.ai/keys) |
 
 ### stagewise Account
 
@@ -84,9 +86,9 @@ For ease of use and immediate access to a large library of models, you can simpl
 
 | Plan | Price | Limits |
 | -------- | ------------- | ------------------------------- |
-| Free     | $0 / month    | Limited access to 3 standard models (Default, Quick, Smart) |
-| Pro      | $20 / month   | Access to all models, including Frontier and Open-Weights |
-| Ultra    | $200 / month  | Access to all models, 15x higher limits than Pro |
+| Free | $0 / month | Limited access to 3 standard models (Default, Quick, Smart) |
+| Pro | $20 / month | Access to all models, including Frontier and Open-Weights |
+| Ultra | $200 / month | Access to all models, 15x higher limits than Pro |
 
 Included models:
 
@@ -138,7 +140,7 @@ Every conversation can be exported or copied as Markdown, including tool
 calls, reasoning (optional) and a marker for compacted regions:
 
 - Right-click a chat in the sidebar → **Copy as Markdown** / **Export as Markdown…**
-- Or the command center → *Export current chat as Markdown…*
+- Or the command center → _Export current chat as Markdown…_
 
 File export opens a native save dialog (suggested name: `chat-title.md`).
 
@@ -181,32 +183,12 @@ Note: the toolchain runs on Node 22+, while the packaged app runs on
 Electron's bundled Node (currently Electron 40 → Node 24.x); the About screen
 lists those runtime versions under “Other versions”.
 
-### Bundled skills
-
-The fork ships built-in skills under `apps/browser/bundled/skills/`. They are
-discovered by the agent (progressive disclosure: only the description loads
-until the skill is relevant) and can also be invoked explicitly.
-
-Re-authored for Agewise (`skill-creator` explains how to add more):
-
-- **Skill Refiner** — fix an existing skill from evidence, with the smallest patch
-- **Skill Creator** — turn a repeated workflow into a skill, with a lint script
-  (`node scripts/lint-skill.mjs <skill-dir>`)
-- **Deep Research** — a five-phase pipeline (background → direction → analysis →
-  research → writing) that ends in a sourced report
-- **Plan Mode** — settle the approach before writing code
-- **Mate Personas** — role cards (coder, planner, verifier, generalist,
-  orchestrator, skill editor)
-- **Visual Page** — build a self-contained HTML page for diagrams, dashboards or
-  comparisons
-- plus the existing **Mate Team** and **Mate Doctor**
-
 ### Roadmap
 
-- **More skills**: the remaining ones are daemon/CLI-bound (`.harness`,
-  the daemon CLI, MCP/Lark tooling) or need heavy binary tooling
-  (docx/xlsx/pptx/pdf); they get Agewise-native rewrites only where they add
-  value.
+- **Mavis skills**: bundle the Mavis agent personas and skills as built-in
+  skills (`apps/browser/bundled/skills/…`). Skills are discovered by the agent
+  via progressive disclosure and can also be invoked explicitly. Proprietary
+  scripts are **re-implemented from scratch**, not copied.
 - **i18n**: extract UI strings and add a language selector (German, French,
   Russian, Chinese) under `Settings → General`.
 - **Layout**: relocate the console/terminal panel.
