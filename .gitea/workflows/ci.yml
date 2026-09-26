@@ -1,0 +1,61 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - '**'
+    paths:
+      - 'apps/browser/**'
+      - 'packages/**'
+      - 'agent/**'
+      - 'pnpm-lock.yaml'
+      - '.gitea/workflows/**'
+      - 'turbo.json'
+      - 'biome.jsonc'
+  pull_request:
+    paths:
+      - 'apps/browser/**'
+      - 'packages/**'
+      - 'agent/**'
+      - 'pnpm-lock.yaml'
+      - '.gitea/workflows/**'
+      - 'turbo.json'
+      - 'biome.jsonc'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    name: Lint, typecheck, build, test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.30.3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint and format (Biome)
+        run: pnpm check
+
+      - name: Build workspace packages
+        run: pnpm build
+
+      - name: Typecheck browser app
+        run: pnpm -F stagewise typecheck
+
+      - name: Tests
+        run: pnpm test

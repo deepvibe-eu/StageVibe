@@ -1,8 +1,12 @@
 # Releasing Agewise
 
 This fork is hosted on the project's own Gitea, so the GitHub Actions release
-workflows under `.github/workflows/` do **not** run. A release is therefore a
-local, manual sequence: bump, build, tag, attach.
+workflows under `.github/workflows-disabled/` do **not** run there (they are
+parked; Gitea would otherwise pick up `.github/workflows/` and fail on the
+missing GitHub secrets). Continuous integration lives in
+`.gitea/workflows/ci.yml` and runs on a self-hosted `act_runner` in host mode.
+
+A release is therefore a local, manual sequence: bump, build, tag, attach.
 
 ## 1. Bump version and changelog
 
@@ -57,6 +61,9 @@ pnpm -F stagewise make --targets zip
 
 ## Notes
 
+- CI runs on the self-hosted `act_runner` in host mode (`ubuntu-latest:host`).
+  The workflow installs Node 22 and pnpm 10.30.3 itself via actions, so the
+  server needs neither Node nor Docker — only `git` and the runner.
 - `make` builds the **dev** release channel unless told otherwise; the release
   channel comes from the environment used to build. Check the version and
   channel shown on the app's About screen after packaging.
