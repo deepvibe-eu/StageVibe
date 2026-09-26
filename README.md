@@ -1,36 +1,18 @@
 <div align="center">
 
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset=".github/assets/logo-combo-dark.svg">
-  <img src=".github/assets/logo-combo.svg" alt="stagewise" height="60" />
-</picture>
+<img src=".github/assets/agewise-icon.svg" alt="Agewise" height="72" />
 
 <h3>The Agentic IDE for Open-Source Models</h3>
 
-<p>
-  <a href="./locales/README.zh-CN.md">简体中文</a> ·
-  <a href="./locales/README.de.md">Deutsch</a> ·
-  <a href="./locales/README.ja.md">日本語</a> ·
-  <a href="./locales/README.es.md">Español</a> ·
-  <a href="./locales/README.ko.md">한국어</a> ·
-  <a href="./locales/README.pt.md">Português</a> ·
-  <a href="./locales/README.fr.md">Français</a> ·
-  <a href="./locales/README.it.md">Italiano</a> ·
-  <a href="./locales/README.hi.md">हिन्दी</a> ·
-  <a href="./locales/README.ru.md">Русский</a> ·
-  <a href="./locales/README.uk.md">Українська</a>
-</p>
+
 
 <p>
-  <a href="https://github.com/stagewise-io/stagewise/blob/main/LICENSE"><img alt="License" src="https://img.shields.io/npm/l/stagewise" /></a>
-  <a href="https://github.com/stagewise-io/stagewise/stargazers"><img alt="GitHub Stars" src="https://img.shields.io/github/stars/stagewise-io/stagewise" /></a>
-  <a href="https://discord.gg/gkdGsDYaKA"><img alt="Discord" src="https://img.shields.io/discord/1229378372141056010?label=Discord&logo=discord&logoColor=white" /></a>
-  <a href="https://x.com/stagewise_io"><img alt="X Follow" src="https://img.shields.io/twitter/follow/stagewise_io" /></a>
+  <a href="https://github.com/moc72/agewise/blob/main/LICENSE"><img alt="License: AGPL-3.0" src="https://img.shields.io/badge/license-AGPL--3.0-blue" /></a>
 </p>
 
 </div>
 
-![stagewise demo](apps/website/src/app/%28home%29/_components/feature-images/full-demo-dark.webp)
+![Agewise demo](.github/assets/full-demo-dark.webp)
 
 <br />
 
@@ -54,7 +36,7 @@
 
 ## Getting Started
 
-Download stagewise from [stagewise.io](https://ade.stagewise.io) and follow the short onboarding guide to set up your account.
+Build Agewise from source (see [Development](#development)); packaged releases are published under [github.com/moc72/agewise/releases](https://github.com/moc72/agewise/releases).
 
 ## Use your coding subscription
 
@@ -195,11 +177,10 @@ lists those runtime versions under “Other versions”.
 
 ## License
 
-stagewise is developed by stagewise GmbH and offered under the AGPLv3 license.
+Agewise is a personal fork of [stagewise](https://github.com/stagewise-io/stagewise) (developed by stagewise GmbH) and is distributed under the AGPLv3 license.
 
 For more information on the license model, visit the [FAQ about the GNU Licenses](https://www.gnu.org/licenses/gpl-faq.html).
 
-For use cases that fall outside the scope permitted by the AGPLv3 license, feel free to [contact us](mailto:sales@stagewise.io).
 
 ## Issues
 
