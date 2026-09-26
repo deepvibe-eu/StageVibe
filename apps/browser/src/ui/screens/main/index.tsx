@@ -36,6 +36,12 @@ import {
 } from './command-center';
 import { FileTreeSidebar } from './file-tree/file-tree-sidebar';
 import { FileTreeToggleButton } from './file-tree/file-tree-toggle-button';
+import { PerTerminalContent } from './terminal-panel/_components/per-terminal-content';
+import {
+  TerminalPanelProvider,
+  useTerminalPanel,
+  useTerminalTabIds,
+} from './_lib/terminal-panel';
 import { SettingsSidebar } from '../settings/sidebar';
 import { SettingsContent } from '../settings/content';
 import {
@@ -108,6 +114,9 @@ function DefaultLayoutInner({ show }: { show: boolean }) {
   const appScreenMode = useKartonState((s) => s.appScreen.mode);
   const { setTabUiState, requestTerminalFocus } = useTabUIState();
   const [openAgent] = useOpenAgent();
+  // Terminals live in the bottom panel, not in the content tab strip's content
+  // area; the panel stays visible while the user works in other tabs.
+  const terminalTabIds = useTerminalTabIds(openAgent);
   const { collapsed: sidebarCollapsed } = useSidebarCollapsed();
   const { collapsed: contentCollapsed, setCollapsed: setContentCollapsed } =
     useContentCollapsed();
@@ -302,110 +311,185 @@ function DefaultLayoutInner({ show }: { show: boolean }) {
         {isMacOs && !isFullScreen && (
           <div className="app-drag absolute top-0 left-0 -z-10 h-10 w-full" />
         )}
-        <ResizablePanelGroup
-          direction="horizontal"
-          autoSaveId={rootLayoutStorageKey}
-          className="overflow-visible! h-full w-full"
-        >
-          {settingsOpen ? (
-            <>
-              <ResizablePanel
-                id={SIDEBAR_PANEL_ID}
-                order={SIDEBAR_PANEL_ORDER}
-                defaultSize={DEFAULT_EXPANDED_SIDEBAR_SIZE}
-                minSize={SIDEBAR_PANEL_MIN_SIZE}
-                maxSize={SIDEBAR_PANEL_MAX_SIZE}
-                className={SIDEBAR_PANEL_CLASS_NAME}
-              >
-                <SettingsSidebar />
-              </ResizablePanel>
+        <TerminalPanelProvider terminalIds={terminalTabIds}>
+          <ResizablePanelGroup
+            direction="horizontal"
+            autoSaveId={rootLayoutStorageKey}
+            className="overflow-visible! h-full w-full"
+          >
+            {settingsOpen ? (
+              <>
+                <ResizablePanel
+                  id={SIDEBAR_PANEL_ID}
+                  order={SIDEBAR_PANEL_ORDER}
+                  defaultSize={DEFAULT_EXPANDED_SIDEBAR_SIZE}
+                  minSize={SIDEBAR_PANEL_MIN_SIZE}
+                  maxSize={SIDEBAR_PANEL_MAX_SIZE}
+                  className={SIDEBAR_PANEL_CLASS_NAME}
+                >
+                  <SettingsSidebar />
+                </ResizablePanel>
 
-              <ResizableHandle />
+                <ResizableHandle />
 
-              <ResizablePanel
-                id="content-panel"
-                order={1}
-                defaultSize={65}
-                className={cn(
-                  'relative h-full overflow-hidden rounded-l-xl bg-background ring-1 ring-derived-subtle',
-                  !isMacOs && 'mt-px',
-                )}
-              >
-                <SettingsContent />
-              </ResizablePanel>
-            </>
-          ) : (
-            <>
-              <Sidebar />
-
-              <ResizablePanel
-                id="content-panel"
-                order={1}
-                defaultSize={65}
-                className={cn(
-                  'relative h-full overflow-hidden ring-1 ring-derived-subtle',
-                  !sidebarCollapsed && 'rounded-l-xl',
-                  !isMacOs && 'mt-px',
-                )}
-              >
-                <ResizablePanelGroup direction="horizontal" className="h-full">
-                  <AgentChat
-                    topRightActions={chatTopRightActions}
-                    defaultSize={innerPanelLayout.chatSize}
-                    minSize={CHAT_PANEL_MIN_SIZE}
-                  />
-
-                  {showContent && (
-                    <>
-                      <ResizableHandle className="w-0.5 bg-border" />
-                      <MainSection
-                        onCreateTab={handleCreateTab}
-                        pendingOmniboxFocusRequest={pendingOmniboxFocusRequest}
-                        onPendingOmniboxFocusHandled={
-                          handlePendingOmniboxFocusHandled
-                        }
-                        topRightActions={
-                          contentPanelTopRightActions ??
-                          openedContentTopRightActions
-                        }
-                        defaultSize={innerPanelLayout.contentSize}
-                        onPanelResize={(size) => {
-                          contentSizeRef.current = size;
-                          persistPanelSize(contentPanelSizeKey, size);
-                        }}
-                      />
-                    </>
+                <ResizablePanel
+                  id="content-panel"
+                  order={1}
+                  defaultSize={65}
+                  className={cn(
+                    'relative h-full overflow-hidden rounded-l-xl bg-background ring-1 ring-derived-subtle',
+                    !isMacOs && 'mt-px',
                   )}
+                >
+                  <SettingsContent />
+                </ResizablePanel>
+              </>
+            ) : (
+              <>
+                <Sidebar />
 
-                  {fileTreeVisible && (
-                    <>
-                      <ResizableHandle className="w-0.5 bg-border" />
-                      <ResizablePanel
-                        id="file-tree-panel"
-                        order={3}
-                        defaultSize={innerPanelLayout.fileTreeSize}
-                        minSize={15}
-                        maxSize={45}
-                        onResize={(size) => {
-                          if (size > 0) {
-                            fileTreeSizeRef.current = size;
-                            persistPanelSize(fileTreePanelSizeKey, size);
-                          }
-                        }}
-                        className="relative min-w-[96px] overflow-hidden bg-background"
+                <ResizablePanel
+                  id="content-panel"
+                  order={1}
+                  defaultSize={65}
+                  className={cn(
+                    'relative h-full overflow-hidden ring-1 ring-derived-subtle',
+                    !sidebarCollapsed && 'rounded-l-xl',
+                    !isMacOs && 'mt-px',
+                  )}
+                >
+                  <ResizablePanelGroup
+                    direction="vertical"
+                    autoSaveId="stagewise-content-vertical"
+                    className="h-full"
+                  >
+                    <ResizablePanel
+                      id="workspace-panels"
+                      order={0}
+                      defaultSize={72}
+                      minSize={30}
+                    >
+                      <ResizablePanelGroup
+                        direction="horizontal"
+                        className="h-full"
                       >
-                        <div className="size-full overflow-hidden">
-                          <FileTreeSidebar />
-                        </div>
-                      </ResizablePanel>
-                    </>
-                  )}
-                </ResizablePanelGroup>
-              </ResizablePanel>
-            </>
-          )}
-        </ResizablePanelGroup>
+                        <AgentChat
+                          topRightActions={chatTopRightActions}
+                          defaultSize={innerPanelLayout.chatSize}
+                          minSize={CHAT_PANEL_MIN_SIZE}
+                        />
+
+                        {showContent && (
+                          <>
+                            <ResizableHandle className="w-0.5 bg-border" />
+                            <MainSection
+                              onCreateTab={handleCreateTab}
+                              pendingOmniboxFocusRequest={
+                                pendingOmniboxFocusRequest
+                              }
+                              onPendingOmniboxFocusHandled={
+                                handlePendingOmniboxFocusHandled
+                              }
+                              topRightActions={
+                                contentPanelTopRightActions ??
+                                openedContentTopRightActions
+                              }
+                              defaultSize={innerPanelLayout.contentSize}
+                              onPanelResize={(size) => {
+                                contentSizeRef.current = size;
+                                persistPanelSize(contentPanelSizeKey, size);
+                              }}
+                            />
+                          </>
+                        )}
+
+                        {fileTreeVisible && (
+                          <>
+                            <ResizableHandle className="w-0.5 bg-border" />
+                            <ResizablePanel
+                              id="file-tree-panel"
+                              order={3}
+                              defaultSize={innerPanelLayout.fileTreeSize}
+                              minSize={15}
+                              maxSize={45}
+                              onResize={(size) => {
+                                if (size > 0) {
+                                  fileTreeSizeRef.current = size;
+                                  persistPanelSize(fileTreePanelSizeKey, size);
+                                }
+                              }}
+                              className="relative min-w-[96px] overflow-hidden bg-background"
+                            >
+                              <div className="size-full overflow-hidden">
+                                <FileTreeSidebar />
+                              </div>
+                            </ResizablePanel>
+                          </>
+                        )}
+                      </ResizablePanelGroup>
+                    </ResizablePanel>
+
+                    {terminalTabIds.length > 0 && (
+                      <>
+                        <ResizableHandle className="h-0.5 bg-border" />
+                        <ResizablePanel
+                          id="terminal-panel"
+                          order={1}
+                          defaultSize={28}
+                          minSize={12}
+                          className="relative overflow-hidden bg-background"
+                        >
+                          <TerminalPanelBody />
+                        </ResizablePanel>
+                      </>
+                    )}
+                  </ResizablePanelGroup>
+                </ResizablePanel>
+              </>
+            )}
+          </ResizablePanelGroup>
+        </TerminalPanelProvider>
       </div>
     </>
+  );
+}
+
+/**
+ * Bottom terminal panel: own header with a numbered switcher plus the active
+ * terminal. Independent of the content tabs, so it stays put while the user
+ * browses or edits.
+ */
+function TerminalPanelBody() {
+  const { terminalIds, activeTerminalId, setActiveTerminalId } =
+    useTerminalPanel();
+  if (!activeTerminalId) return null;
+
+  return (
+    <div className="flex size-full flex-col">
+      <div className="flex h-7 shrink-0 items-center gap-1 border-derived border-b bg-surface-1 px-2">
+        <span className="mr-auto font-mono text-subtle-foreground text-xs">
+          Terminal
+        </span>
+        {terminalIds.map((id, index) => (
+          <button
+            key={id}
+            type="button"
+            onClick={() => setActiveTerminalId(id)}
+            aria-label={`Show terminal ${index + 1}`}
+            className={cn(
+              'rounded px-1.5 py-0.5 font-mono text-xs transition-colors',
+              id === activeTerminalId
+                ? 'bg-surface-3 text-foreground'
+                : 'text-subtle-foreground hover:text-foreground',
+            )}
+          >
+            {index + 1}
+          </button>
+        ))}
+      </div>
+      <div className="min-h-0 flex-1">
+        <PerTerminalContent terminalId={activeTerminalId} isActive />
+      </div>
+    </div>
   );
 }

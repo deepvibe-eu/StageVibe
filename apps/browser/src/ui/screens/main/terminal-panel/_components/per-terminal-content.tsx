@@ -179,22 +179,23 @@ export function PerTerminalContent({
   } as const;
 
   const getTheme = () => {
-    const styles = getComputedStyle(document.documentElement);
     const isDark = document.documentElement.classList.contains('dark');
-    const bg = styles.getPropertyValue('--color-background').trim();
-    const fg = styles.getPropertyValue('--color-foreground').trim();
-
     const ansi = (hue: number, l: number, c: number) =>
       `oklch(${l} ${c} ${hue})`;
     const neutral = (l: number) => ansi(HUES.base, l, 0.002);
 
+    // Classic terminal look: a background clearly darker than the window and
+    // green foreground, independent of the app theme.
+    const terminalBackground = isDark ? '#080d09' : '#0a1410';
+    const terminalForeground = '#7ef0a1';
+
     return {
-      background: bg || (isDark ? '#0f0f14' : '#fafafa'),
-      foreground: fg || (isDark ? '#e0e0e0' : '#1a1a1a'),
-      cursor: fg || (isDark ? '#e0e0e0' : '#1a1a1a'),
+      background: terminalBackground,
+      foreground: terminalForeground,
+      cursor: terminalForeground,
       selectionBackground: isDark
-        ? 'rgba(255,255,255,0.15)'
-        : 'rgba(0,0,0,0.1)',
+        ? 'rgba(126,240,161,0.22)'
+        : 'rgba(126,240,161,0.28)',
       black: neutral(isDark ? 0.25 : 0.92),
       red: ansi(HUES.red, isDark ? 0.55 : 0.45, isDark ? 0.16 : 0.14),
       green: ansi(HUES.green, isDark ? 0.55 : 0.45, isDark ? 0.14 : 0.16),

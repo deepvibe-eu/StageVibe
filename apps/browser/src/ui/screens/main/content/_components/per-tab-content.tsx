@@ -14,7 +14,6 @@ import { ColorSchemeWidget } from './control-buttons/color-scheme';
 import { DeviceEmulationWidget } from './control-buttons/device-emulation';
 import { ChromeDevToolsWidget } from './control-buttons/chrome-devtools';
 import { DeviceEmulationFrame } from './device-emulation-frame';
-import { PerTerminalContent } from '../../terminal-panel/_components/per-terminal-content';
 import { FilePreviewTabContent } from '../../file-tree/file-preview-tab-content';
 import { ChatPanel } from '../../agent-chat/chat/_components';
 
@@ -67,8 +66,8 @@ export const PerTabContent = forwardRef<PerTabContentRef, PerTabContentProps>(
     ) : tab?.type === 'file' ? (
       <FilePreviewTabContent tab={tab} />
     ) : tab?.type === 'terminal' ? (
-      <div className="absolute inset-0 z-10 flex flex-col">
-        <PerTerminalContent terminalId={tabId} isActive />
+      <div className="absolute inset-0 z-10 flex items-center justify-center bg-background p-6 text-center text-sm text-subtle-foreground">
+        This terminal is open in the panel below.
       </div>
     ) : (
       <div className="absolute inset-0 z-10 flex flex-col">
