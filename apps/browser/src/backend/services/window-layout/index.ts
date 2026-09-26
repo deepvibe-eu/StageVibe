@@ -2108,14 +2108,6 @@ export class WindowLayoutService extends DisposableService {
     }
 
     if (bounds && this.activeTab) {
-      // TEMP DIAGNOSTIC (browser layout bug): shows what the renderer sent and
-      // how it relates to the window, so we can tell a wrong measurement from
-      // a coordinate/zoom mismatch. Remove once fixed.
-      const contentBounds = this.baseWindow?.getContentBounds();
-      const uiZoom = this.preferencesService.get().general.uiZoomPercentage;
-      this.logger.debug(
-        `[LayoutDebug] bounds=${JSON.stringify(bounds)} content=${JSON.stringify(contentBounds)} uiZoom=${uiZoom}`,
-      );
       this.activeTab.setVisible(true);
       this.activeTab.setBounds(bounds);
     } else if (!bounds && this.activeTab) {
