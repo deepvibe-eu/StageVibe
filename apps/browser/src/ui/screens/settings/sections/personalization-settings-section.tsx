@@ -43,7 +43,7 @@ function AppColorSchemeSetting() {
       <div>
         <h3 className="font-medium text-base text-foreground">Appearance</h3>
         <p className="text-muted-foreground text-sm">
-          Choose whether stagewise follows your system appearance or always uses
+          Choose whether Agewise follows your system appearance or always uses
           light or dark mode.
         </p>
       </div>
@@ -72,7 +72,7 @@ function ThemeSetting() {
       <div>
         <h3 className="font-medium text-base text-foreground">Color scheme</h3>
         <p className="text-muted-foreground text-sm">
-          Adapt the color style of your stagewise setup to your liking.
+          Adapt the color style of your Agewise setup to your liking.
         </p>
       </div>
 

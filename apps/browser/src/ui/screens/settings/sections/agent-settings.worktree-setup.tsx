@@ -319,7 +319,7 @@ export function WorktreeSetupSection() {
           <div>
             <h1 className="font-semibold text-foreground text-xl">Worktrees</h1>
             <p className="text-muted-foreground text-sm">
-              Configure scripts and clean stagewise-managed Git worktrees.
+              Configure scripts and clean Agewise-managed Git worktrees.
             </p>
           </div>
 

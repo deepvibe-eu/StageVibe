@@ -358,7 +358,7 @@ function PageSettingComponent({ type, title, description }: PageSettingProps) {
           <div className="flex flex-col">
             <span className="font-medium text-foreground">Agewise Home</span>
             <span className="text-muted-foreground text-xs">
-              Open the stagewise home page
+              Open the Agewise home page
             </span>
           </div>
         </RadioLabel>

@@ -72,7 +72,7 @@ export function AccountSection() {
           <div className="mx-auto flex w-full max-w-3xl shrink-0 flex-col items-center">
             <SignInOptionsPanel
               title="Authenticate"
-              description="Get access to the latest models with Agewise."
+              description="Get access to the latest models with Stagewise."
               sendOtp={(email, token) => sendOtp(email, token ?? '')}
               verifyOtp={verifyOtp}
               signInSocial={signInSocial}
