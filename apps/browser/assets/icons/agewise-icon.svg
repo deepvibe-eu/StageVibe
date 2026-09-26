@@ -1,0 +1,32 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="512"
+  height="512"
+  viewBox="0 0 512 512"
+  role="img"
+  aria-label="Agewise"
+>
+  <defs>
+    <linearGradient id="agewise-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1d2429" />
+      <stop offset="100%" stop-color="#0c1013" />
+    </linearGradient>
+    <linearGradient id="agewise-mark" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#a8ffc2" />
+      <stop offset="100%" stop-color="#2fbf63" />
+    </linearGradient>
+  </defs>
+
+  <!-- Squircle plate -->
+  <rect x="0" y="0" width="512" height="512" rx="116" fill="url(#agewise-bg)" />
+
+  <!-- Stylised "A": outer triangle with a cut-out, so the mark still reads at 16px -->
+  <path
+    d="M256 80 L400 424 H112 Z M256 196 L306 320 H206 Z"
+    fill="url(#agewise-mark)"
+    fill-rule="evenodd"
+  />
+
+  <!-- Companion dot: the mate that works alongside you -->
+  <circle cx="384" cy="132" r="26" fill="#a8ffc2" opacity="0.92" />
+</svg>
