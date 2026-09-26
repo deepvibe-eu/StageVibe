@@ -1368,11 +1368,24 @@ export class WindowLayoutService extends DisposableService {
     // tabs gets explicit bounds in device-independent pixels, and scaling the
     // renderer made those bounds drift off the tab's cell. Keep the interface
     // at Default size until the bounds conversion handles zoom reliably.
-    const factor = 1;
-    void percentage;
-    view.webContents.setZoomFactor(factor);
+    // A stale stored value is reset as well, otherwise consumers like the
+    // sidebar counter-scale disagree with what is actually applied.
+    if (percentage !== 100) {
+      this.logger.debug(
+        `[WindowLayoutService] Resetting UI size preference from ${percentage}% to 100%.`,
+      );
+      void this.preferencesService
+        .update([
+          { op: 'replace', path: ['general', 'uiZoomPercentage'], value: 100 },
+        ])
+        .catch((error) =>
+          this.logger.warn(`Failed to reset UI size preference: ${error}`),
+        );
+    }
+
+    view.webContents.setZoomFactor(1);
     this.logger.debug(
-      `[WindowLayoutService] Applied UI webContents zoom factor: ${factor}`,
+      '[WindowLayoutService] Applied UI webContents zoom factor: 1',
     );
   }
 
