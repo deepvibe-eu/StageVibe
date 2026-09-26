@@ -65,7 +65,7 @@ function UiSizeSetting() {
       <div>
         <h3 className="font-medium text-base text-foreground">UI size</h3>
         <p className="text-muted-foreground text-sm">
-          Scale the stagewise interface independently from web page zoom.
+          Scale the Agewise interface independently from web page zoom.
         </p>
       </div>
 
