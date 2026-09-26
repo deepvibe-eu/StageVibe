@@ -1364,7 +1364,12 @@ export class WindowLayoutService extends DisposableService {
     const view = this.uiController.getView();
     if (view.webContents.isDestroyed()) return;
 
-    const factor = Math.max(0.1, percentage / 100);
+    // UI zoom is pinned to 100%. The native WebContentsView for browsing
+    // tabs gets explicit bounds in device-independent pixels, and scaling the
+    // renderer made those bounds drift off the tab's cell. Keep the interface
+    // at Default size until the bounds conversion handles zoom reliably.
+    const factor = 1;
+    void percentage;
     view.webContents.setZoomFactor(factor);
     this.logger.debug(
       `[WindowLayoutService] Applied UI webContents zoom factor: ${factor}`,
