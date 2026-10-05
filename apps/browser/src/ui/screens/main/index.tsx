@@ -310,7 +310,7 @@ function DefaultLayoutInner({ show }: { show: boolean }) {
       {show && <Tutorial tutorialId="general-ui-experience" />}
       <div
         className={cn(
-          'root pointer-events-auto relative inset-0 flex size-full flex-row items-stretch justify-between transition-[opacity,filter] delay-150 duration-300 ease-out',
+          'root pointer-events-auto relative inset-0 flex size-full flex-row items-stretch justify-between p-2 gap-2 transition-[opacity,filter] delay-150 duration-300 ease-out',
           !show && 'pointer-events-none opacity-0 blur-lg',
         )}
         onFocusCapture={markStagewiseUiFocused}
@@ -346,8 +346,7 @@ function DefaultLayoutInner({ show }: { show: boolean }) {
                   order={1}
                   defaultSize={65}
                   className={cn(
-                    'relative h-full overflow-hidden rounded-l-xl bg-background ring-1 ring-derived-subtle',
-                    !isMacOs && 'mt-px',
+                    'relative h-full overflow-hidden rounded-lg bg-background ring-1 ring-derived-subtle',
                   )}
                 >
                   <SettingsContent />
@@ -362,9 +361,7 @@ function DefaultLayoutInner({ show }: { show: boolean }) {
                   order={1}
                   defaultSize={65}
                   className={cn(
-                    'relative h-full overflow-hidden ring-1 ring-derived-subtle',
-                    !sidebarCollapsed && 'rounded-l-xl',
-                    !isMacOs && 'mt-px',
+                    'relative h-full overflow-hidden rounded-lg bg-background ring-1 ring-derived-subtle',
                   )}
                 >
                   {/* Chat keeps its own column; browser and file tree share a
