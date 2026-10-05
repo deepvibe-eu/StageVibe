@@ -3885,6 +3885,7 @@ export function ModelsProvidersSection() {
               <Button
                 variant="secondary"
                 size="sm"
+                className="whitespace-nowrap px-2.5 py-1.5 text-xs"
                 onClick={() => setShowAddProvider(true)}
               >
                 <IconPlusOutline18 className="size-3.5" />

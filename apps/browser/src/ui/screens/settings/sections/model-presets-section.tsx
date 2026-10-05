@@ -775,8 +775,6 @@ function UtilityModelList({
   const userAccount = useKartonState((s) => s.userAccount);
   const updatePreferences = useKartonProcedure((p) => p.preferences.update);
 
-  const modelEntries = preferences.agent.utilityModels[task] ?? [];
-
   const subscriptionPlan = userAccount?.subscription?.plan;
 
   const entries = useMemo(
@@ -786,6 +784,18 @@ function UtilityModelList({
       }),
     [preferences, subscriptionPlan],
   );
+
+  const allModelEntries = preferences.agent.utilityModels[task] ?? [];
+
+  const modelEntries = useMemo(() => {
+    const validEntryKeys = new Set(
+      entries.map((e) => `${e.instanceId}:${e.modelId}`),
+    );
+    return allModelEntries.filter((entry) => {
+      const key = `${entry.providerInstanceId ?? ''}:${entry.modelId}`;
+      return validEntryKeys.has(key);
+    });
+  }, [allModelEntries, entries]);
 
   const handleChange = useCallback(
     (next: UtilityModelEntry[]) => {
