@@ -290,6 +290,25 @@ export function vendorHasApiKey(
 }
 
 /**
+ * Check whether a provider instance is configured and usable for utility models.
+ * Returns true if:
+ * - The instance has an encrypted API key (for API-key based providers)
+ * - The instance is a coding plan (requires subscription)
+ *
+ * Note: Stagewise instances are NOT considered configured by default -
+ * they require a non-free subscription which is checked separately via userAccount.
+ */
+export function isProviderInstanceConfigured(instance: ProviderInstance): boolean {
+  if (instance.typeId === 'coding-plan') {
+    return true;
+  }
+  if (instance.typeId === 'stagewise') {
+    return false;
+  }
+  return !!(instance.config as { encryptedApiKey?: string }).encryptedApiKey;
+}
+
+/**
  * Get the instance ID for a vendor, or `undefined` if it falls back to
  * stagewise (no vendor-specific instance).
  */
@@ -885,10 +904,30 @@ export function getSelectableModelEntries(
 /** Models backed by a complete external agent cannot run AI-SDK utilities. */
 export function getSelectableUtilityModelEntries(
   prefs: Pick<UserPreferences, 'providerInstances' | 'customModels'>,
+  options?: {
+    /** If provided and not 'free', Stagewise models will be included */
+    stagewiseSubscriptionPlan?: string | null;
+  },
 ): ModelSelectorEntry[] {
-  return getSelectableModelEntries(prefs).filter(
+  const entries = getSelectableModelEntries(prefs).filter(
     (entry) => !isExternalAgentProviderType(entry.typeId),
   );
+
+  if (!options?.stagewiseSubscriptionPlan) {
+    return entries;
+  }
+
+  const isStagewiseConfigured =
+    options.stagewiseSubscriptionPlan !== 'free' &&
+    options.stagewiseSubscriptionPlan !== undefined &&
+    options.stagewiseSubscriptionPlan !== null;
+
+  return entries.filter((entry) => {
+    if (entry.typeId !== 'stagewise') {
+      return true;
+    }
+    return isStagewiseConfigured;
+  });
 }
 
 /**

@@ -705,6 +705,7 @@ function AddProviderGrid({
     (p) => p.preferences.setProviderInstanceGoogleCredentials,
   );
   const preferences = useKartonState((s) => s.preferences);
+  const userAccount = useKartonState((s) => s.userAccount);
   const openExternalUrl = useKartonProcedure((p) => p.openExternalUrl);
   const [selected, setSelected] = useState<SelectionKey | null>(null);
   const [apiKey, setApiKey] = useState('');
@@ -718,6 +719,12 @@ function AddProviderGrid({
   const [localAgentError, setLocalAgentError] = useState<string | null>(null);
   const [availabilityCheck, setAvailabilityCheck] = useState(0);
   const searchInputRef = useRef<HTMLInputElement>(null);
+
+  const subscriptionPlan = userAccount?.subscription?.plan;
+  const hasStagewiseSubscription =
+    subscriptionPlan !== undefined &&
+    subscriptionPlan !== null &&
+    subscriptionPlan !== 'free';
 
   // Auto-focus the search input when the dialog opens.
   useEffect(() => {
@@ -913,9 +920,9 @@ function AddProviderGrid({
     : codingPlans;
   const filteredSelfHostedTypes = filterTypes(ADDABLE_SELF_HOSTED_TYPES);
   const filteredExternalAgentTypes = filterTypes(externalAgentProviderTypeIds);
-  const filteredStagewiseModelTypes = filterTypes(
-    stagewiseModelProviderTypeIds,
-  );
+  const filteredStagewiseModelTypes = hasStagewiseSubscription
+    ? filterTypes(stagewiseModelProviderTypeIds)
+    : [];
   const customProviderMatches =
     !query ||
     'custom provider'.includes(query) ||
@@ -1368,44 +1375,34 @@ function ProviderInstancesSection({
   }, [instances]);
 
   return (
-    <div className="space-y-3">
-      {sortedInstances.map((instance) => (
-        <ProviderInstanceCard
-          key={instance.id}
-          instance={instance}
-          onConfigure={() => onConfigure(instance.id)}
-          onRename={
-            instance.typeId !== 'stagewise'
-              ? () => onRename(instance.id)
-              : undefined
-          }
-          onDelete={
-            instance.id !== DEFAULT_INSTANCE_ID
-              ? () => onDelete(instance.id)
-              : undefined
-          }
-        />
-      ))}
-
-      <div className="flex justify-end">
-        <Button
-          variant="secondary"
-          size="sm"
-          onClick={() => setShowAddProvider(true)}
-        >
-          <IconPlusOutline18 className="size-3.5" />
-          Add Provider
-        </Button>
-      </div>
-
-      {showAddProvider && (
-        <AddProviderGrid
-          onClose={() => setShowAddProvider(false)}
-          onConnected={(instanceId) => {
-            setShowAddProvider(false);
-            onConfigure(instanceId);
-          }}
-        />
+    <div className="space-y-2">
+      {sortedInstances.length > 0 ? (
+        sortedInstances.map((instance) => (
+          <ProviderInstanceCard
+            key={instance.id}
+            instance={instance}
+            onConfigure={() => onConfigure(instance.id)}
+            onRename={
+              instance.typeId !== 'stagewise'
+                ? () => onRename(instance.id)
+                : undefined
+            }
+            onDelete={
+              instance.id !== DEFAULT_INSTANCE_ID
+                ? () => onDelete(instance.id)
+                : undefined
+            }
+          />
+        ))
+      ) : (
+        <div className="rounded-lg border border-derived border-dashed px-4 py-6 text-center">
+          <p className="text-muted-foreground text-sm">
+            No providers configured.
+          </p>
+          <p className="mt-1 text-muted-foreground text-xs">
+            Configure how the agent connects to LLM providers.
+          </p>
+        </div>
       )}
     </div>
   );
@@ -3665,6 +3662,7 @@ export function ModelsProvidersSection() {
   const [detailInstanceId, setDetailInstanceId] = useState<string | null>(null);
   const [detailRenameRequested, setDetailRenameRequested] = useState(false);
   const [isDetailNameEditing, setIsDetailNameEditing] = useState(false);
+  const [showAddProvider, setShowAddProvider] = useState(false);
   const removeProviderInstance = useKartonProcedure(
     (p) => p.preferences.removeProviderInstance,
   );
@@ -3875,13 +3873,23 @@ export function ModelsProvidersSection() {
           </div>
 
           {/* Provider Instances Section */}
-          <section className="space-y-6">
-            <div>
-              <h2 className="font-medium text-foreground text-lg">Providers</h2>
-              <p className="text-muted-foreground text-sm">
-                Configure how the agent connects to LLM providers. Add API keys,
-                connect coding plans, or set up custom endpoints.
-              </p>
+          <section className="space-y-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <h2 className="font-medium text-foreground text-lg">Providers</h2>
+                <p className="text-muted-foreground text-sm">
+                  Configure how the agent connects to LLM providers. Add API keys,
+                  connect coding plans, or set up custom endpoints.
+                </p>
+              </div>
+              <Button
+                variant="secondary"
+                size="sm"
+                onClick={() => setShowAddProvider(true)}
+              >
+                <IconPlusOutline18 className="size-3.5" />
+                Add Provider
+              </Button>
             </div>
 
             <ProviderInstancesSection
@@ -3893,6 +3901,16 @@ export function ModelsProvidersSection() {
               onDelete={(id) => void handleDeleteInstance(id)}
             />
           </section>
+
+          {showAddProvider && (
+            <AddProviderGrid
+              onClose={() => setShowAddProvider(false)}
+              onConnected={(instanceId) => {
+                setShowAddProvider(false);
+                setDetailInstanceId(instanceId);
+              }}
+            />
+          )}
 
           {/* Model Presets & Utility Models */}
           <ModelPresetsSection />

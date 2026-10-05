@@ -772,13 +772,19 @@ function UtilityModelList({
   description: string;
 }) {
   const preferences = useKartonState((s) => s.preferences);
+  const userAccount = useKartonState((s) => s.userAccount);
   const updatePreferences = useKartonProcedure((p) => p.preferences.update);
 
   const modelEntries = preferences.agent.utilityModels[task] ?? [];
 
+  const subscriptionPlan = userAccount?.subscription?.plan;
+
   const entries = useMemo(
-    () => getSelectableUtilityModelEntries(preferences),
-    [preferences],
+    () =>
+      getSelectableUtilityModelEntries(preferences, {
+        stagewiseSubscriptionPlan: subscriptionPlan,
+      }),
+    [preferences, subscriptionPlan],
   );
 
   const handleChange = useCallback(
@@ -1048,6 +1054,7 @@ function PresetEditorDialog({
 
 export function ModelPresetsSection() {
   const preferences = useKartonState((s) => s.preferences);
+  const userAccount = useKartonState((s) => s.userAccount);
   const updatePreferences = useKartonProcedure((p) => p.preferences.update);
 
   const presets = preferences.agent.modelPresets ?? [];
@@ -1055,9 +1062,13 @@ export function ModelPresetsSection() {
     () => getSelectableModelEntries(preferences),
     [preferences],
   );
+  const subscriptionPlan = userAccount?.subscription?.plan;
   const utilityEntries = useMemo(
-    () => getSelectableUtilityModelEntries(preferences),
-    [preferences],
+    () =>
+      getSelectableUtilityModelEntries(preferences, {
+        stagewiseSubscriptionPlan: subscriptionPlan,
+      }),
+    [preferences, subscriptionPlan],
   );
 
   const [editorOpen, setEditorOpen] = useState(false);
