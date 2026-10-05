@@ -45,6 +45,45 @@ interface LicenseEntry {
   licenseText: string;
 }
 
+function CollapsibleOtherVersions({
+  versions,
+}: {
+  versions: Record<string, string | undefined>;
+}) {
+  const [expanded, setExpanded] = useState(false);
+  const entries = Object.entries(versions);
+  const initialCount = 8;
+  const hasMore = entries.length > initialCount;
+  const displayEntries = expanded ? entries : entries.slice(0, initialCount);
+
+  return (
+    <div className="flex flex-col gap-2">
+      <div
+        className={cn(
+          'grid gap-x-4 gap-y-1',
+          expanded ? 'grid-cols-4' : 'grid-cols-4',
+        )}
+      >
+        {displayEntries.map(([key, value]) => (
+          <div key={key} className="min-w-0">
+            <span className="text-muted-foreground text-xs">{key}</span>
+            <div className="truncate text-xs">{value ?? 'N/A'}</div>
+          </div>
+        ))}
+      </div>
+      {hasMore && (
+        <button
+          type="button"
+          className="text-left text-xs text-muted-foreground hover:text-foreground"
+          onClick={() => setExpanded(!expanded)}
+        >
+          {expanded ? 'Show Less' : 'View All'}
+        </button>
+      )}
+    </div>
+  );
+}
+
 function AppUpdateStatus() {
   const autoUpdate = useKartonState((s) => s.autoUpdate);
   const checkForUpdates = useKartonProcedure(
@@ -431,6 +470,12 @@ function OpenSourceLicenses() {
         </div>
       )}
 
+      <div className="mt-4 space-y-1 text-center text-muted-foreground text-xs">
+        <hr className="border-border/30" />
+        <br />
+        You can support our work by fueling us with ☕️☕️ coffee ☕️☕️.
+      </div>
+
       <LicenseTextDialog
         entry={selectedEntry}
         open={dialogOpen}
@@ -443,35 +488,48 @@ function OpenSourceLicenses() {
 function AppDataManagement() {
   const openFolder = useKartonProcedure((p) => p.appData.openFolder);
   const resetAppData = useKartonProcedure((p) => p.appData.reset);
+  const appInfo = useKartonState((s) => s.appInfo);
 
   return (
-    <div className="flex items-start justify-between gap-4">
-      <div className="flex flex-col gap-1">
-        <h3 className="font-medium text-base text-foreground">App Data</h3>
-        <p className="text-muted-foreground text-sm">
-          Open the data folder for troubleshooting or reset StageVibe to a clean
-          setup.
-        </p>
-      </div>
-      <div className="flex shrink-0 items-center gap-2">
-        <Button variant="secondary" size="sm" onClick={() => openFolder()}>
-          Open Folder
-        </Button>
-        <Button
-          variant="destructive"
-          size="sm"
-          onClick={() => {
-            if (
-              window.confirm(
-                'Delete all app data and restart? This cannot be undone. Your installation identifier will be retained.',
+    <div className="flex flex-col gap-4">
+      <div className="flex items-start justify-between gap-4">
+        <div className="flex flex-col gap-1">
+          <h3 className="font-medium text-base text-foreground">App Data</h3>
+          <p className="text-muted-foreground text-sm">
+            Open the data folder for troubleshooting or reset StageVibe to a clean
+            setup.
+          </p>
+        </div>
+        <div className="flex shrink-0 items-center gap-2">
+          <Button variant="secondary" size="sm" onClick={() => openFolder()}>
+            Open Folder
+          </Button>
+          <Button
+            variant="destructive"
+            size="sm"
+            onClick={() => {
+              if (
+                window.confirm(
+                  'Delete all app data and restart? This cannot be undone. Your installation identifier will be retained.',
+                )
               )
-            )
-              resetAppData();
-          }}
-        >
-          Delete App Data
-        </Button>
+                resetAppData();
+            }}
+          >
+            Delete App Data
+          </Button>
+        </div>
       </div>
+      {appInfo.appDataPath && (
+        <div className="grid grid-cols-[140px_1fr] gap-x-4">
+          <span className="font-medium text-muted-foreground text-sm">
+            Data Path
+          </span>
+          <span className="break-all text-foreground text-sm">
+            {appInfo.appDataPath}
+          </span>
+        </div>
+      )}
     </div>
   );
 }
@@ -625,11 +683,13 @@ export function AboutSection() {
                   Other Versions
                 </span>
                 <div className="text-foreground text-sm">
-                  {Object.entries(appInfo.otherVersions).map(([key, value]) => (
-                    <div key={key}>
-                      {key}: {value ?? 'N/A'}
-                    </div>
-                  ))}
+                  {Object.keys(appInfo.otherVersions).length > 0 ? (
+                    <CollapsibleOtherVersions
+                      versions={appInfo.otherVersions}
+                    />
+                  ) : (
+                    <span className="text-muted-foreground">No additional versions</span>
+                  )}
                 </div>
               </div>
             </div>

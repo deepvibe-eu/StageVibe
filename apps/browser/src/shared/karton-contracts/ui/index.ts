@@ -1140,6 +1140,7 @@ export type AppState = {
     homepage: string; // Homepage URL.
     arch: string; // Architecture (e.g., 'x64', 'arm64').
     otherVersions: Record<string, string | undefined>; // Other versions of the app.
+    appDataPath: string; // The filesystem path to the app data directory.
   };
   closedLidSleep: {
     isSupported: boolean;
@@ -2339,6 +2340,7 @@ export const defaultState: KartonContract['state'] = {
     homepage: __APP_HOMEPAGE__,
     arch: __APP_ARCH__,
     otherVersions: {},
+    appDataPath: '',
   },
   closedLidSleep: {
     isSupported: __APP_PLATFORM__ === 'darwin',

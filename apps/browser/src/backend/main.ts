@@ -212,6 +212,7 @@ export async function main({ launchOptions: { verbose } }: MainParameters) {
     draft.installedIdes = SUPPORTED_IDES.filter((ide) =>
       app.getApplicationNameForProtocol(`${ide}://`),
     );
+    draft.appInfo.appDataPath = app.getPath('appData');
   });
   const fileTreeService = await FileTreeService.create(logger, uiKarton);
   fileTreeService.setOpenFileTabHandler(

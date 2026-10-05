@@ -913,14 +913,9 @@ export function getSelectableUtilityModelEntries(
     (entry) => !isExternalAgentProviderType(entry.typeId),
   );
 
-  if (!options?.stagewiseSubscriptionPlan) {
-    return entries;
-  }
+  const plan = options?.stagewiseSubscriptionPlan ?? 'free';
 
-  const isStagewiseConfigured =
-    options.stagewiseSubscriptionPlan !== 'free' &&
-    options.stagewiseSubscriptionPlan !== undefined &&
-    options.stagewiseSubscriptionPlan !== null;
+  const isStagewiseConfigured = plan !== 'free';
 
   return entries.filter((entry) => {
     if (entry.typeId !== 'stagewise') {

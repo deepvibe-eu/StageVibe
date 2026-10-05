@@ -66,14 +66,14 @@ export const __APP_NAME__ = (() => {
 export const __APP_BUNDLE_ID__ = (() => {
   switch (__APP_RELEASE_CHANNEL__) {
     case 'release':
-      return 'org.rheaos.stagevibe';
+      return 'eu.deepvibe.stagevibe';
     case 'nightly':
-      return 'org.rheaos.stagevibe.nightly';
+      return 'eu.deepvibe.stagevibe.nightly';
     case 'prerelease':
-      return 'org.rheaos.stagevibe.prerelease';
+      return 'eu.deepvibe.stagevibe.prerelease';
     case 'dev':
     default:
-      return 'org.rheaos.stagevibe.dev';
+      return 'eu.deepvibe.stagevibe.dev';
   }
 })();
 
@@ -91,21 +91,7 @@ export const __APP_VERSION__ = (() => {
   return version;
 })();
 
-export const __APP_AUTHOR__ = (() => {
-  const author = packageJson.author;
-  if (typeof author === 'string' && author.trim()) {
-    return author;
-  }
-  if (
-    author &&
-    typeof author === 'object' &&
-    typeof author.name === 'string' &&
-    author.name.trim()
-  ) {
-    return author.name;
-  }
-  return 'GENERIC_AUTHOR';
-})();
+export const __APP_AUTHOR__ = 'Ziggy D., Modest C.';
 
 const readCliOption = (name: string) => {
   const equalsPrefix = `--${name}=`;
@@ -129,7 +115,7 @@ export const __APP_PLATFORM__ =
 export const __APP_ARCH__ =
   process.env.npm_config_arch || readCliOption('arch') || process.arch;
 
-export const __APP_COPYRIGHT__ = `Copyright © ${new Date().getFullYear()} ${__APP_AUTHOR__}`;
+export const __APP_COPYRIGHT__ = '©2026 DeepVibe EU';
 
 export const __APP_HOMEPAGE__ = (() => {
   const homepage = packageJson.homepage;
