@@ -229,19 +229,24 @@ function DefaultLayoutInner({ show }: { show: boolean }) {
     setPendingOmniboxFocusRequest(null);
   }, []);
 
-  const handleOpenTerminal = useCallback(() => {
-    if (contentCollapsed) setContentCollapsed(false);
-    return createTerminal(undefined, openAgent).then((terminalId) => {
-      if (terminalId) requestTerminalFocus(terminalId);
-      return terminalId;
-    });
-  }, [
-    createTerminal,
-    openAgent,
-    contentCollapsed,
-    setContentCollapsed,
-    requestTerminalFocus,
-  ]);
+  const handleOpenTerminal = useCallback(
+    (options?: { silent?: boolean }) => {
+      if (contentCollapsed) setContentCollapsed(false);
+      return createTerminal(undefined, openAgent).then((terminalId) => {
+        if (terminalId && !options?.silent) {
+          requestTerminalFocus(terminalId);
+        }
+        return terminalId;
+      });
+    },
+    [
+      createTerminal,
+      openAgent,
+      contentCollapsed,
+      setContentCollapsed,
+      requestTerminalFocus,
+    ],
+  );
 
   const contentPanelTopRightActions =
     showContent && !fileTreeVisible ? (
