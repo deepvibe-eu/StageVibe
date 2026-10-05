@@ -1,18 +1,18 @@
 <div align="center">
 
-<img src=".github/assets/agewise-icon.svg" alt="Agewise" height="72" />
+<img src=".github/assets/stagevibe-icon.svg" alt="StageVibe" height="72" />
 
 <h3>The Agentic IDE for Open-Source Models</h3>
 
 
 
 <p>
-  <a href="https://github.com/moc72/agewise/blob/main/LICENSE"><img alt="License: AGPL-3.0" src="https://img.shields.io/badge/license-AGPL--3.0-blue" /></a>
+  <a href="https://github.com/deepvibe-eu/StageVibe/blob/main/LICENSE"><img alt="License: AGPL-3.0" src="https://img.shields.io/badge/license-AGPL--3.0-blue" /></a>
 </p>
 
 </div>
 
-![Agewise demo](.github/assets/full-demo-dark.webp)
+![StageVibe demo](.github/assets/full-demo-dark.webp)
 
 <br />
 
@@ -20,10 +20,10 @@
 
 ## About the project
 
-> **This repository is a personal fork of stagewise, called _Agewise_.**
+> **This repository is a personal fork of stagewise, called _StageVibe_.**
 > Upstream documentation is kept below for reference. The fork focuses on a
 > BYOK-first, local-first workflow and a few quality-of-life features that are
-> documented in [Agewise fork](#agewise-fork) further down.
+> documented in [StageVibe fork](#stagevibe-fork) further down.
 
 **stagewise** is an open source agentic IDE for developers with a coding agent built right in.
 
@@ -36,7 +36,7 @@
 
 ## Getting Started
 
-Build Agewise from source (see [Development](#development)); packaged releases are published under [github.com/moc72/agewise/releases](https://github.com/moc72/agewise/releases).
+Build StageVibe from source (see [Development](#development)); packaged releases are published under [github.com/deepvibe-eu/StageVibe/releases](https://github.com/deepvibe-eu/StageVibe/releases).
 
 ## Use your coding subscription
 
@@ -91,7 +91,7 @@ Included models:
 - **Google**: Gemini 3.5 Flash, Gemini 3.1 Pro (Preview), Gemini 3 Flash, Gemini 3.1 Flash Lite
 - **xAI**: Grok 4.5
 
-## Agewise fork
+## StageVibe fork
 
 This fork is built on top of upstream stagewise. It keeps the upstream
 architecture (Electron app, Karton transport, `agent-core`) and adds the
@@ -143,7 +143,7 @@ pnpm -F stagewise make --targets AppImage
 
 ### Data directories & migration
 
-After the Agewise rename the app uses `~/…/agewise*` profiles and an `agewise`
+After the StageVibe rename the app uses `~/…/stagevibe*` profiles and an `stagevibe`
 data root. On first launch a one-time migration moves an existing
 `stagewise*` profile over (never clobbering existing data); isolated dev
 profiles fall back to the legacy `stagewise-dev` profile when seeding.
@@ -177,7 +177,7 @@ lists those runtime versions under “Other versions”.
 
 ## License
 
-Agewise is a personal fork of [stagewise](https://github.com/stagewise-io/stagewise) (developed by stagewise GmbH) and is distributed under the AGPLv3 license.
+StageVibe is a personal fork of [stagewise](https://github.com/stagewise-io/stagewise) (developed by stagewise GmbH) and is distributed under the AGPLv3 license.
 
 For more information on the license model, visit the [FAQ about the GNU Licenses](https://www.gnu.org/licenses/gpl-faq.html).
 

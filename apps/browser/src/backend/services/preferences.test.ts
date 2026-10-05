@@ -4,13 +4,13 @@ import { PreferencesService } from './preferences';
 import { CODING_PLANS } from '@shared/coding-plans';
 
 vi.hoisted(() => {
-  vi.stubGlobal('__APP_BASE_NAME__', 'agewise-test');
-  vi.stubGlobal('__APP_NAME__', 'agewise-test');
-  vi.stubGlobal('__APP_BUNDLE_ID__', 'org.rheaos.agewise.test');
+  vi.stubGlobal('__APP_BASE_NAME__', 'stagevibe-test');
+  vi.stubGlobal('__APP_NAME__', 'stagevibe-test');
+  vi.stubGlobal('__APP_BUNDLE_ID__', 'org.rheaos.stagevibe.test');
   vi.stubGlobal('__APP_VERSION__', '0.0.0-test');
   vi.stubGlobal('__APP_PLATFORM__', 'darwin');
-  vi.stubGlobal('__APP_AUTHOR__', 'Agewise');
-  vi.stubGlobal('__APP_COPYRIGHT__', 'Agewise');
+  vi.stubGlobal('__APP_AUTHOR__', 'StageVibe');
+  vi.stubGlobal('__APP_COPYRIGHT__', 'StageVibe');
   vi.stubGlobal('__APP_HOMEPAGE__', 'https://ade.stagewise.io');
   vi.stubGlobal('__APP_ARCH__', 'arm64');
 });

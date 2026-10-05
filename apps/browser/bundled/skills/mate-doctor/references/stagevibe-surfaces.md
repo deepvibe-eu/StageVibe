@@ -1,4 +1,4 @@
-# Agewise surfaces: what to inspect
+# StageVibe surfaces: what to inspect
 
 Read-only recipes for triage. Never modify the live database while the app is
 running — copy it first if you need to experiment.
@@ -7,7 +7,7 @@ Adjust the data root to the profile in question (see the table in `SKILL.md`).
 
 ```sh
 # dev profile
-DATA=~/.config/agewise-dev/agewise
+DATA=~/.config/stagevibe-dev/stagevibe
 DB="$DATA/agents/instances.sqlite"
 ```
 
@@ -49,7 +49,7 @@ value is the last provider-reported usage (it refreshes on the next step).
 # Instances and presets (no secrets in the file; keys are separate)
 python3 - <<'PY'
 import json, pathlib
-p = json.loads(pathlib.Path("~/.config/agewise-dev/agewise/preferences.json").expanduser().read_text())
+p = json.loads(pathlib.Path("~/.config/stagevibe-dev/stagevibe/preferences.json").expanduser().read_text())
 for i in p.get("providerInstances", []):
     print(i.get("id"), "|", i.get("typeId"), "|", i.get("name"), "| enabled:", i.get("enabled"))
 print("utility:", json.dumps(p.get("agent", {}).get("utilityModels", {})))
@@ -78,5 +78,5 @@ the packaged binary). Useful markers:
 - Node/pnpm for tooling: `package.json` → `engines`, `packageManager`.
 - Electron runtime versions: About → “Other versions”.
 - Profile selection: the app uses `<appData>/<baseName>` where `baseName` is
-  `agewise`, `agewise-dev`, `agewise-dev-<hash>`, `agewise-nightly` or
-  `agewise-prerelease`.
+  `stagevibe`, `stagevibe-dev`, `stagevibe-dev-<hash>`, `stagevibe-nightly` or
+  `stagevibe-prerelease`.

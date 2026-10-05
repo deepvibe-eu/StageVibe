@@ -10,7 +10,7 @@ user-invocable: true
 agent-invocable: false
 ---
 
-# Mate Team (Agewise port)
+# Mate Team (StageVibe port)
 
 Orchestrate a small team toward one deliverable, but only after an explicit
 `/mate-team` invocation or a 100% unambiguous "use an agent team" request.
@@ -18,8 +18,8 @@ The owner session keeps responsibility for planning, launch, intervention,
 decisions, integration, and cleanup. Workers produce bounded deliverables and
 exit.
 
-This is the original multi-agent operating model re-implemented on Agewise
-primitives. It does **not** call the original daemon CLI and needs no external daemon. See `references/orchestration.md` for how Mate roles map to Agewise.
+This is the original multi-agent operating model re-implemented on StageVibe
+primitives. It does **not** call the original daemon CLI and needs no external daemon. See `references/orchestration.md` for how Mate roles map to StageVibe.
 
 ## Hard rules
 
@@ -62,9 +62,9 @@ completed by a fresh worker with its prompt plus the repository.
   "format").
 - If tracks feel coupled, write the shared contract first, then fan out.
 
-## Roles on Agewise
+## Roles on StageVibe
 
-| Mate role | Agewise equivalent |
+| Mate role | StageVibe equivalent |
 | --- | --- |
 | Owner | this chat session (keeps final responsibility) |
 | Worker | a sub-task with a self-contained prompt, ideally run in parallel/background |

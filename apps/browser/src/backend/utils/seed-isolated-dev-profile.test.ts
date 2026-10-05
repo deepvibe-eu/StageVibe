@@ -13,10 +13,10 @@ let sourceDataRoot: string;
 let userDataDirectory: string;
 
 beforeEach(() => {
-  root = fs.mkdtempSync(path.join(os.tmpdir(), 'agewise-dev-seed-'));
+  root = fs.mkdtempSync(path.join(os.tmpdir(), 'stagevibe-dev-seed-'));
   appDataDirectory = path.join(root, 'app-data');
-  sourceDataRoot = path.join(appDataDirectory, 'agewise-dev', 'agewise');
-  userDataDirectory = path.join(appDataDirectory, 'agewise-dev-deadbeef');
+  sourceDataRoot = path.join(appDataDirectory, 'stagevibe-dev', 'stagevibe');
+  userDataDirectory = path.join(appDataDirectory, 'stagevibe-dev-deadbeef');
   fs.mkdirSync(sourceDataRoot, { recursive: true });
 });
 
@@ -28,10 +28,10 @@ afterEach(() => {
 describe('seedIsolatedDevProfile', () => {
   it('copies only allowed missing files and seeds once', () => {
     vi.spyOn(process, 'platform', 'get').mockReturnValue('win32');
-    const targetDataRoot = path.join(userDataDirectory, 'agewise');
+    const targetDataRoot = path.join(userDataDirectory, 'stagevibe');
     const sourceSessionRoot = path.join(
       appDataDirectory,
-      'agewise-dev',
+      'stagevibe-dev',
       'session',
     );
     fs.mkdirSync(targetDataRoot, { recursive: true });
@@ -49,7 +49,7 @@ describe('seedIsolatedDevProfile', () => {
       seedIsolatedDevProfile(
         appDataDirectory,
         userDataDirectory,
-        'agewise-dev-deadbeef',
+        'stagevibe-dev-deadbeef',
       ),
     ).toBe(2);
     expect(
@@ -74,7 +74,7 @@ describe('seedIsolatedDevProfile', () => {
       seedIsolatedDevProfile(
         appDataDirectory,
         userDataDirectory,
-        'agewise-dev-deadbeef',
+        'stagevibe-dev-deadbeef',
       ),
     ).toBe(0);
   });
@@ -84,14 +84,14 @@ describe('seedIsolatedDevProfile', () => {
       seedIsolatedDevProfile(
         appDataDirectory,
         userDataDirectory,
-        'agewise-dev',
+        'stagevibe-dev',
       ),
     ).toBe(0);
   });
 });
 
 it('falls back to the pre-rebrand stagewise-dev profile', () => {
-  fs.rmSync(path.join(appDataDirectory, 'agewise-dev'), {
+  fs.rmSync(path.join(appDataDirectory, 'stagevibe-dev'), {
     recursive: true,
     force: true,
   });
@@ -103,14 +103,14 @@ it('falls back to the pre-rebrand stagewise-dev profile', () => {
   fs.mkdirSync(legacyDataRoot, { recursive: true });
   fs.writeFileSync(path.join(legacyDataRoot, 'auth-session.json'), 'legacy');
 
-  const targetDataRoot = path.join(userDataDirectory, 'agewise');
+  const targetDataRoot = path.join(userDataDirectory, 'stagevibe');
   fs.mkdirSync(targetDataRoot, { recursive: true });
 
   expect(
     seedIsolatedDevProfile(
       appDataDirectory,
       userDataDirectory,
-      'agewise-dev-deadbeef',
+      'stagevibe-dev-deadbeef',
     ),
   ).toBe(1);
   expect(

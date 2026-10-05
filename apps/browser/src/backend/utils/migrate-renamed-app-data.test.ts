@@ -7,7 +7,7 @@ import { migrateRenamedAppData } from './migrate-renamed-app-data';
 const logger = { info: vi.fn(), warn: vi.fn() };
 
 function makeAppData(): string {
-  return fs.mkdtempSync(path.join(os.tmpdir(), 'agewise-migrate-'));
+  return fs.mkdtempSync(path.join(os.tmpdir(), 'stagevibe-migrate-'));
 }
 
 const createdDirs: string[] = [];
@@ -31,11 +31,11 @@ describe('migrateRenamedAppData', () => {
       '{"k":"v"}',
     );
 
-    const userData = path.join(appData, 'agewise-dev');
+    const userData = path.join(appData, 'stagevibe-dev');
     migrateRenamedAppData(appData, userData, logger);
 
     expect(
-      fs.existsSync(path.join(userData, 'agewise', 'credentials.json')),
+      fs.existsSync(path.join(userData, 'stagevibe', 'credentials.json')),
     ).toBe(true);
     expect(fs.existsSync(legacyUserData)).toBe(false);
     expect(logger.info).toHaveBeenCalled();
@@ -47,13 +47,13 @@ describe('migrateRenamedAppData', () => {
 
     const legacyUserData = path.join(appData, 'stagewise-dev');
     fs.mkdirSync(path.join(legacyUserData, 'stagewise'), { recursive: true });
-    const userData = path.join(appData, 'agewise-dev');
-    fs.mkdirSync(path.join(userData, 'agewise'), { recursive: true });
-    fs.writeFileSync(path.join(userData, 'agewise', 'keep.json'), '{}');
+    const userData = path.join(appData, 'stagevibe-dev');
+    fs.mkdirSync(path.join(userData, 'stagevibe'), { recursive: true });
+    fs.writeFileSync(path.join(userData, 'stagevibe', 'keep.json'), '{}');
 
     migrateRenamedAppData(appData, userData, logger);
 
-    expect(fs.existsSync(path.join(userData, 'agewise', 'keep.json'))).toBe(
+    expect(fs.existsSync(path.join(userData, 'stagevibe', 'keep.json'))).toBe(
       true,
     );
     expect(fs.existsSync(path.join(legacyUserData, 'stagewise'))).toBe(true);

@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Minimal skill linter for Agewise skills.
+ * Minimal skill linter for StageVibe skills.
  *
  * Usage:
  *   node lint-skill.mjs <path-to-skill-dir-or-SKILL.md>

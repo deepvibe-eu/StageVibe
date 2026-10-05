@@ -524,7 +524,7 @@ describe('WorktreeSetupSettingsService', () => {
       service.deleteManagedWorktree('/tmp/outside'),
     ).resolves.toEqual({
       ok: false,
-      message: 'Worktree is not Agewise-managed.',
+      message: 'Worktree is not StageVibe-managed.',
     });
     expect(gitService.removeWorktree).not.toHaveBeenCalled();
   });

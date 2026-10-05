@@ -1,4 +1,4 @@
-# Releasing Agewise
+# Releasing StageVibe
 
 This fork is hosted on the project's own Gitea, so the GitHub Actions release
 workflows under `.github/workflows-disabled/` do **not** run there (they are

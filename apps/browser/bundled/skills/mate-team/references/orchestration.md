@@ -1,11 +1,11 @@
-# Orchestration: Mate → Agewise mapping
+# Orchestration: Mate → StageVibe mapping
 
 This reference explains how the original team roles are reproduced with
-Agewise primitives, and where the port is honestly narrower.
+StageVibe primitives, and where the port is honestly narrower.
 
 ## Concept mapping
 
-| Mate concept | Agewise implementation |
+| Mate concept | StageVibe implementation |
 | --- | --- |
 | Owner session | This chat session. The owner plans, launches, intervenes, decides, integrates, and cleans up. |
 | Worker agent | A sub-task with a fully self-contained prompt. It must be able to finish from its prompt plus the repository, without the owner's context. |
@@ -50,6 +50,6 @@ and the test command."
   commands. This port has no daemon and no such CLI; parallelism is bounded by
   what sub-tasks the host actually supports.
 - Do not invent a `mate` command. If a step would have used the CLI, do it
-  with Agewise tools (plan file, todos, sub-tasks) instead.
+  with StageVibe tools (plan file, todos, sub-tasks) instead.
 - If genuine parallel execution is unavailable, say so and fall back to a
   sequential owner+verifier plan rather than pretending a team is running.
