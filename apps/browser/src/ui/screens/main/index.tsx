@@ -360,33 +360,37 @@ function DefaultLayoutInner({ show }: { show: boolean }) {
                   id="content-panel"
                   order={1}
                   defaultSize={65}
-                  className={cn(
-                    'relative h-full overflow-hidden rounded-lg bg-background ring-1 ring-derived-subtle',
-                  )}
+                  className="relative h-full overflow-hidden"
                 >
                   {/* Chat keeps its own column; browser and file tree share a
                       nested group so the terminal panel below spans exactly
                       those two, not the chat. */}
                   <ResizablePanelGroup
                     direction="horizontal"
-                    className="h-full"
+                    className="h-full gap-2 p-2"
                   >
-                    <AgentChat
-                      topRightActions={chatTopRightActions}
-                      defaultSize={panelLayout.chatSize}
-                      minSize={CHAT_PANEL_MIN_SIZE}
-                      onPanelResize={(size) => {
-                        chatSizeRef.current = size;
-                        persistPanelSize(chatPanelSizeKey, size);
-                      }}
-                    />
+                    <ResizablePanel
+                      id="chat-panel"
+                      order={0}
+                      className="rounded-lg bg-background ring-1 ring-derived-subtle"
+                    >
+                      <AgentChat
+                        topRightActions={chatTopRightActions}
+                        defaultSize={panelLayout.chatSize}
+                        minSize={CHAT_PANEL_MIN_SIZE}
+                        onPanelResize={(size) => {
+                          chatSizeRef.current = size;
+                          persistPanelSize(chatPanelSizeKey, size);
+                        }}
+                      />
+                    </ResizablePanel>
 
                     <ResizableHandle className="w-0.5 bg-border" />
 
                     <ResizablePanel
                       id="browser-tree-panel"
                       order={1}
-                      className="relative h-full overflow-hidden"
+                      className="relative h-full overflow-hidden rounded-lg bg-background ring-1 ring-derived-subtle"
                     >
                       {/* Both panels closed leaves an empty column: keep the
                           re-open controls reachable right here. */}
@@ -400,13 +404,14 @@ function DefaultLayoutInner({ show }: { show: boolean }) {
                       <ResizablePanelGroup
                         direction="vertical"
                         autoSaveId="stagewise-content-vertical"
-                        className="h-full"
+                        className="h-full gap-2 p-2"
                       >
                         <ResizablePanel
                           id="workspace-panels"
                           order={0}
                           defaultSize={72}
                           minSize={30}
+                          className="rounded-lg bg-background ring-1 ring-derived-subtle"
                         >
                           <ResizablePanelGroup
                             direction="horizontal"
@@ -472,7 +477,7 @@ function DefaultLayoutInner({ show }: { show: boolean }) {
                               order={1}
                               defaultSize={28}
                               minSize={12}
-                              className="relative overflow-hidden bg-background"
+                              className="relative overflow-hidden rounded-lg bg-background ring-1 ring-derived-subtle"
                             >
                               <TerminalPanelBody />
                             </ResizablePanel>
