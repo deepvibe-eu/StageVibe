@@ -367,7 +367,7 @@ function DefaultLayoutInner({ show }: { show: boolean }) {
                       those two, not the chat. */}
                   <ResizablePanelGroup
                     direction="horizontal"
-                    className="h-full gap-3"
+                    className="h-full gap-1.5"
                   >
                     <ResizablePanel
                       id="chat-panel"
