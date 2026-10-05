@@ -339,7 +339,7 @@ function DefaultLayoutInner({ show }: { show: boolean }) {
                   <SettingsSidebar />
                 </ResizablePanel>
 
-                <ResizableHandle />
+                <ResizableHandle className="after:w-2 hover:after:bg-transparent" />
 
                 <ResizablePanel
                   id="content-panel"
@@ -385,7 +385,7 @@ function DefaultLayoutInner({ show }: { show: boolean }) {
                       />
                     </ResizablePanel>
 
-                    <ResizableHandle />
+                    <ResizableHandle className="after:w-2 hover:after:bg-transparent" />
 
                     <ResizablePanel
                       id="browser-tree-panel"
@@ -441,7 +441,7 @@ function DefaultLayoutInner({ show }: { show: boolean }) {
                             {fileTreeVisible && (
                               <>
                                 {showContent && (
-                    <ResizableHandle />
+                                  <ResizableHandle className="after:w-2 hover:after:bg-transparent" />
                                 )}
                                 <ResizablePanel
                                   id="file-tree-panel"
@@ -471,7 +471,7 @@ function DefaultLayoutInner({ show }: { show: boolean }) {
 
                         {terminalTabIds.length > 0 && (
                           <>
-                            <ResizableHandle />
+                            <ResizableHandle className="my-0! after:w-2 hover:after:bg-transparent" />
                             <ResizablePanel
                               id="terminal-panel"
                               order={1}

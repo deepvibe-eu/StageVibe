@@ -101,7 +101,7 @@ export function Sidebar() {
       </ResizablePanel>
 
       {!collapsed && (
-        <ResizableHandle className="after:w-2.5" onDoubleClick={reset} />
+        <ResizableHandle className="after:w-2 hover:after:bg-transparent" onDoubleClick={reset} />
       )}
     </>
   );
