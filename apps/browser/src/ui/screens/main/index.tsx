@@ -310,7 +310,7 @@ function DefaultLayoutInner({ show }: { show: boolean }) {
       {show && <Tutorial tutorialId="general-ui-experience" />}
       <div
         className={cn(
-          'root pointer-events-auto relative inset-0 flex size-full flex-row items-stretch justify-between p-2 gap-2 transition-[opacity,filter] delay-150 duration-300 ease-out',
+          'root pointer-events-auto relative inset-0 flex size-full flex-row items-stretch justify-between p-2 gap-0 transition-[opacity,filter] delay-150 duration-300 ease-out',
           !show && 'pointer-events-none opacity-0 blur-lg',
         )}
         onFocusCapture={markStagewiseUiFocused}
@@ -324,7 +324,7 @@ function DefaultLayoutInner({ show }: { show: boolean }) {
           <ResizablePanelGroup
             direction="horizontal"
             autoSaveId={rootLayoutStorageKey}
-            className="overflow-visible! h-full w-full gap-2"
+            className="overflow-visible! h-full w-full gap-3"
           >
             {settingsOpen ? (
               <>
@@ -367,7 +367,7 @@ function DefaultLayoutInner({ show }: { show: boolean }) {
                       those two, not the chat. */}
                   <ResizablePanelGroup
                     direction="horizontal"
-                    className="h-full gap-2 p-2"
+                    className="h-full gap-3"
                   >
                     <ResizablePanel
                       id="chat-panel"
@@ -385,7 +385,7 @@ function DefaultLayoutInner({ show }: { show: boolean }) {
                       />
                     </ResizablePanel>
 
-                    <ResizableHandle className="w-0.5 bg-border" />
+                    <ResizableHandle />
 
                     <ResizablePanel
                       id="browser-tree-panel"
@@ -404,7 +404,7 @@ function DefaultLayoutInner({ show }: { show: boolean }) {
                       <ResizablePanelGroup
                         direction="vertical"
                         autoSaveId="stagewise-content-vertical"
-                        className="h-full gap-2 p-2"
+                        className="h-full gap-3"
                       >
                         <ResizablePanel
                           id="workspace-panels"
@@ -441,7 +441,7 @@ function DefaultLayoutInner({ show }: { show: boolean }) {
                             {fileTreeVisible && (
                               <>
                                 {showContent && (
-                                  <ResizableHandle className="w-0.5 bg-border" />
+                    <ResizableHandle />
                                 )}
                                 <ResizablePanel
                                   id="file-tree-panel"
@@ -471,7 +471,7 @@ function DefaultLayoutInner({ show }: { show: boolean }) {
 
                         {terminalTabIds.length > 0 && (
                           <>
-                            <ResizableHandle className="h-px bg-border" />
+                            <ResizableHandle />
                             <ResizablePanel
                               id="terminal-panel"
                               order={1}
