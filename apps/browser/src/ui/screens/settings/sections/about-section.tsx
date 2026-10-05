@@ -473,7 +473,16 @@ function OpenSourceLicenses() {
       <div className="mt-4 space-y-1 text-center text-muted-foreground text-xs">
         <hr className="border-border/30" />
         <br />
-        You can support our work by fueling us with ☕️☕️ coffee ☕️☕️.
+        You can support our work by fueling us with{' '}
+        <a
+          href="https://ko-fi.com/modestcoder"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="underline hover:text-foreground"
+        >
+          ☕️☕️ coffee ☕️☕️
+        </a>
+        .
       </div>
 
       <LicenseTextDialog
@@ -666,7 +675,7 @@ export function AboutSection() {
                   Homepage
                 </span>
                 <a
-                  href={appInfo.homepage}
+                  href="https://deepvibe.eu/stagevibe"
                   target="_blank"
                   rel="noopener noreferrer"
                   className={cn(
