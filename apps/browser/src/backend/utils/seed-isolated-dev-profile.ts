@@ -19,13 +19,13 @@ export function seedIsolatedDevProfile(
   userDataDirectory: string,
   appBaseName: string,
 ): number {
-  if (!appBaseName.startsWith('agewise-dev-')) return 0;
+  if (!appBaseName.startsWith('stagevibe-dev-')) return 0;
 
   const markerPath = path.join(userDataDirectory, ISOLATED_DEV_SEED_MARKER);
   // Prefer the current layout; fall back to the pre-rebrand `stagewise-dev`
-  // profile so isolated instances keep seeding after the Agewise rename.
+  // profile so isolated instances keep seeding after the StageVibe rename.
   const source = [
-    { userData: path.join(appDataDirectory, 'agewise-dev'), root: 'agewise' },
+    { userData: path.join(appDataDirectory, 'stagevibe-dev'), root: 'stagevibe' },
     {
       userData: path.join(appDataDirectory, 'stagewise-dev'),
       root: 'stagewise',
@@ -38,7 +38,7 @@ export function seedIsolatedDevProfile(
   const sourceUserData = source.userData;
   const sourceDataRoot = path.join(sourceUserData, source.root);
 
-  const targetDataRoot = path.join(userDataDirectory, 'agewise');
+  const targetDataRoot = path.join(userDataDirectory, 'stagevibe');
   fs.mkdirSync(targetDataRoot, { recursive: true });
 
   let copiedFileCount = 0;

@@ -5,8 +5,8 @@ export function TitleManager() {
   const authStatus = useKartonState((s) => s.userAccount.status);
 
   useEffect(() => {
-    if (authStatus === 'unauthenticated') document.title = 'Sign in | Agewise';
-    else document.title = 'Agewise';
+    if (authStatus === 'unauthenticated') document.title = 'Sign in | StageVibe';
+    else document.title = 'StageVibe';
   }, [authStatus]);
 
   return null;

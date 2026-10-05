@@ -46,10 +46,10 @@ function renameOrCopy(
 
 /**
  * Migrates data from the pre-rebrand `stagewise*` directories to the
- * `agewise*` layout after the Agewise rename.
+ * `stagevibe*` layout after the StageVibe rename.
  *
  * Because {@link file://./../index.ts} sets `userData` from the app base
- * name, an upgrade starts with an empty `agewise*` profile even though the
+ * name, an upgrade starts with an empty `stagevibe*` profile even though the
  * previous `stagewise*` profile still holds credentials, the agents database,
  * and preferences. This moves that profile (and its inner data root) once,
  * without ever clobbering a profile that already has data.
@@ -60,8 +60,8 @@ export function migrateRenamedAppData(
   logger: RenameMigrationLogger,
 ): void {
   const newBaseName = path.basename(userDataDirectory);
-  if (!newBaseName.startsWith('agewise')) return;
-  const legacyBaseName = newBaseName.replace(/^agewise/, 'stagewise');
+  if (!newBaseName.startsWith('stagevibe')) return;
+  const legacyBaseName = newBaseName.replace(/^stagevibe/, 'stagewise');
   if (legacyBaseName === newBaseName) return;
 
   const legacyUserData = path.join(appDataDirectory, legacyBaseName);
@@ -79,12 +79,12 @@ export function migrateRenamedAppData(
   }
 
   // The data root inside the profile also changed name ("stagewise" ->
-  // "agewise"); rename it so the migrated profile is actually found.
+  // "stagevibe"); rename it so the migrated profile is actually found.
   const legacyDataRoot = path.join(userDataDirectory, 'stagewise');
-  const newDataRoot = path.join(userDataDirectory, 'agewise');
+  const newDataRoot = path.join(userDataDirectory, 'stagevibe');
   if (fs.existsSync(legacyDataRoot) && !fs.existsSync(newDataRoot)) {
     if (renameOrCopy(legacyDataRoot, newDataRoot, logger)) {
-      logger.info('Migrated data root "stagewise" -> "agewise".');
+      logger.info('Migrated data root "stagewise" -> "stagevibe".');
     }
   }
 }

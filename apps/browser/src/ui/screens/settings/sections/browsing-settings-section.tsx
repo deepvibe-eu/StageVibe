@@ -356,9 +356,9 @@ function PageSettingComponent({ type, title, description }: PageSettingProps) {
         <RadioLabel>
           <Radio value="home" />
           <div className="flex flex-col">
-            <span className="font-medium text-foreground">Agewise Home</span>
+            <span className="font-medium text-foreground">StageVibe Home</span>
             <span className="text-muted-foreground text-xs">
-              Open the Agewise home page
+              Open the StageVibe home page
             </span>
           </div>
         </RadioLabel>

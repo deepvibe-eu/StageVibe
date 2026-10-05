@@ -60,7 +60,7 @@ const linuxMimeTypes = protocolSchemes.map(
 );
 
 // DMG volume name (shown when mounted)
-const dmgVolumeName = 'Install Agewise';
+const dmgVolumeName = 'Install StageVibe';
 
 // For now, we maintain a manually updated list of dependencies and sub-dependencies that need to be copied over in order to get a working deployed app.
 // Ugly but works.
@@ -340,7 +340,7 @@ const config: ForgeConfig = {
     icon: `./assets/icons/${visualAssetChannel}/icon`,
     appCopyright: `Copyright © ${new Date().getFullYear()} RheaOS`,
     win32metadata: {
-      CompanyName: 'Agewise',
+      CompanyName: 'StageVibe',
       ProductName: buildConstants.__APP_NAME__,
       FileDescription: buildConstants.__APP_NAME__,
       'requested-execution-level': 'asInvoker',

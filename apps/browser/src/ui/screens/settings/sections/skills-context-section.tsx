@@ -564,7 +564,7 @@ export function SkillsContextSection() {
             </h1>
             <p className="text-muted-foreground text-sm">
               Per-workspace configuration, context files, and skills for the
-              Agewise agent.
+              StageVibe agent.
             </p>
           </div>
           <div className="space-y-8">

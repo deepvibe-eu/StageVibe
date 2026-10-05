@@ -359,7 +359,7 @@ export const Omnibox = ({
                   <span>
                     Always building something new?{' '}
                     <strong className="font-medium">
-                      Set Agewise as your default browser!
+                      Set StageVibe as your default browser!
                     </strong>
                   </span>
                   <Button variant="primary" size="xs">

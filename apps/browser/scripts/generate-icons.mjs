@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Regenerates the app icons from `assets/icons/agewise-icon.svg`.
+ * Regenerates the app icons from `assets/icons/icon.png`.
  *
  * Usage: node scripts/generate-icons.mjs   (from apps/browser)
  *
@@ -14,7 +14,7 @@ import path from 'node:path';
 import sharp from 'sharp';
 
 const root = path.resolve(import.meta.dirname, '..');
-const source = path.join(root, 'assets/icons/agewise-icon.svg');
+const source = path.join(root, 'assets/icons/icon.png');
 const channels = ['dev', 'nightly', 'release'];
 const sizes = [16, 32, 48, 64, 96, 128, 256, 512, 1024];
 

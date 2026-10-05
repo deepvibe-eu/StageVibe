@@ -410,7 +410,7 @@ export function SignInOptionsPanel({
       : phase === 'otp'
         ? `We sent a code to ${email}. Enter it below.`
         : phase === 'social'
-          ? `Please finish signing in with ${getHandoffProviderLabel(socialLoading)} in your browser, then return to Agewise.`
+          ? `Please finish signing in with ${getHandoffProviderLabel(socialLoading)} in your browser, then return to StageVibe.`
           : description;
 
   return (

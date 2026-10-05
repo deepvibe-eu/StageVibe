@@ -24,7 +24,7 @@ type ClosedLidSleepState = {
 };
 
 const CLOSED_LID_SLEEP_PERSISTENCE_WARNING =
-  'This setting changes a persistent macOS power setting. If Agewise quits unexpectedly, closed-lid sleep may remain disabled until you turn it off again.';
+  'This setting changes a persistent macOS power setting. If StageVibe quits unexpectedly, closed-lid sleep may remain disabled until you turn it off again.';
 
 function parseDisableSleepState(output: string): boolean | null {
   const match = output.match(
@@ -82,7 +82,7 @@ async function installPasswordlessPmsetRule(): Promise<void> {
   await execFileAsync(OSASCRIPT_PATH, [
     '-e',
     `do shell script ${JSON.stringify(command)} with prompt ${JSON.stringify(
-      'Agewise wants to install a restricted sudoers rule so it can toggle closed-lid sleep without asking every time.',
+      'StageVibe wants to install a restricted sudoers rule so it can toggle closed-lid sleep without asking every time.',
     )} with administrator privileges`,
   ]);
 }

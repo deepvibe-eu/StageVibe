@@ -337,7 +337,7 @@ function TelemetrySetting() {
     <div className="flex flex-col gap-4">
       <h3 className="font-medium text-foreground">Telemetry</h3>
       <p className="text-muted-foreground text-sm">
-        Control what usage data is collected to help improve Agewise.
+        Control what usage data is collected to help improve StageVibe.
       </p>
 
       <div className="flex items-center gap-2">
@@ -353,7 +353,7 @@ function TelemetrySetting() {
           htmlFor="telemetry-anonymous-checkbox"
           className="text-muted-foreground text-xs"
         >
-          Help improve Agewise by sharing anonymized events.
+          Help improve StageVibe by sharing anonymized events.
         </label>
       </div>
       <div

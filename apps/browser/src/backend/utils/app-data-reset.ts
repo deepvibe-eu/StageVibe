@@ -17,14 +17,14 @@ export function applyPendingAppDataReset(userDataDirectory: string): void {
     if (
       entry === RESET_MARKER ||
       entry === ISOLATED_DEV_SEED_MARKER ||
-      entry === 'agewise' ||
+      entry === 'stagevibe' ||
       entry.startsWith('Singleton')
     )
       continue;
     fs.rmSync(path.join(userDataDirectory, entry), removeOptions);
   }
 
-  const dataRoot = path.join(userDataDirectory, 'agewise');
+  const dataRoot = path.join(userDataDirectory, 'stagevibe');
   if (fs.existsSync(dataRoot))
     for (const entry of fs.readdirSync(dataRoot)) {
       if (entry !== 'identity.json')

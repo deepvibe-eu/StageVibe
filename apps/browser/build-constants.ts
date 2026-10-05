@@ -37,14 +37,14 @@ const packageJson = JSON.parse(
 export const __APP_BASE_NAME__ = (() => {
   switch (__APP_RELEASE_CHANNEL__) {
     case 'release':
-      return 'agewise';
+      return 'stagevibe';
     case 'nightly':
-      return 'agewise-nightly';
+      return 'stagevibe-nightly';
     case 'prerelease':
-      return 'agewise-prerelease';
+      return 'stagevibe-prerelease';
     case 'dev':
     default:
-      return devInstance ? `agewise-dev-${devInstance}` : 'agewise-dev';
+      return devInstance ? `stagevibe-dev-${devInstance}` : 'stagevibe-dev';
   }
 })();
 
@@ -52,28 +52,28 @@ export const __APP_BASE_NAME__ = (() => {
 export const __APP_NAME__ = (() => {
   switch (__APP_RELEASE_CHANNEL__) {
     case 'release':
-      return 'Agewise';
+      return 'StageVibe';
     case 'nightly':
-      return 'Agewise Nightly';
+      return 'StageVibe Nightly';
     case 'prerelease':
-      return 'Agewise (Pre-Release)';
+      return 'StageVibe (Pre-Release)';
     case 'dev':
     default:
-      return devInstance ? `Agewise (Dev ${devInstance})` : 'Agewise (Dev)';
+      return devInstance ? `StageVibe (Dev ${devInstance})` : 'StageVibe (Dev)';
   }
 })();
 
 export const __APP_BUNDLE_ID__ = (() => {
   switch (__APP_RELEASE_CHANNEL__) {
     case 'release':
-      return 'org.rheaos.agewise';
+      return 'org.rheaos.stagevibe';
     case 'nightly':
-      return 'org.rheaos.agewise.nightly';
+      return 'org.rheaos.stagevibe.nightly';
     case 'prerelease':
-      return 'org.rheaos.agewise.prerelease';
+      return 'org.rheaos.stagevibe.prerelease';
     case 'dev':
     default:
-      return 'org.rheaos.agewise.dev';
+      return 'org.rheaos.stagevibe.dev';
   }
 })();
 
@@ -136,5 +136,5 @@ export const __APP_HOMEPAGE__ = (() => {
   if (typeof homepage === 'string' && homepage.trim()) {
     return homepage;
   }
-  return process.env.APP_HOMEPAGE || 'https://rheaos.org';
+  return process.env.APP_HOMEPAGE || 'https://stagevibe.eu';
 })();

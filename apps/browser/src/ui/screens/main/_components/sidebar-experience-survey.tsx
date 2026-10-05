@@ -247,7 +247,7 @@ export function SidebarExperienceSurvey() {
         {!hasAnswered ? (
           <>
             <div className="pr-7 font-medium text-foreground text-xs leading-relaxed">
-              Do you enjoy your experience with Agewise?
+              Do you enjoy your experience with StageVibe?
             </div>
             <div className="flex gap-2">
               <Button
@@ -327,7 +327,7 @@ export function SidebarExperienceSurvey() {
         onDismiss={handleDismissFounderCall}
       >
         <div className="pr-7 font-medium text-foreground text-xs leading-relaxed">
-          Tell our founders what you think about Agewise and get 1 month Pro for
+          Tell our founders what you think about StageVibe and get 1 month Pro for
           free!
         </div>
         <Button
