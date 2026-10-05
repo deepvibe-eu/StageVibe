@@ -477,7 +477,7 @@ function DefaultLayoutInner({ show }: { show: boolean }) {
                               order={1}
                               defaultSize={28}
                               minSize={12}
-                              className="relative overflow-hidden rounded-lg bg-surface-1 ring-1 ring-derived-subtle"
+                              className="relative overflow-hidden rounded-lg bg-[#080d09] ring-1 ring-derived-subtle"
                             >
                               <TerminalPanelBody />
                             </ResizablePanel>
