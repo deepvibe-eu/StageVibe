@@ -152,7 +152,7 @@ export function AgentChat({
           onCreateChat={handleCreateChat}
         />
       )}
-      <div className="flex h-full flex-col items-stretch justify-between p-1">
+      <div className="flex h-full flex-col items-stretch justify-between p-2">
         <Chat />
       </div>
     </ResizablePanel>

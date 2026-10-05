@@ -324,7 +324,7 @@ function DefaultLayoutInner({ show }: { show: boolean }) {
           <ResizablePanelGroup
             direction="horizontal"
             autoSaveId={rootLayoutStorageKey}
-            className="overflow-visible! h-full w-full"
+            className="overflow-visible! h-full w-full gap-2"
           >
             {settingsOpen ? (
               <>
@@ -471,13 +471,13 @@ function DefaultLayoutInner({ show }: { show: boolean }) {
 
                         {terminalTabIds.length > 0 && (
                           <>
-                            <ResizableHandle className="h-0.5 bg-border" />
+                            <ResizableHandle className="h-px bg-border" />
                             <ResizablePanel
                               id="terminal-panel"
                               order={1}
                               defaultSize={28}
                               minSize={12}
-                              className="relative overflow-hidden rounded-lg bg-background ring-1 ring-derived-subtle"
+                              className="relative overflow-hidden rounded-lg bg-surface-1 ring-1 ring-derived-subtle"
                             >
                               <TerminalPanelBody />
                             </ResizablePanel>

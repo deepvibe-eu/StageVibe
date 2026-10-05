@@ -4,7 +4,7 @@
      Light theme (default)
      --------- */
   --color-app-background: var(--color-base-100);
-  --color-background: var(--color-base-50);
+  --color-background: var(--color-base-150);
   --color-foreground: var(--color-base-900);
   --color-muted-foreground: var(--color-base-500);
   --color-subtle-foreground: var(--color-base-350);
