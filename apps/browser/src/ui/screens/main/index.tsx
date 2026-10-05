@@ -324,7 +324,7 @@ function DefaultLayoutInner({ show }: { show: boolean }) {
           <ResizablePanelGroup
             direction="horizontal"
             autoSaveId={rootLayoutStorageKey}
-            className="overflow-visible! h-full w-full gap-3"
+            className="overflow-visible! h-full w-full gap-1.5"
           >
             {settingsOpen ? (
               <>
@@ -404,7 +404,7 @@ function DefaultLayoutInner({ show }: { show: boolean }) {
                       <ResizablePanelGroup
                         direction="vertical"
                         autoSaveId="stagewise-content-vertical"
-                        className="h-full gap-3"
+                        className="h-full gap-1.5"
                       >
                         <ResizablePanel
                           id="workspace-panels"
