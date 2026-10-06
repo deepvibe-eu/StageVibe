@@ -134,14 +134,27 @@ function DefaultLayoutInner({ show }: { show: boolean }) {
   // content panel visible when it's not collapsed (tabs control their own visibility inside)
   const showContent = !contentCollapsed;
 
-  // Keep the browser-tree-panel in sync with the content-collapse state so the
-  // header toggle actually collapses/expands the whole right column.
+  // Keep the browser-tree-panel in sync with the content-collapse state and
+  // with whether there is any content to show, so the header toggle actually
+  // collapses/expands the whole right column. On (re)open we also resize back
+  // to the remembered width: `expand()` alone only restores to the panel's
+  // minimum, which is 0 while no tab is visible, so a panel that mounted with
+  // no tabs would otherwise stay collapsed forever.
   useEffect(() => {
     const panel = browserTreePanelRef.current;
     if (!panel) return;
-    if (contentCollapsed) panel.collapse();
-    else panel.expand();
-  }, [contentCollapsed]);
+    const shouldShow = !contentCollapsed && hasVisibleTabs;
+    const isPanelCollapsed = panel.isCollapsed();
+    if (shouldShow && isPanelCollapsed) {
+      const restoreSize = contentSizeRef.current;
+      panel.expand();
+      requestAnimationFrame(() => panel.resize(restoreSize));
+    } else if (!shouldShow && !isPanelCollapsed) {
+      const currentSize = panel.getSize();
+      if (currentSize > 0) contentSizeRef.current = currentSize;
+      panel.collapse();
+    }
+  }, [contentCollapsed, hasVisibleTabs]);
 
   const fileTreeSizeRef = useRef(readPanelSize(fileTreePanelSizeKey, 15));
   const contentSizeRef = useRef(readPanelSize(contentPanelSizeKey, 85));
@@ -265,15 +278,15 @@ function DefaultLayoutInner({ show }: { show: boolean }) {
     <>
       <WatcherPopover />
       <LocalServersPopover trailingContent={<ActionDivider />} />
-      <ActionDivider />
+      {/* New-tab buttons stay pinned here regardless of open tabs, so they do
+          not vanish from the header once a tab exists. */}
+      <NewTabButtons
+        onCreateBrowserTab={handleCreateTab}
+        onCreateTerminalTab={handleOpenTerminal}
+      />
       <FileTreeToggleButton />
+      <ActionDivider />
       <ContentToggleButton />
-      {!hasVisibleTabs && (
-        <NewTabButtons
-          onCreateBrowserTab={handleCreateTab}
-          onCreateTerminalTab={handleOpenTerminal}
-        />
-      )}
     </>
   );
 
