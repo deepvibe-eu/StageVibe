@@ -305,6 +305,36 @@
     "stop": "Stop watcher",
     "stopNamed": "Stop {{title}}"
   },
+  "externalAgent": {
+    "needsApproval": "{{toolName}} needs approval",
+    "failed": "Failed {{toolName}}",
+    "denied": "Denied {{toolName}}",
+    "completedPlan": "Completed plan",
+    "runningPlan": "Running plan",
+    "changedFiles_one": "Changed {{count}} file",
+    "changedFiles_other": "Changed {{count}} files",
+    "changingFiles_one": "Changing {{count}} file",
+    "changingFiles_other": "Changing {{count}} files",
+    "finished": "Finished {{toolName}}",
+    "running": "Running {{toolName}}",
+    "deny": "Deny",
+    "allow": "Allow"
+  },
+  "askQuestions": {
+    "cancelledAgentStopped": "Questions cancelled (agent stopped)",
+    "writingQuestions": "Writing up some questions...",
+    "waitingResponse": "Waiting for response...",
+    "sentAnswersMessage": "User sent answers and message",
+    "dismissed": "User dismissed questions",
+    "answered": "Questions answered",
+    "userQuestions": "User questions",
+    "answer": {
+      "empty": "(empty)",
+      "none": "(none)",
+      "yes": "Yes",
+      "no": "No"
+    }
+  },
   "unknown": {
     "calling": "Calling tool {{type}}...",
     "finished": "Finished calling tool {{type}}"

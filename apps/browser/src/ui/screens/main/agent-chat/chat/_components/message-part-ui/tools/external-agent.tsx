@@ -5,6 +5,7 @@ import { useOpenAgent } from '@ui/hooks/use-open-chat';
 import { cn } from '@ui/utils';
 import type { DynamicToolUIPart } from 'ai';
 import { ToolPartUI } from './shared/tool-part-ui';
+import { useTranslation } from 'react-i18next';
 
 type PlanStep = { step: string; status: string };
 type ExternalToolInput = {
@@ -21,6 +22,7 @@ export function ExternalAgentToolPart({
   part: DynamicToolUIPart;
   shimmer: boolean;
 }) {
+  const { t } = useTranslation('tools');
   const [openAgentId] = useOpenAgent();
   const sendApproval = useKartonProcedure(
     (procedures) => procedures.agents.sendToolApprovalResponse,
@@ -43,18 +45,22 @@ export function ExternalAgentToolPart({
   const planCompleted =
     plan.length > 0 && plan.every((step) => step.status === 'completed');
   const label = isApproval
-    ? `${toolName} needs approval`
+    ? t('externalAgent.needsApproval', { toolName })
     : isError
-      ? `Failed ${toolName}`
+      ? t('externalAgent.failed', { toolName })
       : isDenied
-        ? `Denied ${toolName}`
+        ? t('externalAgent.denied', { toolName })
         : plan.length
-          ? `${planCompleted ? 'Completed' : 'Running'} plan`
+          ? planCompleted
+            ? t('externalAgent.completedPlan')
+            : t('externalAgent.runningPlan')
           : input.kind === 'edit' && locations.length > 0
-            ? `${isFinished ? 'Changed' : 'Changing'} ${locations.length} ${
-                locations.length === 1 ? 'file' : 'files'
-              }`
-            : `${isFinished ? 'Finished' : 'Running'} ${toolName}`;
+            ? isFinished
+              ? t('externalAgent.changedFiles', { count: locations.length })
+              : t('externalAgent.changingFiles', { count: locations.length })
+            : isFinished
+              ? t('externalAgent.finished', { toolName })
+              : t('externalAgent.running', { toolName });
   const respond = (approved: boolean) => {
     if (!openAgentId || !isApproval || !part.approval?.id) return;
     sendApproval(
@@ -139,10 +145,10 @@ export function ExternalAgentToolPart({
         isApproval ? (
           <>
             <Button variant="ghost" size="xs" onClick={() => respond(false)}>
-              Deny
+              {t('externalAgent.deny')}
             </Button>
             <Button variant="primary" size="xs" onClick={() => respond(true)}>
-              Allow
+              {t('externalAgent.allow')}
             </Button>
           </>
         ) : undefined

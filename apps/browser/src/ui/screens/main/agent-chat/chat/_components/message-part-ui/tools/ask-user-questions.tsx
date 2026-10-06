@@ -10,6 +10,8 @@ import type {
   QuestionField,
 } from '@shared/karton-contracts/ui/agent/tools/types';
 import { InlineMarkdown } from '@ui/components/streamdown';
+import { useTranslation } from 'react-i18next';
+import i18n from '@ui/i18n';
 
 type AskUserQuestionsPart = Extract<
   AgentToolUIPart,
@@ -21,7 +23,8 @@ function formatAnswerValue(
   field: QuestionField | undefined,
   value: unknown,
 ): string {
-  if (value === undefined || value === null || value === '') return '(empty)';
+  if (value === undefined || value === null || value === '')
+    return i18n.t('tools:askQuestions.answer.empty');
   if (field?.type === 'input' && field.inputType === 'password') {
     return '••••••';
   }
@@ -29,7 +32,7 @@ function formatAnswerValue(
   // Handle "Other" radio values
   if (typeof value === 'string' && value.startsWith('__other__:')) {
     const customText = value.slice('__other__:'.length);
-    return customText || '(empty)';
+    return customText || i18n.t('tools:askQuestions.answer.empty');
   }
 
   // For radio-group, resolve to label
@@ -40,7 +43,7 @@ function formatAnswerValue(
 
   // For checkbox-group, resolve values to labels
   if (field?.type === 'checkbox-group' && Array.isArray(value)) {
-    if (value.length === 0) return '(none)';
+    if (value.length === 0) return i18n.t('tools:askQuestions.answer.none');
     return value
       .map((v) => {
         const opt = field.options.find((o) => o.value === v);
@@ -49,7 +52,10 @@ function formatAnswerValue(
       .join(', ');
   }
 
-  if (typeof value === 'boolean') return value ? 'Yes' : 'No';
+  if (typeof value === 'boolean')
+    return value
+      ? i18n.t('tools:askQuestions.answer.yes')
+      : i18n.t('tools:askQuestions.answer.no');
   return String(value);
 }
 
@@ -73,6 +79,7 @@ export const AskUserQuestionsToolPart = ({
 }: {
   part: AskUserQuestionsPart;
 }) => {
+  const { t } = useTranslation('tools');
   const input = part.input as AskUserQuestionsToolInput | undefined;
   const output = part.output as AskUserQuestionsToolOutput | undefined;
 
@@ -84,7 +91,7 @@ export const AskUserQuestionsToolPart = ({
       <div className="flex h-6 w-full select-none items-center gap-1 font-medium text-muted-foreground">
         <IconHelpChatOutline18 className="size-3 shrink-0 text-muted-foreground" />
         <span className="truncate text-xs">
-          Questions cancelled (agent stopped)
+          {t('askQuestions.cancelledAgentStopped')}
         </span>
       </div>
     );
@@ -94,8 +101,8 @@ export const AskUserQuestionsToolPart = ({
   if (part.state === 'input-streaming' || part.state === 'input-available') {
     const isStreaming = part.state === 'input-streaming';
     const label = isStreaming
-      ? 'Writing up some questions...'
-      : 'Waiting for response...';
+      ? t('askQuestions.writingQuestions')
+      : t('askQuestions.waitingResponse');
     const Icon = isStreaming ? IconPenWriting3Outline18 : IconHelpChatOutline18;
 
     return (
@@ -124,14 +131,14 @@ export const AskUserQuestionsToolPart = ({
 
     let triggerText: string;
     if (output.notice) {
-      triggerText = 'User sent answers and message';
+      triggerText = t('askQuestions.sentAnswersMessage');
     } else if (wasCancelled) {
       triggerText =
         cancelReason === 'agent_stopped'
-          ? 'Questions cancelled (agent stopped)'
-          : 'User dismissed questions';
+          ? t('askQuestions.cancelledAgentStopped')
+          : t('askQuestions.dismissed');
     } else {
-      triggerText = input?.title ?? 'Questions answered';
+      triggerText = input?.title ?? t('askQuestions.answered');
     }
 
     // Build answer summary
@@ -176,7 +183,7 @@ export const AskUserQuestionsToolPart = ({
     <div className="flex h-6 w-full select-none items-center gap-1 font-medium text-muted-foreground">
       <IconHelpChatOutline18 className="size-3 shrink-0 text-muted-foreground" />
       <span className="truncate text-xs">
-        {input?.title ?? 'User questions'}
+        {input?.title ?? t('askQuestions.userQuestions')}
       </span>
     </div>
   );
