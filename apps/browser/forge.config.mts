@@ -329,6 +329,9 @@ const config: ForgeConfig = {
       './bundled',
       './assets/sounds',
       `./assets/icons/${visualAssetChannel}/icon.png`,
+      // Appearance-specific app icons used at runtime (dock/taskbar), see
+      // WindowLayoutService.applyAppearanceIcon().
+      './assets/icons/icons new',
     ],
     prune: true,
     afterCopy: [
