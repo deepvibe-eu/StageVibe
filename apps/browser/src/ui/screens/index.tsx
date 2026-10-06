@@ -4,10 +4,10 @@ import {
   useKartonReconnectState,
   useKartonState,
 } from '@ui/hooks/use-karton';
-import { Logo } from '@ui/components/ui/logo';
 import { WebContentsBoundsSyncer } from '@ui/components/web-contents-bounds-syncer';
 import { TutorialOverlay } from '@ui/components/tutorial/tutorial-overlay';
 import { WhatsNewDialog } from '@ui/components/release-notes';
+import bunny from '../assets/bunny.png';
 
 // Lazy-load the heavy screen trees. Both `DefaultLayout` and `OnboardingWizard`
 // only render *after* the karton connection is established, yet importing them
@@ -39,11 +39,22 @@ function LoadingScreen({
 }) {
   return (
     <div className="absolute inset-0 flex size-full flex-col items-center justify-center gap-4">
-      <Logo
-        color="white"
-        className="w-1/6 max-w-12 drop-shadow-black/30 drop-shadow-lg"
-        loading
-        loadingSpeed="fast"
+      {/* Bunny mark: masked so it takes the theme foreground (white in dark
+          appearance, black in light appearance). */}
+      <div
+        role="img"
+        aria-label="StageVibe"
+        className="aspect-square w-1/6 max-w-12 animate-pulse bg-foreground drop-shadow-black/30 drop-shadow-lg"
+        style={{
+          maskImage: `url(${bunny})`,
+          maskRepeat: 'no-repeat',
+          maskPosition: 'center',
+          maskSize: 'contain',
+          WebkitMaskImage: `url(${bunny})`,
+          WebkitMaskRepeat: 'no-repeat',
+          WebkitMaskPosition: 'center',
+          WebkitMaskSize: 'contain',
+        }}
       />
       {reconnectState.isReconnecting && (
         <div className="flex flex-col items-center gap-2">

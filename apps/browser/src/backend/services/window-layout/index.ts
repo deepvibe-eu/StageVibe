@@ -1,6 +1,5 @@
 import {
   BaseWindow,
-  BrowserWindow,
   app,
   ipcMain,
   nativeImage,
@@ -179,9 +178,6 @@ export class WindowLayoutService extends DisposableService {
   private tabs: Record<string, BrowsingTabController> = {};
   private activeTabId: string | null = null;
   private chatStateController: ChatStateController | null = null;
-
-  /** Lightweight startup splash shown until the main UI has painted. */
-  private splashWindow: BrowserWindow | null = null;
 
   /** Tracks whether the app window is currently focused. Propagated to all
    *  BrowsingTabControllers to gate energy-consuming intervals. */
@@ -616,9 +612,6 @@ export class WindowLayoutService extends DisposableService {
     // Match the dock/taskbar icon to the OS appearance from the start.
     this.applyAppearanceIcon();
 
-    // Show the startup splash until the main UI is ready.
-    this.createSplashWindow();
-
     this.setupKartonConnectionListener();
     this.setupUIControllerListeners();
     this.setupUIViewRecreatedListener();
@@ -777,11 +770,6 @@ export class WindowLayoutService extends DisposableService {
       });
       this.baseWindow.destroy();
     }
-
-    if (this.splashWindow && !this.splashWindow.isDestroyed()) {
-      this.splashWindow.destroy();
-    }
-    this.splashWindow = null;
 
     this.tabs = {};
     this.uiController = null;
@@ -2073,81 +2061,6 @@ export class WindowLayoutService extends DisposableService {
     this.saveTabState();
   };
 
-  /**
-   * Shows a lightweight, frameless splash while the main UI boots. It uses the
-   * appearance-matching icon and is dismissed by `showMainWindowOnce()`.
-   */
-  private createSplashWindow() {
-    if (this.splashWindow && !this.splashWindow.isDestroyed()) return;
-
-    const isDark = nativeTheme.shouldUseDarkColors;
-    const theme = isDark ? THEME_COLORS.dark : THEME_COLORS.light;
-    const icon = this.resolveAppearanceIcon(isDark);
-    const iconDataUrl = icon
-      ? icon.resize({ width: 320, height: 320 }).toDataURL()
-      : '';
-
-    const html = `<!doctype html><html><head><meta charset="utf-8" />
-<style>
-  html,body{margin:0;height:100%;overflow:hidden;background:transparent;
-    -webkit-user-select:none;user-select:none;
-    font-family:system-ui,-apple-system,'Segoe UI',sans-serif;}
-  .card{position:absolute;inset:0;display:flex;flex-direction:column;
-    align-items:center;justify-content:center;gap:26px;
-    background:${theme.background};border-radius:26px;}
-  img{width:180px;height:180px;-webkit-user-drag:none;}
-  .spinner{width:26px;height:26px;border-radius:50%;
-    border:3px solid ${isDark ? 'rgba(255,255,255,0.14)' : 'rgba(0,0,0,0.12)'};
-    border-top-color:#7c5cff;animation:spin .8s linear infinite;}
-  @keyframes spin{to{transform:rotate(360deg)}}
-</style></head>
-<body><div class="card">${iconDataUrl ? `<img src="${iconDataUrl}" alt="StageVibe" />` : ''}<div class="spinner"></div></div></body>
-</html>`;
-
-    const splash = new BrowserWindow({
-      width: 380,
-      height: 380,
-      show: false,
-      frame: false,
-      resizable: false,
-      movable: true,
-      transparent: true,
-      hasShadow: true,
-      center: true,
-      skipTaskbar: true,
-      alwaysOnTop: true,
-      backgroundColor: '#00000000',
-      webPreferences: {
-        contextIsolation: true,
-        nodeIntegration: false,
-        sandbox: true,
-      },
-    });
-
-    splash.once('ready-to-show', () => {
-      if (!splash.isDestroyed()) splash.show();
-    });
-    splash.on('closed', () => {
-      if (this.splashWindow === splash) this.splashWindow = null;
-    });
-    void splash.loadURL(
-      `data:text/html;charset=utf-8,${encodeURIComponent(html)}`,
-    );
-
-    this.splashWindow = splash;
-  }
-
-  private closeSplashWindow() {
-    const splash = this.splashWindow;
-    if (!splash) return;
-    this.splashWindow = null;
-    if (splash.isDestroyed()) return;
-    splash.setOpacity(0);
-    setTimeout(() => {
-      if (!splash.isDestroyed()) splash.close();
-    }, 180);
-  }
-
   // Reveal the window as soon as the renderer DOM is ready (React shell
   // mounted). This fires noticeably earlier than `did-finish-load`, which
   // additionally waits for fonts/images/other subresources — the main cause
@@ -2160,7 +2073,6 @@ export class WindowLayoutService extends DisposableService {
 
     this.windowShown = true;
     this.baseWindow.show();
-    this.closeSplashWindow();
 
     // Apply initial window state after showing
     if (this.initialWindowState.isMaximized) {
