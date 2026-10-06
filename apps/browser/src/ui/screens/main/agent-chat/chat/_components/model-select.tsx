@@ -10,6 +10,7 @@ import {
   IconXmarkOutline18,
 } from '@stagewise/icons';
 import { Button } from '@stagewise/stage-ui/components/button';
+import { useTranslation } from 'react-i18next';
 import {
   Radio,
   RadioGroup,
@@ -294,6 +295,7 @@ interface PresetEntry {
 export const ModelSelect = memo(function ModelSelect({
   onModelChange,
 }: ModelSelectProps) {
+  const { t } = useTranslation('chat');
   const [openAgent] = useOpenAgent();
   const selectedModel = useKartonState((s) =>
     openAgent ? s.agents.instances[openAgent]?.state.activeModelId : null,
@@ -929,7 +931,7 @@ export const ModelSelect = memo(function ModelSelect({
                 <ComboboxInput
                   ref={inputRef}
                   size="xs"
-                  placeholder="Search…"
+                  placeholder={t('common.search')}
                   className="min-w-0 flex-1"
                 />
                 <Tooltip>

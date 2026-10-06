@@ -2,6 +2,7 @@ import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import type { ToolCallFileEdit } from '@shared/karton-contracts/ui/shared-types';
 import { normalizePath } from '@shared/path-utils';
 import { useKartonProcedure } from '@ui/hooks/use-karton';
+import { useTranslation } from 'react-i18next';
 import { useMountedPaths } from '@ui/hooks/use-mounted-paths';
 import { DiffButtonContent } from '@ui/components/diff-button-content';
 import { DiffLineStats } from '@ui/components/diff-line-stats';
@@ -184,6 +185,7 @@ export const TurnFileEdits = memo(function TurnFileEdits({
   agentId: string;
   edits: ToolCallFileEdit[];
 }) {
+  const { t } = useTranslation('chat');
   const mounts = useMountedPaths();
   const { setCollapsed: setContentCollapsed } = useContentCollapsed();
   const setFileTreeVisible = useKartonProcedure(
@@ -278,7 +280,11 @@ export const TurnFileEdits = memo(function TurnFileEdits({
                 <Button
                   variant="ghost"
                   size="icon-xs"
-                  aria-label={allCollapsed ? 'Expand all' : 'Collapse all'}
+                  aria-label={
+                    allCollapsed
+                      ? t('actions.expandAll')
+                      : t('actions.collapseAll')
+                  }
                   onClick={() =>
                     setCollapsedFolders(
                       allCollapsed ? new Set() : new Set(tree.folderKeys),
@@ -293,7 +299,9 @@ export const TurnFileEdits = memo(function TurnFileEdits({
                 </Button>
               </TooltipTrigger>
               <TooltipContent>
-                {allCollapsed ? 'Expand all' : 'Collapse all'}
+                {allCollapsed
+                  ? t('actions.expandAll')
+                  : t('actions.collapseAll')}
               </TooltipContent>
             </Tooltip>
           )}

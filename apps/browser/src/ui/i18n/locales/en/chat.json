@@ -33,6 +33,18 @@
     "search": "Search…",
     "editYourMessage": "Edit your message..."
   },
+  "actions": {
+    "more": "More actions",
+    "restoreCheckpoint": "Restore checkpoint",
+    "expandAll": "Expand all",
+    "collapseAll": "Collapse all"
+  },
+  "revert": {
+    "title": "Keep or revert files?",
+    "description": "Do you want to revert file changes made after this message?",
+    "revertFiles": "Revert files",
+    "keep": "Keep"
+  },
   "omnibox": {
     "placeholder": "Search or type a URL",
     "noSuggestions": "No suggestions found.",

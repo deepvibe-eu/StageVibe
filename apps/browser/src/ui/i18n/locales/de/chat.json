@@ -33,6 +33,18 @@
     "search": "Suchen…",
     "editYourMessage": "Nachricht bearbeiten..."
   },
+  "actions": {
+    "more": "Weitere Aktionen",
+    "restoreCheckpoint": "Checkpoint wiederherstellen",
+    "expandAll": "Alle ausklappen",
+    "collapseAll": "Alle einklappen"
+  },
+  "revert": {
+    "title": "Dateien behalten oder zurücksetzen?",
+    "description": "Möchtest du die nach dieser Nachricht vorgenommenen Dateiänderungen zurücksetzen?",
+    "revertFiles": "Dateien zurücksetzen",
+    "keep": "Behalten"
+  },
   "omnibox": {
     "placeholder": "Suchen oder URL eingeben",
     "noSuggestions": "Keine Vorschläge gefunden.",

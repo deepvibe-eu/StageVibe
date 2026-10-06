@@ -89,6 +89,7 @@ import {
   useState,
 } from 'react';
 import { Button } from '@stagewise/stage-ui/components/button';
+import { useTranslation } from 'react-i18next';
 import { applyWorkspaceGitActionPreferences } from './workspace-action-preferences';
 import { hydrateWorkspaceActionConfigWithDefaults } from './workspace-action-config-utils';
 import {
@@ -2464,6 +2465,7 @@ function ActionBranchSelect({
   onPopupMouseLeave?: () => void;
   onPopupOpenChange?: (open: boolean) => void;
 }) {
+  const { t } = useTranslation('chat');
   const [query, setQuery] = useState('');
 
   const filtered = useMemo(() => {
@@ -2551,7 +2553,7 @@ function ActionBranchSelect({
               <div className="mb-1 rounded-md">
                 <ComboboxInput
                   size="xs"
-                  placeholder="Search…"
+                  placeholder={t('common.search')}
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
                 />

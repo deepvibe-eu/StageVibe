@@ -10,6 +10,7 @@ import {
 import { cn, collectUserMessageMetadata } from '@ui/utils';
 import type { AgentMessage } from '@shared/karton-contracts/ui/agent';
 import { EMPTY_MOUNTS } from '@shared/karton-contracts/ui';
+import { useTranslation } from 'react-i18next';
 import { normalizePath } from '@shared/path-utils';
 
 import {
@@ -68,6 +69,7 @@ export const MessageUser = memo(
     isWorking: boolean;
     hasSubsequentFileModifications?: boolean;
   }) {
+    const { t } = useTranslation('chat');
     const chatInputRef = useRef<ChatInputHandle>(null);
     const [isEditing, setIsEditing] = useState(false);
     const [openAgent] = useOpenAgent();
@@ -763,7 +765,7 @@ export const MessageUser = memo(
                       onChange={setPendingTiptapContent}
                       onSubmit={handleSubmitEdit}
                       onEscape={handleCancelEditing}
-                      placeholder="Edit your message..."
+                      placeholder={t('common.editYourMessage')}
                       showModelSelect
                       onModelChange={() => chatInputRef.current?.focus()}
                       showContextUsageRing={false}

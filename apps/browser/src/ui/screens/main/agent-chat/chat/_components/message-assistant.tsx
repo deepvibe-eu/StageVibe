@@ -13,6 +13,7 @@ import type {
 } from '@shared/karton-contracts/ui/agent';
 import type { UIAgentTools } from '@shared/karton-contracts/ui/agent/tools/types';
 import { useMemo, memo, useState, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import { ThinkingPart } from './message-part-ui/thinking';
 import { FilePart } from './message-part-ui/file';
 import { TextPart } from './message-part-ui/text';
@@ -272,6 +273,7 @@ export const MessageAssistant = memo(
     showBetweenStepsIndicator?: boolean;
     hasSubsequentFileModifications?: boolean;
   }) {
+    const { t } = useTranslation('chat');
     const isEmptyMessage = useMemo(() => {
       if (
         msg.parts
@@ -451,6 +453,7 @@ export const MessageAssistant = memo(
                     <MenuTrigger>
                       <button
                         type="button"
+                        aria-label={t('actions.more')}
                         className="flex size-5 cursor-pointer items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
                       >
                         <IconDotsOutline18 className="size-3.5" />
@@ -464,7 +467,7 @@ export const MessageAssistant = memo(
                     >
                       <MenuItem size="xs" onClick={handleRestoreCheckpoint}>
                         <HistoryIcon className="size-3" />
-                        Restore checkpoint
+                        {t('actions.restoreCheckpoint')}
                       </MenuItem>
                     </MenuContent>
                   </Menu>
