@@ -17,6 +17,7 @@ import {
 import { cn, stripMountPrefix } from '@ui/utils';
 import type { AgentToolUIPart } from '@shared/karton-contracts/ui/agent';
 import { FileContextMenu } from '@ui/components/file-context-menu';
+import { useTranslation } from 'react-i18next';
 
 export const DeleteFileToolPart = ({
   part,
@@ -95,11 +96,12 @@ const ErrorHeader = ({
   relativePath?: string;
   errorText?: string;
 }) => {
+  const { t } = useTranslation('tools');
   const errorTextContent = errorText
     ? errorText
     : relativePath
-      ? `Error deleting ${relativePath}`
-      : 'Error deleting file';
+      ? t('delete.errorPath', { path: relativePath })
+      : t('delete.errorFile');
 
   return (
     <div className="flex flex-row items-center justify-start gap-1">
@@ -127,6 +129,7 @@ const SuccessHeader = ({
   fullPath?: string;
   isDirectory?: boolean;
 }) => {
+  const { t } = useTranslation('tools');
   const fileName = relativePath ? getBaseName(relativePath) : relativePath;
 
   return (
@@ -159,7 +162,7 @@ const SuccessHeader = ({
         </FileContextMenu>
       </div>
       <span className="shrink-0 text-error-foreground text-xs group-hover/trigger:text-hover-derived">
-        (deleted)
+        {t('delete.deleted')}
       </span>
     </div>
   );

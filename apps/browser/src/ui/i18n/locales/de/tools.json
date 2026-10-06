@@ -1,0 +1,20 @@
+{
+  "copy": {
+    "renaming": "Umbenennen",
+    "moving": "Verschieben",
+    "copying": "Kopieren",
+    "renamed": "Umbenannt",
+    "moved": "Verschoben",
+    "copied": "Kopiert"
+  },
+  "delete": {
+    "errorPath": "Fehler beim Löschen von {{path}}",
+    "errorFile": "Fehler beim Löschen der Datei",
+    "deleted": "(gelöscht)"
+  },
+  "mkdir": {
+    "creatingPath": "Erstelle {{path}}...",
+    "creating": "Verzeichnis wird erstellt...",
+    "created": "Erstellt"
+  }
+}

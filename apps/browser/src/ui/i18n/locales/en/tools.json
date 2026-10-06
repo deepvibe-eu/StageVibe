@@ -1,0 +1,20 @@
+{
+  "copy": {
+    "renaming": "Renaming",
+    "moving": "Moving",
+    "copying": "Copying",
+    "renamed": "Renamed",
+    "moved": "Moved",
+    "copied": "Copied"
+  },
+  "delete": {
+    "errorPath": "Error deleting {{path}}",
+    "errorFile": "Error deleting file",
+    "deleted": "(deleted)"
+  },
+  "mkdir": {
+    "creatingPath": "Creating {{path}}...",
+    "creating": "Creating directory...",
+    "created": "Created"
+  }
+}

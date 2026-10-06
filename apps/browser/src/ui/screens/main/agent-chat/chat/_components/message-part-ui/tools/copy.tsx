@@ -10,6 +10,7 @@ import {
 import { resolveDisplayPath } from '@ui/utils';
 import { useAttachmentMetadata } from '@ui/hooks/use-attachment-metadata';
 import { getBaseName, getParentPath } from '@shared/path-utils';
+import { useTranslation } from 'react-i18next';
 
 export const CopyToolPart = ({
   part,
@@ -20,6 +21,7 @@ export const CopyToolPart = ({
   disableShimmer?: boolean;
   minimal?: boolean;
 }) => {
+  const { t } = useTranslation('tools');
   const inputPath = part.input?.input_path ?? '';
   const outputPath = part.input?.output_path ?? '';
   const isMove = part.input?.move ?? false;
@@ -57,15 +59,23 @@ export const CopyToolPart = ({
     <IconClone2Outline18 className="size-3 shrink-0" />
   );
 
-  const action = isRename ? 'Renaming' : isMove ? 'Moving' : 'Copying';
-  const actionPast = isRename ? 'Renamed' : isMove ? 'Moved' : 'Copied';
+  const action = isRename
+    ? t('copy.renaming')
+    : isMove
+      ? t('copy.moving')
+      : t('copy.copying');
+  const actionPast = isRename
+    ? t('copy.renamed')
+    : isMove
+      ? t('copy.moved')
+      : t('copy.copied');
 
   const streamingText = useMemo(() => {
     if (displayInputPath && displayOutputPath) {
       return `${action} ${displayInputPath} → ${displayOutputPath}...`;
     }
     return `${action}...`;
-  }, [displayInputPath, displayOutputPath, isRename, isMove]);
+  }, [displayInputPath, displayOutputPath, action]);
 
   const finishedText = useMemo(() => {
     if (part.state !== 'output-available') return undefined;
@@ -77,7 +87,7 @@ export const CopyToolPart = ({
         </span>
       </span>
     );
-  }, [part.state, isRename, isMove, displayInputPath, displayOutputPath]);
+  }, [part.state, actionPast, displayInputPath, displayOutputPath]);
 
   return (
     <ToolPartUINotCollapsible
