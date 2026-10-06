@@ -312,6 +312,12 @@ export const ModelSelect = memo(function ModelSelect({
   const openSettings = useKartonProcedure((p) => p.appScreen.openSettings);
   const updatePreferences = useKartonProcedure((p) => p.preferences.update);
   const preferences = useKartonState((s) => s.preferences);
+  const subscription = useKartonState((s) => s.userAccount.subscription);
+  const subscriptionPlan = subscription?.plan;
+  const hasStagewiseSubscription =
+    subscriptionPlan !== undefined &&
+    subscriptionPlan !== null &&
+    subscriptionPlan !== 'free';
   const modelThinkingOverrides = useKartonState(
     (s) =>
       s.preferences.agent.modelThinkingOverrides ??
@@ -336,7 +342,13 @@ export const ModelSelect = memo(function ModelSelect({
   // Build flat model options list from the aggregation utility
   const selectableEntries = useMemo<SelectableEntry[]>(() => {
     const entries = getSelectableModelEntries(preferences);
-    return entries.map((entry) => {
+    const filteredEntries = hasStagewiseSubscription
+      ? entries
+      : entries.filter((entry) => {
+          const instance = instanceMap.get(entry.instanceId);
+          return instance?.typeId !== 'stagewise';
+        });
+    return filteredEntries.map((entry) => {
       let thinkingLabel: string | undefined;
       const instance = instanceMap.get(entry.instanceId);
       const model = getThinkingModel(
@@ -383,6 +395,7 @@ export const ModelSelect = memo(function ModelSelect({
     runtimeContextWindow,
     selectedModel,
     selectedProviderInstanceId,
+    hasStagewiseSubscription,
   ]);
 
   // Index by composite key for fast lookups

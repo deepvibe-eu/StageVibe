@@ -80,7 +80,7 @@ export function Sidebar() {
         data-tutorial="sidebar-panel"
         className={`${SIDEBAR_PANEL_CLASS_NAME} data-[panel-size='0.0']:min-w-0`}
       >
-        <SidebarTitlebarRow absolute />
+        {!collapsed && <SidebarTitlebarRow absolute />}
         {!collapsed && (
           <div
             className="flex h-full flex-col items-stretch p-2"

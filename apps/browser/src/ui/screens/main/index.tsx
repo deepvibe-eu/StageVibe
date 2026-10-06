@@ -134,8 +134,8 @@ function DefaultLayoutInner({ show }: { show: boolean }) {
 
   const createTab = useKartonProcedure((p) => p.browser.createTab);
   const createTerminal = useKartonProcedure((p) => p.browser.createTerminal);
-  // content panel visible when there are visible tabs AND it's not collapsed
-  const showContent = hasVisibleTabs && !contentCollapsed;
+  // content panel visible when it's not collapsed (tabs control their own visibility inside)
+  const showContent = !contentCollapsed;
 
   const fileTreeSizeRef = useRef(readPanelSize(fileTreePanelSizeKey, 15));
   const contentSizeRef = useRef(readPanelSize(contentPanelSizeKey, 85));
@@ -146,7 +146,7 @@ function DefaultLayoutInner({ show }: { show: boolean }) {
   // normalised against each other instead of against the full width.
   const panelLayout = useMemo(() => {
     const fileTreeSize = fileTreeVisible ? fileTreeSizeRef.current : 0;
-    const desiredContentSize = showContent ? contentSizeRef.current : 0;
+    const desiredContentSize = showContent && hasVisibleTabs ? contentSizeRef.current : 0;
     const innerTotal = fileTreeSize + desiredContentSize;
     const scale = innerTotal > 100 ? 100 / innerTotal : 1;
 
@@ -260,6 +260,7 @@ function DefaultLayoutInner({ show }: { show: boolean }) {
         trailingContent={<ActionDivider />}
       />
       <ActionDivider />
+      <FileTreeToggleButton />
       <ContentToggleButton />
       {!hasVisibleTabs && (
         <NewTabButtons
@@ -267,8 +268,6 @@ function DefaultLayoutInner({ show }: { show: boolean }) {
           onCreateTerminalTab={handleOpenTerminal}
         />
       )}
-      <ActionDivider />
-      <FileTreeToggleButton />
     </>
   );
 
@@ -373,15 +372,17 @@ function DefaultLayoutInner({ show }: { show: boolean }) {
                       />
                     </ResizablePanel>
 
-                    {showContent && (
-                      <>
-                        <ResizableHandle className="after:w-2 hover:after:bg-transparent" />
+                    <ResizableHandle className="after:w-2 hover:after:bg-transparent" />
 
-                        <ResizablePanel
-                          id="browser-tree-panel"
-                          order={1}
-                          className="relative h-full overflow-hidden rounded-lg bg-background ring-1 ring-derived-subtle"
-                        >
+                    <ResizablePanel
+                      id="browser-tree-panel"
+                      order={1}
+                      defaultSize={hasVisibleTabs ? contentSizeRef.current : 0}
+                      minSize={hasVisibleTabs ? 5 : 0}
+                      collapsible
+                      collapsedSize={0}
+                      className="relative h-full overflow-hidden rounded-lg bg-background ring-1 ring-derived-subtle"
+                    >
                           <ResizablePanelGroup
                             direction="vertical"
                             autoSaveId="stagewise-content-vertical"
@@ -462,8 +463,6 @@ function DefaultLayoutInner({ show }: { show: boolean }) {
                             )}
                           </ResizablePanelGroup>
                         </ResizablePanel>
-                      </>
-                    )}
                   </ResizablePanelGroup>
                 </ResizablePanel>
               </>
