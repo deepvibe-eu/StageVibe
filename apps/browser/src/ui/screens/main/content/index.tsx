@@ -49,7 +49,6 @@ import {
   IconPinTackOutline18,
   IconPinTackSlashOutline18,
 } from '@stagewise/icons';
-import { NewTabButtons } from '../_components/new-tab-buttons';
 import { Tutorial } from '@ui/components/tutorial';
 import { useTutorial } from '@ui/contexts/tutorial';
 import type { TutorialId } from '@ui/tutorial-steps';
@@ -176,14 +175,12 @@ function TabPinIcon({
 // ---------------------------------------------------------------------------
 
 export function MainSection({
-  onCreateTab,
   pendingOmniboxFocusRequest,
   onPendingOmniboxFocusHandled,
   topRightActions,
   defaultSize = 70,
   onPanelResize,
 }: {
-  onCreateTab: () => void;
   pendingOmniboxFocusRequest: {
     id: number;
     fromTabId: string | null;
@@ -199,7 +196,6 @@ export function MainSection({
   const globalOrder = useKartonState((s) => s.contentTabs.globalOrder);
   const agentOrders = useKartonState((s) => s.contentTabs.agentOrders);
   const activeTabId = useKartonState((s) => s.contentTabs.activeTabId);
-  const createTerminal = useKartonProcedure((p) => p.browser.createTerminal);
   const closeTab = useKartonProcedure((p) => p.browser.closeTab);
   const switchTab = useKartonProcedure((p) => p.browser.switchTab);
   const reorderTabs = useKartonProcedure((p) => p.browser.reorderTabs);
@@ -765,21 +761,6 @@ export function MainSection({
               />
             )}
           </SortableTabs>
-          {/* New-tab buttons hug the right edge of the tab list: they stay
-              outside the scrollable section and follow the list's end until
-              the flexible spacer collapses, at which point they sit next to
-              the fixed close/expand controls and the list scrolls instead. */}
-          <div className="app-no-drag flex shrink-0 items-center gap-0.5">
-            <NewTabButtons
-              buttonClassName="size-7"
-              onCreateBrowserTab={onCreateTab}
-              onCreateTerminalTab={() =>
-                void createTerminal(undefined, openAgent).then((terminalId) => {
-                  if (terminalId) requestTerminalFocus(terminalId);
-                })
-              }
-            />
-          </div>
           <div className="min-w-0 flex-1" />
           <div className="app-no-drag flex shrink-0 items-center gap-0.5">
             {topRightActions}

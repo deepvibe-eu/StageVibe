@@ -420,7 +420,6 @@ function DefaultLayoutInner({ show }: { show: boolean }) {
                             className="h-full"
                           >
                             <MainSection
-                              onCreateTab={handleCreateTab}
                               pendingOmniboxFocusRequest={
                                 pendingOmniboxFocusRequest
                               }

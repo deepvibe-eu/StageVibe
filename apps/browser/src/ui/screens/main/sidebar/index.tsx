@@ -51,15 +51,15 @@ export function Sidebar() {
       if (currentSize > 0) preCollapseSizeRef.current = currentSize;
       panel.collapse();
     } else if (!collapsed && isPanelCollapsed) {
-      panel.expand();
-      // Restore the pre-collapse size instead of defaultSize.
-      // `panel.expand()` may set defaultSize; override with the
-      // remembered size so user-resized widths survive collapse cycles.
+      // Restore the pre-collapse size instead of defaultSize, even when it
+      // equals the expanded default: a panel that started collapsed has no
+      // stored pre-collapse size, so `expand()` alone would only restore to
+      // `minSize` and the sidebar would stay effectively hidden.
       const restoreSize = preCollapseSizeRef.current;
-      if (restoreSize !== DEFAULT_EXPANDED_SIDEBAR_SIZE) {
-        // Delay one tick so expand() has settled.
-        requestAnimationFrame(() => panel.resize(restoreSize));
-      }
+      panel.expand();
+      // Delay one tick so expand() has settled before overriding with the
+      // remembered size.
+      requestAnimationFrame(() => panel.resize(restoreSize));
     }
   }, [collapsed]);
 
