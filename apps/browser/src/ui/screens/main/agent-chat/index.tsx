@@ -12,9 +12,14 @@ import { useEmptyAgentId } from '@ui/hooks/use-empty-agent';
 import { usePendingRemovals } from '@ui/hooks/use-pending-agent-removals';
 import { useTrack } from '@ui/hooks/use-track';
 import { EMPTY_MOUNTS } from '@shared/karton-contracts/ui';
+import { SidebarToggleButton } from '../_components/sidebar-toggle-button';
+import { ContentToggleButton } from '../_components/content-toggle-button';
+import { FileTreeToggleButton } from '../file-tree/file-tree-toggle-button';
+import { NewTabButtons } from '../_components/new-tab-buttons';
 
 type AgentChatProps = {
   topRightActions?: ReactNode;
+  topLeftActions?: ReactNode;
   defaultSize?: number;
   minSize?: number;
   /** Reports the user-adjusted panel size so the layout can persist it. */
@@ -23,6 +28,7 @@ type AgentChatProps = {
 
 export function AgentChat({
   topRightActions,
+  topLeftActions,
   defaultSize = 35,
   minSize = 20,
   onPanelResize,
@@ -136,6 +142,11 @@ export function AgentChat({
       }}
       className="@container group overflow-visible! relative z-10 flex h-full flex-col items-stretch justify-between bg-background"
     >
+      {topLeftActions && (
+        <div className="app-no-drag absolute top-1 left-2 z-20 flex items-center gap-0 rounded-xl">
+          {topLeftActions}
+        </div>
+      )}
       {topRightActions && (
         <div
           data-tutorial="new-tab-buttons"
@@ -148,6 +159,7 @@ export function AgentChat({
         <SidebarTitlebarRow
           absolute
           sidebarCollapsed
+          showSidebarToggle={false}
           agentTitle={agentTitle}
           onCreateChat={handleCreateChat}
         />

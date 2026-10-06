@@ -26,6 +26,7 @@ import {
 } from './_components/content-collapsed-context';
 import { useTabUIState } from '@ui/hooks/use-tab-ui-state';
 import { ContentToggleButton } from './_components/content-toggle-button';
+import { SidebarToggleButton } from './_components/sidebar-toggle-button';
 import { Tutorial } from '@ui/components/tutorial';
 import { GlobalHotkeyBindings } from './_components/global-hotkey-bindings';
 import { AgentHotkeyBindings } from './_components/agent-hotkey-bindings';
@@ -248,44 +249,31 @@ function DefaultLayoutInner({ show }: { show: boolean }) {
     ],
   );
 
-  const contentPanelTopRightActions =
-    showContent && !fileTreeVisible ? (
-      <>
-        <ContentToggleButton />
-        <ActionDivider />
-        <FileTreeToggleButton />
-      </>
-    ) : null;
+  const contentPanelTopRightActions = null;
+
+  const chatTopLeftActions = <SidebarToggleButton />;
 
   const chatTopRightActions = (
     <>
       <WatcherPopover />
       <LocalServersPopover
-        trailingContent={!showContent ? <ActionDivider /> : null}
+        trailingContent={<ActionDivider />}
       />
-      {!showContent && (
-        <>
-          {hasVisibleTabs ? (
-            <ContentToggleButton />
-          ) : (
-            <NewTabButtons
-              onCreateBrowserTab={handleCreateTab}
-              onCreateTerminalTab={handleOpenTerminal}
-            />
-          )}
-          {!fileTreeVisible && (
-            <>
-              <ActionDivider />
-              <FileTreeToggleButton />
-            </>
-          )}
-        </>
+      <ActionDivider />
+      {hasVisibleTabs ? (
+        <ContentToggleButton />
+      ) : (
+        <NewTabButtons
+          onCreateBrowserTab={handleCreateTab}
+          onCreateTerminalTab={handleOpenTerminal}
+        />
       )}
+      <ActionDivider />
+      <FileTreeToggleButton />
     </>
   );
 
-  const openedContentTopRightActions =
-    showContent && fileTreeVisible ? <ContentToggleButton /> : null;
+  const openedContentTopRightActions = null;
 
   const markStagewiseUiFocused = useCallback(() => {
     if (!activeTabId) return;
@@ -375,6 +363,7 @@ function DefaultLayoutInner({ show }: { show: boolean }) {
                       className="rounded-lg bg-background ring-1 ring-derived-subtle"
                     >
                       <AgentChat
+                        topLeftActions={chatTopLeftActions}
                         topRightActions={chatTopRightActions}
                         defaultSize={panelLayout.chatSize}
                         minSize={CHAT_PANEL_MIN_SIZE}
@@ -392,15 +381,6 @@ function DefaultLayoutInner({ show }: { show: boolean }) {
                       order={1}
                       className="relative h-full overflow-hidden rounded-lg bg-background ring-1 ring-derived-subtle"
                     >
-                      {/* Both panels closed leaves an empty column: keep the
-                          re-open controls reachable right here. */}
-                      {!showContent && !fileTreeVisible && (
-                        <div className="absolute top-1 right-2 z-20 flex items-center gap-0">
-                          <ContentToggleButton />
-                          <ActionDivider />
-                          <FileTreeToggleButton />
-                        </div>
-                      )}
                       <ResizablePanelGroup
                         direction="vertical"
                         autoSaveId="stagewise-content-vertical"
