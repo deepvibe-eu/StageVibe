@@ -18,5 +18,24 @@
   "newTerminalTab": {
     "label": "Open new terminal tab",
     "tooltip": "Open terminal tab"
+  },
+  "composer": {
+    "placeholder": "Use / to plan and run commands. Use @ for context.",
+    "pressToSend": "Press ↵ to send now",
+    "stop": "Stop mate",
+    "selectElements": "Select context elements",
+    "stopSelecting": "Stop selecting elements",
+    "addElements": "Add reference elements",
+    "attachFile": "Attach file",
+    "sendMessage": "Send message"
+  },
+  "common": {
+    "search": "Search…",
+    "editYourMessage": "Edit your message..."
+  },
+  "omnibox": {
+    "placeholder": "Search or type a URL",
+    "noSuggestions": "No suggestions found.",
+    "noHistory": "No browsing history yet."
   }
 }

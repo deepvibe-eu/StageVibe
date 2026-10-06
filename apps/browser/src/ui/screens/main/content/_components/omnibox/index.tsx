@@ -23,6 +23,7 @@ import { Button } from '@stagewise/stage-ui/components/button';
 import { cn } from '@stagewise/stage-ui/lib/utils';
 import { InternalPageBreadcrumbs } from './internal-page-breadcrumbs';
 import { dispatchArrowFromCtrl } from '@ui/utils/keyboard-nav';
+import { useTranslation } from 'react-i18next';
 
 export interface OmniboxRef {
   focus: () => void;
@@ -39,6 +40,7 @@ export const Omnibox = ({
   isActive: boolean;
   ref: Ref<OmniboxRef>;
 }) => {
+  const { t } = useTranslation('chat');
   const displayedTabUrl =
     tab?.url === 'stagewise://internal/home' ? '' : tab?.url;
 
@@ -271,7 +273,7 @@ export const Omnibox = ({
         <div className="h-full flex-1">
           <Autocomplete.Input
             ref={inputRef}
-            placeholder="Search or type a URL"
+            placeholder={t('omnibox.placeholder')}
             disabled={!isActive}
             onFocus={onInputFocus}
             onKeyDown={onInputKeyDown}
@@ -313,8 +315,8 @@ export const Omnibox = ({
                 0 && (
                 <Autocomplete.Empty className="p-3 text-muted-foreground text-sm empty:m-0 empty:p-0">
                   {inputValue && inputValue.trim() !== ''
-                    ? 'No suggestions found.'
-                    : 'No browsing history yet.'}
+                    ? t('omnibox.noSuggestions')
+                    : t('omnibox.noHistory')}
                 </Autocomplete.Empty>
               )}
               <Autocomplete.List className="divide-y divide-surface-2">

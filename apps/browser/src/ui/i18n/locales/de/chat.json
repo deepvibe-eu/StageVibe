@@ -18,5 +18,24 @@
   "newTerminalTab": {
     "label": "Neuen Terminal-Tab öffnen",
     "tooltip": "Terminal-Tab öffnen"
+  },
+  "composer": {
+    "placeholder": "Nutze / zum Planen und Ausführen von Befehlen. Nutze @ für Kontext.",
+    "pressToSend": "↵ zum sofortigen Senden drücken",
+    "stop": "Mate stoppen",
+    "selectElements": "Kontext-Elemente auswählen",
+    "stopSelecting": "Elementauswahl beenden",
+    "addElements": "Referenz-Elemente hinzufügen",
+    "attachFile": "Datei anhängen",
+    "sendMessage": "Nachricht senden"
+  },
+  "common": {
+    "search": "Suchen…",
+    "editYourMessage": "Nachricht bearbeiten..."
+  },
+  "omnibox": {
+    "placeholder": "Suchen oder URL eingeben",
+    "noSuggestions": "Keine Vorschläge gefunden.",
+    "noHistory": "Noch kein Browserverlauf."
   }
 }

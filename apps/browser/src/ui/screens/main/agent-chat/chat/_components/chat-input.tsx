@@ -9,6 +9,7 @@ import { ContextUsageRing } from './context-usage-ring';
 import { Button } from '@stagewise/stage-ui/components/button';
 import { cn } from '@ui/utils';
 import { HotkeyActions } from '@shared/hotkeys';
+import { useTranslation } from 'react-i18next';
 import {
   ArrowUpIcon,
   SquareIcon,
@@ -347,12 +348,15 @@ export const ChatInput = memo(function ChatInput({
   className,
   ref,
 }: ChatInputProps) {
+  const { t } = useTranslation('chat');
   const shownPlaceholder = useRef('');
   useEffect(() => {
     shownPlaceholder.current =
       placeholder ??
-      `Use / to plan and run commands. Use @ for context. ${hasQueuedMessages ? 'Press ↵ to send now' : ''}`;
-  }, [placeholder, hasQueuedMessages]);
+      `${t('composer.placeholder')} ${
+        hasQueuedMessages ? t('composer.pressToSend') : ''
+      }`;
+  }, [placeholder, hasQueuedMessages, t]);
   const staticPlaceholderRef = useRef(() => shownPlaceholder.current);
 
   const [textContent, setTextContent] = useState<string>('');
@@ -906,7 +910,7 @@ export const ChatInput = memo(function ChatInput({
                 <TooltipTrigger>
                   <Button
                     onClick={onStop}
-                    aria-label="Stop mate"
+                    aria-label={t('composer.stop')}
                     variant="secondary"
                     className="group absolute right-1 bottom-0 z-10 size-8 cursor-pointer rounded-full p-1 opacity-100! shadow-md"
                   >
@@ -915,7 +919,7 @@ export const ChatInput = memo(function ChatInput({
                 </TooltipTrigger>
                 <TooltipContent>
                   <span className="flex items-center gap-1.5">
-                    <span>Stop mate</span>
+                    <span>{t('composer.stop')}</span>
                     <HotkeyCombo action={HotkeyActions.STOP_AGENT} size="xs" />
                     <ShortcutCombo value="Esc" size="xs" />
                   </span>
@@ -953,6 +957,7 @@ export const ChatInputActions = memo(function ChatInputActions({
   canSendMessage,
   onSubmit,
 }: ChatInputActionsProps) {
+  const { t } = useTranslation('chat');
   return (
     <div className="flex shrink-0 flex-col items-end justify-end gap-1">
       {/* Element selector and image upload - always shown (can add context to queued messages) */}
@@ -973,7 +978,7 @@ export const ChatInputActions = memo(function ChatInputActions({
                   e.stopPropagation();
                   onToggleElementSelection?.();
                 }}
-                aria-label="Select context elements"
+                aria-label={t('composer.selectElements')}
               >
                 <SquareDashedMousePointerIcon className="size-3.5 stroke-[2.5px]" />
               </Button>
@@ -982,8 +987,8 @@ export const ChatInputActions = memo(function ChatInputActions({
               <span className="flex items-center gap-1.5">
                 <span>
                   {elementSelectionActive
-                    ? 'Stop selecting elements'
-                    : 'Add reference elements'}
+                    ? t('composer.stopSelecting')
+                    : t('composer.addElements')}
                 </span>
                 {elementSelectionActive ? (
                   <ShortcutCombo value="Esc" size="xs" />
@@ -1011,7 +1016,7 @@ export const ChatInputActions = memo(function ChatInputActions({
               <Button
                 size="icon-sm"
                 variant="ghost"
-                aria-label="Attach file"
+                aria-label={t('composer.attachFile')}
                 className="mb-1 shrink-0"
                 onClick={() => {
                   const input = document.getElementById(
@@ -1031,7 +1036,7 @@ export const ChatInputActions = memo(function ChatInputActions({
                 <IconPaperclip2Outline18 className="size-4" />
               </Button>
             </TooltipTrigger>
-            <TooltipContent>Attach file</TooltipContent>
+            <TooltipContent>{t('composer.attachFile')}</TooltipContent>
           </Tooltip>
         </>
       )}
@@ -1040,14 +1045,14 @@ export const ChatInputActions = memo(function ChatInputActions({
           <Button
             disabled={!canSendMessage}
             onClick={onSubmit}
-            aria-label="Send message"
+            aria-label={t('composer.sendMessage')}
             variant="primary"
             className="z-10 size-8 shrink-0 cursor-pointer rounded-full p-1 shadow-md transition-all disabled:opacity-50"
           >
             <ArrowUpIcon className="size-4 stroke-3" />
           </Button>
         </TooltipTrigger>
-        <TooltipContent>Send message</TooltipContent>
+        <TooltipContent>{t('composer.sendMessage')}</TooltipContent>
       </Tooltip>
     </div>
   );
