@@ -401,7 +401,13 @@ function DefaultLayoutInner({ show }: { show: boolean }) {
                       minSize={hasVisibleTabs ? 5 : 0}
                       collapsible
                       collapsedSize={0}
-                      className="relative h-full overflow-hidden rounded-lg bg-background ring-1 ring-derived-subtle"
+                      className={cn(
+                        'relative h-full overflow-hidden rounded-lg ring-1 ring-derived-subtle',
+                        // The UI renderer is transparent so the native page shows
+                        // through the cell while the UI is on top. Only when there
+                        // is nothing to render do we paint an opaque backdrop.
+                        !hasVisibleTabs && 'bg-background',
+                      )}
                     >
                       <ResizablePanelGroup
                         direction="vertical"
@@ -413,7 +419,10 @@ function DefaultLayoutInner({ show }: { show: boolean }) {
                           order={0}
                           defaultSize={72}
                           minSize={30}
-                          className="rounded-lg bg-background ring-1 ring-derived-subtle"
+                          className={cn(
+                            'rounded-lg ring-1 ring-derived-subtle',
+                            !hasVisibleTabs && 'bg-background',
+                          )}
                         >
                           <ResizablePanelGroup
                             direction="horizontal"
