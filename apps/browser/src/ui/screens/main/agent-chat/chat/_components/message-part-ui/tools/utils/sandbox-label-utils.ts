@@ -1,5 +1,6 @@
 import type { TabState } from '@shared/karton-contracts/ui';
 import { getBaseName } from '@shared/path-utils';
+import type { TFunction } from 'i18next';
 
 /**
  * Represents a parsed CDP call extracted from a sandbox script.
@@ -31,127 +32,59 @@ export interface ParsedMultimodalAttachmentCall {
 }
 
 /**
- * Human-readable labels for common CDP methods.
- * Each method maps to in-progress/completed labels and a preposition for the hostname.
- * - "from" for data retrieval (read, got, extracted)
+ * Maps common CDP methods to i18n keys (under `sandbox.methods`) and a
+ * preposition used before the hostname:
  * - "on" for actions/interactions (queried, called, ran)
+ * - "from" for data retrieval (read, got, extracted)
+ * - "of" for screenshots
  */
-const CDP_METHOD_LABELS: Record<
+const CDP_METHOD_KEYS: Record<
   string,
-  { inProgress: string; completed: string; preposition: 'on' | 'from' | 'of' }
+  { key: string; preposition: 'on' | 'from' | 'of' }
 > = {
   // CSS domain
-  'CSS.enable': {
-    inProgress: 'Enabling CSS inspection',
-    completed: 'Enabled CSS inspection',
-    preposition: 'on',
-  },
+  'CSS.enable': { key: 'cssEnable', preposition: 'on' },
   'CSS.getComputedStyleForNode': {
-    inProgress: 'Reading computed styles',
-    completed: 'Read computed styles',
+    key: 'cssGetComputedStyleForNode',
     preposition: 'from',
   },
   'CSS.getMatchedStylesForNode': {
-    inProgress: 'Reading CSS rules',
-    completed: 'Read CSS rules',
+    key: 'cssGetMatchedStylesForNode',
     preposition: 'from',
   },
   'CSS.getInlineStylesForNode': {
-    inProgress: 'Reading inline styles',
-    completed: 'Read inline styles',
+    key: 'cssGetInlineStylesForNode',
     preposition: 'from',
   },
   'CSS.getStyleSheetText': {
-    inProgress: 'Reading stylesheet',
-    completed: 'Read stylesheet',
+    key: 'cssGetStyleSheetText',
     preposition: 'from',
   },
 
   // DOM domain
-  'DOM.enable': {
-    inProgress: 'Enabling DOM inspection',
-    completed: 'Enabled DOM inspection',
-    preposition: 'on',
-  },
-  'DOM.getDocument': {
-    inProgress: 'Reading document',
-    completed: 'Read document',
-    preposition: 'from',
-  },
-  'DOM.querySelector': {
-    inProgress: 'Querying element',
-    completed: 'Queried element',
-    preposition: 'on',
-  },
-  'DOM.querySelectorAll': {
-    inProgress: 'Querying elements',
-    completed: 'Queried elements',
-    preposition: 'on',
-  },
-  'DOM.getOuterHTML': {
-    inProgress: 'Reading element HTML',
-    completed: 'Read element HTML',
-    preposition: 'from',
-  },
-  'DOM.resolveNode': {
-    inProgress: 'Resolving element',
-    completed: 'Resolved element',
-    preposition: 'on',
-  },
-  'DOM.getBoxModel': {
-    inProgress: 'Reading box model',
-    completed: 'Read box model',
-    preposition: 'from',
-  },
+  'DOM.enable': { key: 'domEnable', preposition: 'on' },
+  'DOM.getDocument': { key: 'domGetDocument', preposition: 'from' },
+  'DOM.querySelector': { key: 'domQuerySelector', preposition: 'on' },
+  'DOM.querySelectorAll': { key: 'domQuerySelectorAll', preposition: 'on' },
+  'DOM.getOuterHTML': { key: 'domGetOuterHTML', preposition: 'from' },
+  'DOM.resolveNode': { key: 'domResolveNode', preposition: 'on' },
+  'DOM.getBoxModel': { key: 'domGetBoxModel', preposition: 'from' },
 
   // Runtime domain
-  'Runtime.enable': {
-    inProgress: 'Enabling runtime',
-    completed: 'Enabled runtime',
-    preposition: 'on',
-  },
-  'Runtime.evaluate': {
-    inProgress: 'Running a script',
-    completed: 'Ran a script',
-    preposition: 'on',
-  },
-  'Runtime.callFunctionOn': {
-    inProgress: 'Calling function',
-    completed: 'Called function',
-    preposition: 'on',
-  },
-  'Runtime.getProperties': {
-    inProgress: 'Reading properties',
-    completed: 'Read properties',
-    preposition: 'from',
-  },
+  'Runtime.enable': { key: 'runtimeEnable', preposition: 'on' },
+  'Runtime.evaluate': { key: 'runtimeEvaluate', preposition: 'on' },
+  'Runtime.callFunctionOn': { key: 'runtimeCallFunctionOn', preposition: 'on' },
+  'Runtime.getProperties': { key: 'runtimeGetProperties', preposition: 'from' },
 
   // Page domain
-  'Page.enable': {
-    inProgress: 'Enabling page inspection',
-    completed: 'Enabled page inspection',
-    preposition: 'on',
-  },
-  'Page.getFrameTree': {
-    inProgress: 'Reading frames',
-    completed: 'Read frames',
-    preposition: 'from',
-  },
-  'Page.captureScreenshot': {
-    inProgress: 'Taking screenshot',
-    completed: 'Took screenshot',
-    preposition: 'of',
-  },
+  'Page.enable': { key: 'pageEnable', preposition: 'on' },
+  'Page.getFrameTree': { key: 'pageGetFrameTree', preposition: 'from' },
+  'Page.captureScreenshot': { key: 'pageCaptureScreenshot', preposition: 'of' },
 
   // Network domain
-  'Network.enable': {
-    inProgress: 'Enabling network inspection',
-    completed: 'Enabled network inspection',
-    preposition: 'on',
-  },
+  'Network.enable': { key: 'networkEnable', preposition: 'on' },
   'Network.getResponseBody': {
-    inProgress: 'Reading response',
-    completed: 'Read response',
+    key: 'networkGetResponseBody',
     preposition: 'from',
   },
 };
@@ -230,10 +163,11 @@ export function parseOutputAttachmentCalls(
   return calls;
 }
 
-const MEDIA_TYPE_LABELS: Record<string, string> = {
-  image: 'image',
-  video: 'video',
-  audio: 'audio',
+/** MIME media types mapped to i18n keys (under `sandbox`). */
+const MEDIA_TYPE_KEYS: Record<string, string> = {
+  image: 'mediaImage',
+  video: 'mediaVideo',
+  audio: 'mediaAudio',
   'application/pdf': 'PDF',
   'text/html': 'HTML',
   'text/csv': 'CSV',
@@ -244,13 +178,20 @@ const MEDIA_TYPE_LABELS: Record<string, string> = {
  * Derives a human-friendly noun from a MIME mediaType.
  * Falls back to "attachment" for unknown types.
  */
-export function getAttachmentLabel(mediaType: string | undefined): string {
-  if (!mediaType) return 'attachment';
-  if (MEDIA_TYPE_LABELS[mediaType]) return MEDIA_TYPE_LABELS[mediaType];
+export function getAttachmentLabel(
+  mediaType: string | undefined,
+  t: TFunction<'tools'>,
+): string {
+  if (!mediaType) return t('sandbox.attachment');
   const topLevel = mediaType.split('/')[0];
-  if (topLevel && MEDIA_TYPE_LABELS[topLevel])
-    return MEDIA_TYPE_LABELS[topLevel];
-  return 'attachment';
+  const key =
+    MEDIA_TYPE_KEYS[mediaType] ??
+    (topLevel ? MEDIA_TYPE_KEYS[topLevel] : undefined);
+  if (!key) return t('sandbox.attachment');
+  if (key === 'mediaImage' || key === 'mediaVideo' || key === 'mediaAudio')
+    return t(`sandbox.${key}`);
+  // Technical acronyms (PDF/HTML/CSV/JSON) stay as-is.
+  return key;
 }
 
 /**
@@ -272,26 +213,27 @@ interface MethodLabelResult {
 export function getMethodLabel(
   method: string,
   isInProgress: boolean,
+  t: TFunction<'tools'>,
 ): MethodLabelResult {
-  const labels = CDP_METHOD_LABELS[method];
-  if (labels)
+  const phase = isInProgress ? 'inProgress' : 'completed';
+  const entry = CDP_METHOD_KEYS[method];
+  if (entry)
     return {
-      label: isInProgress ? labels.inProgress : labels.completed,
-      preposition: labels.preposition,
+      label: t(`sandbox.methods.${entry.key}.${phase}`),
+      preposition: entry.preposition,
     };
 
   // Fallback: extract domain and create generic label
   // e.g., "CSS.someUnknownMethod" → "Inspecting CSS" / "Inspected CSS"
   const domain = method.split('.')[0];
-  if (domain) {
+  if (domain)
     return {
-      label: isInProgress ? `Inspecting ${domain}` : `Inspected ${domain}`,
+      label: t(`sandbox.fallbackInspect.${phase}`, { domain }),
       preposition: 'on',
     };
-  }
 
   return {
-    label: isInProgress ? 'Running script' : 'Ran script',
+    label: t(`sandbox.fallbackScript.${phase}`),
     preposition: 'on',
   };
 }
@@ -321,14 +263,17 @@ export function resolveTabHostname(
  * @param script - The sandbox script content
  * @param activeTabs - Current browser tabs from state
  * @param isInProgress - Whether the script is still running
+ * @param t - Translation function for the `tools` namespace
  * @returns A human-readable label describing the operation
  */
 export function getSandboxLabel(
   script: string | undefined,
   activeTabs: Record<string, TabState>,
   isInProgress: boolean,
+  t: TFunction<'tools'>,
 ): string {
-  if (!script) return isInProgress ? 'Running a script...' : 'Ran a script';
+  if (!script)
+    return isInProgress ? t('sandbox.runningScript') : t('sandbox.ranScript');
 
   const cdpCalls = parseCDPCalls(script);
   const writeFileCalls = parseWriteFileCalls(script);
@@ -349,16 +294,22 @@ export function getSandboxLabel(
     readAttCalls.length === 0 &&
     multimodalAttachmentCalls.length === 0
   )
-    return isInProgress ? 'Running a script...' : 'Ran a script';
+    return isInProgress ? t('sandbox.runningScript') : t('sandbox.ranScript');
 
   // 1. API.createAttachment always wins (user sees visual output)
   if (multimodalAttachmentCalls.length > 0) {
     if (multimodalAttachmentCalls.length === 1)
-      return isInProgress ? 'Parsing attachment...' : 'Parsed attachment';
+      return isInProgress
+        ? t('sandbox.parsingAttachment')
+        : t('sandbox.parsedAttachment');
 
     return isInProgress
-      ? `Parsing ${multimodalAttachmentCalls.length} attachments...`
-      : `Parsed ${multimodalAttachmentCalls.length} attachments`;
+      ? t('sandbox.parsingAttachments', {
+          count: multimodalAttachmentCalls.length,
+        })
+      : t('sandbox.parsedAttachments', {
+          count: multimodalAttachmentCalls.length,
+        });
   }
 
   // 2. att/ writes only (preparing data for visual output)
@@ -369,11 +320,13 @@ export function getSandboxLabel(
     readAttCalls.length === 0
   ) {
     if (attWriteCalls.length === 1)
-      return isInProgress ? 'Preparing attachment...' : 'Prepared attachment';
+      return isInProgress
+        ? t('sandbox.preparingAttachment')
+        : t('sandbox.preparedAttachment');
 
     return isInProgress
-      ? `Preparing ${attWriteCalls.length} attachments...`
-      : `Prepared ${attWriteCalls.length} attachments`;
+      ? t('sandbox.preparingAttachments', { count: attWriteCalls.length })
+      : t('sandbox.preparedAttachments', { count: attWriteCalls.length });
   }
 
   // 3. Attachment reads only
@@ -384,29 +337,39 @@ export function getSandboxLabel(
     readAttCalls.length > 0
   ) {
     if (readAttCalls.length === 1)
-      return isInProgress ? 'Reading attachment...' : 'Read attachment';
+      return isInProgress
+        ? t('sandbox.readingAttachment')
+        : t('sandbox.readAttachment');
 
     return isInProgress
-      ? `Reading ${readAttCalls.length} attachments...`
-      : `Read ${readAttCalls.length} attachments`;
+      ? t('sandbox.readingAttachments', { count: readAttCalls.length })
+      : t('sandbox.readAttachments', { count: readAttCalls.length });
   }
 
   // 4. Real file writes (possibly with attachment reads), no CDP calls
   if (cdpCalls.length === 0 && realWriteCalls.length > 0) {
     const attachmentSuffix =
       readAttCalls.length > 0
-        ? ` from ${readAttCalls.length === 1 ? 'attachment' : `${readAttCalls.length} attachments`}`
+        ? readAttCalls.length === 1
+          ? t('sandbox.fromAttachment')
+          : t('sandbox.fromAttachments', { count: readAttCalls.length })
         : '';
 
     if (realWriteCalls.length === 1) {
       const fileName = getFileName(realWriteCalls[0]!.relativePath);
       return isInProgress
-        ? `Writing ${fileName}${attachmentSuffix}...`
-        : `Wrote ${fileName}${attachmentSuffix}`;
+        ? t('sandbox.writing', { name: fileName, suffix: attachmentSuffix })
+        : t('sandbox.wrote', { name: fileName, suffix: attachmentSuffix });
     }
     return isInProgress
-      ? `Writing ${realWriteCalls.length} files${attachmentSuffix}...`
-      : `Wrote ${realWriteCalls.length} files${attachmentSuffix}`;
+      ? t('sandbox.writingFiles', {
+          count: realWriteCalls.length,
+          suffix: attachmentSuffix,
+        })
+      : t('sandbox.wroteFiles', {
+          count: realWriteCalls.length,
+          suffix: attachmentSuffix,
+        });
   }
 
   // 5. CDP calls
@@ -414,21 +377,24 @@ export function getSandboxLabel(
 
   if (uniqueTabIds.length > 1)
     return isInProgress
-      ? `Running a script on ${uniqueTabIds.length} tabs...`
-      : `Ran a script on ${uniqueTabIds.length} tabs`;
+      ? t('sandbox.runningScriptOnTabs', { count: uniqueTabIds.length })
+      : t('sandbox.ranScriptOnTabs', { count: uniqueTabIds.length });
 
   const hostname = resolveTabHostname(uniqueTabIds[0]!, activeTabs);
   const latestMethod = cdpCalls[cdpCalls.length - 1]!.method;
-  const { label, preposition } = getMethodLabel(latestMethod, isInProgress);
-  const suffix = hostname ? ` ${preposition} ${hostname}` : '';
+  const { label, preposition } = getMethodLabel(latestMethod, isInProgress, t);
+  const suffix = hostname
+    ? ` ${t(`sandbox.preposition.${preposition}`)} ${hostname}`
+    : '';
 
   if (realWriteCalls.length > 0) {
     const fileInfo =
       realWriteCalls.length === 1
         ? getFileName(realWriteCalls[0]!.relativePath)
-        : `${realWriteCalls.length} files`;
-    if (isInProgress) return `${label}${suffix}, writing ${fileInfo}...`;
-    return `${label}${suffix}, wrote ${fileInfo}`;
+        : t('sandbox.fileCount', { count: realWriteCalls.length });
+    if (isInProgress)
+      return t('sandbox.labelWriting', { label, suffix, file: fileInfo });
+    return t('sandbox.labelWrote', { label, suffix, file: fileInfo });
   }
 
   if (isInProgress) return `${label}${suffix}...`;

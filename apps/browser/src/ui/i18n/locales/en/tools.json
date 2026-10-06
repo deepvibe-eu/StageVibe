@@ -97,6 +97,13 @@
     "closeTerminal": "close terminal {{sessionId}}",
     "empty": "(empty)"
   },
+  "shellApproval": {
+    "skip": "Skip",
+    "smartAllow": "Smart allow",
+    "smartAllowTitle": "Ask only for risky commands",
+    "smartAllowDescription": "Switches this agent to smart approval. A fast classifier decides per command — destructive or system-level commands still require your approval.",
+    "allow": "Allow"
+  },
   "console": {
     "errorReading": "Error reading console logs",
     "waiting": "Waiting {{delayMs}}ms before reading logs...",
@@ -117,17 +124,149 @@
     "script": "Script",
     "error": "Error",
     "result": "Result",
-    "loading": "Loading..."
+    "loading": "Loading...",
+    "preposition": {
+      "on": "on",
+      "from": "from",
+      "of": "of"
+    },
+    "methods": {
+      "cssEnable": {
+        "inProgress": "Enabling CSS inspection",
+        "completed": "Enabled CSS inspection"
+      },
+      "cssGetComputedStyleForNode": {
+        "inProgress": "Reading computed styles",
+        "completed": "Read computed styles"
+      },
+      "cssGetMatchedStylesForNode": {
+        "inProgress": "Reading CSS rules",
+        "completed": "Read CSS rules"
+      },
+      "cssGetInlineStylesForNode": {
+        "inProgress": "Reading inline styles",
+        "completed": "Read inline styles"
+      },
+      "cssGetStyleSheetText": {
+        "inProgress": "Reading stylesheet",
+        "completed": "Read stylesheet"
+      },
+      "domEnable": {
+        "inProgress": "Enabling DOM inspection",
+        "completed": "Enabled DOM inspection"
+      },
+      "domGetDocument": {
+        "inProgress": "Reading document",
+        "completed": "Read document"
+      },
+      "domQuerySelector": {
+        "inProgress": "Querying element",
+        "completed": "Queried element"
+      },
+      "domQuerySelectorAll": {
+        "inProgress": "Querying elements",
+        "completed": "Queried elements"
+      },
+      "domGetOuterHTML": {
+        "inProgress": "Reading element HTML",
+        "completed": "Read element HTML"
+      },
+      "domResolveNode": {
+        "inProgress": "Resolving element",
+        "completed": "Resolved element"
+      },
+      "domGetBoxModel": {
+        "inProgress": "Reading box model",
+        "completed": "Read box model"
+      },
+      "runtimeEnable": {
+        "inProgress": "Enabling runtime",
+        "completed": "Enabled runtime"
+      },
+      "runtimeEvaluate": {
+        "inProgress": "Running a script",
+        "completed": "Ran a script"
+      },
+      "runtimeCallFunctionOn": {
+        "inProgress": "Calling function",
+        "completed": "Called function"
+      },
+      "runtimeGetProperties": {
+        "inProgress": "Reading properties",
+        "completed": "Read properties"
+      },
+      "pageEnable": {
+        "inProgress": "Enabling page inspection",
+        "completed": "Enabled page inspection"
+      },
+      "pageGetFrameTree": {
+        "inProgress": "Reading frames",
+        "completed": "Read frames"
+      },
+      "pageCaptureScreenshot": {
+        "inProgress": "Taking screenshot",
+        "completed": "Took screenshot"
+      },
+      "networkEnable": {
+        "inProgress": "Enabling network inspection",
+        "completed": "Enabled network inspection"
+      },
+      "networkGetResponseBody": {
+        "inProgress": "Reading response",
+        "completed": "Read response"
+      }
+    },
+    "fallbackInspect": {
+      "inProgress": "Inspecting {{domain}}",
+      "completed": "Inspected {{domain}}"
+    },
+    "fallbackScript": {
+      "inProgress": "Running script",
+      "completed": "Ran script"
+    },
+    "runningScript": "Running a script...",
+    "ranScript": "Ran a script",
+    "parsingAttachment": "Parsing attachment...",
+    "parsedAttachment": "Parsed attachment",
+    "parsingAttachments_one": "Parsing {{count}} attachment...",
+    "parsingAttachments_other": "Parsing {{count}} attachments...",
+    "parsedAttachments_one": "Parsed {{count}} attachment",
+    "parsedAttachments_other": "Parsed {{count}} attachments",
+    "preparingAttachment": "Preparing attachment...",
+    "preparedAttachment": "Prepared attachment",
+    "preparingAttachments_one": "Preparing {{count}} attachment...",
+    "preparingAttachments_other": "Preparing {{count}} attachments...",
+    "preparedAttachments_one": "Prepared {{count}} attachment",
+    "preparedAttachments_other": "Prepared {{count}} attachments",
+    "readingAttachment": "Reading attachment...",
+    "readAttachment": "Read attachment",
+    "readingAttachments_one": "Reading {{count}} attachment...",
+    "readingAttachments_other": "Reading {{count}} attachments...",
+    "readAttachments_one": "Read {{count}} attachment",
+    "readAttachments_other": "Read {{count}} attachments",
+    "writing": "Writing {{name}}{{suffix}}...",
+    "wrote": "Wrote {{name}}{{suffix}}",
+    "writingFiles_one": "Writing {{count}} file{{suffix}}...",
+    "writingFiles_other": "Writing {{count}} files{{suffix}}...",
+    "wroteFiles_one": "Wrote {{count}} file{{suffix}}",
+    "wroteFiles_other": "Wrote {{count}} files{{suffix}}",
+    "fromAttachment": " from attachment",
+    "fromAttachments": " from {{count}} attachments",
+    "runningScriptOnTabs_one": "Running a script on {{count}} tab...",
+    "runningScriptOnTabs_other": "Running a script on {{count}} tabs...",
+    "ranScriptOnTabs_one": "Ran a script on {{count}} tab",
+    "ranScriptOnTabs_other": "Ran a script on {{count}} tabs",
+    "labelWriting": "{{label}}{{suffix}}, writing {{file}}...",
+    "labelWrote": "{{label}}{{suffix}}, wrote {{file}}",
+    "fileCount_one": "{{count}} file",
+    "fileCount_other": "{{count}} files",
+    "attachment": "attachment",
+    "mediaImage": "image",
+    "mediaVideo": "video",
+    "mediaAudio": "audio"
   },
   "unknown": {
     "calling": "Calling tool {{type}}...",
     "finished": "Finished calling tool {{type}}"
-  },
-  "shellApproval": {
-    "skip": "Skip",
-    "smartAllow": "Smart allow",
-    "smartAllowTitle": "Ask only for risky commands",
-    "smartAllowDescription": "Switches this agent to smart approval. A fast classifier decides per command — destructive or system-level commands still require your approval.",
-    "allow": "Allow"
   }
 }

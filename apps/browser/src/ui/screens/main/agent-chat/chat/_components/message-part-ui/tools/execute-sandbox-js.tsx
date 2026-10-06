@@ -93,14 +93,16 @@ export const ExecuteSandboxJsToolPart = ({
 
   // Generate contextual labels based on CDP calls in the script
   const inProgressLabel = useMemo(() => {
-    return explanation || getSandboxLabel(part.input?.script, activeTabs, true);
-  }, [explanation, part.input?.script, activeTabs]);
+    return (
+      explanation || getSandboxLabel(part.input?.script, activeTabs, true, t)
+    );
+  }, [explanation, part.input?.script, activeTabs, t]);
 
   const completedLabel = useMemo(() => {
     return (
-      explanation || getSandboxLabel(part.input?.script, activeTabs, false)
+      explanation || getSandboxLabel(part.input?.script, activeTabs, false, t)
     );
-  }, [explanation, part.input?.script, activeTabs]);
+  }, [explanation, part.input?.script, activeTabs, t]);
 
   // Use the unified auto-expand hook
   const { expanded, handleUserSetExpanded } = useToolAutoExpand({

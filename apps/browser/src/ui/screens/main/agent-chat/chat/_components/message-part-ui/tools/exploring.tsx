@@ -23,6 +23,7 @@ import { LsToolPart } from './ls';
 import { SearchInLibraryDocsToolPart } from './search-in-library-docs';
 import { ListLibraryDocsToolPart } from './list-library-docs';
 import { cn } from '@ui/utils';
+import { useTranslation } from 'react-i18next';
 import type { PluginDefinition } from '@shared/plugins';
 import { useIsTruncated } from '@ui/hooks/use-is-truncated';
 import {
@@ -231,6 +232,7 @@ export const ExploringToolParts = memo(
     /** Attachments from the parent assistant message metadata */
     messageAttachments?: AttachmentMetadata[];
   }) {
+    const { t } = useTranslation('tools');
     const [expanded, setExpanded] = useState(isAutoExpanded);
     const [expandedChildren, setExpandedChildren] = useState<Set<string>>(
       new Set(),
@@ -361,12 +363,12 @@ export const ExploringToolParts = memo(
 
             if (multimodalCalls.length > 0) {
               for (let i = 0; i < multimodalCalls.length; i++)
-                attachmentLabels.push(getAttachmentLabel(undefined));
+                attachmentLabels.push(getAttachmentLabel(undefined, t));
             }
 
             if (readAttCalls.length > 0)
               for (let i = 0; i < readAttCalls.length; i++)
-                attachmentLabels.push('attachment');
+                attachmentLabels.push(t('sandbox.attachment'));
 
             const realWrites = writeFileCalls.filter(
               (c) => !c.relativePath.startsWith('att/'),
@@ -436,7 +438,7 @@ export const ExploringToolParts = memo(
         enabledPlugins,
         enabledWorkspaceSkills,
       };
-    }, [items, activeTabs, plugins]);
+    }, [items, activeTabs, plugins, t]);
 
     const isReasoningOnly = useMemo(
       () => items.every((i) => i.part.type === 'reasoning'),
@@ -650,7 +652,7 @@ export const ExploringToolParts = memo(
             { type: 'tool-executeSandboxJs' }
           >;
           if (p.input?.explanation) return `${p.input.explanation}...`;
-          return getSandboxLabel(p.input?.script, activeTabs, true);
+          return getSandboxLabel(p.input?.script, activeTabs, true, t);
         }
         case 'tool-readConsoleLogs': {
           const p = lastNonReasoningPart as Extract<
@@ -667,7 +669,7 @@ export const ExploringToolParts = memo(
         default:
           return isReasoningOnly ? 'Thinking...' : 'Exploring...';
       }
-    }, [items, activeTabs, plugins, isReasoningOnly]);
+    }, [items, activeTabs, plugins, isReasoningOnly, t]);
 
     // True when at least one tool part is still actively streaming/executing
     const anyPartStreaming = useMemo(
