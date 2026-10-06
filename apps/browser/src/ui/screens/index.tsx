@@ -1,4 +1,5 @@
 import { lazy, Suspense } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   useKartonConnected,
   useKartonReconnectState,
@@ -25,6 +26,7 @@ function LoadingScreen({
 }: {
   reconnectState: ReturnType<typeof useKartonReconnectState>;
 }) {
+  const { t } = useTranslation('common');
   return (
     <div className="absolute inset-0 flex size-full flex-col items-center justify-center gap-4">
       {/* Bunny mark: masked so it takes the theme foreground (white in dark
@@ -47,18 +49,16 @@ function LoadingScreen({
       {reconnectState.isReconnecting && (
         <div className="flex flex-col items-center gap-2">
           <p className="text-muted-foreground text-sm">
-            Reconnecting... (attempt {reconnectState.attempt}/10)
+            {t('boot.reconnecting', { attempt: reconnectState.attempt })}
           </p>
         </div>
       )}
       {reconnectState.failed && (
         <div className="flex flex-col items-center gap-2">
           <p className="text-error-foreground text-sm">
-            Connection failed after {reconnectState.attempt} attempts
+            {t('boot.connectionFailed', { attempt: reconnectState.attempt })}
           </p>
-          <p className="text-muted-foreground text-xs">
-            Please restart the application
-          </p>
+          <p className="text-muted-foreground text-xs">{t('boot.restart')}</p>
         </div>
       )}
     </div>

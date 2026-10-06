@@ -1,0 +1,21 @@
+{
+  "personalization": {
+    "title": "Personalisierung",
+    "appearance": {
+      "title": "Erscheinungsbild",
+      "description": "Wähle, ob StageVibe dem System-Erscheinungsbild folgt oder immer den hellen oder dunklen Modus verwendet.",
+      "system": "System",
+      "light": "Hell",
+      "dark": "Dunkel"
+    },
+    "colorScheme": {
+      "title": "Farbschema",
+      "description": "Passe den Farbstil deines StageVibe-Setups nach deinen Wünschen an.",
+      "useTheme": "Theme {{name}} verwenden"
+    },
+    "language": {
+      "title": "Sprache",
+      "description": "Wähle die Sprache für die StageVibe-Oberfläche."
+    }
+  }
+}

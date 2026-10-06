@@ -5,30 +5,17 @@ import type { AppColorScheme } from '@shared/karton-contracts/ui/shared-types';
 import { useKartonProcedure, useKartonState } from '@ui/hooks/use-karton';
 import { useThemeSelection } from '@ui/hooks/use-theme-selection';
 import { ThemeBadge } from '@ui/components/theme-badge';
+import i18n, { SUPPORTED_LANGUAGES, type SupportedLanguage } from '@ui/i18n';
 import { enablePatches } from 'immer';
+import { useTranslation } from 'react-i18next';
 import { NotificationsSetting } from './general-settings-section';
 
 enablePatches();
 
-const APP_COLOR_SCHEME_ITEMS: {
-  value: AppColorScheme;
-  label: string;
-}[] = [
-  {
-    value: 'system',
-    label: 'System',
-  },
-  {
-    value: 'light',
-    label: 'Light',
-  },
-  {
-    value: 'dark',
-    label: 'Dark',
-  },
-];
+const APP_COLOR_SCHEME_VALUES: AppColorScheme[] = ['system', 'light', 'dark'];
 
 function AppColorSchemeSetting() {
+  const { t } = useTranslation('settings');
   const appColorScheme = useKartonState(
     (s) => s.globalConfig.appColorScheme ?? 'system',
   );
@@ -38,13 +25,19 @@ function AppColorSchemeSetting() {
     await setGlobalConfig({ appColorScheme: value });
   };
 
+  const items = APP_COLOR_SCHEME_VALUES.map((value) => ({
+    value,
+    label: t(`personalization.appearance.${value}`),
+  }));
+
   return (
     <div className="flex items-center justify-between gap-4">
       <div>
-        <h3 className="font-medium text-base text-foreground">Appearance</h3>
+        <h3 className="font-medium text-base text-foreground">
+          {t('personalization.appearance.title')}
+        </h3>
         <p className="text-muted-foreground text-sm">
-          Choose whether StageVibe follows your system appearance or always uses
-          light or dark mode.
+          {t('personalization.appearance.description')}
         </p>
       </div>
 
@@ -53,7 +46,7 @@ function AppColorSchemeSetting() {
         onValueChange={(value) =>
           handleAppColorSchemeChange(value as AppColorScheme)
         }
-        items={APP_COLOR_SCHEME_ITEMS}
+        items={items}
         triggerVariant="secondary"
         size="xs"
         triggerClassName="w-auto min-w-32 px-2 py-3"
@@ -65,14 +58,17 @@ function AppColorSchemeSetting() {
 }
 
 function ThemeSetting() {
+  const { t } = useTranslation('settings');
   const { currentThemeId, handleThemeChange } = useThemeSelection();
 
   return (
     <div className="space-y-4">
       <div>
-        <h3 className="font-medium text-base text-foreground">Color scheme</h3>
+        <h3 className="font-medium text-base text-foreground">
+          {t('personalization.colorScheme.title')}
+        </h3>
         <p className="text-muted-foreground text-sm">
-          Adapt the color style of your StageVibe setup to your liking.
+          {t('personalization.colorScheme.description')}
         </p>
       </div>
 
@@ -86,7 +82,9 @@ function ThemeSetting() {
               className="group rounded-lg"
               onClick={() => handleThemeChange(theme.id)}
               aria-checked={active}
-              aria-label={`Use ${theme.name} theme`}
+              aria-label={t('personalization.colorScheme.useTheme', {
+                name: theme.name,
+              })}
               role="radio"
               title={theme.name}
             >
@@ -103,20 +101,59 @@ function ThemeSetting() {
   );
 }
 
+function LanguageSetting() {
+  const { t } = useTranslation('settings');
+  const items = SUPPORTED_LANGUAGES.map((language) => ({
+    value: language.code,
+    label: language.label,
+  }));
+  const currentLanguage = (i18n.resolvedLanguage ??
+    i18n.language) as SupportedLanguage;
+
+  return (
+    <div className="flex items-center justify-between gap-4">
+      <div>
+        <h3 className="font-medium text-base text-foreground">
+          {t('personalization.language.title')}
+        </h3>
+        <p className="text-muted-foreground text-sm">
+          {t('personalization.language.description')}
+        </p>
+      </div>
+
+      <Select
+        value={currentLanguage}
+        onValueChange={(value) => {
+          void i18n.changeLanguage(value);
+        }}
+        items={items}
+        triggerVariant="secondary"
+        size="xs"
+        triggerClassName="w-auto min-w-32 px-2 py-3"
+        side="bottom"
+        align="end"
+      />
+    </div>
+  );
+}
+
 export function PersonalizationSettingsSection() {
+  const { t } = useTranslation('settings');
+
   return (
     <div className="h-full w-full">
       <OverlayScrollbar className="h-full" contentClassName="px-6 pt-24 pb-24">
         <div className="mx-auto max-w-3xl space-y-8">
           <div>
             <h1 className="font-semibold text-foreground text-xl">
-              Personalization
+              {t('personalization.title')}
             </h1>
           </div>
 
           <section className="space-y-6">
             <AppColorSchemeSetting />
             <ThemeSetting />
+            <LanguageSetting />
           </section>
 
           <hr className="border-derived-subtle border-t" />
