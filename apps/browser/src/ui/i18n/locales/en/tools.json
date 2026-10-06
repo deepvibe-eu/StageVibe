@@ -350,6 +350,10 @@
     "updated": "Updated",
     "channelLog": "{{channel}} log"
   },
+  "fallback": {
+    "finished": "Finished",
+    "error": "Error"
+  },
   "unknown": {
     "calling": "Calling tool {{type}}...",
     "finished": "Finished calling tool {{type}}"

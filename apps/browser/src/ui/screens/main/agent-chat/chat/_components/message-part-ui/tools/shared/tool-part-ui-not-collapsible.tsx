@@ -9,6 +9,7 @@ import {
   TooltipContent,
 } from '@stagewise/stage-ui/components/tooltip';
 import { ToolPartUI } from './tool-part-ui';
+import { useTranslation } from 'react-i18next';
 
 export const ToolPartUINotCollapsible = memo(
   ({
@@ -28,6 +29,7 @@ export const ToolPartUINotCollapsible = memo(
     icon?: React.ReactNode;
     content?: React.ReactNode;
   }) => {
+    const { t } = useTranslation('tools');
     const trigger = useMemo(() => {
       if (part.state === 'output-available') {
         return (
@@ -38,7 +40,7 @@ export const ToolPartUINotCollapsible = memo(
           >
             {icon && <div className="size-3 shrink-0">{icon}</div>}
             <span className="min-w-0 truncate">
-              {finishedText ?? `Finished`}
+              {finishedText ?? t('fallback.finished')}
             </span>
           </div>
         );
@@ -77,10 +79,12 @@ export const ToolPartUINotCollapsible = memo(
             <Tooltip>
               <TooltipTrigger>
                 <span className="min-w-0 truncate text-xs">
-                  {part.errorText ?? 'Error'}
+                  {part.errorText ?? t('fallback.error')}
                 </span>
               </TooltipTrigger>
-              <TooltipContent>{part.errorText ?? 'Error'}</TooltipContent>
+              <TooltipContent>
+                {part.errorText ?? t('fallback.error')}
+              </TooltipContent>
             </Tooltip>
           </div>
         );
@@ -92,6 +96,7 @@ export const ToolPartUINotCollapsible = memo(
       finishedText,
       streamingText,
       disableShimmer,
+      t,
     ]);
 
     return minimal ? (
