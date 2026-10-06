@@ -20,6 +20,7 @@ import { SidebarSettingsButton } from '../_components/sidebar-settings-button';
 import {
   DEFAULT_EXPANDED_SIDEBAR_SIZE,
   SIDEBAR_PANEL_CLASS_NAME,
+  SIDEBAR_PANEL_COLLAPSED_CLASS_NAME,
   SIDEBAR_PANEL_ID,
   SIDEBAR_PANEL_MAX_SIZE,
   SIDEBAR_PANEL_MIN_SIZE,
@@ -78,7 +79,11 @@ export function Sidebar() {
         onCollapse={() => setCollapsed(true)}
         onExpand={() => setCollapsed(false)}
         data-tutorial="sidebar-panel"
-        className={`${SIDEBAR_PANEL_CLASS_NAME} data-[panel-size='0.0']:min-w-0`}
+        className={
+          collapsed
+            ? SIDEBAR_PANEL_COLLAPSED_CLASS_NAME
+            : SIDEBAR_PANEL_CLASS_NAME
+        }
       >
         {!collapsed && <SidebarTitlebarRow absolute />}
         {!collapsed && (
@@ -101,7 +106,10 @@ export function Sidebar() {
       </ResizablePanel>
 
       {!collapsed && (
-        <ResizableHandle className="after:w-2 hover:after:bg-transparent" onDoubleClick={reset} />
+        <ResizableHandle
+          className="after:w-2 hover:after:bg-transparent"
+          onDoubleClick={reset}
+        />
       )}
     </>
   );
