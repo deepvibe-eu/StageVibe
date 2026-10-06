@@ -265,6 +265,46 @@
     "mediaVideo": "video",
     "mediaAudio": "audio"
   },
+  "docs": {
+    "searchLatest": "Searching latest docs...",
+    "searchLatestFor": "Searching latest docs for {{name}}...",
+    "foundLabel": "Found",
+    "foundDocs_one": "{{count}} doc for {{name}}",
+    "foundDocs_other": "{{count}} docs for {{name}}",
+    "readingLatest": "Reading latest docs...",
+    "readingLatestFor": "Reading latest docs for {{libraryId}}...",
+    "readLatest": "Read latest docs",
+    "forLibrary": " for {{libraryId}}"
+  },
+  "linting": {
+    "checkingForIssues": "Checking for issues...",
+    "errorChecking": "Error checking linting diagnostics",
+    "noIssuesFound": "No linting issues found",
+    "noIssues": "No linting issues",
+    "foundLabel": "Found",
+    "errorCount_one": "{{count}} error",
+    "errorCount_other": "{{count}} errors",
+    "warningCount_one": "{{count}} warning",
+    "warningCount_other": "{{count}} warnings",
+    "inFiles_one": " in {{count}} file",
+    "inFiles_other": " in {{count}} files"
+  },
+  "watcher": {
+    "creating": "Creating watcher",
+    "skipped": "Watcher skipped",
+    "failed": "Watcher failed",
+    "created": "Created watcher",
+    "triggered": "Triggered",
+    "timedOut": "Timed out",
+    "outcomeFailed": "Failed",
+    "stoppedManually": "Stopped manually",
+    "stoppedAppClosed": "Stopped when the app closed",
+    "expires": "Expires {{when}}",
+    "runsForUpTo": "Runs for up to {{duration}}",
+    "defaultTitle": "Watcher",
+    "stop": "Stop watcher",
+    "stopNamed": "Stop {{title}}"
+  },
   "unknown": {
     "calling": "Calling tool {{type}}...",
     "finished": "Finished calling tool {{type}}"

@@ -1,6 +1,7 @@
 import type { AgentToolUIPart } from '@shared/karton-contracts/ui/agent';
 import { ToolPartUINotCollapsible } from './shared/tool-part-ui-not-collapsible';
 import { IconBooks2Outline18 } from '@stagewise/icons';
+import { useTranslation } from 'react-i18next';
 
 export const ListLibraryDocsToolPart = ({
   part,
@@ -11,16 +12,22 @@ export const ListLibraryDocsToolPart = ({
   disableShimmer?: boolean;
   minimal?: boolean;
 }) => {
+  const { t } = useTranslation('tools');
   const streamingText = part.input?.name
-    ? `Searching latest docs for ${part.input.name}...`
-    : 'Searching latest docs...';
+    ? t('docs.searchLatestFor', { name: part.input.name })
+    : t('docs.searchLatest');
 
   const finishedText =
     part.state === 'output-available' ? (
       <span className="flex min-w-0 gap-1">
-        <span className="shrink-0 truncate font-semibold">Found</span>
+        <span className="shrink-0 truncate font-semibold">
+          {t('docs.foundLabel')}
+        </span>
         <span className="truncate font-normal">
-          {part.output?.results.length ?? 0} docs for {part.input?.name}
+          {t('docs.foundDocs', {
+            count: part.output?.results.length ?? 0,
+            name: part.input?.name,
+          })}
         </span>
       </span>
     ) : undefined;

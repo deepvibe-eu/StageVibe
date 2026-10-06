@@ -20,6 +20,7 @@ import {
 } from './shared/shell-tool-approval';
 import { ToolPartUI } from './shared/tool-part-ui';
 import { useToolAutoExpand } from './shared/use-tool-auto-expand';
+import { useTranslation } from 'react-i18next';
 
 type CreateWatcherSessionPart = Extract<
   AgentToolUIPart,
@@ -53,19 +54,19 @@ function formatTimestamp(timestamp: number): string {
   }).format(timestamp);
 }
 
-const STATE_LABELS: Record<WatcherToolState, string> = {
-  approval: 'Creating watcher',
-  'approval-responded': 'Creating watcher',
-  denied: 'Watcher skipped',
-  error: 'Watcher failed',
-  streaming: 'Creating watcher',
-  success: 'Created watcher',
+const STATE_LABEL_KEYS: Record<WatcherToolState, string> = {
+  approval: 'creating',
+  'approval-responded': 'creating',
+  denied: 'skipped',
+  error: 'failed',
+  streaming: 'creating',
+  success: 'created',
 };
 
-const OUTCOME_TIMING_LABELS: Record<WatcherOutcome, string> = {
-  triggered: 'Triggered',
-  timed_out: 'Timed out',
-  failed: 'Failed',
+const OUTCOME_TIMING_KEYS: Record<WatcherOutcome, string> = {
+  triggered: 'triggered',
+  timed_out: 'timedOut',
+  failed: 'outcomeFailed',
 };
 
 export function CreateWatcherSessionToolPart({
@@ -75,6 +76,7 @@ export function CreateWatcherSessionToolPart({
   part: CreateWatcherSessionPart;
   isLastPart?: boolean;
 }) {
+  const { t } = useTranslation('tools');
   const state = getWatcherToolState(part);
   const output = part.output as CreateWatcherSessionToolOutput | undefined;
   const [openAgentId] = useOpenAgent();
@@ -115,7 +117,7 @@ export function CreateWatcherSessionToolPart({
   });
 
   const input = part.input;
-  const title = input?.title ?? 'Watcher';
+  const title = input?.title ?? t('watcher.defaultTitle');
   const description = input?.description;
   const command = input?.command ?? '';
   const timeoutMs = input?.timeout_ms;
@@ -130,17 +132,19 @@ export function CreateWatcherSessionToolPart({
     ? Number(finishedState[2])
     : null;
   const timingLabel = watcherStoppedManually
-    ? 'Stopped manually'
+    ? t('watcher.stoppedManually')
     : watcherStopped
-      ? 'Stopped when the app closed'
+      ? t('watcher.stoppedAppClosed')
       : watcherOutcome
         ? watcherFinishedAt
-          ? `${OUTCOME_TIMING_LABELS[watcherOutcome]} ${formatTimestamp(watcherFinishedAt)}`
-          : OUTCOME_TIMING_LABELS[watcherOutcome]
+          ? `${t(`watcher.${OUTCOME_TIMING_KEYS[watcherOutcome]}`)} ${formatTimestamp(watcherFinishedAt)}`
+          : t(`watcher.${OUTCOME_TIMING_KEYS[watcherOutcome]}`)
         : output?.expires_at
-          ? `Expires ${formatTimestamp(output.expires_at)}`
+          ? t('watcher.expires', { when: formatTimestamp(output.expires_at) })
           : typeof timeoutMs === 'number'
-            ? `Runs for up to ${formatDuration(timeoutMs, { style: 'long' })}`
+            ? t('watcher.runsForUpTo', {
+                duration: formatDuration(timeoutMs, { style: 'long' }),
+              })
             : null;
   const isCreating =
     state === 'approval' ||
@@ -172,7 +176,7 @@ export function CreateWatcherSessionToolPart({
               )}
             />
           )}
-          <span>{STATE_LABELS[state]}</span>
+          <span>{t(`watcher.${STATE_LABEL_KEYS[state]}`)}</span>
           <ChevronDownIcon
             className={cn(
               'size-3 text-subtle-foreground transition-transform duration-150',
@@ -263,7 +267,7 @@ export function CreateWatcherSessionToolPart({
               variant="ghost"
               size="icon-xs"
               className="absolute top-2 right-2 z-20 bg-background/70 backdrop-blur-sm hover:text-error-foreground dark:bg-surface-1/70"
-              aria-label={`Stop ${title}`}
+              aria-label={t('watcher.stopNamed', { title })}
               onClick={() =>
                 void killShellSession(openAgentId, output.session_id)
               }
@@ -271,7 +275,7 @@ export function CreateWatcherSessionToolPart({
               <IconPowerOffOutline18 className="size-3" />
             </Button>
           </TooltipTrigger>
-          <TooltipContent>Stop watcher</TooltipContent>
+          <TooltipContent>{t('watcher.stop')}</TooltipContent>
         </Tooltip>
       ) : null}
     </div>

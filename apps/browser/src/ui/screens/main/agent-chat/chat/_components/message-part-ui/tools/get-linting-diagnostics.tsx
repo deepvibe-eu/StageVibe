@@ -10,6 +10,7 @@ import { cn, stripMountPrefix } from '@ui/utils';
 import { useToolAutoExpand } from './shared/use-tool-auto-expand';
 import type { LintingDiagnostic } from '@shared/karton-contracts/ui/agent/tools/types';
 import type { AgentToolUIPart } from '@shared/karton-contracts/ui/agent';
+import { useTranslation } from 'react-i18next';
 
 export const GetLintingDiagnosticsToolPart = ({
   part,
@@ -22,6 +23,7 @@ export const GetLintingDiagnosticsToolPart = ({
   capMaxHeight?: boolean;
   isLastPart?: boolean;
 }) => {
+  const { t } = useTranslation('tools');
   const streaming = useMemo(() => {
     return part.state === 'input-streaming' || part.state === 'input-available';
   }, [part.state]);
@@ -60,7 +62,7 @@ export const GetLintingDiagnosticsToolPart = ({
           <div className="flex w-full flex-row items-center justify-start gap-1">
             <IconXmarkOutline18 className="size-3 shrink-0 text-muted-foreground" />
             <span className="min-w-0 flex-1 truncate text-muted-foreground text-xs">
-              {part.errorText ?? 'Error checking linting diagnostics'}
+              {part.errorText ?? t('linting.errorChecking')}
             </span>
           </div>
         </div>
@@ -99,7 +101,7 @@ export const GetLintingDiagnosticsToolPart = ({
         <>
           {streaming && (
             <div className="overflow-x-hidden text-muted-foreground text-xs opacity-75">
-              Checking for issues...
+              {t('linting.checkingForIssues')}
             </div>
           )}
           {state === 'success' && hasDiagnostics && files.length > 0 && (
@@ -123,7 +125,7 @@ export const GetLintingDiagnosticsToolPart = ({
           )}
           {state === 'success' && !hasDiagnostics && (
             <div className="pb-1 text-muted-foreground text-xs opacity-75">
-              No linting issues found
+              {t('linting.noIssuesFound')}
             </div>
           )}
         </>
@@ -165,28 +167,24 @@ const SuccessHeader = ({
   totalFiles: number;
   hasDiagnostics: boolean;
 }) => {
+  const { t } = useTranslation('tools');
   return (
     <div className="pointer-events-none flex flex-row items-center justify-start gap-1 overflow-hidden">
       <span className={cn('shrink-0 text-xs')}>
         {hasDiagnostics ? (
           <>
-            <span className="font-medium">Found </span>
+            <span className="font-medium">{t('linting.foundLabel')} </span>
             {errors > 0 && (
-              <span>
-                {errors} error{errors !== 1 ? 's' : ''}
-              </span>
+              <span>{t('linting.errorCount', { count: errors })}</span>
             )}
             {errors > 0 && warnings > 0 && ', '}
             {warnings > 0 && (
-              <span>
-                {warnings} warning{warnings !== 1 ? 's' : ''}
-              </span>
+              <span>{t('linting.warningCount', { count: warnings })}</span>
             )}
-            {totalFiles > 0 &&
-              ` in ${totalFiles} file${totalFiles !== 1 ? 's' : ''}`}
+            {totalFiles > 0 && t('linting.inFiles', { count: totalFiles })}
           </>
         ) : (
-          'No linting issues'
+          t('linting.noIssues')
         )}
       </span>
     </div>
@@ -194,6 +192,7 @@ const SuccessHeader = ({
 };
 
 const LoadingHeader = ({ disableShimmer }: { disableShimmer?: boolean }) => {
+  const { t } = useTranslation('tools');
   return (
     <div className="flex flex-row items-center justify-start gap-1 overflow-hidden">
       <IconLoader6Outline18
@@ -209,7 +208,7 @@ const LoadingHeader = ({ disableShimmer }: { disableShimmer?: boolean }) => {
           disableShimmer ? '' : 'shimmer-text-primary',
         )}
       >
-        Checking for issues...
+        {t('linting.checkingForIssues')}
       </span>
     </div>
   );
