@@ -28,6 +28,7 @@ import {
   TooltipTrigger,
 } from '@stagewise/stage-ui/components/tooltip';
 import { ShortcutCombo } from '@stagewise/stage-ui/components/shortcut-key';
+import { useTranslation } from 'react-i18next';
 
 export const ExecuteShellCommandToolPart = ({
   part,
@@ -41,6 +42,7 @@ export const ExecuteShellCommandToolPart = ({
   >;
   isLastPart?: boolean;
 }) => {
+  const { t } = useTranslation('tools');
   const [openAgentId] = useOpenAgent();
   const killShellSession = useKartonProcedure(
     (p) => p.toolbox.killShellSession,
@@ -148,11 +150,11 @@ export const ExecuteShellCommandToolPart = ({
     state !== 'approval-responded' &&
     state !== 'denied';
   const minimalStreamingText = isCreateSession
-    ? 'Opening new terminal…'
-    : 'Closing terminal…';
+    ? t('shell.openingTerminal')
+    : t('shell.closingTerminal');
   const minimalFinishedText = isCreateSession
-    ? 'Opened new terminal'
-    : 'Closed terminal';
+    ? t('shell.openedTerminal')
+    : t('shell.closedTerminal');
 
   const trigger = useMemo(() => {
     if (state === 'approval' || state === 'approval-responded') {
@@ -160,7 +162,7 @@ export const ExecuteShellCommandToolPart = ({
         <div className="flex min-w-0 flex-1 flex-row items-center justify-start gap-1">
           <IconTerminalOutline18 className="size-3 shrink-0 text-warning" />
           <TruncatedCommandText
-            text={explanation || 'Run command'}
+            text={explanation || t('shell.runCommand')}
             className="text-xs"
           />
         </div>
@@ -172,11 +174,11 @@ export const ExecuteShellCommandToolPart = ({
         <div className="flex min-w-0 flex-1 flex-row items-center justify-start gap-1">
           <IconTerminalOutline18 className="size-3 shrink-0" />
           <TruncatedCommandText
-            text={explanation || 'Skipped command'}
+            text={explanation || t('shell.skippedCommand')}
             className="text-xs"
           />
           <span className="shrink-0 text-subtle-foreground text-xs">
-            (skipped)
+            {t('shell.skipped')}
           </span>
         </div>
       );
@@ -187,7 +189,7 @@ export const ExecuteShellCommandToolPart = ({
         <div className="flex min-w-0 flex-1 flex-row items-center justify-start gap-1">
           <IconXmarkOutline18 className="size-3 shrink-0" />
           <TruncatedCommandText
-            text={part.errorText ?? `Error running: ${command}`}
+            text={part.errorText ?? t('shell.errorRunning', { command })}
             className="text-xs"
           />
         </div>
@@ -202,7 +204,9 @@ export const ExecuteShellCommandToolPart = ({
             <TruncatedCommandText
               text={
                 explanation ||
-                (isStdin ? 'Sending input' : `Running ${command}`) ||
+                (isStdin
+                  ? t('shell.sendingInput')
+                  : t('shell.running', { command })) ||
                 '...'
               }
               className="shimmer-text-primary"
@@ -218,7 +222,7 @@ export const ExecuteShellCommandToolPart = ({
             }}
             className="-mr-2 ml-auto"
           >
-            Cancel
+            {t('shell.cancel')}
           </Button>
         </div>
       );
@@ -229,7 +233,7 @@ export const ExecuteShellCommandToolPart = ({
         <div className="flex min-w-0 flex-1 flex-row items-center justify-start gap-1">
           <IconXmarkOutline18 className="size-3 shrink-0" />
           <TruncatedCommandText
-            text="Could not close terminal"
+            text={t('shell.couldNotClose')}
             className="text-xs"
           />
         </div>
@@ -246,7 +250,10 @@ export const ExecuteShellCommandToolPart = ({
         <div className="pointer-events-none flex min-w-0 flex-1 flex-row items-center justify-start gap-1">
           <IconTerminalOutline18 className="size-3 shrink-0" />
           <TruncatedCommandText
-            text={explanation || (isStdin ? 'Sent input' : 'Ran command')}
+            text={
+              explanation ||
+              (isStdin ? t('shell.sentInput') : t('shell.ranCommand'))
+            }
             className="text-xs"
           />
           {exitCode !== 0 && exitCode != null && (
@@ -259,19 +266,19 @@ export const ExecuteShellCommandToolPart = ({
     }
 
     let statusLabel: string;
-    if (timedOut) statusLabel = 'timed out';
-    else if (sessionExited) statusLabel = 'session exited';
-    else if (exitCode === 0) statusLabel = 'exit 0';
+    if (timedOut) statusLabel = t('shell.statusTimedOut');
+    else if (sessionExited) statusLabel = t('shell.statusSessionExited');
+    else if (exitCode === 0) statusLabel = t('shell.statusExitZero');
     else if (exitCode !== null && exitCode !== undefined)
-      statusLabel = `exit ${exitCode}`;
-    else statusLabel = 'killed';
+      statusLabel = t('shell.statusExit', { code: exitCode });
+    else statusLabel = t('shell.statusKilled');
 
     return (
       <div className="pointer-events-none flex flex-row items-center justify-start gap-1">
         <IconTerminalOutline18 className="size-3 shrink-0" />
         <span className="flex min-w-0 gap-1 text-xs">
           <span className="shrink-0 font-medium">
-            {explanation || `Command ${statusLabel}`}
+            {explanation || t('shell.commandStatus', { status: statusLabel })}
           </span>
         </span>
       </div>
@@ -284,6 +291,7 @@ export const ExecuteShellCommandToolPart = ({
     command,
     output,
     killFailed,
+    t,
   ]);
 
   const content = useMemo(() => {
@@ -301,13 +309,22 @@ export const ExecuteShellCommandToolPart = ({
         {isStdin ? (
           <HumanizedStdin value={stdin ?? ''} />
         ) : isKill ? (
-          <>close terminal {sessionId}</>
+          t('shell.closeTerminal', { sessionId })
         ) : (
           command
         )}
       </ShellCommandPreview>
     );
-  }, [state, effectiveOutputText, command, isStdin, isKill, sessionId, stdin]);
+  }, [
+    state,
+    effectiveOutputText,
+    command,
+    isStdin,
+    isKill,
+    sessionId,
+    stdin,
+    t,
+  ]);
 
   const showApprovalFooter =
     (state === 'approval' || state === 'approval-responded') &&
@@ -412,8 +429,9 @@ function tokenizeStdin(raw: string): StdinToken[] {
 }
 
 function HumanizedStdin({ value }: { value: string }) {
+  const { t } = useTranslation('tools');
   const tokens = tokenizeStdin(value);
-  if (tokens.length === 0) return value || '(empty)';
+  if (tokens.length === 0) return value || t('shell.empty');
 
   return (
     <span className="inline-flex flex-wrap items-center gap-0.5 align-middle">

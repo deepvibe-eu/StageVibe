@@ -73,6 +73,30 @@
     "errorPath": "Error editing {{path}}",
     "errorFile": "Error editing file"
   },
+  "shell": {
+    "openingTerminal": "Opening new terminal…",
+    "closingTerminal": "Closing terminal…",
+    "openedTerminal": "Opened new terminal",
+    "closedTerminal": "Closed terminal",
+    "runCommand": "Run command",
+    "skippedCommand": "Skipped command",
+    "skipped": "(skipped)",
+    "errorRunning": "Error running: {{command}}",
+    "sendingInput": "Sending input",
+    "running": "Running {{command}}",
+    "cancel": "Cancel",
+    "couldNotClose": "Could not close terminal",
+    "sentInput": "Sent input",
+    "ranCommand": "Ran command",
+    "statusTimedOut": "timed out",
+    "statusSessionExited": "session exited",
+    "statusExitZero": "exit 0",
+    "statusExit": "exit {{code}}",
+    "statusKilled": "killed",
+    "commandStatus": "Command {{status}}",
+    "closeTerminal": "close terminal {{sessionId}}",
+    "empty": "(empty)"
+  },
   "unknown": {
     "calling": "Calling tool {{type}}...",
     "finished": "Finished calling tool {{type}}"
