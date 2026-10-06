@@ -2,35 +2,23 @@ import { lazy, Suspense } from 'react';
 import {
   useKartonConnected,
   useKartonReconnectState,
-  useKartonState,
 } from '@ui/hooks/use-karton';
 import { WebContentsBoundsSyncer } from '@ui/components/web-contents-bounds-syncer';
 import { TutorialOverlay } from '@ui/components/tutorial/tutorial-overlay';
 import { WhatsNewDialog } from '@ui/components/release-notes';
 import bunny from '../assets/bunny.png';
 
-// Lazy-load the heavy screen trees. Both `DefaultLayout` and `OnboardingWizard`
-// only render *after* the karton connection is established, yet importing them
-// statically pulled their entire module graph (tiptap, shiki + oniguruma/wasm,
-// prosemirror-highlight, mermaid, code-block stacks, ...) onto the critical
-// path to React's first mount. That delayed `did-finish-load`, which gates the
-// OS window becoming visible — i.e. the "DevTools open but main window blank"
-// wait. Splitting them lets React mount the shell (and the window appear) at
-// the connecting spinner immediately; the large chunks load off the critical
-// path while the spinner is already shown.
+// Lazy-load the heavy screen tree. It only renders *after* the karton
+// connection is established, yet importing it statically pulled its entire
+// module graph (tiptap, shiki + oniguruma/wasm, prosemirror-highlight, mermaid,
+// code-block stacks, ...) onto the critical path to React's first mount. That
+// delayed `did-finish-load`, which gates the OS window becoming visible — i.e.
+// the "DevTools open but main window blank" wait. Splitting it lets React mount
+// the shell (and the window appear) at the connecting spinner immediately; the
+// large chunk loads off the critical path while the spinner is already shown.
 const DefaultLayout = lazy(() =>
   import('./main').then((m) => ({ default: m.DefaultLayout })),
 );
-const OnboardingWizard = lazy(() =>
-  import('./onboarding').then((m) => ({ default: m.OnboardingWizard })),
-);
-
-/**
- * Fork: start directly in the app instead of showing the onboarding wizard.
- * Providers/skills/theme remain configurable in Settings. Set to `false` to
- * restore the upstream first-run flow.
- */
-const SKIP_ONBOARDING = true;
 
 function LoadingScreen({
   reconnectState,
@@ -78,25 +66,17 @@ function LoadingScreen({
 }
 
 export function ScreenRouter() {
-  // We render different screens based on the app state.
   const connected = useKartonConnected();
   const reconnectState = useKartonReconnectState();
-  const hasSeenOnboarding = useKartonState(
-    (s) => s.userExperience.storedExperienceData.hasSeenOnboardingFlow,
-  );
   return (
     <div className="fixed inset-0">
-      {!connected || hasSeenOnboarding === null ? (
+      {!connected ? (
         <LoadingScreen reconnectState={reconnectState} />
-      ) : hasSeenOnboarding || SKIP_ONBOARDING ? (
+      ) : (
         <Suspense fallback={<LoadingScreen reconnectState={reconnectState} />}>
           <DefaultLayout show />
           <WebContentsBoundsSyncer />
           <WhatsNewDialog />
-        </Suspense>
-      ) : (
-        <Suspense fallback={<LoadingScreen reconnectState={reconnectState} />}>
-          <OnboardingWizard />
         </Suspense>
       )}
       <TutorialOverlay />
