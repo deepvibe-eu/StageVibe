@@ -56,6 +56,23 @@
     "resultCount_other": "{{count}} results",
     "forQuery": " for \"{{query}}\""
   },
+  "write": {
+    "expandDiff": "Expand code diff",
+    "collapseDiff": "Collapse code diff",
+    "openFile": "Open file",
+    "openFileTooltip": "Click to see full file",
+    "errorPath": "Error editing {{path}}",
+    "errorFile": "Error editing file",
+    "created": "(new)"
+  },
+  "multiEdit": {
+    "expandDiff": "Expand code diff",
+    "collapseDiff": "Collapse code diff",
+    "openFile": "Open file",
+    "openFileTooltip": "Click to see full file",
+    "errorPath": "Error editing {{path}}",
+    "errorFile": "Error editing file"
+  },
   "unknown": {
     "calling": "Calling tool {{type}}...",
     "finished": "Finished calling tool {{type}}"

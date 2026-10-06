@@ -29,6 +29,7 @@ import {
   StreamingCodeBlock,
   getLanguageFromPath,
 } from '@ui/components/ui/streaming-code-block';
+import { useTranslation } from 'react-i18next';
 
 export const GenericMultiEditToolPart = ({
   part,
@@ -37,6 +38,7 @@ export const GenericMultiEditToolPart = ({
   part: Extract<AgentToolUIPart, { type: 'tool-multiEdit' }>;
   initiallyCollapsed?: boolean;
 }) => {
+  const { t } = useTranslation('tools');
   const [expanded, setExpanded] = useState(!initiallyCollapsed);
   const [openAgent] = useOpenAgent();
   const openFileTab = useKartonProcedure((p) => p.fileTree.openFileTab);
@@ -205,7 +207,9 @@ export const GenericMultiEditToolPart = ({
                 </Button>
               </TooltipTrigger>
               <TooltipContent>
-                {collapsedDiffView ? 'Expand code diff' : 'Collapse code diff'}
+                {collapsedDiffView
+                  ? t('multiEdit.expandDiff')
+                  : t('multiEdit.collapseDiff')}
               </TooltipContent>
             </Tooltip>
             <Tooltip>
@@ -231,10 +235,10 @@ export const GenericMultiEditToolPart = ({
                   }}
                 >
                   <IconArrowUpRightOutline18 className="size-3 shrink-0" />
-                  Open file
+                  {t('multiEdit.openFile')}
                 </Button>
               </TooltipTrigger>
-              <TooltipContent>Click to see full file</TooltipContent>
+              <TooltipContent>{t('multiEdit.openFileTooltip')}</TooltipContent>
             </Tooltip>
           </div>
         ) : undefined
@@ -251,11 +255,12 @@ const ErrorHeader = ({
   relativePath?: string;
   errorText?: string;
 }) => {
+  const { t } = useTranslation('tools');
   const errorTextContent = errorText
     ? errorText
     : relativePath
-      ? `Error editing ${relativePath}`
-      : 'Error editing file';
+      ? t('multiEdit.errorPath', { path: relativePath })
+      : t('multiEdit.errorFile');
 
   return (
     <div className="flex flex-row items-center justify-start gap-1">

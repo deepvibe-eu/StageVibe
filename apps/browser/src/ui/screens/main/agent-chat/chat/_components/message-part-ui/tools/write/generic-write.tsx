@@ -29,6 +29,7 @@ import {
   StreamingCodeBlock,
   getLanguageFromPath,
 } from '@ui/components/ui/streaming-code-block';
+import { useTranslation } from 'react-i18next';
 
 export const GenericWriteToolPart = memo(
   function GenericWriteToolPart({
@@ -38,6 +39,7 @@ export const GenericWriteToolPart = memo(
     part: WritePart;
     initiallyCollapsed?: boolean;
   }) {
+    const { t } = useTranslation('tools');
     const [codeDiffCollapsed, setCodeDiffCollapsed] = useState(true);
     const [expanded, setExpanded] = useState(!initiallyCollapsed);
     const [openAgent] = useOpenAgent();
@@ -176,7 +178,9 @@ export const GenericWriteToolPart = memo(
                 </Button>
               </TooltipTrigger>
               <TooltipContent>
-                {codeDiffCollapsed ? 'Expand code diff' : 'Collapse code diff'}
+                {codeDiffCollapsed
+                  ? t('write.expandDiff')
+                  : t('write.collapseDiff')}
               </TooltipContent>
             </Tooltip>
             <Tooltip>
@@ -202,10 +206,10 @@ export const GenericWriteToolPart = memo(
                   }}
                 >
                   <IconArrowUpRightOutline18 className="size-3 shrink-0" />
-                  Open file
+                  {t('write.openFile')}
                 </Button>
               </TooltipTrigger>
-              <TooltipContent>Click to see full file</TooltipContent>
+              <TooltipContent>{t('write.openFileTooltip')}</TooltipContent>
             </Tooltip>
           </div>
         );
@@ -220,6 +224,7 @@ export const GenericWriteToolPart = memo(
       mounts,
       globalMounts,
       revealInFolder,
+      t,
     ]);
 
     return (
@@ -247,11 +252,12 @@ const ErrorHeader = ({
   relativePath?: string;
   errorText?: string;
 }) => {
+  const { t } = useTranslation('tools');
   const errorTextContent = errorText
     ? errorText
     : relativePath
-      ? `Error editing ${relativePath}`
-      : 'Error editing file';
+      ? t('write.errorPath', { path: relativePath })
+      : t('write.errorFile');
 
   return (
     <div className="flex flex-row items-center justify-start gap-1">
@@ -281,6 +287,7 @@ const SuccessHeader = ({
   deletedLineCount: number;
   fileWasCreated: boolean;
 }) => {
+  const { t } = useTranslation('tools');
   const fileName = relativePath ? getBaseName(relativePath) : relativePath;
 
   return (
@@ -306,7 +313,7 @@ const SuccessHeader = ({
       </div>
       {fileWasCreated && (
         <span className="shrink-0 text-success-foreground text-xs group-hover/trigger:text-hover-derived">
-          (new)
+          {t('write.created')}
         </span>
       )}
       <span className="shrink-0 text-success-foreground text-xs group-hover/trigger:text-hover-derived">
