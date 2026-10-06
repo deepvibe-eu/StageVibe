@@ -97,6 +97,28 @@
     "closeTerminal": "close terminal {{sessionId}}",
     "empty": "(empty)"
   },
+  "console": {
+    "errorReading": "Error reading console logs",
+    "waiting": "Waiting {{delayMs}}ms before reading logs...",
+    "waitingFilter": "Waiting {{delayMs}}ms before reading logs (filter: \"{{filter}}\")...",
+    "readingFiltered": "Reading logs filtered by \"{{filter}}\"...",
+    "reading": "Reading console logs...",
+    "noLogs": "No logs found",
+    "noLogsMatching": "No logs found matching \"{{filter}}\"",
+    "readLabel": "Read",
+    "logCount_one": "{{count}} console log",
+    "logCount_other": "{{count}} console logs",
+    "from": " from {{hostname}}",
+    "readingFrom": "Reading console logs from {{hostname}}..."
+  },
+  "sandbox": {
+    "errorWithExplanation": "Error: {{explanation}}",
+    "errorGeneric": "Error while running a script",
+    "script": "Script",
+    "error": "Error",
+    "result": "Result",
+    "loading": "Loading..."
+  },
   "unknown": {
     "calling": "Calling tool {{type}}...",
     "finished": "Finished calling tool {{type}}"

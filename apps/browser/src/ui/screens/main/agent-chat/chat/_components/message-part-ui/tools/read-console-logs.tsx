@@ -11,6 +11,7 @@ import { CodeBlock } from '@ui/components/ui/code-block';
 import { cn } from '@ui/utils';
 import { useToolAutoExpand } from './shared/use-tool-auto-expand';
 import { useKartonState } from '@ui/hooks/use-karton';
+import { useTranslation } from 'react-i18next';
 
 export const ReadConsoleLogsToolPart = ({
   part,
@@ -23,6 +24,7 @@ export const ReadConsoleLogsToolPart = ({
   disableShimmer?: boolean;
   isLastPart?: boolean;
 }) => {
+  const { t } = useTranslation('tools');
   const activeTabs = useKartonState((s) => s.contentTabs.tabs);
 
   const streaming = useMemo(() => {
@@ -112,10 +114,15 @@ export const ReadConsoleLogsToolPart = ({
           {streaming && part.input && (
             <pre className="overflow-x-hidden whitespace-pre font-mono text-xs">
               {part.input?.delayMs && part.input.delayMs > 0
-                ? `Waiting ${part.input.delayMs}ms before reading logs${part.input?.filter ? ` (filter: "${part.input.filter}")` : ''}...`
+                ? part.input?.filter
+                  ? t('console.waitingFilter', {
+                      delayMs: part.input.delayMs,
+                      filter: part.input.filter,
+                    })
+                  : t('console.waiting', { delayMs: part.input.delayMs })
                 : part.input?.filter
-                  ? `Reading logs filtered by "${part.input.filter}"...`
-                  : 'Reading console logs...'}
+                  ? t('console.readingFiltered', { filter: part.input.filter })
+                  : t('console.reading')}
             </pre>
           )}
           {state === 'success' && formattedLogs && (
@@ -123,8 +130,9 @@ export const ReadConsoleLogsToolPart = ({
           )}
           {state === 'success' && !formattedLogs && logInfo && (
             <div className="py-2 text-xs">
-              No logs found
-              {part.input?.filter ? ` matching "${part.input.filter}"` : ''}
+              {part.input?.filter
+                ? t('console.noLogsMatching', { filter: part.input.filter })
+                : t('console.noLogs')}
             </div>
           )}
         </>
@@ -138,7 +146,8 @@ export const ReadConsoleLogsToolPart = ({
 };
 
 const ErrorHeader = ({ errorText }: { errorText?: string }) => {
-  const errorTextContent = errorText ?? 'Error reading console logs';
+  const { t } = useTranslation('tools');
+  const errorTextContent = errorText ?? t('console.errorReading');
 
   return (
     <div className="flex flex-row items-center justify-start gap-1">
@@ -164,13 +173,14 @@ const SuccessHeader = ({
   logsReturned: number;
   hostname?: string;
 }) => {
+  const { t } = useTranslation('tools');
   return (
     <div className="pointer-events-none flex flex-row items-center justify-start gap-1 overflow-hidden">
       <span className={cn('shrink-0 text-xs')}>
-        <span className="font-medium">Read </span>
+        <span className="font-medium">{t('console.readLabel')}</span>{' '}
         <span className="font-normal opacity-75">
-          {logsReturned} console log{logsReturned !== 1 ? 's' : ''}
-          {hostname ? ` from ${hostname}` : ''}
+          {t('console.logCount', { count: logsReturned })}
+          {hostname ? t('console.from', { hostname }) : ''}
         </span>
       </span>
     </div>
@@ -184,9 +194,10 @@ const LoadingHeader = ({
   disableShimmer?: boolean;
   hostname?: string;
 }) => {
+  const { t } = useTranslation('tools');
   const text = hostname
-    ? `Reading console logs from ${hostname}...`
-    : 'Reading console logs...';
+    ? t('console.readingFrom', { hostname })
+    : t('console.reading');
   return (
     <div className="flex flex-row items-center justify-start gap-1 overflow-hidden">
       <IconTerminalOutline18

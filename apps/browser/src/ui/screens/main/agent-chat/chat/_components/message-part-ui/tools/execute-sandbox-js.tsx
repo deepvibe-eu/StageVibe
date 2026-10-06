@@ -29,6 +29,7 @@ import {
 } from '@ui/components/attachment-renderers';
 import { Suspense } from 'react';
 import { ExpandedShell } from '@ui/components/attachment-renderers/shared/expanded-shell';
+import { useTranslation } from 'react-i18next';
 
 export const ExecuteSandboxJsToolPart = ({
   part,
@@ -46,6 +47,7 @@ export const ExecuteSandboxJsToolPart = ({
   /** Attachments from the parent message metadata — populated after the step completes. */
   messageAttachments?: AttachmentMetadata[];
 }) => {
+  const { t } = useTranslation('tools');
   const [scriptExpanded, setScriptExpanded] = useState(false);
   const [resultExpanded, setResultExpanded] = useState(true);
   const activeTabs = useKartonState((s) => s.contentTabs.tabs);
@@ -209,8 +211,8 @@ export const ExecuteSandboxJsToolPart = ({
             <div className="flex min-w-0 flex-col items-start">
               <span className="truncate text-start font-medium text-xs">
                 {explanation
-                  ? `Error: ${explanation}`
-                  : 'Error while running a script'}
+                  ? t('sandbox.errorWithExplanation', { explanation })
+                  : t('sandbox.errorGeneric')}
               </span>
             </div>
           </>
@@ -229,7 +231,7 @@ export const ExecuteSandboxJsToolPart = ({
                       !scriptExpanded && '-rotate-90',
                     )}
                   />
-                  <span className="text-2xs">Script</span>
+                  <span className="text-2xs">{t('sandbox.script')}</span>
                 </CollapsibleTrigger>
                 <CollapsibleContent className="duration-0!">
                   <CodeBlock
@@ -252,7 +254,7 @@ export const ExecuteSandboxJsToolPart = ({
                       !resultExpanded && '-rotate-90',
                     )}
                   />
-                  <span className="text-2xs">Error</span>
+                  <span className="text-2xs">{t('sandbox.error')}</span>
                 </CollapsibleTrigger>
                 <CollapsibleContent className="duration-0!">
                   <CodeBlock
@@ -325,7 +327,7 @@ export const ExecuteSandboxJsToolPart = ({
                         !scriptExpanded && '-rotate-90',
                       )}
                     />
-                    <span className="text-2xs">Script</span>
+                    <span className="text-2xs">{t('sandbox.script')}</span>
                   </CollapsibleTrigger>
                   <CollapsibleContent className="duration-0!">
                     <CodeBlock
@@ -348,7 +350,7 @@ export const ExecuteSandboxJsToolPart = ({
                         !resultExpanded && '-rotate-90',
                       )}
                     />
-                    <span className="text-2xs">Result</span>
+                    <span className="text-2xs">{t('sandbox.result')}</span>
                   </CollapsibleTrigger>
                   <CollapsibleContent className="duration-0!">
                     {effectiveAttachments && (
@@ -404,6 +406,7 @@ const AttachmentPreviewCards = ({
 }: {
   attachments: AttachmentMetadata[];
 }) => {
+  const { t } = useTranslation('tools');
   const [openAgentId] = useOpenAgent();
   return (
     <div className="scrollbar-hover-only flex flex-row gap-2 overflow-x-auto px-1 py-2 [&_embed]:max-h-38 [&_img]:max-h-38 [&_video]:max-h-38">
@@ -432,7 +435,7 @@ const AttachmentPreviewCards = ({
               fallback={
                 <ExpandedShell fileName={rendererProps.fileName}>
                   <span className="text-muted-foreground text-xs">
-                    Loading...
+                    {t('sandbox.loading')}
                   </span>
                 </ExpandedShell>
               }
