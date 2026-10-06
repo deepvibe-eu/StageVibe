@@ -28,6 +28,17 @@ cause you can read from the data.
 How to read the database, check the compaction boundary and inspect provider
 config: `references/stagevibe-surfaces.md`.
 
+## SQL safety
+
+- **Read-only first.** Run every query with `sqlite3 -readonly`; only write when
+  the user explicitly asks for that change.
+- **Always `LIMIT`** exploratory queries; never pull whole tables.
+- **No destructive statements without explicit confirmation** — `DROP`,
+  `TRUNCATE`, `ALTER`, and `DELETE`/`UPDATE` without a `WHERE`; show the exact
+  statement first.
+- **Never write to a live app database**; copy it before experimenting.
+- **Quote the query and the result** in your report so the user can verify.
+
 ## Workflow
 
 1. **Reproduce or locate.** Identify the session, the failing action and the

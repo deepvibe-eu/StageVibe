@@ -133,12 +133,26 @@ Returns the project's API keys (anon, service_role, etc.).
 `POST /v1/projects/{ref}/database/query`
 Body: `{ "query": "SELECT * FROM public.users LIMIT 10" }`
 
-This is the most powerful endpoint — it runs arbitrary SQL against the project's Postgres database with full privileges.
+This endpoint runs arbitrary SQL against the project's Postgres database with
+full privileges. **Reserve it for writes the user explicitly asked for**;
+prefer the read-only endpoint for everything else.
 
-**Execute a read-only SQL query**
+**Execute a read-only SQL query (default)**
 `POST /v1/projects/{ref}/database/query/read-only`
 Body: `{ "query": "SELECT ..." }`
-Same as above but restricted to read-only operations. Use this for SELECT queries to avoid accidental mutations.
+Same as above but restricted to read-only operations. This is the default for
+SELECT and exploration — it cannot mutate data.
+
+#### SQL safety
+
+- **Read-only first.** Use `/database/query/read-only` for SELECT/exploration;
+  only use the full endpoint when the user explicitly asked for a change.
+- **Always `LIMIT`** exploratory queries.
+- **No destructive statements without explicit confirmation** — `DROP`,
+  `TRUNCATE`, `ALTER`, and `DELETE`/`UPDATE` without a `WHERE`; show the exact
+  statement first.
+- **Never expose secrets** (service keys, tokens) in a query or its output.
+- **Quote the query and the result** in your report so the user can verify.
 
 #### Common SQL Patterns
 
@@ -200,6 +214,8 @@ WHERE schemaname = 'public';
 ```sql
 SELECT count(*) FROM public.your_table;
 ```
+
+#### Write operations (only when explicitly requested)
 
 **Insert a row:**
 ```sql

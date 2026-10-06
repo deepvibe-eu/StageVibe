@@ -1,7 +1,9 @@
 # StageVibe surfaces: what to inspect
 
 Read-only recipes for triage. Never modify the live database while the app is
-running — copy it first if you need to experiment.
+running — copy it first if you need to experiment. Open every query read-only
+by passing `-readonly` to `sqlite3` (see below), so an accidental statement
+cannot write.
 
 Adjust the data root to the profile in question (see the table in `SKILL.md`).
 
@@ -15,25 +17,25 @@ DB="$DATA/agents/instances.sqlite"
 
 ```sh
 # Instances: model, token count, timestamps
-sqlite3 -header -column "$DB" \
+sqlite3 -readonly -header -column "$DB" \
   "SELECT id, used_tokens, active_model_id,
           datetime(last_message_at/1000,'unixepoch') AS last_message
    FROM agentInstances ORDER BY last_message_at DESC LIMIT 20;"
 
 # Message sizes for one instance (find the big ones)
-sqlite3 -header -column "$DB" \
+sqlite3 -readonly -header -column "$DB" \
   "SELECT seq, role, length(parts) AS chars
    FROM agentMessages WHERE agent_instance_id='<id>'
    ORDER BY seq;"
 
 # Compaction boundary: which message carries a briefing, and how large it is
-sqlite3 "$DB" \
+sqlite3 -readonly "$DB" \
   "SELECT seq, id, length(metadata) FROM agentMessages
    WHERE agent_instance_id='<id>'
      AND metadata LIKE '%compressedHistory%';"
 
 # Read a briefing (metadata is JSON)
-sqlite3 "$DB" \
+sqlite3 -readonly "$DB" \
   "SELECT json_extract(metadata,'\$.compressedHistory')
    FROM agentMessages WHERE id='<boundary-message-id>';"
 ```

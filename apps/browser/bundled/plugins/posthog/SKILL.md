@@ -141,7 +141,14 @@ Body:
 
 Response contains `results` (array of rows), `columns` (column names), and `types` (column types).
 
-HogQL is a SQL-like query language on top of ClickHouse. It can query `events`, `persons`, `sessions`, `groups`, and more. This is the most powerful endpoint for analytics — prefer it over the REST list endpoints when aggregation or filtering is needed.
+HogQL is a SQL-like query language on top of ClickHouse. It can query `events`, `persons`, `sessions`, `groups`, and more. Prefer it over the REST list endpoints when aggregation or filtering is needed.
+
+#### SQL safety
+
+- **Read-only.** HogQL queries here are analytical reads; never attempt to
+  mutate data through them.
+- **Always `LIMIT`** exploratory queries.
+- **Quote the query and the result** in your report so the user can verify.
 
 **Run a web stats query**
 `POST /api/projects/{project_id}/query`
