@@ -55,5 +55,16 @@
     "resultCount_one": "{{count}} result",
     "resultCount_other": "{{count}} results",
     "forQuery": " for \"{{query}}\""
+  },
+  "unknown": {
+    "calling": "Calling tool {{type}}...",
+    "finished": "Finished calling tool {{type}}"
+  },
+  "shellApproval": {
+    "skip": "Skip",
+    "smartAllow": "Smart allow",
+    "smartAllowTitle": "Ask only for risky commands",
+    "smartAllowDescription": "Switches this agent to smart approval. A fast classifier decides per command — destructive or system-level commands still require your approval.",
+    "allow": "Allow"
   }
 }

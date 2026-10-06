@@ -16,6 +16,7 @@ import {
   TooltipTrigger,
 } from '@stagewise/stage-ui/components/tooltip';
 import { useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export type ApprovableShellToolPart = Extract<
   AgentToolUIPart,
@@ -120,6 +121,7 @@ export function ShellToolApprovalFooter({
   approval: ShellToolApproval;
   isResponded: boolean;
 }) {
+  const { t } = useTranslation('tools');
   return (
     <div className="flex w-full flex-col gap-2.5">
       {approval.classifierExplanation ? (
@@ -135,7 +137,7 @@ export function ShellToolApprovalFooter({
           onClick={approval.handleDeny}
           disabled={isResponded}
         >
-          Skip
+          {t('shellApproval.skip')}
         </Button>
         {approval.currentApprovalMode !== 'smart' ? (
           <Tooltip>
@@ -146,16 +148,16 @@ export function ShellToolApprovalFooter({
                 onClick={approval.handleSmartAllow}
                 disabled={isResponded}
               >
-                Smart allow
+                {t('shellApproval.smartAllow')}
               </Button>
             </TooltipTrigger>
             <TooltipContent side="top" align="end">
               <div className="flex max-w-64 flex-col gap-1 py-1">
-                <div className="font-medium">Ask only for risky commands</div>
+                <div className="font-medium">
+                  {t('shellApproval.smartAllowTitle')}
+                </div>
                 <div className="text-muted-foreground">
-                  Switches this agent to smart approval. A fast classifier
-                  decides per command — destructive or system-level commands
-                  still require your approval.
+                  {t('shellApproval.smartAllowDescription')}
                 </div>
               </div>
             </TooltipContent>
@@ -171,7 +173,7 @@ export function ShellToolApprovalFooter({
           {isResponded ? (
             <IconLoader6Outline18 className="size-3 shrink-0 animate-spin" />
           ) : null}
-          Allow
+          {t('shellApproval.allow')}
           {approval.allowIsWinner ? (
             <HotkeyCombo
               action={HotkeyActions.CMD_ENTER}

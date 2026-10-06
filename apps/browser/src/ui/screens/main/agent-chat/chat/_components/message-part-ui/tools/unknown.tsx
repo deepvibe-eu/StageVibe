@@ -3,6 +3,7 @@ import type { AgentToolUIPart } from '@shared/karton-contracts/ui/agent';
 import { ToolPartUINotCollapsible } from './shared/tool-part-ui-not-collapsible';
 import { IconGear2Outline18 } from '@stagewise/icons';
 import { ExternalAgentToolPart } from './external-agent';
+import { useTranslation } from 'react-i18next';
 
 export const UnknownToolPart = ({
   part,
@@ -11,11 +12,12 @@ export const UnknownToolPart = ({
   part: AgentToolUIPart | DynamicToolUIPart;
   shimmer?: boolean;
 }) => {
+  const { t } = useTranslation('tools');
   if (part.type === 'dynamic-tool' && part.toolName.startsWith('acp.')) {
     return <ExternalAgentToolPart part={part} shimmer={shimmer} />;
   }
-  const streamingText = `Calling tool ${part.type}...`;
-  const finishedText = `Finished calling tool ${part.type}`;
+  const streamingText = t('unknown.calling', { type: part.type });
+  const finishedText = t('unknown.finished', { type: part.type });
   return (
     <ToolPartUINotCollapsible
       part={part}
