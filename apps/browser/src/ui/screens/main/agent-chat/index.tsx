@@ -4,10 +4,6 @@ import {
   type ImperativePanelHandle,
 } from '@stagewise/stage-ui/components/resizable';
 import { useRef, type ReactNode } from 'react';
-import { useSidebarCollapsed } from '../_components/sidebar-collapsed-context';
-import { SidebarTitlebarRow } from '../_components/sidebar-titlebar-row';
-import { useOpenAgent } from '@ui/hooks/use-open-chat';
-import { useKartonState } from '@ui/hooks/use-karton';
 
 type AgentChatProps = {
   topRightActions?: ReactNode;
@@ -27,12 +23,6 @@ export function AgentChat({
 }: AgentChatProps) {
   const panelRef = useRef<ImperativePanelHandle>(null);
   const previousSizeRef = useRef<number | null>(null);
-  const { collapsed } = useSidebarCollapsed();
-  const [openAgent] = useOpenAgent();
-
-  const agentTitle = useKartonState((s) =>
-    openAgent ? s.agents.instances[openAgent]?.state.title : undefined,
-  );
 
   return (
     <ResizablePanel
@@ -62,9 +52,6 @@ export function AgentChat({
         >
           {topRightActions}
         </div>
-      )}
-      {collapsed && (
-        <SidebarTitlebarRow absolute sidebarCollapsed agentTitle={agentTitle} />
       )}
       <div className="flex h-full flex-col items-stretch justify-between p-2">
         <Chat />

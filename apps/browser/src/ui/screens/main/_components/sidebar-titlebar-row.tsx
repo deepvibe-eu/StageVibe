@@ -1,20 +1,13 @@
-import {
-  TITLEBAR_HEIGHT,
-  TITLEBAR_ICON_OPTICAL_OFFSET,
-} from '@shared/titlebar';
+import { TITLEBAR_HEIGHT } from '@shared/titlebar';
 import { cn } from '@ui/utils';
 import { useUiZoomCounterScale } from '@ui/hooks/use-ui-zoom-counter-scale';
 import { TrafficLightGutter } from './traffic-light-gutter';
-import { useKartonState } from '@ui/hooks/use-karton';
 
 /**
- * Titlebar row providing the macOS traffic-light gutter and, when the sidebar
- * is collapsed, the current chat title. Rendered inside the sidebar when open,
- * and overlaid at the top-left of the agent-chat panel when the sidebar is
- * collapsed, so the row keeps content clear of the traffic lights in both
- * states.
+ * Titlebar row providing the macOS traffic-light gutter, rendered at the top
+ * of a panel so its content stays clear of the traffic lights.
  *
- * The sidebar toggle itself lives in the chat-panel header (see
+ * The sidebar toggle lives in the chat-panel header (see
  * `SidebarToggleButton`), so it stays at the same screen position whether the
  * sidebar is open or collapsed.
  *
@@ -27,27 +20,20 @@ import { useKartonState } from '@ui/hooks/use-karton';
  */
 export function SidebarTitlebarRow({
   absolute = false,
-  sidebarCollapsed = false,
-  agentTitle,
   children,
 }: {
   absolute?: boolean;
-  sidebarCollapsed?: boolean;
-  agentTitle?: string;
   children?: React.ReactNode;
 }) {
   const counterScale = useUiZoomCounterScale();
-  const isMacOs = useKartonState((s) => s.appInfo.platform === 'darwin');
   return (
     <div
       style={{
         height: TITLEBAR_HEIGHT * counterScale,
-        // Sub-pixel nudge: flex-centering puts our icons' geometric center on
-        // the traffic-light center, but AA + icon-grid rounding makes them
-        // read as ~0.5px too high. A CSS transform is the only way to express
-        // a fractional offset — `marginTop` would round on non-Retina. Applied
-        // at the container so any future icons added to this row inherit the
-        // same optical alignment without per-icon tweaks.
+        // Sub-pixel nudge: flex-centering puts content's geometric center on
+        // the traffic-light center, but AA + grid rounding makes it read as
+        // ~0.5px too high. A CSS transform is the only way to express a
+        // fractional offset — `marginTop` would round on non-Retina.
         transform: `translateY(${0.5 * counterScale}px)`,
       }}
       className={cn(
@@ -57,16 +43,6 @@ export function SidebarTitlebarRow({
     >
       <TrafficLightGutter />
       {children}
-      {sidebarCollapsed && agentTitle && (
-        <span
-          className="app-no-drag ml-2 min-w-0 select-none truncate font-medium text-foreground text-sm"
-          style={
-            isMacOs ? { marginTop: TITLEBAR_ICON_OPTICAL_OFFSET } : undefined
-          }
-        >
-          {agentTitle}
-        </span>
-      )}
     </div>
   );
 }
