@@ -4,6 +4,7 @@ import {
   ResizablePanelGroup,
   ResizableHandle,
   ResizablePanel,
+  type ImperativePanelHandle,
 } from '@stagewise/stage-ui/components/resizable';
 import { AgentChat } from './agent-chat';
 import { MainSection } from './content';
@@ -137,8 +138,18 @@ function DefaultLayoutInner({ show }: { show: boolean }) {
   // content panel visible when it's not collapsed (tabs control their own visibility inside)
   const showContent = !contentCollapsed;
 
+  // Keep the browser-tree-panel in sync with the content-collapse state so the
+  // header toggle actually collapses/expands the whole right column.
+  useEffect(() => {
+    const panel = browserTreePanelRef.current;
+    if (!panel) return;
+    if (contentCollapsed) panel.collapse();
+    else panel.expand();
+  }, [contentCollapsed]);
+
   const fileTreeSizeRef = useRef(readPanelSize(fileTreePanelSizeKey, 15));
   const contentSizeRef = useRef(readPanelSize(contentPanelSizeKey, 85));
+  const browserTreePanelRef = useRef<ImperativePanelHandle>(null);
   const chatSizeRef = useRef(readPanelSize(chatPanelSizeKey, 30));
 
   // Chat is its own column; the browser and file tree share a nested group.
@@ -376,6 +387,7 @@ function DefaultLayoutInner({ show }: { show: boolean }) {
 
                     <ResizablePanel
                       id="browser-tree-panel"
+                      ref={browserTreePanelRef}
                       order={1}
                       defaultSize={hasVisibleTabs ? contentSizeRef.current : 0}
                       minSize={hasVisibleTabs ? 5 : 0}
