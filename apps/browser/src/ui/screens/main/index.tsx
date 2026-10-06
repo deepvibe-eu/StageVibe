@@ -260,9 +260,8 @@ function DefaultLayoutInner({ show }: { show: boolean }) {
         trailingContent={<ActionDivider />}
       />
       <ActionDivider />
-      {hasVisibleTabs ? (
-        <ContentToggleButton />
-      ) : (
+      <ContentToggleButton />
+      {!hasVisibleTabs && (
         <NewTabButtons
           onCreateBrowserTab={handleCreateTab}
           onCreateTerminalTab={handleOpenTerminal}
@@ -374,97 +373,97 @@ function DefaultLayoutInner({ show }: { show: boolean }) {
                       />
                     </ResizablePanel>
 
-                    <ResizableHandle className="after:w-2 hover:after:bg-transparent" />
+                    {showContent && (
+                      <>
+                        <ResizableHandle className="after:w-2 hover:after:bg-transparent" />
 
-                    <ResizablePanel
-                      id="browser-tree-panel"
-                      order={1}
-                      className="relative h-full overflow-hidden rounded-lg bg-background ring-1 ring-derived-subtle"
-                    >
-                      <ResizablePanelGroup
-                        direction="vertical"
-                        autoSaveId="stagewise-content-vertical"
-                        className="h-full gap-1.5"
-                      >
                         <ResizablePanel
-                          id="workspace-panels"
-                          order={0}
-                          defaultSize={72}
-                          minSize={30}
-                          className="rounded-lg bg-background ring-1 ring-derived-subtle"
+                          id="browser-tree-panel"
+                          order={1}
+                          className="relative h-full overflow-hidden rounded-lg bg-background ring-1 ring-derived-subtle"
                         >
                           <ResizablePanelGroup
-                            direction="horizontal"
-                            className="h-full"
+                            direction="vertical"
+                            autoSaveId="stagewise-content-vertical"
+                            className="h-full gap-1.5"
                           >
-                            {showContent && (
-                              <MainSection
-                                onCreateTab={handleCreateTab}
-                                pendingOmniboxFocusRequest={
-                                  pendingOmniboxFocusRequest
-                                }
-                                onPendingOmniboxFocusHandled={
-                                  handlePendingOmniboxFocusHandled
-                                }
-                                topRightActions={
-                                  contentPanelTopRightActions ??
-                                  openedContentTopRightActions
-                                }
-                                defaultSize={panelLayout.contentSize}
-                                onPanelResize={(size) => {
-                                  contentSizeRef.current = size;
-                                  persistPanelSize(contentPanelSizeKey, size);
-                                }}
-                              />
-                            )}
-
-                            {fileTreeVisible && (
-                              <>
-                                {showContent && (
-                                  <ResizableHandle className="after:w-2 hover:after:bg-transparent" />
-                                )}
-                                <ResizablePanel
-                                  id="file-tree-panel"
-                                  order={3}
-                                  defaultSize={panelLayout.fileTreeSize}
-                                  minSize={15}
-                                  maxSize={45}
-                                  onResize={(size) => {
-                                    if (size > 0) {
-                                      fileTreeSizeRef.current = size;
-                                      persistPanelSize(
-                                        fileTreePanelSizeKey,
-                                        size,
-                                      );
-                                    }
+                            <ResizablePanel
+                              id="workspace-panels"
+                              order={0}
+                              defaultSize={72}
+                              minSize={30}
+                              className="rounded-lg bg-background ring-1 ring-derived-subtle"
+                            >
+                              <ResizablePanelGroup
+                                direction="horizontal"
+                                className="h-full"
+                              >
+                                <MainSection
+                                  onCreateTab={handleCreateTab}
+                                  pendingOmniboxFocusRequest={
+                                    pendingOmniboxFocusRequest
+                                  }
+                                  onPendingOmniboxFocusHandled={
+                                    handlePendingOmniboxFocusHandled
+                                  }
+                                  topRightActions={
+                                    contentPanelTopRightActions ??
+                                    openedContentTopRightActions
+                                  }
+                                  defaultSize={panelLayout.contentSize}
+                                  onPanelResize={(size) => {
+                                    contentSizeRef.current = size;
+                                    persistPanelSize(contentPanelSizeKey, size);
                                   }}
-                                  className="relative min-w-[96px] overflow-hidden bg-background"
+                                />
+
+                                {fileTreeVisible && (
+                                  <>
+                                    <ResizableHandle className="after:w-2 hover:after:bg-transparent" />
+                                    <ResizablePanel
+                                      id="file-tree-panel"
+                                      order={3}
+                                      defaultSize={panelLayout.fileTreeSize}
+                                      minSize={15}
+                                      maxSize={45}
+                                      onResize={(size) => {
+                                        if (size > 0) {
+                                          fileTreeSizeRef.current = size;
+                                          persistPanelSize(
+                                            fileTreePanelSizeKey,
+                                            size,
+                                          );
+                                        }
+                                      }}
+                                      className="relative min-w-[96px] overflow-hidden bg-background"
+                                    >
+                                      <div className="size-full overflow-hidden">
+                                        <FileTreeSidebar />
+                                      </div>
+                                    </ResizablePanel>
+                                  </>
+                                )}
+                              </ResizablePanelGroup>
+                            </ResizablePanel>
+
+                            {terminalTabIds.length > 0 && (
+                              <>
+                                <ResizableHandle className="my-0! after:w-2 hover:after:bg-transparent" />
+                                <ResizablePanel
+                                  id="terminal-panel"
+                                  order={1}
+                                  defaultSize={28}
+                                  minSize={12}
+                                  className="relative overflow-hidden rounded-lg bg-[#080d09] ring-1 ring-derived-subtle"
                                 >
-                                  <div className="size-full overflow-hidden">
-                                    <FileTreeSidebar />
-                                  </div>
+                                  <TerminalPanelBody />
                                 </ResizablePanel>
                               </>
                             )}
                           </ResizablePanelGroup>
                         </ResizablePanel>
-
-                        {terminalTabIds.length > 0 && (
-                          <>
-                            <ResizableHandle className="my-0! after:w-2 hover:after:bg-transparent" />
-                            <ResizablePanel
-                              id="terminal-panel"
-                              order={1}
-                              defaultSize={28}
-                              minSize={12}
-                              className="relative overflow-hidden rounded-lg bg-[#080d09] ring-1 ring-derived-subtle"
-                            >
-                              <TerminalPanelBody />
-                            </ResizablePanel>
-                          </>
-                        )}
-                      </ResizablePanelGroup>
-                    </ResizablePanel>
+                      </>
+                    )}
                   </ResizablePanelGroup>
                 </ResizablePanel>
               </>
