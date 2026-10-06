@@ -31,7 +31,8 @@
   },
   "common": {
     "search": "Search…",
-    "editYourMessage": "Edit your message..."
+    "editYourMessage": "Edit your message...",
+    "dismissNotification": "Dismiss notification"
   },
   "actions": {
     "more": "More actions",
@@ -49,5 +50,46 @@
     "placeholder": "Search or type a URL",
     "noSuggestions": "No suggestions found.",
     "noHistory": "No browsing history yet."
+  },
+  "errors": {
+    "retry": "Retry",
+    "configureOtherApiKeys": "Configure other API keys",
+    "configureApiKeys": "Configure API keys",
+    "upgradePlan": "Upgrade plan",
+    "buyCredits": "Buy credits in console",
+    "usageLimitReached": "Usage limit reached",
+    "descriptionUltra": "You've used all your included credits.{{reset}}",
+    "descriptionPro": "You've reached your Pro plan limit.{{reset}}",
+    "descriptionFree": "You've reached your free plan limit.{{reset}}",
+    "limitResets": " Your limit resets {{when}}.",
+    "modelNotAvailableOnPlan": "{{model}} is not available on the {{plan}} plan",
+    "modelNotAvailableOnPlanGeneric": "Model not available on the {{plan}} plan",
+    "byokDescription": "This model is only accessible via BYOK or a Pro plan. Get your plan or configure your own API key.",
+    "subscriptionRequired": "Subscription required",
+    "subscriptionRequiredDescription": "AI model access through Stagewise Inference requires a subscription. Upgrade your plan, configure your own API keys, or connect a coding plan to continue.",
+    "upstreamDescription": "The upstream AI provider is temporarily at capacity. Please switch to another model or try again.",
+    "modelTemporarilyUnavailable": "{{model}} is temporarily unavailable",
+    "modelTemporarilyUnavailableGeneric": "Model is temporarily unavailable",
+    "waitingForConnection": "Waiting for connection...",
+    "waitingForConnectionDescription": "Your device appears to be offline. The agent will retry automatically once internet access is available again.",
+    "lastNetworkError": "Last network error: {{message}}",
+    "notLoggedIn": "Not logged in",
+    "notLoggedInDescription": "You aren't signed in to stagewise, and you haven't configured any other method for AI model access.",
+    "logIn": "Log in to stagewise",
+    "heading": "Error",
+    "errorCode": "(Code: {{code}})",
+    "whatToDo": "What to do if the issue persists?",
+    "reportPrefix": "If this error continues to occur, you can",
+    "reportLink": "report it on GitHub",
+    "reportSuffix": ". Please include the error message and stack trace (if available) to help us diagnose the issue.",
+    "time": {
+      "shortly": "shortly",
+      "inMinutes_one": "in {{count}} minute",
+      "inMinutes_other": "in {{count}} minutes",
+      "inHours_one": "in {{count}} hour",
+      "inHours_other": "in {{count}} hours",
+      "inDays_one": "in {{count}} day",
+      "inDays_other": "in {{count}} days"
+    }
   }
 }

@@ -31,7 +31,8 @@
   },
   "common": {
     "search": "Suchen…",
-    "editYourMessage": "Nachricht bearbeiten..."
+    "editYourMessage": "Nachricht bearbeiten...",
+    "dismissNotification": "Benachrichtigung verwerfen"
   },
   "actions": {
     "more": "Weitere Aktionen",
@@ -49,5 +50,46 @@
     "placeholder": "Suchen oder URL eingeben",
     "noSuggestions": "Keine Vorschläge gefunden.",
     "noHistory": "Noch kein Browserverlauf."
+  },
+  "errors": {
+    "retry": "Erneut versuchen",
+    "configureOtherApiKeys": "Andere API-Schlüssel konfigurieren",
+    "configureApiKeys": "API-Schlüssel konfigurieren",
+    "upgradePlan": "Tarif upgraden",
+    "buyCredits": "Credits in der Konsole kaufen",
+    "usageLimitReached": "Nutzungslimit erreicht",
+    "descriptionUltra": "Du hast alle enthaltenen Credits verbraucht.{{reset}}",
+    "descriptionPro": "Du hast das Limit deines Pro-Tarifs erreicht.{{reset}}",
+    "descriptionFree": "Du hast das Limit deines kostenlosen Tarifs erreicht.{{reset}}",
+    "limitResets": " Dein Limit wird {{when}} zurückgesetzt.",
+    "modelNotAvailableOnPlan": "{{model}} ist im Tarif {{plan}} nicht verfügbar",
+    "modelNotAvailableOnPlanGeneric": "Modell im Tarif {{plan}} nicht verfügbar",
+    "byokDescription": "Dieses Modell ist nur über BYOK oder einen Pro-Tarif verfügbar. Hole dir einen Tarif oder konfiguriere deinen eigenen API-Schlüssel.",
+    "subscriptionRequired": "Abo erforderlich",
+    "subscriptionRequiredDescription": "Der Zugriff auf KI-Modelle über Stagewise Inference erfordert ein Abo. Upgrade deinen Tarif, konfiguriere eigene API-Schlüssel oder verbinde einen Coding-Plan, um fortzufahren.",
+    "upstreamDescription": "Der vorgelagerte KI-Anbieter ist vorübergehend ausgelastet. Bitte wechsle das Modell oder versuche es erneut.",
+    "modelTemporarilyUnavailable": "{{model}} ist vorübergehend nicht verfügbar",
+    "modelTemporarilyUnavailableGeneric": "Modell ist vorübergehend nicht verfügbar",
+    "waitingForConnection": "Warte auf Verbindung...",
+    "waitingForConnectionDescription": "Dein Gerät scheint offline zu sein. Der Agent versucht es automatisch erneut, sobald wieder Internet verfügbar ist.",
+    "lastNetworkError": "Letzter Netzwerkfehler: {{message}}",
+    "notLoggedIn": "Nicht angemeldet",
+    "notLoggedInDescription": "Du bist nicht bei stagewise angemeldet und hast keine andere Methode für den KI-Modellzugriff konfiguriert.",
+    "logIn": "Bei stagewise anmelden",
+    "heading": "Fehler",
+    "errorCode": "(Code: {{code}})",
+    "whatToDo": "Was tun, wenn das Problem weiterhin besteht?",
+    "reportPrefix": "Wenn dieser Fehler weiterhin auftritt, kannst du ihn",
+    "reportLink": "auf GitHub melden",
+    "reportSuffix": ". Bitte füge die Fehlermeldung und den Stacktrace (falls vorhanden) bei, damit wir das Problem eingrenzen können.",
+    "time": {
+      "shortly": "in Kürze",
+      "inMinutes_one": "in {{count}} Minute",
+      "inMinutes_other": "in {{count}} Minuten",
+      "inHours_one": "in {{count}} Stunde",
+      "inHours_other": "in {{count}} Stunden",
+      "inDays_one": "in {{count}} Tag",
+      "inDays_other": "in {{count}} Tagen"
+    }
   }
 }

@@ -7,8 +7,10 @@ import {
 } from '@stagewise/icons';
 import { LoaderCircleIcon } from 'lucide-react';
 import { SidebarToast } from '../../../_components/sidebar-toast';
+import { useTranslation } from 'react-i18next';
 
 export function NotificationBanners() {
+  const { t } = useTranslation('chat');
   const notifications = useKartonState((s) => s.notifications);
   const triggerAction = useKartonProcedure(
     (s) => s.notifications.triggerAction,
@@ -24,7 +26,7 @@ export function NotificationBanners() {
       {notifications.map((notification) => (
         <SidebarToast
           key={notification.id}
-          dismissLabel="Dismiss notification"
+          dismissLabel={t('common.dismissNotification')}
           onDismiss={() => dismissNotification(notification.id)}
         >
           <div className="flex flex-row items-start gap-2 pr-7">

@@ -24,6 +24,8 @@ import { useCmdEnterTarget } from '@ui/hooks/use-cmd-enter-target';
 import { CmdEnterPriority } from '@ui/utils/cmd-enter-registry';
 import { HotkeyCombo } from '@ui/components/hotkey-combo';
 import { HotkeyActions } from '@shared/hotkeys';
+import { useTranslation } from 'react-i18next';
+import i18n from '@ui/i18n';
 
 interface RetryActionProps {
   retryRef?: (element: HTMLElement | null) => void;
@@ -58,15 +60,16 @@ function isAuthorizationError(error: GenericRuntimeError): boolean {
 
 function formatRelativeTime(isoDate: string): string {
   const diff = new Date(isoDate).getTime() - Date.now();
-  if (diff <= 0) return 'shortly';
+  if (diff <= 0) return i18n.t('chat:errors.time.shortly');
   const minutes = Math.ceil(diff / 60_000);
-  if (minutes < 60) return `in ${minutes} minute${minutes !== 1 ? 's' : ''}`;
+  if (minutes < 60)
+    return i18n.t('chat:errors.time.inMinutes', { count: minutes });
 
   const hours = Math.ceil(minutes / 60);
-  if (hours < 24) return `in ${hours} hour${hours !== 1 ? 's' : ''}`;
+  if (hours < 24) return i18n.t('chat:errors.time.inHours', { count: hours });
 
   const days = Math.ceil(hours / 24);
-  return `in ${days} day${days !== 1 ? 's' : ''}`;
+  return i18n.t('chat:errors.time.inDays', { count: days });
 }
 
 export function MessageRuntimeError({
@@ -174,6 +177,7 @@ function PlanLimitExceededError({
   canRetry: boolean;
   onRetry: () => void;
 } & RetryActionProps) {
+  const { t } = useTranslation('chat');
   const subscription = useKartonState((s) => s.userAccount.subscription);
   const openSettings = useKartonProcedure((p) => p.appScreen.openSettings);
   const openExternalUrl = useKartonProcedure((p) => p.openExternalUrl);
@@ -183,32 +187,34 @@ function PlanLimitExceededError({
   const resetLabel = resetsAt ? formatRelativeTime(resetsAt) : null;
 
   const { heading, description, ctaLabel, ctaHref } = useMemo(() => {
-    const resetSuffix = resetLabel ? ` Your limit resets ${resetLabel}.` : '';
+    const resetSuffix = resetLabel
+      ? t('errors.limitResets', { when: resetLabel })
+      : '';
 
     switch (plan) {
       case 'ultra':
         return {
-          heading: 'Usage limit reached',
-          description: `You've used all your included credits.${resetSuffix}`,
-          ctaLabel: 'Buy credits in console',
+          heading: t('errors.usageLimitReached'),
+          description: t('errors.descriptionUltra', { reset: resetSuffix }),
+          ctaLabel: t('errors.buyCredits'),
           ctaHref: consoleUrl,
         };
       case 'pro':
         return {
-          heading: 'Usage limit reached',
-          description: `You've reached your Pro plan limit.${resetSuffix}`,
-          ctaLabel: 'Buy credits in console',
+          heading: t('errors.usageLimitReached'),
+          description: t('errors.descriptionPro', { reset: resetSuffix }),
+          ctaLabel: t('errors.buyCredits'),
           ctaHref: consoleUrl,
         };
       default:
         return {
-          heading: 'Usage limit reached',
-          description: `You've reached your free plan limit.${resetSuffix}`,
-          ctaLabel: 'Buy credits in console',
+          heading: t('errors.usageLimitReached'),
+          description: t('errors.descriptionFree', { reset: resetSuffix }),
+          ctaLabel: t('errors.buyCredits'),
           ctaHref: consoleUrl,
         };
     }
-  }, [plan, resetLabel]);
+  }, [plan, resetLabel, t]);
 
   return (
     <div className="mt-6 flex w-full flex-col gap-1.5 rounded-lg border border-derived-strong p-2 text-sm">
@@ -221,7 +227,7 @@ function PlanLimitExceededError({
           {canRetry && (
             <Button ref={retryRef} variant="ghost" size="xs" onClick={onRetry}>
               <RefreshCcwIcon className="size-3" />
-              Retry
+              {t('errors.retry')}
               {showRetryHotkey && (
                 <HotkeyCombo
                   action={HotkeyActions.CMD_ENTER}
@@ -239,7 +245,7 @@ function PlanLimitExceededError({
             size="xs"
             onClick={() => void openSettings({ section: 'models-providers' })}
           >
-            Configure other API keys
+            {t('errors.configureOtherApiKeys')}
           </Button>
           <Button
             variant="primary"
@@ -271,6 +277,7 @@ function ModelRestrictedError({
   canRetry: boolean;
   onRetry: () => void;
 } & RetryActionProps) {
+  const { t } = useTranslation('chat');
   const openSettings = useKartonProcedure((p) => p.appScreen.openSettings);
   const openExternalUrl = useKartonProcedure((p) => p.openExternalUrl);
 
@@ -286,24 +293,21 @@ function ModelRestrictedError({
 
   const planLabel = error.plan ?? 'free';
   const heading = modelName
-    ? `${modelName} is not available on the ${planLabel} plan`
-    : `Model not available on the ${planLabel} plan`;
+    ? t('errors.modelNotAvailableOnPlan', { model: modelName, plan: planLabel })
+    : t('errors.modelNotAvailableOnPlanGeneric', { plan: planLabel });
 
   return (
     <div className="mt-6 flex w-full flex-col gap-1.5 rounded-lg border border-derived-strong p-2 text-sm">
       <span className="font-medium text-foreground">{heading}</span>
 
-      <div className="text-foreground">
-        This model is only accessible via BYOK or a Pro plan. Get your plan or
-        configure your own API key.
-      </div>
+      <div className="text-foreground">{t('errors.byokDescription')}</div>
 
       <div className="flex flex-row items-center justify-between gap-2 pt-1">
         <div>
           {canRetry && (
             <Button ref={retryRef} variant="ghost" size="xs" onClick={onRetry}>
               <RefreshCcwIcon className="size-3" />
-              Retry
+              {t('errors.retry')}
               {showRetryHotkey && (
                 <HotkeyCombo
                   action={HotkeyActions.CMD_ENTER}
@@ -321,14 +325,14 @@ function ModelRestrictedError({
             size="xs"
             onClick={() => void openSettings({ section: 'models-providers' })}
           >
-            Configure other API keys
+            {t('errors.configureOtherApiKeys')}
           </Button>
           <Button
             variant="primary"
             size="xs"
             onClick={() => void openExternalUrl(consoleUrl)}
           >
-            Upgrade plan
+            {t('errors.upgradePlan')}
             <ArrowUpRightIcon className="size-3" />
           </Button>
         </div>
@@ -352,6 +356,7 @@ function SubscriptionRequiredError({
   canRetry: boolean;
   onRetry: () => void;
 } & RetryActionProps) {
+  const { t } = useTranslation('chat');
   const openSettings = useKartonProcedure((p) => p.appScreen.openSettings);
   const openExternalUrl = useKartonProcedure((p) => p.openExternalUrl);
 
@@ -360,14 +365,12 @@ function SubscriptionRequiredError({
       <div className="flex flex-row items-center gap-1.5">
         <IconLockKeyOutline18 className="size-3.5 shrink-0 text-foreground" />
         <span className="font-medium text-foreground">
-          Subscription required
+          {t('errors.subscriptionRequired')}
         </span>
       </div>
 
       <div className="text-foreground">
-        AI model access through Stagewise Inference requires a subscription.
-        Upgrade your plan, configure your own API keys, or connect a coding plan
-        to continue.
+        {t('errors.subscriptionRequiredDescription')}
       </div>
 
       <div className="flex flex-row items-center justify-between gap-2 pt-1">
@@ -375,7 +378,7 @@ function SubscriptionRequiredError({
           {canRetry && (
             <Button ref={retryRef} variant="ghost" size="xs" onClick={onRetry}>
               <RefreshCcwIcon className="size-3" />
-              Retry
+              {t('errors.retry')}
               {showRetryHotkey && (
                 <HotkeyCombo
                   action={HotkeyActions.CMD_ENTER}
@@ -393,14 +396,14 @@ function SubscriptionRequiredError({
             size="xs"
             onClick={() => void openSettings({ section: 'models-providers' })}
           >
-            Configure API keys
+            {t('errors.configureApiKeys')}
           </Button>
           <Button
             variant="primary"
             size="xs"
             onClick={() => void openExternalUrl(consoleUrl)}
           >
-            Upgrade plan
+            {t('errors.upgradePlan')}
             <ArrowUpRightIcon className="size-3" />
           </Button>
         </div>
@@ -431,8 +434,8 @@ function UpstreamOverloadError({
   isWorking: boolean;
   onRetry: () => void;
 } & RetryActionProps) {
-  const description =
-    'The upstream AI provider is temporarily at capacity. Please switch to another model or try again.';
+  const { t } = useTranslation('chat');
+  const description = t('errors.upstreamDescription');
 
   // Read the name from the error snapshot (not live state) so that switching
   // the active model while the card is visible does not mislabel the heading.
@@ -442,8 +445,8 @@ function UpstreamOverloadError({
     return m?.modelDisplayName ?? null;
   }, [error.modelId]);
   const heading = modelName
-    ? `${modelName} is temporarily unavailable`
-    : 'Model is temporarily unavailable';
+    ? t('errors.modelTemporarilyUnavailable', { model: modelName })
+    : t('errors.modelTemporarilyUnavailableGeneric');
 
   return (
     <div className="mt-6 flex w-full flex-col gap-2 rounded-lg border border-derived bg-surface-1 p-3 text-sm">
@@ -455,7 +458,7 @@ function UpstreamOverloadError({
         <div className="flex flex-row items-center justify-end gap-2 pt-2">
           <Button ref={retryRef} variant="primary" size="xs" onClick={onRetry}>
             <RefreshCcwIcon className="size-3" />
-            Retry
+            {t('errors.retry')}
             {showRetryHotkey && (
               <HotkeyCombo
                 action={HotkeyActions.CMD_ENTER}
@@ -482,29 +485,29 @@ function WaitingForConnectionError({
   canRetry: boolean;
   onRetry: () => void;
 } & RetryActionProps) {
+  const { t } = useTranslation('chat');
   return (
     <div className="mt-6 flex w-full flex-col gap-1.5 rounded-lg border border-warning-solid/30 bg-warning-background p-2 text-sm">
       <div className="flex flex-row items-center gap-1.5">
         <IconTriangleWarning className="size-3.5 shrink-0 text-warning-foreground" />
         <span className="font-medium text-warning-foreground">
-          Waiting for connection...
+          {t('errors.waitingForConnection')}
         </span>
       </div>
 
       <div className="text-foreground">
-        Your device appears to be offline. The agent will retry automatically
-        once internet access is available again.
+        {t('errors.waitingForConnectionDescription')}
       </div>
 
       <div className="text-muted-foreground text-xs">
-        Last network error: {error.originalMessage}
+        {t('errors.lastNetworkError', { message: error.originalMessage })}
       </div>
 
       {canRetry && (
         <div className="flex flex-row justify-end pt-1">
           <Button ref={retryRef} variant="primary" size="xs" onClick={onRetry}>
             <RefreshCcwIcon className="size-3" />
-            Retry
+            {t('errors.retry')}
             {showRetryHotkey && (
               <HotkeyCombo
                 action={HotkeyActions.CMD_ENTER}
@@ -533,6 +536,7 @@ function GenericError({
   canRetry: boolean;
   onRetry: () => void;
 } & RetryActionProps) {
+  const { t } = useTranslation('chat');
   const [helpExpanded, setHelpExpanded] = useState(false);
   const openExternalUrl = useKartonProcedure((p) => p.openExternalUrl);
   const [hasCopied, setHasCopied] = useState(false);
@@ -562,12 +566,13 @@ function GenericError({
       <div className="mt-6 flex w-full flex-col gap-1.5 rounded-lg border border-derived-strong p-2 text-sm">
         <div className="flex flex-row items-center gap-1.5">
           <IconLockKeyOutline18 className="size-3.5 shrink-0 text-foreground" />
-          <span className="font-medium text-foreground">Not logged in</span>
+          <span className="font-medium text-foreground">
+            {t('errors.notLoggedIn')}
+          </span>
         </div>
 
         <div className="text-foreground">
-          You aren&apos;t signed in to stagewise, and you haven&apos;t
-          configured any other method for AI model access.
+          {t('errors.notLoggedInDescription')}
         </div>
 
         <div className="flex flex-row items-center justify-between gap-2 pt-1">
@@ -580,7 +585,7 @@ function GenericError({
                 onClick={onRetry}
               >
                 <RefreshCcwIcon className="size-3" />
-                Retry
+                {t('errors.retry')}
                 {showRetryHotkey && (
                   <HotkeyCombo
                     action={HotkeyActions.CMD_ENTER}
@@ -598,14 +603,14 @@ function GenericError({
               size="xs"
               onClick={() => void openSettings({ section: 'models-providers' })}
             >
-              Configure other API keys
+              {t('errors.configureOtherApiKeys')}
             </Button>
             <Button
               variant="primary"
               size="xs"
               onClick={() => void openSettings({ section: 'account' })}
             >
-              Log in to stagewise
+              {t('errors.logIn')}
             </Button>
           </div>
         </div>
@@ -626,7 +631,9 @@ function GenericError({
     <div className="mt-6 flex w-full flex-col gap-1.5 rounded-lg border border-derived-strong p-2 text-sm">
       <div className="flex flex-row items-center gap-1.5">
         <IconTriangleWarning className="size-3.5 shrink-0 text-error-foreground" />
-        <span className="font-medium text-error-foreground">Error</span>
+        <span className="font-medium text-error-foreground">
+          {t('errors.heading')}
+        </span>
         <Button
           variant="ghost"
           size="icon-2xs"
@@ -645,7 +652,7 @@ function GenericError({
         {error.message}{' '}
         {error.code && (
           <span className="text-muted-foreground text-xs">
-            (Code: {error.code})
+            {t('errors.errorCode', { code: error.code })}
           </span>
         )}
       </div>
@@ -655,7 +662,7 @@ function GenericError({
           size="condensed"
           className="-mx-1 flex w-[calc(100%+0.5rem)] items-center justify-between gap-2 py-0.5"
         >
-          <span className="text-xs">What to do if the issue persists?</span>
+          <span className="text-xs">{t('errors.whatToDo')}</span>
           <ChevronDownIcon
             className={cn(
               'size-3 transition-transform',
@@ -665,7 +672,7 @@ function GenericError({
         </CollapsibleTrigger>
         <CollapsibleContent>
           <div className="mt-0.5 text-muted-foreground text-xs">
-            If this error continues to occur, you can{' '}
+            {t('errors.reportPrefix')}{' '}
             <a
               href={reportIssueUrl}
               rel="noopener noreferrer"
@@ -675,10 +682,9 @@ function GenericError({
               }}
               className="text-primary-foreground underline hover:text-primary-foreground/80"
             >
-              report it on GitHub
+              {t('errors.reportLink')}
             </a>
-            . Please include the error message and stack trace (if available) to
-            help us diagnose the issue.
+            {t('errors.reportSuffix')}
           </div>
         </CollapsibleContent>
       </Collapsible>
@@ -687,7 +693,7 @@ function GenericError({
         <div className="flex flex-row justify-end pt-1">
           <Button ref={retryRef} variant="primary" size="xs" onClick={onRetry}>
             <RefreshCcwIcon className="size-3" />
-            Retry
+            {t('errors.retry')}
             {showRetryHotkey && (
               <HotkeyCombo
                 action={HotkeyActions.CMD_ENTER}
