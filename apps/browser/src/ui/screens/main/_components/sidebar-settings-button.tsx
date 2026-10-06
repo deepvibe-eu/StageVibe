@@ -9,6 +9,7 @@ import { cn } from '@stagewise/stage-ui/lib/utils';
 import { useKartonProcedure, useKartonState } from '@ui/hooks/use-karton';
 import { useTrack } from '@ui/hooks/use-track';
 import { useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 
 /**
  * Gear button at the bottom of both sidebars.
@@ -18,6 +19,7 @@ import { useCallback } from 'react';
  * settings toggle at the familiar spot.
  */
 export function SidebarSettingsButton() {
+  const { t } = useTranslation('sidebar');
   const track = useTrack();
   const openSettings = useKartonProcedure((p) => p.appScreen.openSettings);
   const closeSettings = useKartonProcedure((p) => p.appScreen.closeSettings);
@@ -41,7 +43,9 @@ export function SidebarSettingsButton() {
           <Button
             variant="ghost"
             size="icon-sm"
-            aria-label={isSettingsOpen ? 'Close settings' : 'Settings'}
+            aria-label={
+              isSettingsOpen ? t('settings.close') : t('settings.open')
+            }
             className="app-no-drag shrink-0"
             onClick={handleToggleSettings}
             aria-pressed={isSettingsOpen}
@@ -55,7 +59,7 @@ export function SidebarSettingsButton() {
           </Button>
         </TooltipTrigger>
         <TooltipContent side="top">
-          {isSettingsOpen ? 'Close settings' : 'Settings'}
+          {isSettingsOpen ? t('settings.close') : t('settings.open')}
         </TooltipContent>
       </Tooltip>
     </div>

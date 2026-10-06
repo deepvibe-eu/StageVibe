@@ -10,11 +10,13 @@ import {
   IconSidebarRightShowOutline18,
 } from '@stagewise/icons';
 import { HotkeyCombo } from '@ui/components/hotkey-combo';
+import { useTranslation } from 'react-i18next';
 import { useContentCollapsed } from './content-collapsed-context';
 
 export function ContentToggleButton() {
+  const { t } = useTranslation('chat');
   const { collapsed, toggle } = useContentCollapsed();
-  const label = collapsed ? 'Show content panel' : 'Hide content panel';
+  const label = collapsed ? t('toggleContent.show') : t('toggleContent.hide');
   const Icon = collapsed
     ? IconSidebarRightShowOutline18
     : IconSidebarRightHideOutline18;

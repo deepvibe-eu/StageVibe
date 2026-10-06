@@ -12,16 +12,18 @@ import {
   IconSidebarLeftHideOutline18,
   IconSidebarLeftShowOutline18,
 } from '@stagewise/icons';
+import { useTranslation } from 'react-i18next';
 import { useSidebarCollapsed } from './sidebar-collapsed-context';
 
 export function SidebarToggleButton() {
+  const { t } = useTranslation('chat');
   const { collapsed, toggle } = useSidebarCollapsed();
   // The optical offset was tuned to align the icon's perceived center
   // with the macOS traffic-light cluster. On Windows/Linux there are no
   // traffic lights to align against, so we skip the nudge and let the
   // icon sit on the flex-center of the titlebar row.
   const isMacOs = useKartonState((s) => s.appInfo.platform === 'darwin');
-  const label = collapsed ? 'Show sidebar' : 'Hide sidebar';
+  const label = collapsed ? t('toggleSidebar.show') : t('toggleSidebar.hide');
   const Icon = collapsed
     ? IconSidebarLeftShowOutline18
     : IconSidebarLeftHideOutline18;

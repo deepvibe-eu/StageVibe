@@ -114,6 +114,8 @@ import { extractTipTapText, firstWords } from '@ui/utils/text-utils';
 import { cn } from '@ui/utils';
 import { useEmptyAgentId } from '@ui/hooks/use-empty-agent';
 import { useTrack } from '@ui/hooks/use-track';
+import { useTranslation } from 'react-i18next';
+import i18n from '@ui/i18n';
 import { AgentCard, AgentCardSkeleton } from './_components/agent-card';
 import { AgentCardWithPreview } from './_components/agent-card-with-preview';
 import type { CachedPreview } from '../../_components/agent-preview-panel';
@@ -230,40 +232,35 @@ const SHOW_MORE_WORKTREES_INCREMENT = 10;
 const NO_WORKSPACE_GROUP_KEY = '__no-workspace__';
 
 function getRemoteRepositoryOpenLabel(url: string | null | undefined): string {
-  if (!url) return 'Open remote repository';
+  if (!url) return i18n.t('sidebar:workspace.openRemote');
 
   try {
     const host = new URL(url).hostname.toLowerCase();
     if (host === 'github.com' || host.endsWith('.github.com')) {
-      return 'Open in GitHub';
+      return i18n.t('sidebar:workspace.openInGithub');
     }
     if (host === 'gitlab.com' || host.endsWith('.gitlab.com')) {
-      return 'Open in GitLab';
+      return i18n.t('sidebar:workspace.openInGitlab');
     }
     if (host === 'bitbucket.org' || host.endsWith('.bitbucket.org')) {
-      return 'Open in Bitbucket';
+      return i18n.t('sidebar:workspace.openInBitbucket');
     }
   } catch {
-    return 'Open remote repository';
+    return i18n.t('sidebar:workspace.openRemote');
   }
 
-  return 'Open remote repository';
+  return i18n.t('sidebar:workspace.openRemote');
 }
 
 // ============================================================================
 // Time grouping
 // ============================================================================
 
-type GroupLabel =
-  | 'Today'
-  | 'Yesterday'
-  | 'Last 7 days'
-  | 'Last 30 days'
-  | 'Older';
+type GroupLabel = 'today' | 'yesterday' | 'last7' | 'last30' | 'older';
 
 function getGroupLabel(timestamp: number): GroupLabel {
-  // A zero timestamp means no messages yet — treat as "Today".
-  if (!timestamp) return 'Today';
+  // A zero timestamp means no messages yet — treat as "today".
+  if (!timestamp) return 'today';
   // Bucket by calendar days (local date), not elapsed 24-hour windows.
   const now = new Date();
   const ts = new Date(timestamp);
@@ -278,12 +275,12 @@ function getGroupLabel(timestamp: number): GroupLabel {
     ts.getDate(),
   ).getTime();
   const diffDays = Math.round((nowMidnight - tsMidnight) / 86_400_000);
-  if (diffDays < 0) return 'Today'; // clock skew
-  if (diffDays === 0) return 'Today';
-  if (diffDays === 1) return 'Yesterday';
-  if (diffDays <= 7) return 'Last 7 days';
-  if (diffDays <= 30) return 'Last 30 days';
-  return 'Older';
+  if (diffDays < 0) return 'today'; // clock skew
+  if (diffDays === 0) return 'today';
+  if (diffDays === 1) return 'yesterday';
+  if (diffDays <= 7) return 'last7';
+  if (diffDays <= 30) return 'last30';
+  return 'older';
 }
 
 type GroupedItem =
@@ -508,9 +505,12 @@ function WorkspaceGroupHeader({
   onCreateAgent?: () => void;
   hideActions?: boolean;
 }) {
-  const openInFileManagerLabel = `Open in ${IDE_SELECTION_ITEMS.fileManager}`;
+  const { t } = useTranslation('sidebar');
+  const openInFileManagerLabel = t('workspace.openInFileManager', {
+    fileManager: IDE_SELECTION_ITEMS.fileManager,
+  });
   const remoteRepositoryLabel =
-    openRemoteRepositoryLabel ?? 'Open remote repository';
+    openRemoteRepositoryLabel ?? t('workspace.openRemote');
 
   return (
     <div
@@ -597,7 +597,7 @@ function WorkspaceGroupHeader({
             <Button
               variant="ghost"
               size="icon-2xs"
-              aria-label="Delete worktree"
+              aria-label={t('workspace.deleteWorktree')}
               className="size-5 shrink-0 opacity-0 transition-opacity group-hover/workspace-header:opacity-100"
               onClick={(event) => {
                 event.stopPropagation();
@@ -611,14 +611,14 @@ function WorkspaceGroupHeader({
               <IconTrashOutline18 className="size-3.5" />
             </Button>
           </TooltipTrigger>
-          <TooltipContent>Delete worktree</TooltipContent>
+          <TooltipContent>{t('workspace.deleteWorktree')}</TooltipContent>
         </Tooltip>
       )}
       {!hideActions && onCreateAgent && (
         <Button
           variant="ghost"
           size="icon-2xs"
-          aria-label={`New mate for ${label}`}
+          aria-label={t('workspace.newMateFor', { label })}
           className="size-5 shrink-0 opacity-0 transition-opacity group-hover/workspace-header:opacity-100"
           onClick={(event) => {
             event.stopPropagation();
@@ -639,10 +639,12 @@ function AgentListGroupingToggle({
   mode: AgentListGroupingMode;
   onModeChange: (mode: AgentListGroupingMode) => void;
 }) {
-  const label = mode === 'workspace' ? 'Group by Workspace' : 'Group by Age';
+  const { t } = useTranslation('sidebar');
+  const label =
+    mode === 'workspace' ? t('grouping.byWorkspace') : t('grouping.byAge');
   const options = [
-    { value: 'age', label: 'Age' },
-    { value: 'workspace', label: 'Workspace' },
+    { value: 'age', label: t('grouping.age') },
+    { value: 'workspace', label: t('grouping.workspace') },
   ] as const;
 
   return (
@@ -651,7 +653,7 @@ function AgentListGroupingToggle({
         <button
           type="button"
           className="flex h-5 shrink-0 cursor-pointer items-center gap-1 rounded-md bg-transparent px-1 text-sidebar-foreground text-xs transition-colors hover:text-foreground"
-          aria-label="Change mate grouping mode"
+          aria-label={t('grouping.aria')}
         >
           <span>{label}</span>
           <IconChevronDownOutline18 className="size-3 shrink-0" />
@@ -683,6 +685,7 @@ function AgentListGroupingToggle({
 // ============================================================================
 
 export function AgentsList() {
+  const { t } = useTranslation('sidebar');
   const [openAgent, setOpenAgent] = useOpenAgent();
   const { previewAgentId } = useAgentSwitcher();
   const setHistoryAttentionEntries = useSetHistoryAttentionEntries();
@@ -2445,7 +2448,7 @@ export function AgentsList() {
         >
           <IconPenPlusOutline18 className="size-4 shrink-0" />
           <span className="min-w-0 flex-1 truncate text-left transition-[mask-image] duration-200 group-hover/new-agent:[mask-image:linear-gradient(to_right,black_calc(100%-56px),transparent_100%)]">
-            New Mate
+            {t('newMate')}
           </span>
           <HotkeyCombo
             action={HotkeyActions.NEW_CHAT}
@@ -2458,8 +2461,8 @@ export function AgentsList() {
           <IconMagnifierOutline18 className="size-3.5 shrink-0 text-sidebar-foreground" />
           <input
             type="text"
-            aria-label="Search mates"
-            placeholder="Search mates…"
+            aria-label={t('search.aria')}
+            placeholder={t('search.placeholder')}
             value=""
             onPointerDown={(e) => {
               if (!e.isPrimary || e.button !== 0) return;
@@ -2495,7 +2498,7 @@ export function AgentsList() {
       >
         <div className="flex shrink-0 items-center pt-0 pr-0 pb-1 pl-1.5">
           <div className="min-w-0 flex-1 truncate font-normal text-sidebar-foreground text-xs">
-            {filteredPinnedAgents.length > 0 ? 'Pinned' : 'Mates'}
+            {filteredPinnedAgents.length > 0 ? t('pinned') : t('mates')}
           </div>
           <AgentListGroupingToggle
             mode={agentListGroupingMode}
@@ -2604,7 +2607,7 @@ export function AgentsList() {
                   key={`h-${item.label}`}
                   className="shrink-0 px-1.5 pt-3 pb-1 font-normal text-sidebar-foreground text-xs"
                 >
-                  {item.label}
+                  {t(`ageGroups.${item.label}`)}
                 </div>
               );
             }

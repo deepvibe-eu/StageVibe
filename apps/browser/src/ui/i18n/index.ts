@@ -3,8 +3,12 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 import { initReactI18next } from 'react-i18next';
 import enCommon from './locales/en/common.json';
 import enSettings from './locales/en/settings.json';
+import enChat from './locales/en/chat.json';
+import enSidebar from './locales/en/sidebar.json';
 import deCommon from './locales/de/common.json';
 import deSettings from './locales/de/settings.json';
+import deChat from './locales/de/chat.json';
+import deSidebar from './locales/de/sidebar.json';
 
 export const SUPPORTED_LANGUAGES = [
   { code: 'en', label: 'English' },
@@ -15,15 +19,25 @@ export type SupportedLanguage = (typeof SUPPORTED_LANGUAGES)[number]['code'];
 
 export const LANGUAGE_STORAGE_KEY = 'stagevibe-language';
 
-export const NAMESPACES = ['common', 'settings'] as const;
+export const NAMESPACES = ['common', 'settings', 'chat', 'sidebar'] as const;
 
 void i18n
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
     resources: {
-      en: { common: enCommon, settings: enSettings },
-      de: { common: deCommon, settings: deSettings },
+      en: {
+        common: enCommon,
+        settings: enSettings,
+        chat: enChat,
+        sidebar: enSidebar,
+      },
+      de: {
+        common: deCommon,
+        settings: deSettings,
+        chat: deChat,
+        sidebar: deSidebar,
+      },
     },
     ns: [...NAMESPACES],
     defaultNS: 'common',

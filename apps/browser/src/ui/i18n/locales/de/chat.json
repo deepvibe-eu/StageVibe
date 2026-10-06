@@ -1,0 +1,22 @@
+{
+  "toggleSidebar": {
+    "show": "Seitenleiste einblenden",
+    "hide": "Seitenleiste ausblenden"
+  },
+  "toggleContent": {
+    "show": "Inhaltsbereich einblenden",
+    "hide": "Inhaltsbereich ausblenden"
+  },
+  "toggleFileTree": {
+    "show": "Dateibaum einblenden",
+    "hide": "Dateibaum ausblenden"
+  },
+  "newBrowserTab": {
+    "label": "Neuen Browser-Tab öffnen",
+    "tooltip": "Browsing-Tab öffnen"
+  },
+  "newTerminalTab": {
+    "label": "Neuen Terminal-Tab öffnen",
+    "tooltip": "Terminal-Tab öffnen"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "toggleSidebar": {
+    "show": "Show sidebar",
+    "hide": "Hide sidebar"
+  },
+  "toggleContent": {
+    "show": "Show content panel",
+    "hide": "Hide content panel"
+  },
+  "toggleFileTree": {
+    "show": "Show file tree",
+    "hide": "Hide file tree"
+  },
+  "newBrowserTab": {
+    "label": "Open new browser tab",
+    "tooltip": "Open browsing tab"
+  },
+  "newTerminalTab": {
+    "label": "Open new terminal tab",
+    "tooltip": "Open terminal tab"
+  }
+}

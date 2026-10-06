@@ -1,0 +1,36 @@
+{
+  "newMate": "New Mate",
+  "search": {
+    "aria": "Search mates",
+    "placeholder": "Search mates…"
+  },
+  "pinned": "Pinned",
+  "mates": "Mates",
+  "settings": {
+    "open": "Settings",
+    "close": "Close settings"
+  },
+  "ageGroups": {
+    "today": "Today",
+    "yesterday": "Yesterday",
+    "last7": "Last 7 days",
+    "last30": "Last 30 days",
+    "older": "Older"
+  },
+  "grouping": {
+    "byWorkspace": "Group by Workspace",
+    "byAge": "Group by Age",
+    "age": "Age",
+    "workspace": "Workspace",
+    "aria": "Change mate grouping mode"
+  },
+  "workspace": {
+    "openInGithub": "Open in GitHub",
+    "openInGitlab": "Open in GitLab",
+    "openInBitbucket": "Open in Bitbucket",
+    "openRemote": "Open remote repository",
+    "openInFileManager": "Open in {{fileManager}}",
+    "deleteWorktree": "Delete worktree",
+    "newMateFor": "New mate for {{label}}"
+  }
+}

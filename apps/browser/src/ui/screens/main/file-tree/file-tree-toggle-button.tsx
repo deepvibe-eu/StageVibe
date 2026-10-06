@@ -14,6 +14,7 @@ import {
 import { useOpenAgent } from '@ui/hooks/use-open-chat';
 import { HotkeyCombo } from '@ui/components/hotkey-combo';
 import { HotkeyActions } from '@shared/hotkeys';
+import { useTranslation } from 'react-i18next';
 import {
   areFileTreeWorkspaceMountsEqual,
   getFileTreeWorkspaceKey,
@@ -26,13 +27,14 @@ import { DiffLineStats } from '@ui/components/diff-line-stats';
 const diffTotalsCache = new Map<string, { added: number; deleted: number }>();
 
 export function FileTreeToggleButton() {
+  const { t } = useTranslation('chat');
   const visible = useKartonState((s) => s.fileTree.visible);
   const setVisible = useKartonProcedure((p) => p.fileTree.setVisible);
   const [openAgent] = useOpenAgent();
   const getWorkspaceDiffSummary = useKartonProcedure(
     (p) => p.toolbox.getWorkspaceDiffSummary,
   );
-  const label = visible ? 'Hide file tree' : 'Show file tree';
+  const label = visible ? t('toggleFileTree.hide') : t('toggleFileTree.show');
   const Icon = visible ? FolderTreeIcon : FolderIcon;
 
   // Resolve selected workspace path (same logic as sidebar)
