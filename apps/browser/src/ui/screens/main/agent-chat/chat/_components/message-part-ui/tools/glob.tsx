@@ -1,6 +1,7 @@
 import type { AgentToolUIPart } from '@shared/karton-contracts/ui/agent';
 import { ToolPartUINotCollapsible } from './shared/tool-part-ui-not-collapsible';
 import { IconFileSearchOutline18 } from '@stagewise/icons';
+import { useTranslation } from 'react-i18next';
 
 export const GlobToolPart = ({
   part,
@@ -11,18 +12,23 @@ export const GlobToolPart = ({
   disableShimmer?: boolean;
   minimal?: boolean;
 }) => {
+  const { t } = useTranslation('tools');
   const streamingText = part.input?.pattern
-    ? `Searching for ${part.input.pattern}...`
-    : 'Searching files...';
+    ? t('glob.searchingFor', { pattern: part.input.pattern })
+    : t('glob.searchingFiles');
 
   const finishedText =
     part.state === 'output-available' ? (
       <span className="flex min-w-0 gap-1">
-        <span className="shrink-0 truncate font-medium">Found </span>
+        <span className="shrink-0 truncate font-medium">
+          {t('glob.foundLabel')}
+        </span>
         <span className="truncate font-normal opacity-75">
-          {part.output?.result?.totalMatches ?? 0} file
-          {part.output?.result?.totalMatches !== 1 ? 's' : ''}
-          {part.input?.pattern && <> matching "{part.input.pattern}"</>}
+          {t('glob.fileCount', {
+            count: part.output?.result?.totalMatches ?? 0,
+          })}
+          {part.input?.pattern &&
+            t('glob.matching', { pattern: part.input.pattern })}
         </span>
       </span>
     ) : undefined;

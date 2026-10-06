@@ -13,6 +13,8 @@ import { useAttachmentMetadata } from '@ui/hooks/use-attachment-metadata';
 import { useKartonState } from '@ui/hooks/use-karton';
 import { useOpenAgent } from '@ui/hooks/use-open-chat';
 import { isLogPath, LOGS_PREFIX } from '@stagewise/agent-core/logs';
+import { useTranslation } from 'react-i18next';
+import i18n from '@ui/i18n';
 
 const PLUGIN_SKILL_RE = /^plugins\/([^/]+)\/SKILL\.md$/;
 const WORKSPACE_SKILL_RE =
@@ -29,21 +31,26 @@ function getMemoryReadLabel(
     relativePath === 'memory/index.md' ||
     relativePath === 'memory/index.json'
   ) {
-    return 'index';
+    return i18n.t('tools:read.memoryIndex');
   }
 
   const match = relativePath.match(AGENT_MEMORY_RE);
-  if (!match) return 'file';
+  if (!match) return i18n.t('tools:read.memoryFile');
 
   const [, agentId, filename] = match;
-  const subject = agentId === currentAgentId ? '' : ` of ${agentId}`;
+  const subject =
+    agentId === currentAgentId
+      ? ''
+      : i18n.t('tools:read.memoryOf', { agentId });
 
-  if (filename === 'metadata.json') return `metadata${subject}`;
+  if (filename === 'metadata.json') {
+    return `${i18n.t('tools:read.memoryMetadata')}${subject}`;
+  }
   if (filename === 'history.md' || filename === 'history.jsonl') {
-    return `content${subject}`;
+    return `${i18n.t('tools:read.memoryContent')}${subject}`;
   }
 
-  return `file${subject}`;
+  return `${i18n.t('tools:read.memoryFile')}${subject}`;
 }
 
 export const ReadToolPart = ({
@@ -55,6 +62,7 @@ export const ReadToolPart = ({
   disableShimmer?: boolean;
   minimal?: boolean;
 }) => {
+  const { t } = useTranslation('tools');
   const plugins = useKartonState((s) => s.plugins);
   const [openAgent] = useOpenAgent();
   const relativePath = part.input?.path ?? '';
@@ -94,12 +102,14 @@ export const ReadToolPart = ({
     : undefined;
 
   if (pluginMatch) {
-    const streamingText = `Enabling ${pluginMatch.displayName}...`;
+    const streamingText = t('read.enabling', {
+      name: pluginMatch.displayName,
+    });
 
     const finishedText =
       part.state === 'output-available' ? (
         <span className="flex min-w-0 gap-1">
-          <span className="shrink-0 font-medium">Enabled</span>
+          <span className="shrink-0 font-medium">{t('read.enabled')}</span>
           <span className="truncate font-normal opacity-75">
             {pluginMatch.displayName}
           </span>
@@ -130,12 +140,12 @@ export const ReadToolPart = ({
   }
 
   if (workspaceSkillName) {
-    const streamingText = `Enabling ${workspaceSkillName}...`;
+    const streamingText = t('read.enabling', { name: workspaceSkillName });
 
     const finishedText =
       part.state === 'output-available' ? (
         <span className="flex min-w-0 gap-1">
-          <span className="shrink-0 font-medium">Enabled</span>
+          <span className="shrink-0 font-medium">{t('read.enabled')}</span>
           <span className="truncate font-normal opacity-75">
             {workspaceSkillName}
           </span>
@@ -155,12 +165,12 @@ export const ReadToolPart = ({
   }
 
   if (logChannelName) {
-    const streamingText = `Reading log ${logChannelName}…`;
+    const streamingText = t('read.readingLog', { name: logChannelName });
 
     const finishedText =
       part.state === 'output-available' ? (
         <span className="flex min-w-0 gap-1">
-          <span className="shrink-0 font-medium">Read log</span>
+          <span className="shrink-0 font-medium">{t('read.readLog')}</span>
           <span className="truncate font-normal opacity-75">
             {logChannelName}
           </span>
@@ -180,12 +190,14 @@ export const ReadToolPart = ({
   }
 
   if (isShellLog) {
-    const streamingText = 'Reading shell output...';
+    const streamingText = t('read.readingShellOutput');
 
     const finishedText =
       part.state === 'output-available' ? (
         <span className="flex min-w-0 gap-1">
-          <span className="shrink-0 font-medium">Read shell output</span>
+          <span className="shrink-0 font-medium">
+            {t('read.readShellOutput')}
+          </span>
         </span>
       ) : undefined;
 
@@ -203,12 +215,14 @@ export const ReadToolPart = ({
 
   if (isMemoryPath) {
     const memoryReadLabel = getMemoryReadLabel(relativePath, openAgent);
-    const streamingText = `Reading memory ${memoryReadLabel}...`;
+    const streamingText = t('read.readingMemory', {
+      label: memoryReadLabel,
+    });
 
     const finishedText =
       part.state === 'output-available' ? (
         <span className="flex min-w-0 gap-1">
-          <span className="shrink-0 font-medium">Read memory</span>
+          <span className="shrink-0 font-medium">{t('read.readMemory')}</span>
           <span className="truncate font-normal opacity-75">
             {memoryReadLabel}
           </span>
@@ -228,13 +242,13 @@ export const ReadToolPart = ({
   }
 
   const streamingText = displayPath
-    ? `Reading ${displayPath}...`
-    : 'Reading file...';
+    ? t('read.readingPath', { path: displayPath })
+    : t('read.readingFile');
 
   const finishedText =
     part.state === 'output-available' ? (
       <span className="flex min-w-0 gap-1">
-        <span className="shrink-0 truncate font-medium">Read </span>
+        <span className="shrink-0 truncate font-medium">{t('read.read')}</span>
         <span className="truncate font-normal opacity-75">
           {displayPath ?? ''}
         </span>

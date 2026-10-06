@@ -16,5 +16,44 @@
     "creatingPath": "Creating {{path}}...",
     "creating": "Creating directory...",
     "created": "Created"
+  },
+  "read": {
+    "enabling": "Enabling {{name}}...",
+    "enabled": "Enabled",
+    "readingLog": "Reading log {{name}}…",
+    "readLog": "Read log",
+    "readingShellOutput": "Reading shell output...",
+    "readShellOutput": "Read shell output",
+    "readingMemory": "Reading memory {{label}}...",
+    "readMemory": "Read memory",
+    "memoryOf": " of {{agentId}}",
+    "memoryIndex": "index",
+    "memoryFile": "file",
+    "memoryMetadata": "metadata",
+    "memoryContent": "content",
+    "readingPath": "Reading {{path}}...",
+    "readingFile": "Reading file...",
+    "read": "Read"
+  },
+  "ls": {
+    "listingPath": "Listing {{path}}...",
+    "listing": "Listing directory...",
+    "listed": "Listed"
+  },
+  "glob": {
+    "searchingFor": "Searching for {{pattern}}...",
+    "searchingFiles": "Searching files...",
+    "foundLabel": "Found",
+    "fileCount_one": "{{count}} file",
+    "fileCount_other": "{{count}} files",
+    "matching": " matching \"{{pattern}}\""
+  },
+  "grep": {
+    "searchingFor": "Searching for {{query}}...",
+    "searchingGrep": "Searching with grep...",
+    "foundLabel": "Found",
+    "resultCount_one": "{{count}} result",
+    "resultCount_other": "{{count}} results",
+    "forQuery": " for \"{{query}}\""
   }
 }
