@@ -4,7 +4,6 @@ import {
 } from '@shared/titlebar';
 import { cn } from '@ui/utils';
 import { useUiZoomCounterScale } from '@ui/hooks/use-ui-zoom-counter-scale';
-import { SidebarToggleButton } from './sidebar-toggle-button';
 import { TrafficLightGutter } from './traffic-light-gutter';
 import { Button } from '@stagewise/stage-ui/components/button';
 import {
@@ -18,17 +17,19 @@ import { IconPenPlusOutline18 } from '@stagewise/icons';
 import { useKartonState } from '@ui/hooks/use-karton';
 
 /**
- * Titlebar row containing the macOS traffic-light gutter and the sidebar
- * toggle button. Rendered inside the sidebar when open, and overlaid at the
- * top-left of the agent-chat panel when the sidebar is collapsed, so the
- * toggle button stays at the same screen position in both states.
+ * Titlebar row providing the macOS traffic-light gutter (plus, when the
+ * sidebar is collapsed, the "new chat" button and current chat title).
+ * Rendered inside the sidebar when open, and overlaid at the top-left of the
+ * agent-chat panel when the sidebar is collapsed, so the row keeps content
+ * clear of the traffic lights in both states.
  *
- * When the sidebar is collapsed, an additional "new chat" icon-only button
- * and the current chat title are shown inline after the toggle button.
+ * The sidebar toggle itself lives in the chat-panel header (see
+ * `SidebarToggleButton`), so it stays at the same screen position whether the
+ * sidebar is open or collapsed.
  *
  * Vertical centering is done via flexbox against `TITLEBAR_HEIGHT`, which is
  * the same constant that drives `trafficLightPosition.y` in the main process
- * — so the toggle button and the macOS traffic lights cannot drift apart.
+ * — so the row and the macOS traffic lights cannot drift apart.
  *
  * Height and the optical sub-pixel nudge are counter-scaled so they stay
  * aligned with the OS-drawn traffic lights regardless of UI zoom.
@@ -36,14 +37,12 @@ import { useKartonState } from '@ui/hooks/use-karton';
 export function SidebarTitlebarRow({
   absolute = false,
   sidebarCollapsed = false,
-  showSidebarToggle = true,
   agentTitle,
   onCreateChat,
   children,
 }: {
   absolute?: boolean;
   sidebarCollapsed?: boolean;
-  showSidebarToggle?: boolean;
   agentTitle?: string;
   onCreateChat?: () => void;
   children?: React.ReactNode;
@@ -68,11 +67,6 @@ export function SidebarTitlebarRow({
       )}
     >
       <TrafficLightGutter />
-      {showSidebarToggle && (
-        <div className="ml-0.5 shrink-0">
-          <SidebarToggleButton />
-        </div>
-      )}
       {children}
       {sidebarCollapsed && onCreateChat && (
         <Tooltip>

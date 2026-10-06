@@ -12,10 +12,6 @@ import { useEmptyAgentId } from '@ui/hooks/use-empty-agent';
 import { usePendingRemovals } from '@ui/hooks/use-pending-agent-removals';
 import { useTrack } from '@ui/hooks/use-track';
 import { EMPTY_MOUNTS } from '@shared/karton-contracts/ui';
-import { SidebarToggleButton } from '../_components/sidebar-toggle-button';
-import { ContentToggleButton } from '../_components/content-toggle-button';
-import { FileTreeToggleButton } from '../file-tree/file-tree-toggle-button';
-import { NewTabButtons } from '../_components/new-tab-buttons';
 
 type AgentChatProps = {
   topRightActions?: ReactNode;
@@ -159,7 +155,6 @@ export function AgentChat({
         <SidebarTitlebarRow
           absolute
           sidebarCollapsed
-          showSidebarToggle={false}
           agentTitle={agentTitle}
           onCreateChat={handleCreateChat}
         />
