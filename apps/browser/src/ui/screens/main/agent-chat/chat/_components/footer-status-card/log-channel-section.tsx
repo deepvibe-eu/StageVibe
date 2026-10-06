@@ -4,6 +4,7 @@ import { cn } from '@ui/utils';
 import type { MouseEvent } from 'react';
 import type { StatusCardSection } from './shared';
 import { IconBugOutline18 } from '@stagewise/icons';
+import type { TFunction } from 'i18next';
 
 export interface LogChannelDisplayEntry {
   filename: string;
@@ -15,6 +16,7 @@ export interface LogChannelDisplayEntry {
 export interface LogChannelSectionProps {
   channels: LogChannelDisplayEntry[];
   onClear?: (filename: string) => void;
+  t: TFunction<'chat'>;
 }
 
 /**
@@ -60,6 +62,7 @@ function extractMessage(obj: Record<string, unknown>, rawLine: string): string {
 export function buildLogChannelSections({
   channels,
   onClear,
+  t,
 }: LogChannelSectionProps): StatusCardSection[] {
   return channels.map((channel) => {
     const channelName = channel.filename.replace(/\.jsonl$/, '');
@@ -112,8 +115,7 @@ export function buildLogChannelSections({
             <IconBugOutline18 className="size-3 shrink-0" />
             <span className="truncate">{channelName}</span>
             <span className="shrink-0 text-subtle-foreground">
-              {channel.lineCount}{' '}
-              {channel.lineCount === 1 ? 'entry' : 'entries'}
+              {t('status.entries', { count: channel.lineCount })}
             </span>
           </div>
           {onClear && channel.lineCount > 0 && (
@@ -127,7 +129,7 @@ export function buildLogChannelSections({
                   onClear(channel.filename);
                 }}
               >
-                Clear log
+                {t('status.clearLog')}
               </Button>
             </div>
           )}

@@ -51,6 +51,35 @@
     "noSuggestions": "No suggestions found.",
     "noHistory": "No browsing history yet."
   },
+  "status": {
+    "queued": "{{count}} Queued",
+    "reorder": "Reorder queued message",
+    "sendNow": "Send now",
+    "removeFromQueue": "Remove from queue",
+    "openPlan": "Open Plan",
+    "implement": "Implement",
+    "implementing": "Implementing",
+    "clearLog": "Clear log",
+    "entries_one": "{{count}} entry",
+    "entries_other": "{{count}} entries",
+    "back": "Back",
+    "next": "Next",
+    "send": "Send",
+    "cancelQuestion": "Cancel question"
+  },
+  "validation": {
+    "required": "This field is required",
+    "invalidEmail": "Invalid email format",
+    "mustBeNumber": "Must be a number",
+    "minValue": "Min value is {{min}}",
+    "maxValue": "Max value is {{max}}",
+    "minLength": "Min length is {{minLength}}",
+    "maxLength": "Max length is {{maxLength}}",
+    "selectOption": "Please select an option",
+    "enterValue": "Please enter a value",
+    "selectAtLeastOne": "Select at least one option",
+    "otherPlaceholder": "Other (please enter)..."
+  },
   "errors": {
     "retry": "Retry",
     "configureOtherApiKeys": "Configure other API keys",

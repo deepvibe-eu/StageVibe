@@ -11,6 +11,8 @@ import { useCmdEnterTarget } from '@ui/hooks/use-cmd-enter-target';
 import { CmdEnterPriority } from '@ui/utils/cmd-enter-registry';
 import { HotkeyCombo } from '@ui/components/hotkey-combo';
 import { HotkeyActions } from '@shared/hotkeys';
+import { useTranslation } from 'react-i18next';
+import type { TFunction } from 'i18next';
 
 export type { PlanTask, TaskGroup };
 
@@ -27,6 +29,7 @@ export interface PlanSectionProps {
   plans: PlanEntry[];
   onOpenPlan: (filename: string) => void;
   onImplement: () => void;
+  t: TFunction<'chat'>;
 }
 
 function TaskRow({ task, isCurrent }: { task: PlanTask; isCurrent: boolean }) {
@@ -73,6 +76,7 @@ function PlanImplementButton({
   onImplement: () => void;
   isImplementing: boolean;
 }) {
+  const { t } = useTranslation('chat');
   const { setRef, isWinner } = useCmdEnterTarget({
     id: `plan-section-implement-${planFilename}`,
     priority: CmdEnterPriority.PLAN_SECTION,
@@ -94,7 +98,7 @@ function PlanImplementButton({
         onImplement();
       }}
     >
-      {isImplementing ? 'Implementing' : 'Implement'}
+      {isImplementing ? t('status.implementing') : t('status.implement')}
       {isWinner && (
         <HotkeyCombo
           action={HotkeyActions.CMD_ENTER}
@@ -153,6 +157,7 @@ export function buildPlanSections({
   plans,
   onOpenPlan,
   onImplement,
+  t,
 }: PlanSectionProps): StatusCardSection[] {
   return plans.map((plan) => {
     const isImplementing = plan.phase === 'implementing';
@@ -196,7 +201,7 @@ export function buildPlanSections({
                   onOpenPlan(plan.filename);
                 }}
               >
-                Open Plan
+                {t('status.openPlan')}
               </Button>
             )}
             {showImplement && (

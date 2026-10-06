@@ -6,6 +6,8 @@ import React, {
   useEffect,
 } from 'react';
 import { Button } from '@stagewise/stage-ui/components/button';
+import { useTranslation } from 'react-i18next';
+import i18n from '@ui/i18n';
 import { Input } from '@stagewise/stage-ui/components/input';
 import { Checkbox } from '@stagewise/stage-ui/components/checkbox';
 import {
@@ -56,42 +58,48 @@ function validateField(
 ): string | null {
   if (field.type === 'input') {
     const strValue = String(value ?? '').trim();
-    if (field.required && strValue === '') return 'This field is required';
+    if (field.required && strValue === '')
+      return i18n.t('chat:validation.required');
     if (
       field.inputType === 'email' &&
       strValue &&
       !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(strValue)
     )
-      return 'Invalid email format';
+      return i18n.t('chat:validation.invalidEmail');
     if (field.inputType === 'number' && strValue) {
       const num = Number(strValue);
-      if (Number.isNaN(num)) return 'Must be a number';
+      if (Number.isNaN(num)) return i18n.t('chat:validation.mustBeNumber');
       if (field.min !== undefined && num < field.min)
-        return `Min value is ${field.min}`;
+        return i18n.t('chat:validation.minValue', { min: field.min });
       if (field.max !== undefined && num > field.max)
-        return `Max value is ${field.max}`;
+        return i18n.t('chat:validation.maxValue', { max: field.max });
     }
     if (field.minLength !== undefined && strValue.length < field.minLength)
-      return `Min length is ${field.minLength}`;
+      return i18n.t('chat:validation.minLength', {
+        minLength: field.minLength,
+      });
     if (field.maxLength !== undefined && strValue.length > field.maxLength)
-      return `Max length is ${field.maxLength}`;
+      return i18n.t('chat:validation.maxLength', {
+        maxLength: field.maxLength,
+      });
   }
 
   if (field.type === 'radio-group') {
     if (field.required && (value === undefined || value === ''))
-      return 'Please select an option';
+      return i18n.t('chat:validation.selectOption');
     // Validate "Other" option: custom text must not be empty after trimming
     if (
       typeof value === 'string' &&
       value.startsWith('__other__:') &&
       value.slice('__other__:'.length).trim() === ''
     )
-      return 'Please enter a value';
+      return i18n.t('chat:validation.enterValue');
   }
 
   if (field.type === 'checkbox-group') {
     const arr = Array.isArray(value) ? value : [];
-    if (field.required && arr.length === 0) return 'Select at least one option';
+    if (field.required && arr.length === 0)
+      return i18n.t('chat:validation.selectAtLeastOne');
   }
 
   return null;
@@ -172,6 +180,7 @@ function UserQuestionForm({
     getDefaultValues(currentStepData?.fields ?? [], pendingQuestion.answers),
   );
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const { t } = useTranslation('chat');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Reset form values when step changes
@@ -350,7 +359,7 @@ function UserQuestionForm({
             size="xs"
             onClick={() => void onGoBack(pendingQuestion.id)}
           >
-            Back
+            {t('status.back')}
           </Button>
         )}
         <Button
@@ -360,7 +369,7 @@ function UserQuestionForm({
           onClick={() => void handleSubmit()}
           disabled={!isStepComplete || isSubmitting}
         >
-          {isLastStep ? 'Send' : 'Next'}
+          {isLastStep ? t('status.send') : t('status.next')}
           {submitIsWinner && (
             <HotkeyCombo
               action={HotkeyActions.CMD_ENTER}
@@ -395,6 +404,7 @@ function FieldRenderer({
   onChange: (value: QuestionAnswerValue) => void;
   onBlur?: (questionId: string, error: string | null) => void;
 }) {
+  const { t } = useTranslation('chat');
   const containerRef = useRef<HTMLDivElement>(null);
   // Refs for radio-group "Other" state — declared unconditionally to
   // satisfy the Rules of Hooks. Only used when field.type === 'radio-group'.
@@ -570,7 +580,7 @@ function FieldRenderer({
                 <Input
                   size="xs"
                   tabIndex={-1}
-                  placeholder="Other (please enter)..."
+                  placeholder={t('validation.otherPlaceholder')}
                   value={isOtherSelected ? otherText : otherTextRef.current}
                   onValueChange={(val) => onChange(`__other__:${val}`)}
                   onFocus={() => {
@@ -738,6 +748,7 @@ export function UserQuestionSection(
         <Button
           variant="ghost"
           size="icon-2xs"
+          aria-label={i18n.t('chat:status.cancelQuestion')}
           onClick={(e) => {
             e.stopPropagation();
             void props.onCancel(pendingQuestion.id);

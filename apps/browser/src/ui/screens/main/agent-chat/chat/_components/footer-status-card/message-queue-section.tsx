@@ -33,12 +33,15 @@ import {
 import { AttachmentMetadataProvider } from '@ui/hooks/use-attachment-metadata';
 import type { StatusCardSection } from './shared';
 import { getMessageText } from './shared';
+import { useTranslation } from 'react-i18next';
+import type { TFunction } from 'i18next';
 
 export interface QueuedMessagesSectionProps {
   queuedMessages: AgentMessage[];
   onRemoveMessage: (messageId: string) => void;
   onSendMessage: (messageId: string) => void;
   onMoveMessage: (messageId: string, toIndex: number) => void;
+  t: TFunction<'chat'>;
 }
 
 function SortableQueuedMessage({
@@ -54,6 +57,7 @@ function SortableQueuedMessage({
   onRemoveMessage: QueuedMessagesSectionProps['onRemoveMessage'];
   onSendMessage: QueuedMessagesSectionProps['onSendMessage'];
 }) {
+  const { t } = useTranslation('chat');
   const {
     attributes,
     listeners,
@@ -75,7 +79,7 @@ function SortableQueuedMessage({
     >
       <button
         type="button"
-        aria-label="Reorder queued message"
+        aria-label={t('status.reorder')}
         className="flex size-5 shrink-0 cursor-grab touch-none items-center justify-center text-muted-foreground hover:text-foreground active:cursor-grabbing"
         {...attributes}
         {...listeners}
@@ -112,13 +116,13 @@ function SortableQueuedMessage({
           size="xs"
           onClick={() => onSendMessage(queuedMsg.id)}
         >
-          Send now
+          {t('status.sendNow')}
           <IconArrowUpOutline24 className="size-3" />
         </Button>
         <Tooltip>
           <TooltipTrigger>
             <Button
-              aria-label="Remove from queue"
+              aria-label={t('status.removeFromQueue')}
               variant="ghost"
               size="icon-xs"
               onClick={() => onRemoveMessage(queuedMsg.id)}
@@ -126,7 +130,7 @@ function SortableQueuedMessage({
               <IconTrash2Outline24 className="size-3" />
             </Button>
           </TooltipTrigger>
-          <TooltipContent>Remove from queue</TooltipContent>
+          <TooltipContent>{t('status.removeFromQueue')}</TooltipContent>
         </Tooltip>
       </div>
     </div>
@@ -199,7 +203,7 @@ export function MessageQueueSection(
             isOpen && 'rotate-180',
           )}
         />
-        {`${props.queuedMessages.length} Queued`}
+        {props.t('status.queued', { count: props.queuedMessages.length })}
       </div>
     ),
     scrollable: true,

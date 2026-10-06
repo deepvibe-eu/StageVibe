@@ -28,6 +28,7 @@ import { getPlanUIPhases, type LivePlanData } from '@shared/plan-lifecycle';
 import { useSendImplement } from '@ui/hooks/use-send-implement';
 import { useContentCollapsed } from '@ui/screens/main/_components/content-collapsed-context';
 import { dispatchChatHistoryScroll } from '../../_lib/chat-history-scroll-event';
+import { useTranslation } from 'react-i18next';
 
 // Stable empty arrays/sets to avoid infinite loop with useSyncExternalStore
 const EMPTY_HISTORY: AgentMessage[] = [];
@@ -35,6 +36,7 @@ const EMPTY_QUEUE: (AgentMessage & { role: 'user' })[] = [];
 const EMPTY_MOUNTS_SNAPSHOT: Mount[] = [];
 
 export function StatusCard() {
+  const { t } = useTranslation('chat');
   const cardRef = useRef<HTMLDivElement>(null);
   const previousHeightRef = useRef(0);
   const [openAgentId] = useOpenAgent();
@@ -259,6 +261,7 @@ export function StatusCard() {
           onSendMessage: (messageId) => void flushQueue(openAgentId, messageId),
           onMoveMessage: (messageId, toIndex) =>
             void moveQueuedMessage(openAgentId, messageId, toIndex),
+          t,
         })
       : null;
     if (messageQueueSection) result.push(messageQueueSection);
@@ -267,6 +270,7 @@ export function StatusCard() {
       plans: ownedPlans,
       onOpenPlan: handleOpenPlan,
       onImplement: handleImplement,
+      t,
     });
     for (const section of planSections) result.push(section);
 
@@ -275,6 +279,7 @@ export function StatusCard() {
       onClear: (filename) => {
         void clearLogChannel(filename);
       },
+      t,
     });
     for (const section of logSections) result.push(section);
 
@@ -294,6 +299,7 @@ export function StatusCard() {
     submitUserQuestionStep,
     cancelUserQuestion,
     goBackUserQuestion,
+    t,
   ]);
 
   // Sync card height with CSS variable for ChatHistory padding

@@ -51,6 +51,35 @@
     "noSuggestions": "Keine Vorschläge gefunden.",
     "noHistory": "Noch kein Browserverlauf."
   },
+  "status": {
+    "queued": "{{count}} in Warteschlange",
+    "reorder": "Wartende Nachricht verschieben",
+    "sendNow": "Jetzt senden",
+    "removeFromQueue": "Aus Warteschlange entfernen",
+    "openPlan": "Plan öffnen",
+    "implement": "Umsetzen",
+    "implementing": "Wird umgesetzt",
+    "clearLog": "Log leeren",
+    "entries_one": "{{count}} Eintrag",
+    "entries_other": "{{count}} Einträge",
+    "back": "Zurück",
+    "next": "Weiter",
+    "send": "Senden",
+    "cancelQuestion": "Frage abbrechen"
+  },
+  "validation": {
+    "required": "Dieses Feld ist erforderlich",
+    "invalidEmail": "Ungültiges E-Mail-Format",
+    "mustBeNumber": "Muss eine Zahl sein",
+    "minValue": "Mindestwert ist {{min}}",
+    "maxValue": "Höchstwert ist {{max}}",
+    "minLength": "Mindestlänge ist {{minLength}}",
+    "maxLength": "Höchstlänge ist {{maxLength}}",
+    "selectOption": "Bitte wähle eine Option",
+    "enterValue": "Bitte gib einen Wert ein",
+    "selectAtLeastOne": "Wähle mindestens eine Option",
+    "otherPlaceholder": "Andere (bitte eingeben)..."
+  },
   "errors": {
     "retry": "Erneut versuchen",
     "configureOtherApiKeys": "Andere API-Schlüssel konfigurieren",
