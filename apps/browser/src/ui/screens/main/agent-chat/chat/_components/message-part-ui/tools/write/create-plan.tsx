@@ -29,6 +29,7 @@ import {
   TooltipTrigger,
 } from '@stagewise/stage-ui/components/tooltip';
 import { useContentCollapsed } from '@ui/screens/main/_components/content-collapsed-context';
+import { useTranslation } from 'react-i18next';
 
 /**
  * Dedicated tool-part UI for plan file creation / update.
@@ -42,6 +43,7 @@ import { useContentCollapsed } from '@ui/screens/main/_components/content-collap
  */
 export const CreatePlanToolPart = memo(
   function CreatePlanToolPart({ part }: { part: WritePart }) {
+    const { t } = useTranslation('tools');
     const streaming =
       part.state === 'input-streaming' || part.state === 'input-available';
     const isError = part.state === 'output-error';
@@ -51,14 +53,16 @@ export const CreatePlanToolPart = memo(
       return (
         <div className="flex h-6 w-full items-center gap-1 font-medium text-muted-foreground">
           <IconClipboardOutline18 className="size-3 shrink-0 text-primary-foreground" />
-          <span className="shimmer-text-primary text-xs">Creating plan…</span>
+          <span className="shimmer-text-primary text-xs">
+            {t('planTool.creating')}
+          </span>
         </div>
       );
     }
 
     // Error state — matches standard tool error style (muted inline text)
     if (isError) {
-      const errorText = part.errorText ?? 'Failed to create plan';
+      const errorText = part.errorText ?? t('planTool.failed');
       return (
         <div className="flex max-w-full cursor-default items-center gap-1 text-muted-foreground text-xs hover:text-foreground">
           <IconXmarkOutline18 className="size-3 shrink-0" />
@@ -94,6 +98,7 @@ export const CreatePlanToolPart = memo(
  * Extracted so Karton subscriptions only run after streaming finishes.
  */
 function CreatePlanSettledCard({ part }: { part: WritePart }) {
+  const { t } = useTranslation('tools');
   const relativePath = part.input?.path ?? '';
 
   // Plan lifecycle phase — controls whether footer buttons are shown
@@ -219,7 +224,7 @@ function CreatePlanSettledCard({ part }: { part: WritePart }) {
       {/* Footer: always show View Plan; Implement only when just created */}
       <div className="flex items-center justify-end gap-1 border-border/30 px-1.5 py-1.5 dark:border-border/70">
         <Button variant="ghost" size="xs" onClick={handleOpenPlan}>
-          Open Plan
+          {t('planTool.openPlan')}
         </Button>
         {phase === 'just-created' && (
           <Button
@@ -230,7 +235,7 @@ function CreatePlanSettledCard({ part }: { part: WritePart }) {
             onClick={handleImplement}
           >
             <span className="flex items-center gap-1.5">
-              <span>Implement</span>
+              <span>{t('planTool.implement')}</span>
               {implementIsWinner && (
                 <HotkeyCombo
                   action={HotkeyActions.CMD_ENTER}

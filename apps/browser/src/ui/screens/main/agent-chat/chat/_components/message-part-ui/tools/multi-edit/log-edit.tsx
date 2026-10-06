@@ -4,8 +4,10 @@ import { ToolPartUINotCollapsible } from '../shared/tool-part-ui-not-collapsible
 import { IconBugOutline18 } from '@stagewise/icons';
 import { stripMountPrefix } from '@ui/utils';
 import { LOGS_PREFIX } from '@stagewise/agent-core/logs';
+import { useTranslation } from 'react-i18next';
 
 export const LogEditToolPart = ({ part }: { part: MultiEditPart }) => {
+  const { t } = useTranslation('tools');
   const channelName = useMemo(() => {
     const raw = stripMountPrefix(part.input?.path ?? '');
     return raw
@@ -13,14 +15,14 @@ export const LogEditToolPart = ({ part }: { part: MultiEditPart }) => {
       .replace(/\.jsonl$/, '');
   }, [part.input?.path]);
 
-  const streamingText = `Updating ${channelName} log…`;
+  const streamingText = t('logTool.updating', { channel: channelName });
 
   const finishedText =
     part.state === 'output-available' ? (
       <span className="flex min-w-0 gap-1">
-        <span className="shrink-0 font-medium">Updated</span>
+        <span className="shrink-0 font-medium">{t('logTool.updated')}</span>
         <span className="truncate font-normal opacity-75">
-          {channelName} log
+          {t('logTool.channelLog', { channel: channelName })}
         </span>
       </span>
     ) : undefined;

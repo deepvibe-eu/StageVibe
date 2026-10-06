@@ -7,6 +7,7 @@ import { getBaseName } from '@shared/path-utils';
 import { stripMountPrefix } from '@ui/utils';
 import { ToolPartUINotCollapsible } from '../shared/tool-part-ui-not-collapsible';
 import { IconClipboardContentOutline18 } from '@stagewise/icons';
+import { useTranslation } from 'react-i18next';
 
 /**
  * Compact tool-part UI for plan checkbox toggles.
@@ -14,6 +15,7 @@ import { IconClipboardContentOutline18 } from '@stagewise/icons';
  *   "Completed 3 of 7 · Some task description…"
  */
 export const PlanCheckoffToolPart = ({ part }: { part: MultiEditPart }) => {
+  const { t } = useTranslation('tools');
   const relativePath = part.input?.path ?? '';
   const filename = useMemo(
     () => getBaseName(stripMountPrefix(relativePath)),
@@ -56,12 +58,15 @@ export const PlanCheckoffToolPart = ({ part }: { part: MultiEditPart }) => {
     return null;
   }, [part.input?.edits]);
 
-  const streamingText = 'Updating plan…';
+  const streamingText = t('planTool.updating');
 
   const finishedText = (
     <span className="flex min-w-0 gap-1">
       <span className="shrink-0 font-medium">
-        Completed {completedTasks} of {totalTasks}
+        {t('planTool.completedOf', {
+          completed: completedTasks,
+          total: totalTasks,
+        })}
       </span>
       {firstTaskText && (
         <>

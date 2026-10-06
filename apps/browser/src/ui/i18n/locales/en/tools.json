@@ -335,6 +335,21 @@
       "no": "No"
     }
   },
+  "planTool": {
+    "creating": "Creating plan…",
+    "failed": "Failed to create plan",
+    "openPlan": "Open Plan",
+    "implement": "Implement",
+    "updating": "Updating plan…",
+    "completedOf": "Completed {{completed}} of {{total}}"
+  },
+  "logTool": {
+    "creating": "Creating {{channel}} log…",
+    "enabled": "Enabled",
+    "updating": "Updating {{channel}} log…",
+    "updated": "Updated",
+    "channelLog": "{{channel}} log"
+  },
   "unknown": {
     "calling": "Calling tool {{type}}...",
     "finished": "Finished calling tool {{type}}"
