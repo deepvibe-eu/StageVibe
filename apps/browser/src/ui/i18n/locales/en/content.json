@@ -44,5 +44,17 @@
   },
   "preview": {
     "toggleChatPanel": "Toggle chat panel"
+  },
+  "device": {
+    "dimensions": "Dimensions:",
+    "viewportWidth": "Viewport width",
+    "viewportHeight": "Viewport height",
+    "rotate": "Rotate viewport",
+    "hideToolbar": "Hide device toolbar"
+  },
+  "tabPreview": {
+    "imageAlt": "Preview of the tab",
+    "copyUrlAria": "Copy current URL",
+    "copyUrl": "Copy URL"
   }
 }

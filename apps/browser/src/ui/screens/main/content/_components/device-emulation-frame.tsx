@@ -16,6 +16,7 @@ import type {
   RefObject,
 } from 'react';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { DEVICE_PRESETS, getPresetConfig } from './device-emulation-presets';
 
 const MIN_VIEWPORT_WIDTH = 240;
@@ -86,6 +87,7 @@ function EnabledDeviceEmulationFrame({
   containerRef,
   children,
 }: DeviceEmulationFrameProps & { emulation: DeviceEmulation }) {
+  const { t } = useTranslation('content');
   const setDeviceEmulation = useKartonProcedure(
     (procedures) => procedures.browser.setDeviceEmulation,
   );
@@ -264,7 +266,7 @@ function EnabledDeviceEmulationFrame({
           renderValue={(presetId) => (
             <span className="flex min-w-0 items-center gap-1.5">
               <span className="shrink-0 text-muted-foreground">
-                Dimensions:
+                {t('device.dimensions')}
               </span>
               <span className="truncate text-foreground">
                 {
@@ -281,7 +283,7 @@ function EnabledDeviceEmulationFrame({
         <div className="flex items-center gap-1">
           <Input
             type="number"
-            aria-label="Viewport width"
+            aria-label={t('device.viewportWidth')}
             value={viewportSize.width}
             debounce={250}
             onValueChange={(value) => updateDimension('width', value)}
@@ -291,7 +293,7 @@ function EnabledDeviceEmulationFrame({
           <span className="text-muted-foreground text-sm">×</span>
           <Input
             type="number"
-            aria-label="Viewport height"
+            aria-label={t('device.viewportHeight')}
             value={viewportSize.height}
             debounce={250}
             onValueChange={(value) => updateDimension('height', value)}
@@ -304,7 +306,7 @@ function EnabledDeviceEmulationFrame({
             <Button
               variant="ghost"
               size="icon-sm"
-              aria-label="Rotate viewport"
+              aria-label={t('device.rotate')}
               onClick={() =>
                 updateEmulation({
                   width: viewportSize.height,
@@ -315,7 +317,7 @@ function EnabledDeviceEmulationFrame({
               <IconReuseOutline18 className="size-4" aria-hidden="true" />
             </Button>
           </TooltipTrigger>
-          <TooltipContent>Rotate viewport</TooltipContent>
+          <TooltipContent>{t('device.rotate')}</TooltipContent>
         </Tooltip>
         <div className="ml-auto">
           <Tooltip>
@@ -323,13 +325,13 @@ function EnabledDeviceEmulationFrame({
               <Button
                 variant="ghost"
                 size="icon-sm"
-                aria-label="Hide device toolbar"
+                aria-label={t('device.hideToolbar')}
                 onClick={() => setDeviceEmulation(null, tab.id)}
               >
                 <XIcon className="size-4" />
               </Button>
             </TooltipTrigger>
-            <TooltipContent>Hide device toolbar</TooltipContent>
+            <TooltipContent>{t('device.hideToolbar')}</TooltipContent>
           </Tooltip>
         </div>
       </div>

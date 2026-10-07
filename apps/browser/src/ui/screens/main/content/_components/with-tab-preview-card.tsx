@@ -12,6 +12,7 @@ import {
 } from '@stagewise/stage-ui/components/tooltip';
 import { Button } from '@stagewise/stage-ui/components/button';
 import { IconLinkFill18 } from '@stagewise/icons';
+import { useTranslation } from 'react-i18next';
 
 export function WithTabPreviewCard({
   tabState,
@@ -22,6 +23,7 @@ export function WithTabPreviewCard({
   children: ReactElement;
   activeTabId: string | null | undefined;
 }) {
+  const { t } = useTranslation('content');
   const isActive = tabState.id === activeTabId;
   const [imageLoaded, setImageLoaded] = useState(false);
 
@@ -46,7 +48,7 @@ export function WithTabPreviewCard({
             <img
               src={tabState.screenshot ?? undefined}
               className="hidden"
-              alt="Preview of the tab"
+              alt={t('tabPreview.imageAlt')}
               onLoad={() => setImageLoaded(true)}
               onError={() => setImageLoaded(false)}
             />
@@ -55,7 +57,7 @@ export function WithTabPreviewCard({
                 <img
                   src={tabState.screenshot ?? undefined}
                   className="max-h-36 max-w-full object-contain"
-                  alt="Preview of the tab"
+                  alt={t('tabPreview.imageAlt')}
                 />
               </div>
             )}
@@ -71,13 +73,13 @@ export function WithTabPreviewCard({
                 <Button
                   variant="ghost"
                   size="icon-xs"
-                  aria-label="Copy current URL"
+                  aria-label={t('tabPreview.copyUrlAria')}
                   onClick={() => navigator.clipboard.writeText(tabState.url)}
                 >
                   <IconLinkFill18 className="size-3.5" />
                 </Button>
               </TooltipTrigger>
-              <TooltipContent>Copy URL</TooltipContent>
+              <TooltipContent>{t('tabPreview.copyUrl')}</TooltipContent>
             </Tooltip>
           </div>
         </div>
