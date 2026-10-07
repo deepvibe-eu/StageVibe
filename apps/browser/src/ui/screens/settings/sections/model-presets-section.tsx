@@ -80,6 +80,7 @@ import {
 } from '@ui/utils/model-thinking';
 import { cn } from '@ui/utils';
 import { getModelAlias } from '@shared/available-models';
+import { useTranslation } from 'react-i18next';
 
 enablePatches();
 
@@ -174,6 +175,7 @@ function SortableModelItem({
   thinkingDefaultOptions: ModelThinkingDefaultOptions | undefined;
   effectiveThinkingOverride?: ModelThinkingOverride;
 }) {
+  const { t } = useTranslation('settings');
   const {
     attributes,
     listeners,
@@ -241,7 +243,7 @@ function SortableModelItem({
         {!isValid && (
           <span className="flex shrink-0 items-center gap-0.5 text-2xs text-warning-foreground">
             <IconTriangleWarningOutline18 className="size-3" />
-            Invalid
+            {t('modelPresets.invalid')}
           </span>
         )}
         {canThink && thinkingDisplay && (
@@ -298,6 +300,7 @@ function ModelPickerButton({
   onPick: (entry: ModelSelectorEntry) => void;
   excludeIds: Set<string>;
 }) {
+  const { t } = useTranslation('settings');
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState('');
 
@@ -392,17 +395,22 @@ function ModelPickerButton({
     >
       <ComboboxBase.Trigger className="flex w-full items-center justify-center gap-1 rounded-md border border-derived border-dashed px-2 py-1 text-muted-foreground text-xs transition-colors hover:bg-surface hover:text-foreground">
         <IconPlusOutline18 className="size-3" />
-        Add
+        {t('modelPresets.add')}
       </ComboboxBase.Trigger>
       <ComboboxContent side="bottom" align="start" sideOffset={4} size="xs">
         <div className="mb-1 rounded-md">
-          <ComboboxInput size="xs" placeholder="Search…" />
+          <ComboboxInput
+            size="xs"
+            placeholder={t('modelPresets.searchPlaceholder')}
+          />
         </div>
         <ComboboxList>
           <div className="scrollbar-subtle max-h-48 overflow-y-auto">
             {grouped.length === 0 && (
               <div className="px-2 py-1.5 text-muted-foreground text-xs">
-                {query.trim() === '' ? 'No models available' : 'No results'}
+                {query.trim() === ''
+                  ? t('modelPresets.noModelsAvailable')
+                  : t('modelPresets.noResults')}
               </div>
             )}
             {grouped.map((group) => (
@@ -447,6 +455,7 @@ function InlineThinkingConfig({
   onChange: (override: ModelThinkingOverride) => void;
   onReset: () => void;
 }) {
+  const { t } = useTranslation('settings');
   const display = getModelThinkingDisplayState(
     model,
     effectiveOverride ?? override,
@@ -468,7 +477,9 @@ function InlineThinkingConfig({
     <div className="space-y-2">
       <div className="flex items-center gap-1.5">
         <IconBrainOutline18 className="size-3 text-muted-foreground" />
-        <span className="text-2xs text-muted-foreground">Thinking</span>
+        <span className="text-2xs text-muted-foreground">
+          {t('modelPresets.thinking')}
+        </span>
       </div>
       <RadioGroup
         value={display.enabled ? display.value : OFF_VALUE}
@@ -495,7 +506,7 @@ function InlineThinkingConfig({
       >
         <RadioLabel key={OFF_VALUE} size="xs">
           <Radio value={OFF_VALUE} size="xs" />
-          <span>Off</span>
+          <span>{t('modelPresets.off')}</span>
         </RadioLabel>
         {enabledOptions.map((option) => (
           <RadioLabel key={option.value} size="xs">
@@ -513,7 +524,7 @@ function InlineThinkingConfig({
           className="text-2xs text-muted-foreground hover:text-foreground"
           onClick={onReset}
         >
-          Reset to default
+          {t('modelPresets.resetToDefault')}
         </button>
       )}
     </div>
@@ -533,6 +544,7 @@ function useModelListItems(
   entries: ModelSelectorEntry[],
   preferences: UserPreferences,
 ) {
+  const { t } = useTranslation('settings');
   const instanceMap = useMemo(() => {
     const map = new Map<string, ProviderInstance>();
     for (const inst of preferences.providerInstances ?? []) {
@@ -585,7 +597,7 @@ function useModelListItems(
           entry,
           display: display ?? {
             displayName: entry.modelId,
-            instanceName: 'Unknown',
+            instanceName: t('modelPresets.unknown'),
           },
           valid,
           thinkingModel,
@@ -593,7 +605,7 @@ function useModelListItems(
           effectiveThinkingOverride,
         };
       }),
-    [modelEntries, entries, preferences, instanceMap],
+    [modelEntries, entries, preferences, instanceMap, t],
   );
 
   const excludeIds = useMemo(
@@ -771,6 +783,7 @@ function UtilityModelList({
   label: string;
   description: string;
 }) {
+  const { t } = useTranslation('settings');
   const preferences = useKartonState((s) => s.preferences);
   const userAccount = useKartonState((s) => s.userAccount);
   const updatePreferences = useKartonProcedure((p) => p.preferences.update);
@@ -815,7 +828,7 @@ function UtilityModelList({
       onChange={handleChange}
       entries={entries}
       preferences={preferences}
-      emptyMessage="No model configured, uses main chat model."
+      emptyMessage={t('modelPresets.utilityEmpty')}
     />
   );
 }
@@ -837,6 +850,7 @@ function PresetCard({
   onEdit: () => void;
   onDelete: () => void;
 }) {
+  const { t } = useTranslation('settings');
   const mainModel = preset.models[0];
   const mainDisplay = mainModel
     ? resolveModelDisplay(
@@ -873,23 +887,25 @@ function PresetCard({
           {!mainValid && (
             <span className="flex shrink-0 items-center gap-0.5 text-2xs text-warning-foreground">
               <IconTriangleWarningOutline18 className="size-3" />
-              Invalid model
+              {t('modelPresets.invalidModel')}
             </span>
           )}
         </div>
         <div className="flex items-center gap-2 text-muted-foreground text-xs">
           <span className="truncate">
-            {mainDisplay?.displayName ?? mainModel?.modelId ?? 'No model'}
+            {mainDisplay?.displayName ??
+              mainModel?.modelId ??
+              t('modelPresets.noModel')}
           </span>
           {fallbackCount > 0 && (
             <>
               <span className="text-muted-foreground/50">·</span>
               <span>
-                {fallbackCount} fallback{fallbackCount === 1 ? '' : 's'}
+                {t('modelPresets.fallbackCount', { count: fallbackCount })}
               </span>
               {validFallbacks < fallbackCount && (
                 <span className="text-warning-foreground">
-                  ({validFallbacks} valid)
+                  {t('modelPresets.validCount', { count: validFallbacks })}
                 </span>
               )}
             </>
@@ -897,7 +913,9 @@ function PresetCard({
           {thinkingLabel && (
             <>
               <span className="text-muted-foreground/50">·</span>
-              <span>Thinking: {thinkingLabel}</span>
+              <span>
+                {t('modelPresets.thinkingLabel', { value: thinkingLabel })}
+              </span>
             </>
           )}
         </div>
@@ -941,6 +959,7 @@ function PresetEditorDialog({
   utilityEntries: ModelSelectorEntry[];
   preferences: UserPreferences;
 }) {
+  const { t } = useTranslation('settings');
   const isEdit = !!preset;
   const [name, setName] = useState(preset?.name ?? '');
   const [models, setModels] = useState<PresetModelEntry[]>(
@@ -979,60 +998,72 @@ function PresetEditorDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-lg">
         <DialogHeader>
-          <DialogTitle>{isEdit ? 'Edit preset' : 'New preset'}</DialogTitle>
+          <DialogTitle>
+            {isEdit
+              ? t('modelPresets.editor.editTitle')
+              : t('modelPresets.editor.newTitle')}
+          </DialogTitle>
           <DialogDescription>
             {isEdit
-              ? 'Update this model configuration preset.'
-              : 'Create a named model configuration for one-click switching.'}
+              ? t('modelPresets.editor.editDescription')
+              : t('modelPresets.editor.newDescription')}
           </DialogDescription>
         </DialogHeader>
 
         <div className="max-h-[60vh] space-y-4 overflow-y-auto py-2">
           {/* Name */}
           <div className="space-y-1.5">
-            <span className="font-medium text-foreground text-sm">Name</span>
+            <span className="font-medium text-foreground text-sm">
+              {t('modelPresets.editor.name')}
+            </span>
             <Input
               value={name}
               onValueChange={(val) => setName(val)}
-              placeholder="e.g. Fast coding, Deep reasoning"
+              placeholder={t('modelPresets.editor.namePlaceholder')}
               size="sm"
             />
           </div>
 
           {/* Models (drag-and-drop, first = main, rest = fallbacks) */}
           <ModelList
-            label="Models"
-            description="Drag to reorder. First model is the main model; the rest are fallbacks. Click the brain icon to configure thinking per model."
+            label={t('modelPresets.editor.modelsTitle')}
+            description={t('modelPresets.editor.modelsDescription')}
             modelEntries={models}
             onChange={setModels}
             entries={entries}
             preferences={preferences}
-            itemLabel={(i) => (i === 0 ? 'Main' : `Fallback ${i}`)}
+            itemLabel={(i) =>
+              i === 0
+                ? t('modelPresets.editor.main')
+                : t('modelPresets.editor.fallback', { index: i })
+            }
           />
 
           {/* Per-preset utility model lists */}
           <div className="space-y-3 border-derived border-t pt-3">
             <ModelList
-              label="Title generation"
-              description="Models used for title generation when this preset is active. If empty, the main model is used."
+              label={t('modelPresets.editor.titleGeneration')}
+              description={t('modelPresets.editor.titleGenerationDescription')}
               modelEntries={titleGeneration ?? []}
               onChange={(next) =>
                 setTitleGeneration(next.length > 0 ? next : undefined)
               }
               entries={utilityEntries}
               preferences={preferences}
-              emptyMessage="Uses main model."
+              emptyMessage={t('modelPresets.editor.usesMainModel')}
             />
             <ModelList
-              label="Context compression"
-              description="Models used for context compression when this preset is active. If empty, the main model is used."
+              label={t('modelPresets.editor.contextCompression')}
+              description={t(
+                'modelPresets.editor.contextCompressionDescription',
+              )}
               modelEntries={contextCompression ?? []}
               onChange={(next) =>
                 setContextCompression(next.length > 0 ? next : undefined)
               }
               entries={utilityEntries}
               preferences={preferences}
-              emptyMessage="Uses main model."
+              emptyMessage={t('modelPresets.editor.usesMainModel')}
             />
           </div>
         </div>
@@ -1043,14 +1074,16 @@ function PresetEditorDialog({
             size="sm"
             onClick={() => onOpenChange?.(false)}
           >
-            Cancel
+            {t('modelPresets.editor.cancel')}
           </Button>
           <Button
             size="sm"
             onClick={handleSave}
             disabled={!name.trim() || models.length === 0}
           >
-            {isEdit ? 'Save changes' : 'Create preset'}
+            {isEdit
+              ? t('modelPresets.editor.saveChanges')
+              : t('modelPresets.editor.createPreset')}
           </Button>
         </DialogFooter>
       </DialogContent>
@@ -1063,6 +1096,7 @@ function PresetEditorDialog({
 // ---------------------------------------------------------------------------
 
 export function ModelPresetsSection() {
+  const { t } = useTranslation('settings');
   const preferences = useKartonState((s) => s.preferences);
   const userAccount = useKartonState((s) => s.userAccount);
   const updatePreferences = useKartonProcedure((p) => p.preferences.update);
@@ -1152,25 +1186,23 @@ export function ModelPresetsSection() {
       <section className="space-y-4">
         <div>
           <h2 className="font-medium text-foreground text-lg">
-            Default utility models
+            {t('modelPresets.defaultTitle')}
           </h2>
           <p className="text-muted-foreground text-sm">
-            These models are used for background tasks when no preset-specific
-            configuration is set. The agent tries each model in order until one
-            succeeds.
+            {t('modelPresets.defaultDescription')}
           </p>
         </div>
 
         <div className="space-y-6">
           <UtilityModelList
             task="titleGeneration"
-            label="Title generation"
-            description="Models used to generate conversation titles."
+            label={t('modelPresets.titleGeneration')}
+            description={t('modelPresets.titleGenerationDescription')}
           />
           <UtilityModelList
             task="contextCompression"
-            label="Context compression"
-            description="Models used to compress conversation history."
+            label={t('modelPresets.contextCompression')}
+            description={t('modelPresets.contextCompressionDescription')}
           />
         </div>
       </section>
@@ -1179,15 +1211,16 @@ export function ModelPresetsSection() {
       <section className="space-y-4">
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="font-medium text-foreground text-lg">Presets</h2>
+            <h2 className="font-medium text-foreground text-lg">
+              {t('modelPresets.presetsTitle')}
+            </h2>
             <p className="text-muted-foreground text-sm">
-              Named model configurations for one-click switching. Shown at the
-              top of the model selector.
+              {t('modelPresets.presetsDescription')}
             </p>
           </div>
           <Button variant="secondary" size="sm" onClick={handleAddPreset}>
             <IconPlusOutline18 className="size-3.5" />
-            Add preset
+            {t('modelPresets.addPreset')}
           </Button>
         </div>
 
@@ -1207,10 +1240,10 @@ export function ModelPresetsSection() {
         ) : (
           <div className="rounded-lg border border-derived border-dashed px-4 py-6 text-center">
             <p className="text-muted-foreground text-sm">
-              No presets configured.
+              {t('modelPresets.noPresets')}
             </p>
             <p className="mt-1 text-muted-foreground text-xs">
-              Create a preset to quickly switch between model configurations.
+              {t('modelPresets.noPresetsHint')}
             </p>
           </div>
         )}
