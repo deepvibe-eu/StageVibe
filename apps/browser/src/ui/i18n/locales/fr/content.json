@@ -1,0 +1,144 @@
+{
+  "nav": {
+    "back": "Retour",
+    "forward": "Suivant",
+    "reload": "Recharger",
+    "stopLoading": "Arrêter le chargement"
+  },
+  "zoom": {
+    "out": "Zoom arrière",
+    "in": "Zoom avant",
+    "reset": "Réinitialiser le zoom"
+  },
+  "colorScheme": {
+    "toggle": "Basculer le schéma de couleurs",
+    "current": "Actuel :",
+    "aria": "Basculer le schéma de couleurs, actuel : {{current}}",
+    "light": "Clair",
+    "dark": "Sombre",
+    "system": "Système ({{mode}})"
+  },
+  "search": {
+    "placeholder": "Rechercher dans l'onglet…",
+    "previousAria": "Résultat de recherche précédent",
+    "previousMatch": "Correspondance précédente",
+    "nextAria": "Résultat de recherche suivant",
+    "nextMatch": "Correspondance suivante",
+    "closeAria": "Fermer la recherche",
+    "close": "Fermer la recherche"
+  },
+  "basicAuth": {
+    "signInRequired": "Connexion requise",
+    "realm": "Domaine : {{realm}}",
+    "username": "Nom d'utilisateur",
+    "usernamePlaceholder": "Entrez le nom d'utilisateur",
+    "password": "Mot de passe",
+    "passwordPlaceholder": "Entrez le mot de passe",
+    "signIn": "Se connecter"
+  },
+  "unsavedClose": {
+    "title": "Modifications de fichier non enregistrées",
+    "description": "{{path}} a des modifications non enregistrées. Que doit-il se passer avant de le fermer ?",
+    "saveAndClose": "Enregistrer et fermer",
+    "closeWithoutSave": "Fermer sans enregistrer"
+  },
+  "preview": {
+    "toggleChatPanel": "Afficher/masquer le panneau de conversation"
+  },
+  "device": {
+    "dimensions": "Dimensions :",
+    "viewportWidth": "Largeur de la fenêtre",
+    "viewportHeight": "Hauteur de la fenêtre",
+    "rotate": "Rotation de la fenêtre",
+    "hideToolbar": "Masquer la barre d'outils de l'appareil"
+  },
+  "tabPreview": {
+    "imageAlt": "Aperçu de l'onglet",
+    "copyUrlAria": "Copier l'URL actuelle",
+    "copyUrl": "Copier l'URL"
+  },
+  "watcher": {
+    "showActive": "Afficher les watchers actifs",
+    "title": "Watchers",
+    "open": "(Ouvrir)",
+    "agentChat": "Conversation de l'agent",
+    "showChatFor": "Afficher la conversation pour {{title}}",
+    "showChat": "Afficher la conversation",
+    "stopTitle": "Arrêter {{title}}",
+    "stopWatcher": "Arrêter le watcher",
+    "commandUnavailable": "Commande non disponible",
+    "copyScriptFor": "Copier le script pour {{title}}",
+    "copiedScriptFor": "Script copié pour {{title}}",
+    "copied": "Copié",
+    "copyScript": "Copier le script",
+    "running": "en cours {{duration}}",
+    "expiresIn": "expire dans {{duration}}",
+    "expiring": "expiration"
+  },
+  "servers": {
+    "showLocal": "Afficher les serveurs locaux",
+    "title": "Serveurs locaux",
+    "open": "(Ouvrir)",
+    "global": "Global",
+    "agentChat": "Conversation de l'agent",
+    "startedByAgent": "Démarré par un shell d'agent",
+    "showChat": "Afficher la conversation",
+    "showTerminal": "Afficher le terminal",
+    "stopProcess": "Arrêter le processus",
+    "stopProcessShortcut": "Arrêter le processus (Ctrl+C)",
+    "openInBrowser": "Ouvrir {{endpoint}} dans le navigateur"
+  },
+  "breadcrumbs": {
+    "preview": "Aperçu",
+    "home": "Accueil"
+  },
+  "omniboxSuggestions": {
+    "runningLocally": "En cours d'exécution localement",
+    "searchOrEnterUrl": "Rechercher ou entrer une URL",
+    "mostVisited": "Les plus visités",
+    "frequentSearches": "Recherches fréquentes",
+    "reloadCurrentPage": "Recharger la page actuelle",
+    "open": "Ouvrir {{input}}",
+    "searchFor": "Rechercher « {{input}} » avec {{engine}}",
+    "recentPages": "Pages récentes",
+    "recentSearches": "Recherches récentes"
+  },
+  "permissions": {
+    "desc": {
+      "mediaCameraMic": "veut utiliser votre caméra et microphone",
+      "mediaCamera": "veut utiliser votre caméra",
+      "mediaMic": "veut utiliser votre microphone",
+      "mediaGeneric": "veut accéder aux médias",
+      "geolocation": "veut connaître votre position",
+      "notifications": "veut envoyer des notifications",
+      "fullscreen": "veut passer en plein écran",
+      "clipboardRead": "veut lire votre presse-papiers",
+      "displayCapture": "veut partager votre écran",
+      "midi": "veut accéder aux appareils MIDI",
+      "idleDetection": "veut détecter quand vous êtes inactif",
+      "speakerSelection": "veut sélectionner la sortie audio",
+      "storageAccess": "veut accéder au stockage",
+      "bluetooth": "veut se connecter à un appareil Bluetooth",
+      "hid": "veut se connecter à un appareil HID",
+      "serial": "veut se connecter à un port série",
+      "usb": "veut se connecter à un appareil USB",
+      "bluetoothPairing": "veut s'appairer avec un appareil Bluetooth",
+      "generic": "demande l'accès"
+    },
+    "unknownDevice": "Appareil inconnu",
+    "hidDevice": "Appareil HID",
+    "serialPort": "Port série",
+    "usbDevice": "Appareil USB",
+    "searchingDevices": "Recherche d'appareils…",
+    "selectDevice": "Sélectionner un appareil…",
+    "enterPin": "Entrer le code PIN d'appairage",
+    "pin": "PIN :",
+    "allow": "Autoriser",
+    "block": "Bloquer",
+    "always": "Toujours",
+    "title": "Demandes de permission",
+    "requested_one": "{{count}} permission demandée",
+    "requested_other": "{{count}} permissions demandées",
+    "noPending": "Aucune demande en attente"
+  }
+}

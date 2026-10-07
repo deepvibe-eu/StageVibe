@@ -1,0 +1,140 @@
+{
+  "errorBoundary": {
+    "title": "出现问题",
+    "description": "发生了意外错误。请重新加载应用。",
+    "reload": "重新加载"
+  },
+  "fileMenu": {
+    "openInFileView": "在文件视图中打开",
+    "revealIn": "在 {{manager}} 中显示"
+  },
+  "openIn": {
+    "label": "在 {{target}} 中打开",
+    "menu": "在…中打开"
+  },
+  "mermaid": {
+    "loading": "正在加载图表…",
+    "errorPrefix": "Mermaid 错误：{{error}}",
+    "showCode": "显示代码",
+    "chart": "Mermaid 图表",
+    "openInTab": "在标签页中打开 Mermaid 图表"
+  },
+  "releaseNotes": {
+    "title": "新增内容",
+    "gotIt": "知道了"
+  },
+  "idePicker": {
+    "group": "打开文件在：",
+    "placeholder": "打开文件在…"
+  },
+  "tutorial": {
+    "close": "关闭教程",
+    "back": "返回",
+    "okay": "好的",
+    "finish": "完成",
+    "next": "下一步"
+  },
+  "codingPlan": {
+    "connectionFailed": "连接失败。请重试。",
+    "disconnectionFailed": "断开连接失败。请重试。",
+    "connected": "已连接",
+    "apiKeyLabel": "{{plan}} API 密钥",
+    "enterApiKey": "输入 API 密钥…",
+    "disconnecting": "正在断开…",
+    "disconnect": "断开",
+    "connecting": "正在连接…",
+    "connect": "连接",
+    "createKey": "创建密钥"
+  },
+  "signIn": {
+    "lastUsed": "上次使用",
+    "title": "身份验证",
+    "description": "选择登录方式以继续。",
+    "providerGoogle": "Google",
+    "providerGithub": "GitHub",
+    "providerEmail": "邮箱",
+    "providerOther": "您的提供商",
+    "socialFailed": "社交登录完成失败。",
+    "emailFailed": "邮箱登录完成失败。",
+    "securityNotReady": "安全验证尚未就绪。请稍等。",
+    "securityFailed": "安全验证失败。请重试。",
+    "sendCodeFailed": "发送验证码失败。",
+    "verifyCodeFailed": "验证代码失败。",
+    "enterEmail": "输入您的邮箱以接收验证码。",
+    "sentCode": "我们已向 {{email}} 发送了代码。请在下方输入。",
+    "waitingBrowser": "请在浏览器中完成与 {{provider}} 的登录，然后返回 StageVibe。",
+    "continueGoogle": "继续使用 Google",
+    "continueGithub": "继续使用 GitHub",
+    "continueEmail": "继续使用邮箱",
+    "or": "或",
+    "useApiKeys": "使用您自己的 API 密钥",
+    "useSubscription": "使用现有订阅",
+    "loading": "正在加载…",
+    "sendCode": "发送代码",
+    "back": "返回登录选项",
+    "waitingSignIn": "等待您在浏览器中完成登录…",
+    "verifying": "正在验证…",
+    "verify": "验证",
+    "useDifferentEmail": "使用其他邮箱"
+  },
+  "domBadge": {
+    "elementScreenshot": "元素截图",
+    "nodeType": "节点类型",
+    "size": "大小",
+    "text": "文本",
+    "xpath": "XPath",
+    "page": "页面",
+    "selectedElement": "已选元素：{{fileName}}"
+  },
+  "textclip": {
+    "copyToClipboard": "复制到剪贴板",
+    "pastedText": "粘贴的文本",
+    "characters": "{{count}} 个字符",
+    "useRawText": "使用原始文本"
+  },
+  "mermaidEditor": {
+    "viewDiagram": "查看图表",
+    "view": "查看",
+    "sideBySide": "并排",
+    "split": "分割",
+    "editSource": "编辑源码",
+    "edit": "编辑"
+  },
+  "thinking": {
+    "title": "思考",
+    "close": "关闭",
+    "enable": "启用思考",
+    "current": "当前：{{label}}",
+    "effort": "努力程度",
+    "defaultLabel": "默认：{{label}}",
+    "default": "默认",
+    "reset": "重置为默认"
+  },
+  "diff": {
+    "label": "差异"
+  },
+  "markdownEditor": {
+    "saving": "正在保存…",
+    "saved": "已保存",
+    "saveFailed": "保存失败"
+  },
+  "table": {
+    "copyAsCsv": "复制表格为 CSV",
+    "downloadAsCsv": "下载为 CSV"
+  },
+  "attachmentLink": {
+    "copied": "已复制",
+    "copy": "复制",
+    "openAria": "打开 {{target}}",
+    "clickToOpen": "点击在文件视图中打开",
+    "clickToOpenReadOnly": "点击打开（只读）"
+  },
+  "streamdown": {
+    "openInContentTab": "在内容标签页中打开",
+    "openInBrowser": "在浏览器中打开",
+    "downloadImage": "下载图片",
+    "image": "图片",
+    "imageTitle": "图片",
+    "openImageAria": "在标签页中打开 {{name}}"
+  }
+}

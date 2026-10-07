@@ -1,0 +1,417 @@
+{
+  "copy": {
+    "renaming": "Переименование",
+    "moving": "Перемещение",
+    "copying": "Копирование",
+    "renamed": "Переименовано",
+    "moved": "Перемещено",
+    "copied": "Скопировано"
+  },
+  "delete": {
+    "errorPath": "Ошибка удаления {{path}}",
+    "errorFile": "Ошибка удаления файла",
+    "deleted": "(удалено)"
+  },
+  "mkdir": {
+    "creatingPath": "Создание {{path}}...",
+    "creating": "Создание каталога...",
+    "created": "Создано"
+  },
+  "read": {
+    "enabling": "Включение {{name}}...",
+    "enabled": "Включено",
+    "readingLog": "Чтение журнала {{name}}…",
+    "readLog": "Прочитать журнал",
+    "readingShellOutput": "Чтение вывода оболочки...",
+    "readShellOutput": "Прочитать вывод оболочки",
+    "readingMemory": "Чтение памяти {{label}}...",
+    "readMemory": "Прочитать память",
+    "memoryOf": " из {{agentId}}",
+    "memoryIndex": "индекс",
+    "memoryFile": "файл",
+    "memoryMetadata": "метаданные",
+    "memoryContent": "содержимое",
+    "readingPath": "Чтение {{path}}...",
+    "readingFile": "Чтение файла...",
+    "read": "Прочитать"
+  },
+  "ls": {
+    "listingPath": "Список {{path}}...",
+    "listing": "Список каталога...",
+    "listed": "Перечислено"
+  },
+  "glob": {
+    "searchingFor": "Поиск {{pattern}}...",
+    "searchingFiles": "Поиск файлов...",
+    "foundLabel": "Найдено",
+    "fileCount_one": "{{count}} файл",
+    "fileCount_other": "{{count}} файлов",
+    "matching": " соответствующих «{{pattern}}»"
+  },
+  "grep": {
+    "searchingFor": "Поиск {{query}}...",
+    "searchingGrep": "Поиск с grep...",
+    "foundLabel": "Найдено",
+    "resultCount_one": "{{count}} результат",
+    "resultCount_other": "{{count}} результатов",
+    "forQuery": " для «{{query}}»"
+  },
+  "write": {
+    "expandDiff": "Развернуть diff кода",
+    "collapseDiff": "Свернуть diff кода",
+    "openFile": "Открыть файл",
+    "openFileTooltip": "Нажмите, чтобы увидеть полный файл",
+    "errorPath": "Ошибка редактирования {{path}}",
+    "errorFile": "Ошибка редактирования файла",
+    "created": "(новый)"
+  },
+  "multiEdit": {
+    "expandDiff": "Развернуть diff кода",
+    "collapseDiff": "Свернуть diff кода",
+    "openFile": "Открыть файл",
+    "openFileTooltip": "Нажмите, чтобы увидеть полный файл",
+    "errorPath": "Ошибка редактирования {{path}}",
+    "errorFile": "Ошибка редактирования файла"
+  },
+  "shell": {
+    "openingTerminal": "Открытие нового терминала…",
+    "closingTerminal": "Закрытие терминала…",
+    "openedTerminal": "Открыт новый терминал",
+    "closedTerminal": "Терминал закрыт",
+    "runCommand": "Выполнить команду",
+    "skippedCommand": "Пропущенная команда",
+    "skipped": "(пропущено)",
+    "errorRunning": "Ошибка выполнения: {{command}}",
+    "sendingInput": "Отправка ввода",
+    "running": "Выполнение {{command}}",
+    "cancel": "Отмена",
+    "couldNotClose": "Не удалось закрыть терминал",
+    "sentInput": "Ввод отправлен",
+    "ranCommand": "Команда выполнена",
+    "statusTimedOut": "время вышло",
+    "statusSessionExited": "сеанс завершён",
+    "statusExitZero": "выход 0",
+    "statusExit": "выход {{code}}",
+    "statusKilled": "убит",
+    "commandStatus": "Команда {{status}}",
+    "closeTerminal": "закрыть терминал {{sessionId}}",
+    "empty": "(пусто)"
+  },
+  "shellApproval": {
+    "skip": "Пропустить",
+    "smartAllow": "Умное разрешение",
+    "smartAllowTitle": "Спрашивать только для рискованных команд",
+    "smartAllowDescription": "Переключает этого агента на умное одобрение. Быстрый классификатор решает за каждую команду — деструктивные команды или команды системного уровня по-прежнему требуют вашего одобрения.",
+    "allow": "Разрешить"
+  },
+  "console": {
+    "errorReading": "Ошибка чтения журналов консоли",
+    "waiting": "Ожидание {{delayMs}}мс перед чтением журналов...",
+    "waitingFilter": "Ожидание {{delayMs}}мс перед чтением журналов (фильтр: «{{filter}}»)...",
+    "readingFiltered": "Чтение журналов с фильтром «{{filter}}»...",
+    "reading": "Чтение журналов консоли...",
+    "noLogs": "Журналы не найдены",
+    "noLogsMatching": "Журналы не найдены по фильтру «{{filter}}»",
+    "readLabel": "Прочитать",
+    "logCount_one": "{{count}} журнал консоли",
+    "logCount_other": "{{count}} журналов консоли",
+    "from": " от {{hostname}}",
+    "readingFrom": "Чтение журналов консоли от {{hostname}}..."
+  },
+  "sandbox": {
+    "errorWithExplanation": "Ошибка: {{explanation}}",
+    "errorGeneric": "Ошибка при выполнении скрипта",
+    "script": "Скрипт",
+    "error": "Ошибка",
+    "result": "Результат",
+    "loading": "Загрузка...",
+    "preposition": {
+      "on": "на",
+      "from": "из",
+      "of": "из"
+    },
+    "methods": {
+      "cssEnable": {
+        "inProgress": "Включение проверки CSS",
+        "completed": "Проверка CSS включена"
+      },
+      "cssGetComputedStyleForNode": {
+        "inProgress": "Чтение вычисленных стилей",
+        "completed": "Вычисленные стили прочитаны"
+      },
+      "cssGetMatchedStylesForNode": {
+        "inProgress": "Чтение CSS-правил",
+        "completed": "CSS-правила прочитаны"
+      },
+      "cssGetInlineStylesForNode": {
+        "inProgress": "Чтение встроенных стилей",
+        "completed": "Встроенные стили прочитаны"
+      },
+      "cssGetStyleSheetText": {
+        "inProgress": "Чтение таблицы стилей",
+        "completed": "Таблица стилей прочитана"
+      },
+      "domEnable": {
+        "inProgress": "Включение проверки DOM",
+        "completed": "Проверка DOM включена"
+      },
+      "domGetDocument": {
+        "inProgress": "Чтение документа",
+        "completed": "Документ прочитан"
+      },
+      "domQuerySelector": {
+        "inProgress": "Запрос элемента",
+        "completed": "Элемент запрошен"
+      },
+      "domQuerySelectorAll": {
+        "inProgress": "Запрос элементов",
+        "completed": "Элементы запрошены"
+      },
+      "domGetOuterHTML": {
+        "inProgress": "Чтение HTML элемента",
+        "completed": "HTML элемента прочитан"
+      },
+      "domResolveNode": {
+        "inProgress": "Разрешение элемента",
+        "completed": "Элемент разрешён"
+      },
+      "domGetBoxModel": {
+        "inProgress": "Чтение блочной модели",
+        "completed": "Блочная модель прочитана"
+      },
+      "runtimeEnable": {
+        "inProgress": "Включение runtime",
+        "completed": "Runtime включён"
+      },
+      "runtimeEvaluate": {
+        "inProgress": "Выполнение скрипта",
+        "completed": "Скрипт выполнен"
+      },
+      "runtimeCallFunctionOn": {
+        "inProgress": "Вызов функции",
+        "completed": "Функция вызвана"
+      },
+      "runtimeGetProperties": {
+        "inProgress": "Чтение свойств",
+        "completed": "Свойства прочитаны"
+      },
+      "pageEnable": {
+        "inProgress": "Включение проверки страницы",
+        "completed": "Проверка страницы включена"
+      },
+      "pageGetFrameTree": {
+        "inProgress": "Чтение фреймов",
+        "completed": "Фреймы прочитаны"
+      },
+      "pageCaptureScreenshot": {
+        "inProgress": "Создание скриншота",
+        "completed": "Скриншот сделан"
+      },
+      "networkEnable": {
+        "inProgress": "Включение проверки сети",
+        "completed": "Проверка сети включена"
+      },
+      "networkGetResponseBody": {
+        "inProgress": "Чтение ответа",
+        "completed": "Ответ прочитан"
+      }
+    },
+    "fallbackInspect": {
+      "inProgress": "Проверка {{domain}}",
+      "completed": "Проверен {{domain}}"
+    },
+    "fallbackScript": {
+      "inProgress": "Выполнение скрипта",
+      "completed": "Скрипт выполнен"
+    },
+    "runningScript": "Выполнение скрипта...",
+    "ranScript": "Скрипт выполнен",
+    "parsingAttachment": "Разбор вложения...",
+    "parsedAttachment": "Вложение разобрано",
+    "parsingAttachments_one": "Разбор {{count}} вложения...",
+    "parsingAttachments_other": "Разбор {{count}} вложений...",
+    "parsedAttachments_one": "Разобрано {{count}} вложение",
+    "parsedAttachments_other": "Разобрано {{count}} вложений",
+    "preparingAttachment": "Подготовка вложения...",
+    "preparedAttachment": "Вложение подготовлено",
+    "preparingAttachments_one": "Подготовка {{count}} вложения...",
+    "preparingAttachments_other": "Подготовка {{count}} вложений...",
+    "preparedAttachments_one": "Подготовлено {{count}} вложение",
+    "preparedAttachments_other": "Подготовлено {{count}} вложений",
+    "readingAttachment": "Чтение вложения...",
+    "readAttachment": "Вложение прочитано",
+    "readingAttachments_one": "Чтение {{count}} вложения...",
+    "readingAttachments_other": "Чтение {{count}} вложений...",
+    "readAttachments_one": "Прочитано {{count}} вложение",
+    "readAttachments_other": "Прочитано {{count}} вложений",
+    "writing": "Запись {{name}}{{suffix}}...",
+    "wrote": "Записано {{name}}{{suffix}}",
+    "writingFiles_one": "Запись {{count}} файла{{suffix}}...",
+    "writingFiles_other": "Запись {{count}} файлов{{suffix}}...",
+    "wroteFiles_one": "Записан {{count}} файл{{suffix}}",
+    "wroteFiles_other": "Записано {{count}} файлов{{suffix}}",
+    "fromAttachment": " из вложения",
+    "fromAttachments": " из {{count}} вложений",
+    "runningScriptOnTabs_one": "Выполнение скрипта на {{count}} вкладке...",
+    "runningScriptOnTabs_other": "Выполнение скрипта на {{count}} вкладках...",
+    "ranScriptOnTabs_one": "Скрипт выполнен на {{count}} вкладке",
+    "ranScriptOnTabs_other": "Скрипт выполнен на {{count}} вкладках",
+    "labelWriting": "{{label}}{{suffix}}, запись {{file}}...",
+    "labelWrote": "{{label}}{{suffix}}, записано {{file}}",
+    "fileCount_one": "{{count}} файл",
+    "fileCount_other": "{{count}} файлов",
+    "attachment": "вложение",
+    "mediaImage": "изображение",
+    "mediaVideo": "видео",
+    "mediaAudio": "аудио"
+  },
+  "docs": {
+    "searchLatest": "Поиск последних документов...",
+    "searchLatestFor": "Поиск последних документов для {{name}}...",
+    "foundLabel": "Найдено",
+    "foundDocs_one": "{{count}} документ для {{name}}",
+    "foundDocs_other": "{{count}} документов для {{name}}",
+    "readingLatest": "Чтение последних документов...",
+    "readingLatestFor": "Чтение последних документов для {{libraryId}}...",
+    "readLatest": "Прочитать последние документы",
+    "forLibrary": " для {{libraryId}}"
+  },
+  "linting": {
+    "checkingForIssues": "Проверка на наличие проблем...",
+    "errorChecking": "Ошибка проверки диагностики линтера",
+    "noIssuesFound": "Проблем линтера не найдено",
+    "noIssues": "Нет проблем линтера",
+    "foundLabel": "Найдено",
+    "errorCount_one": "{{count}} ошибка",
+    "errorCount_other": "{{count}} ошибок",
+    "warningCount_one": "{{count}} предупреждение",
+    "warningCount_other": "{{count}} предупреждений",
+    "inFiles_one": " в {{count}} файле",
+    "inFiles_other": " в {{count}} файлах"
+  },
+  "watcher": {
+    "creating": "Создание watcher",
+    "skipped": "Watcher пропущен",
+    "failed": "Watcher не удался",
+    "created": "Watcher создан",
+    "triggered": "Триггернут",
+    "timedOut": "Время вышло",
+    "outcomeFailed": "Не удалось",
+    "stoppedManually": "Остановлен вручную",
+    "stoppedAppClosed": "Остановлен при закрытии приложения",
+    "expires": "Истекает {{when}}",
+    "runsForUpTo": "Работает до {{duration}}",
+    "defaultTitle": "Watcher",
+    "stop": "Остановить watcher",
+    "stopNamed": "Остановить {{title}}"
+  },
+  "externalAgent": {
+    "needsApproval": "{{toolName}} требует одобрения",
+    "failed": "Не удалось {{toolName}}",
+    "denied": "Отклонено {{toolName}}",
+    "completedPlan": "План выполнен",
+    "runningPlan": "Выполнение плана",
+    "changedFiles_one": "Изменён {{count}} файл",
+    "changedFiles_other": "Изменено {{count}} файлов",
+    "changingFiles_one": "Изменение {{count}} файла",
+    "changingFiles_other": "Изменение {{count}} файлов",
+    "finished": "Завершено {{toolName}}",
+    "running": "Выполнение {{toolName}}",
+    "deny": "Отклонить",
+    "allow": "Разрешить"
+  },
+  "askQuestions": {
+    "cancelledAgentStopped": "Вопросы отменены (агент остановлен)",
+    "writingQuestions": "Составление вопросов...",
+    "waitingResponse": "Ожидание ответа...",
+    "sentAnswersMessage": "Пользователь отправил ответы и сообщение",
+    "dismissed": "Пользователь отклонил вопросы",
+    "answered": "На вопросы отвечено",
+    "userQuestions": "Вопросы пользователя",
+    "answer": {
+      "empty": "(пусто)",
+      "none": "(нет)",
+      "yes": "Да",
+      "no": "Нет"
+    }
+  },
+  "planTool": {
+    "creating": "Создание плана…",
+    "failed": "Не удалось создать план",
+    "openPlan": "Открыть план",
+    "implement": "Реализовать",
+    "updating": "Обновление плана…",
+    "completedOf": "Выполнено {{completed}} из {{total}}"
+  },
+  "logTool": {
+    "creating": "Создание журнала {{channel}}…",
+    "enabled": "Включено",
+    "updating": "Обновление журнала {{channel}}…",
+    "updated": "Обновлено",
+    "channelLog": "Журнал {{channel}}"
+  },
+  "fallback": {
+    "finished": "Завершено",
+    "error": "Ошибка"
+  },
+  "exploring": {
+    "thought": "Мысль",
+    "codebase": "Исследован код",
+    "enabledNames": "Включено {{names}}",
+    "enabledCountPlugins_one": "Включён {{count}} плагин",
+    "enabledCountPlugins_other": "Включено {{count}} плагинов",
+    "enabledCountSkills_one": "Включён {{count}} навык",
+    "enabledCountSkills_other": "Включено {{count}} навыков",
+    "exploredOnly": "Исследовано {{list}}",
+    "foundOnly": "Найдено {{list}}",
+    "enabledAndExplored": "{{enabled}}, исследовано {{list}}",
+    "enabledAndFound": "{{enabled}}, найдено {{list}}",
+    "checkedLintingNoIssues": "Проверка линтера — нет проблем",
+    "theBrowser": "браузер",
+    "documentation": "документация",
+    "filesWord": "файлы",
+    "files_one": "{{count}} файл",
+    "files_other": "{{count}} файлов",
+    "docs_one": "{{count}} документ",
+    "docs_other": "{{count}} документов",
+    "consoleLogs_one": "{{count}} журнал консоли",
+    "consoleLogs_other": "{{count}} журналов консоли",
+    "screenshots_one": "{{count}} скриншот{{suffix}}",
+    "screenshots_other": "{{count}} скриншотов{{suffix}}",
+    "styles": "стили{{suffix}}",
+    "dom": "DOM{{suffix}}",
+    "scripts_one": "{{count}} скрипт{{suffix}}",
+    "scripts_other": "{{count}} скриптов{{suffix}}",
+    "sandboxFiles_one": "{{count}} файл песочницы",
+    "sandboxFiles_other": "{{count}} файлов песочницы",
+    "attachmentOne": "1 {{noun}}",
+    "attachmentMany": "{{count}} {{noun}}s",
+    "attachmentGeneric": "вложение",
+    "hostSuffixSingle": " на {{hostname}}",
+    "hostSuffixMany": " на {{count}} вкладках",
+    "lintErrors_one": "{{count}} ошибка",
+    "lintErrors_other": "{{count}} ошибок",
+    "lintWarnings_one": "{{count}} предупреждение",
+    "lintWarnings_other": "{{count}} предупреждений",
+    "listSeparator": ", ",
+    "listConjunction": " и ",
+    "inProgress": {
+      "enabling": "Включение {{name}}...",
+      "readingFile": "Чтение файла...",
+      "listingDirectory": "Список каталога...",
+      "exploringFiles": "Исследование файлов...",
+      "exploringDocumentation": "Исследование документации...",
+      "readingDocsFor": "Чтение документов для {{libraryId}}...",
+      "searchingDocsFor": "Поиск документов для {{name}}...",
+      "exploringTheBrowser": "Исследование браузера...",
+      "readingLogsFrom": "Чтение журналов от {{hostname}}...",
+      "checkingLinting": "Проверка линтера...",
+      "thinking": "Думаю...",
+      "exploring": "Исследую..."
+    }
+  },
+  "unknown": {
+    "calling": "Вызов инструмента {{type}}...",
+    "finished": "Завершён вызов инструмента {{type}}"
+  }
+}

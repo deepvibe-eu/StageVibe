@@ -1,0 +1,53 @@
+{
+  "newMate": "Nouveau Mate",
+  "search": {
+    "aria": "Rechercher des mates",
+    "placeholder": "Rechercher des mates…"
+  },
+  "pinned": "Épinglés",
+  "mates": "Mates",
+  "settings": {
+    "open": "Paramètres",
+    "close": "Fermer les paramètres"
+  },
+  "ageGroups": {
+    "today": "Aujourd'hui",
+    "yesterday": "Hier",
+    "last7": "7 derniers jours",
+    "last30": "30 derniers jours",
+    "older": "Plus anciens"
+  },
+  "grouping": {
+    "byWorkspace": "Grouper par espace de travail",
+    "byAge": "Grouper par âge",
+    "age": "Âge",
+    "workspace": "Espace de travail",
+    "aria": "Changer le mode de regroupement des mates"
+  },
+  "workspace": {
+    "openInGithub": "Ouvrir dans GitHub",
+    "openInGitlab": "Ouvrir dans GitLab",
+    "openInBitbucket": "Ouvrir dans Bitbucket",
+    "openRemote": "Ouvrir le dépôt distant",
+    "openInFileManager": "Ouvrir dans {{fileManager}}",
+    "deleteWorktree": "Supprimer le worktree",
+    "deleteWorktreeTitle": "Supprimer le worktree ?",
+    "newMateFor": "Nouveau mate pour {{label}}"
+  },
+  "terminalTitle": "Terminal",
+  "terminalShow": "Afficher le terminal {{index}}",
+  "terminalClose": "Fermer le terminal",
+  "contextMenu": {
+    "rename": "Renommer",
+    "fork": "Dupliquer la conversation",
+    "copyMarkdown": "Copier en Markdown",
+    "exportMarkdown": "Exporter en Markdown…",
+    "markAsUnread": "Marquer comme non lu",
+    "unpin": "Désépingler",
+    "pinGlobally": "Épingler globalement",
+    "archive": "Archiver",
+    "permanentlyDelete": "Supprimer définitivement",
+    "copyInstanceId": "Copier l'ID d'instance",
+    "openDataDirectory": "Ouvrir le répertoire de données"
+  }
+}

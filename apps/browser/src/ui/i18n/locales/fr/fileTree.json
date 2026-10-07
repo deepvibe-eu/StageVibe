@@ -1,0 +1,40 @@
+{
+  "hideTree": "Masquer l'arborescence",
+  "files": "Fichiers",
+  "changedFiles": "Fichiers modifiés",
+  "searchInContent": "Rechercher dans le contenu",
+  "searchFiles": "Rechercher des fichiers",
+  "noWorkspaces": "Aucun espace de travail monté.",
+  "loading": "Chargement…",
+  "loadMore": "Charger plus",
+  "diffLoading": "Chargement du diff…",
+  "notGitRepo": "Pas un dépôt git",
+  "treeClean": "Arbre de travail propre",
+  "confirmDeleteFile": "Supprimer {{path}} ?",
+  "confirmDeleteItems": "Supprimer {{count}} éléments ?",
+  "toast": {
+    "renameFailed": "Échec du renommage",
+    "renameError": "Impossible de renommer l'élément.",
+    "newFileFailed": "Échec de la création du fichier",
+    "newFileError": "Impossible de créer un nouveau fichier.",
+    "newFolderFailed": "Échec de la création du dossier",
+    "newFolderError": "Impossible de créer un nouveau dossier.",
+    "pasteFailed": "Échec du collage",
+    "pasteError": "Impossible de coller l'élément.",
+    "moveFailed": "Échec du déplacement",
+    "moveError": "Impossible de déplacer l'élément.",
+    "deleteFailed": "Échec de la suppression",
+    "deleteError": "Impossible de supprimer l'élément."
+  },
+  "menu": {
+    "newFile": "Nouveau fichier",
+    "newFolder": "Nouveau dossier",
+    "rename": "Renommer",
+    "copy": "Copier",
+    "cut": "Couper",
+    "paste": "Coller",
+    "delete": "Supprimer",
+    "copyPath": "Copier le chemin",
+    "openIn": "Ouvrir dans…"
+  }
+}

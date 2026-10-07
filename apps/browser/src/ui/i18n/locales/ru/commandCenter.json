@@ -1,0 +1,87 @@
+{
+  "loading": "Загрузка…",
+  "noResults": "Нет результатов",
+  "title": "Командный центр",
+  "closeOverlay": "Закрыть командный центр",
+  "searchFiles": "Поиск файлов…",
+  "searchAll": "Поиск mates, вкладок, терминалов, настроек…",
+  "modes": {
+    "all": "Все",
+    "agents": "Mates",
+    "browser": "Браузер",
+    "terminals": "Терминалы",
+    "files": "Файлы",
+    "settings": "Настройки"
+  },
+  "switchMode": "Переключиться в режим {{mode}}",
+  "cycleHint": "Нажмите Tab для переключения режимов командного центра",
+  "cancel": "Отмена",
+  "save": "Сохранить",
+  "delete": "Удалить",
+  "rename": "Переименовать",
+  "pin": "Закрепить",
+  "unpin": "Открепить",
+  "deleteConfirm": "Удалить «{{title}}»?",
+  "searchFilenamesOnly": "Искать только по именам файлов",
+  "searchInContent": "Искать в содержимом",
+  "excludeGitignored": "Исключить gitignored",
+  "includeGitignored": "Включить gitignored",
+  "copyUrl": "Копировать URL",
+  "close": "Закрыть",
+  "showingResultsFor": "Показаны результаты для {{label}}",
+  "showResultsFor": "Показать результаты для",
+  "untitledTab": "Безымянная вкладка",
+  "lastChanged": "Последнее изменение",
+  "globalAgent": "Глобальный",
+  "agentChat": "Чат агента",
+  "terminal": "Терминал",
+  "shell": "Оболочка",
+  "sourceAgent": "Агент",
+  "sourceManual": "Вручную",
+  "exportMarkdown": "Экспортировать текущий чат как Markdown…",
+  "exportMarkdownSubtitle": "Сохранить полный разговор в файл",
+  "copyMarkdown": "Копировать текущий чат как Markdown",
+  "copyMarkdownSubtitle": "Помстить полный разговор в буфер обмена",
+  "settings": {
+    "modelsProviders": {
+      "title": "Модели и провайдеры",
+      "subtitle": "Настройка провайдеров моделей и планов кодирования"
+    },
+    "apiKeys": {
+      "title": "Установить API-ключи",
+      "subtitle": "Подключить Anthropic, OpenAI, Google и других провайдеров"
+    },
+    "customProviders": {
+      "title": "Пользовательские провайдеры",
+      "subtitle": "Управление пользовательскими конечными точками моделей"
+    },
+    "agentGeneral": {
+      "title": "Общие настройки Mate",
+      "subtitle": "Настройка поведения mate по умолчанию"
+    },
+    "skillsContext": {
+      "title": "Навыки и контекстные файлы",
+      "subtitle": "Управление настройками навыков и контекстных файлов"
+    },
+    "worktrees": {
+      "title": "Worktrees",
+      "subtitle": "Управление скриптами настройки worktree"
+    },
+    "plugins": {
+      "title": "Плагины",
+      "subtitle": "Настройка включённых плагинов"
+    },
+    "personalization": {
+      "title": "Персонализация",
+      "subtitle": "Настройка размера UI, цветов темы, уведомлений и поведения доков"
+    },
+    "browsing": {
+      "title": "Настройки браузера",
+      "subtitle": "Настройка поведения браузера и разрешений"
+    },
+    "history": {
+      "title": "История",
+      "subtitle": "Открыть историю браузера"
+    }
+  }
+}

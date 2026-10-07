@@ -1,0 +1,144 @@
+{
+  "nav": {
+    "back": "后退",
+    "forward": "前进",
+    "reload": "重新加载",
+    "stopLoading": "停止加载"
+  },
+  "zoom": {
+    "out": "缩小",
+    "in": "放大",
+    "reset": "重置缩放"
+  },
+  "colorScheme": {
+    "toggle": "切换配色方案",
+    "current": "当前：",
+    "aria": "切换配色方案，当前：{{current}}",
+    "light": "浅色",
+    "dark": "深色",
+    "system": "系统（{{mode}}）"
+  },
+  "search": {
+    "placeholder": "在标签页中搜索…",
+    "previousAria": "上一个搜索结果",
+    "previousMatch": "上一个匹配",
+    "nextAria": "下一个搜索结果",
+    "nextMatch": "下一个匹配",
+    "closeAria": "关闭搜索",
+    "close": "关闭搜索"
+  },
+  "basicAuth": {
+    "signInRequired": "需要登录",
+    "realm": "领域：{{realm}}",
+    "username": "用户名",
+    "usernamePlaceholder": "输入用户名",
+    "password": "密码",
+    "passwordPlaceholder": "输入密码",
+    "signIn": "登录"
+  },
+  "unsavedClose": {
+    "title": "未保存的文件编辑",
+    "description": "{{path}} 有未保存的编辑。在关闭前应该如何处理？",
+    "saveAndClose": "保存并关闭",
+    "closeWithoutSave": "不保存关闭"
+  },
+  "preview": {
+    "toggleChatPanel": "切换对话面板"
+  },
+  "device": {
+    "dimensions": "尺寸：",
+    "viewportWidth": "视口宽度",
+    "viewportHeight": "视口高度",
+    "rotate": "旋转视口",
+    "hideToolbar": "隐藏设备工具栏"
+  },
+  "tabPreview": {
+    "imageAlt": "标签页预览",
+    "copyUrlAria": "复制当前网址",
+    "copyUrl": "复制网址"
+  },
+  "watcher": {
+    "showActive": "显示活跃的 watchers",
+    "title": "Watchers",
+    "open": "（打开）",
+    "agentChat": "代理对话",
+    "showChatFor": "显示 {{title}} 的对话",
+    "showChat": "显示对话",
+    "stopTitle": "停止 {{title}}",
+    "stopWatcher": "停止 watcher",
+    "commandUnavailable": "命令不可用",
+    "copyScriptFor": "复制 {{title}} 的脚本",
+    "copiedScriptFor": "已复制 {{title}} 的脚本",
+    "copied": "已复制",
+    "copyScript": "复制脚本",
+    "running": "运行中 {{duration}}",
+    "expiresIn": "{{duration}} 后过期",
+    "expiring": "即将过期"
+  },
+  "servers": {
+    "showLocal": "显示本地服务器",
+    "title": "本地服务器",
+    "open": "（打开）",
+    "global": "全局",
+    "agentChat": "代理对话",
+    "startedByAgent": "由代理 shell 启动",
+    "showChat": "显示对话",
+    "showTerminal": "显示终端",
+    "stopProcess": "停止进程",
+    "stopProcessShortcut": "停止进程（Ctrl+C）",
+    "openInBrowser": "在浏览器中打开 {{endpoint}}"
+  },
+  "breadcrumbs": {
+    "preview": "预览",
+    "home": "首页"
+  },
+  "omniboxSuggestions": {
+    "runningLocally": "本地运行",
+    "searchOrEnterUrl": "搜索或输入网址",
+    "mostVisited": "最常访问",
+    "frequentSearches": "频繁搜索",
+    "reloadCurrentPage": "重新加载当前页面",
+    "open": "打开 {{input}}",
+    "searchFor": "使用 {{engine}} 搜索 \"{{input}}\"",
+    "recentPages": "最近页面",
+    "recentSearches": "最近搜索"
+  },
+  "permissions": {
+    "desc": {
+      "mediaCameraMic": "想要使用您的摄像头和麦克风",
+      "mediaCamera": "想要使用您的摄像头",
+      "mediaMic": "想要使用您的麦克风",
+      "mediaGeneric": "想要访问媒体",
+      "geolocation": "想要获取您的位置",
+      "notifications": "想要发送通知",
+      "fullscreen": "想要进入全屏",
+      "clipboardRead": "想要读取您的剪贴板",
+      "displayCapture": "想要共享您的屏幕",
+      "midi": "想要访问 MIDI 设备",
+      "idleDetection": "想要检测您是否空闲",
+      "speakerSelection": "想要选择音频输出",
+      "storageAccess": "想要存储访问权限",
+      "bluetooth": "想要连接到蓝牙设备",
+      "hid": "想要连接到 HID 设备",
+      "serial": "想要连接到串行端口",
+      "usb": "想要连接到 USB 设备",
+      "bluetoothPairing": "想要与蓝牙设备配对",
+      "generic": "正在请求访问"
+    },
+    "unknownDevice": "未知设备",
+    "hidDevice": "HID 设备",
+    "serialPort": "串行端口",
+    "usbDevice": "USB 设备",
+    "searchingDevices": "正在搜索设备…",
+    "selectDevice": "选择设备…",
+    "enterPin": "输入配对 PIN",
+    "pin": "PIN：",
+    "allow": "允许",
+    "block": "阻止",
+    "always": "始终",
+    "title": "权限请求",
+    "requested_one": "请求了 {{count}} 个权限",
+    "requested_other": "请求了 {{count}} 个权限",
+    "noPending": "无待处理请求"
+  }
+}

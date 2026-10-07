@@ -1,0 +1,40 @@
+{
+  "hideTree": "Dateibaum ausblenden",
+  "files": "Dateien",
+  "changedFiles": "Geänderte Dateien",
+  "searchInContent": "Im Inhalt suchen",
+  "searchFiles": "Nach Dateien suchen",
+  "noWorkspaces": "Keine eingebundenen Workspaces.",
+  "loading": "Wird geladen…",
+  "loadMore": "Mehr laden",
+  "diffLoading": "Diff wird geladen…",
+  "notGitRepo": "Kein Git-Repository",
+  "treeClean": "Arbeitsbaum sauber",
+  "confirmDeleteFile": "{{path}} löschen?",
+  "confirmDeleteItems": "{{count}} Elemente löschen?",
+  "toast": {
+    "renameFailed": "Umbenennen fehlgeschlagen",
+    "renameError": "Element konnte nicht umbenannt werden.",
+    "newFileFailed": "Neue Datei fehlgeschlagen",
+    "newFileError": "Neue Datei konnte nicht erstellt werden.",
+    "newFolderFailed": "Neuer Ordner fehlgeschlagen",
+    "newFolderError": "Neuer Ordner konnte nicht erstellt werden.",
+    "pasteFailed": "Einfügen fehlgeschlagen",
+    "pasteError": "Element konnte nicht eingefügt werden.",
+    "moveFailed": "Verschieben fehlgeschlagen",
+    "moveError": "Element konnte nicht verschoben werden.",
+    "deleteFailed": "Löschen fehlgeschlagen",
+    "deleteError": "Element konnte nicht gelöscht werden."
+  },
+  "menu": {
+    "newFile": "Neue Datei",
+    "newFolder": "Neuer Ordner",
+    "rename": "Umbenennen",
+    "copy": "Kopieren",
+    "cut": "Ausschneiden",
+    "paste": "Einfügen",
+    "delete": "Löschen",
+    "copyPath": "Pfad kopieren",
+    "openIn": "Öffnen in…"
+  }
+}

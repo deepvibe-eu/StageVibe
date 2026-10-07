@@ -1,0 +1,87 @@
+{
+  "loading": "Cargando…",
+  "noResults": "Sin resultados",
+  "title": "Centro de comandos",
+  "closeOverlay": "Cerrar centro de comandos",
+  "searchFiles": "Buscar archivos…",
+  "searchAll": "Buscar mates, pestañas, terminales, configuración…",
+  "modes": {
+    "all": "Todo",
+    "agents": "Mates",
+    "browser": "Navegador",
+    "terminals": "Terminales",
+    "files": "Archivos",
+    "settings": "Configuración"
+  },
+  "switchMode": "Cambiar a modo {{mode}}",
+  "cycleHint": "Presiona Tab para ciclar los modos del centro de comandos",
+  "cancel": "Cancelar",
+  "save": "Guardar",
+  "delete": "Eliminar",
+  "rename": "Renombrar",
+  "pin": "Fijar",
+  "unpin": "Desfijar",
+  "deleteConfirm": "¿Eliminar \"{{title}}\"?",
+  "searchFilenamesOnly": "Buscar solo nombres de archivo",
+  "searchInContent": "Buscar en contenido",
+  "excludeGitignored": "Excluir gitignored",
+  "includeGitignored": "Incluir gitignored",
+  "copyUrl": "Copiar URL",
+  "close": "Cerrar",
+  "showingResultsFor": "Mostrando resultados para {{label}}",
+  "showResultsFor": "Mostrar resultados para",
+  "untitledTab": "Pestaña sin título",
+  "lastChanged": "Último cambio",
+  "globalAgent": "Global",
+  "agentChat": "Chat del agente",
+  "terminal": "Terminal",
+  "shell": "Shell",
+  "sourceAgent": "Agente",
+  "sourceManual": "Manual",
+  "exportMarkdown": "Exportar chat actual como Markdown…",
+  "exportMarkdownSubtitle": "Guardar la conversación completa en un archivo",
+  "copyMarkdown": "Copiar chat actual como Markdown",
+  "copyMarkdownSubtitle": "Poner la conversación completa en el portapapeles",
+  "settings": {
+    "modelsProviders": {
+      "title": "Modelos y Proveedores",
+      "subtitle": "Configurar proveedores de modelos y planes de código"
+    },
+    "apiKeys": {
+      "title": "Establecer Claves API",
+      "subtitle": "Conectar Anthropic, OpenAI, Google y otros proveedores"
+    },
+    "customProviders": {
+      "title": "Proveedores Personalizados",
+      "subtitle": "Gestionar endpoints de modelos personalizados"
+    },
+    "agentGeneral": {
+      "title": "Configuración General de Mate",
+      "subtitle": "Configurar comportamiento predeterminado del mate"
+    },
+    "skillsContext": {
+      "title": "Habilidades y Archivos de Contexto",
+      "subtitle": "Gestionar preferencias de habilidades y archivos de contexto"
+    },
+    "worktrees": {
+      "title": "Worktrees",
+      "subtitle": "Gestionar scripts de configuración de worktree"
+    },
+    "plugins": {
+      "title": "Plugins",
+      "subtitle": "Configurar plugins incluidos y habilitados"
+    },
+    "personalization": {
+      "title": "Personalización",
+      "subtitle": "Configurar tamaño de UI, colores de tema, notificaciones y comportamiento del dock"
+    },
+    "browsing": {
+      "title": "Configuración de Navegación",
+      "subtitle": "Configurar comportamiento del navegador y permisos"
+    },
+    "history": {
+      "title": "Historial",
+      "subtitle": "Abrir historial de navegación"
+    }
+  }
+}

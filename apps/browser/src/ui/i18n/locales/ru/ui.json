@@ -1,0 +1,140 @@
+{
+  "errorBoundary": {
+    "title": "Что-то пошло не так",
+    "description": "Произошла непредвиденная ошибка. Пожалуйста, перезагрузите приложение.",
+    "reload": "Перезагрузить"
+  },
+  "fileMenu": {
+    "openInFileView": "Открыть в режиме файла",
+    "revealIn": "Показать в {{manager}}"
+  },
+  "openIn": {
+    "label": "Открыть в {{target}}",
+    "menu": "Открыть в…"
+  },
+  "mermaid": {
+    "loading": "Загрузка диаграммы...",
+    "errorPrefix": "Ошибка Mermaid: {{error}}",
+    "showCode": "Показать код",
+    "chart": "Диаграмма Mermaid",
+    "openInTab": "Открыть диаграмму Mermaid во вкладке"
+  },
+  "releaseNotes": {
+    "title": "Что нового",
+    "gotIt": "Понятно"
+  },
+  "idePicker": {
+    "group": "Открывать файлы в:",
+    "placeholder": "Открывать файлы в…"
+  },
+  "tutorial": {
+    "close": "Закрыть обучение",
+    "back": "Назад",
+    "okay": "ОК",
+    "finish": "Завершить",
+    "next": "Далее"
+  },
+  "codingPlan": {
+    "connectionFailed": "Подключение не удалось. Пожалуйста, попробуйте ещё раз.",
+    "disconnectionFailed": "Отключение не удалось. Пожалуйста, попробуйте ещё раз.",
+    "connected": "Подключено",
+    "apiKeyLabel": "API-ключ {{plan}}",
+    "enterApiKey": "Введите API-ключ...",
+    "disconnecting": "Отключение…",
+    "disconnect": "Отключить",
+    "connecting": "Подключение…",
+    "connect": "Подключить",
+    "createKey": "Создать ключ"
+  },
+  "signIn": {
+    "lastUsed": "Последнее использование",
+    "title": "Аутентификация",
+    "description": "Выберите способ входа для продолжения.",
+    "providerGoogle": "Google",
+    "providerGithub": "GitHub",
+    "providerEmail": "Эл. почта",
+    "providerOther": "ваш провайдер",
+    "socialFailed": "Не удалось завершить социальный вход.",
+    "emailFailed": "Не удалось завершить вход по email.",
+    "securityNotReady": "Проверка безопасности не готова. Пожалуйста, подождите.",
+    "securityFailed": "Проверка безопасности не удалась. Пожалуйста, попробуйте ещё раз.",
+    "sendCodeFailed": "Не удалось отправить код верификации.",
+    "verifyCodeFailed": "Не удалось проверить код.",
+    "enterEmail": "Введите ваш email для получения кода верификации.",
+    "sentCode": "Мы отправили код на {{email}}. Введите его ниже.",
+    "waitingBrowser": "Пожалуйста, завершите вход через {{provider}} в браузере, затем вернитесь в StageVibe.",
+    "continueGoogle": "Продолжить с Google",
+    "continueGithub": "Продолжить с GitHub",
+    "continueEmail": "Продолжить с Email",
+    "or": "или",
+    "useApiKeys": "Используйте собственные API-ключи",
+    "useSubscription": "Используйте существующую подписку",
+    "loading": "Загрузка...",
+    "sendCode": "Отправить код",
+    "back": "Назад к вариантам входа",
+    "waitingSignIn": "Ожидание завершения входа в браузере…",
+    "verifying": "Проверка...",
+    "verify": "Проверить",
+    "useDifferentEmail": "Использовать другой email"
+  },
+  "domBadge": {
+    "elementScreenshot": "Скриншот элемента",
+    "nodeType": "Тип узла",
+    "size": "Размер",
+    "text": "Текст",
+    "xpath": "XPath",
+    "page": "Страница",
+    "selectedElement": "Выбранный элемент: {{fileName}}"
+  },
+  "textclip": {
+    "copyToClipboard": "Копировать в буфер обмена",
+    "pastedText": "Вставленный текст",
+    "characters": "{{count}} символов",
+    "useRawText": "Использовать сырой текст"
+  },
+  "mermaidEditor": {
+    "viewDiagram": "Посмотреть диаграмму",
+    "view": "Вид",
+    "sideBySide": "Бок о бок",
+    "split": "Разделить",
+    "editSource": "Редактировать исходный код",
+    "edit": "Редактировать"
+  },
+  "thinking": {
+    "title": "Мышление",
+    "close": "Закрыть",
+    "enable": "Включить мышление",
+    "current": "Текущее: {{label}}",
+    "effort": "Усилие",
+    "defaultLabel": "По умолчанию: {{label}}",
+    "default": "По умолчанию",
+    "reset": "Сбросить до默认值"
+  },
+  "diff": {
+    "label": "Diff"
+  },
+  "markdownEditor": {
+    "saving": "Сохранение…",
+    "saved": "Сохранено",
+    "saveFailed": "Не удалось сохранить"
+  },
+  "table": {
+    "copyAsCsv": "Копировать таблицу как CSV",
+    "downloadAsCsv": "Скачать как CSV"
+  },
+  "attachmentLink": {
+    "copied": "Скопировано",
+    "copy": "Копировать",
+    "openAria": "Открыть {{target}}",
+    "clickToOpen": "Нажмите, чтобы открыть в режиме файла",
+    "clickToOpenReadOnly": "Нажмите, чтобы открыть (только чтение)"
+  },
+  "streamdown": {
+    "openInContentTab": "Открыть во вкладке контента",
+    "openInBrowser": "Открыть в браузере",
+    "downloadImage": "Скачать изображение",
+    "image": "изображение",
+    "imageTitle": "Изображение",
+    "openImageAria": "Открыть {{name}} во вкладке"
+  }
+}

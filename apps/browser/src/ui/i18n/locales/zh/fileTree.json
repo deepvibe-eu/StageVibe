@@ -1,0 +1,40 @@
+{
+  "hideTree": "隐藏文件树",
+  "files": "文件",
+  "changedFiles": "已更改的文件",
+  "searchInContent": "在内容中搜索",
+  "searchFiles": "搜索文件",
+  "noWorkspaces": "没有挂载的工作区。",
+  "loading": "正在加载…",
+  "loadMore": "加载更多",
+  "diffLoading": "正在加载差异…",
+  "notGitRepo": "不是 git 仓库",
+  "treeClean": "工作树干净",
+  "confirmDeleteFile": "删除 {{path}}？",
+  "confirmDeleteItems": "删除 {{count}} 个项目？",
+  "toast": {
+    "renameFailed": "重命名失败",
+    "renameError": "无法重命名该项目。",
+    "newFileFailed": "新建文件失败",
+    "newFileError": "无法创建新文件。",
+    "newFolderFailed": "新建文件夹失败",
+    "newFolderError": "无法创建新文件夹。",
+    "pasteFailed": "粘贴失败",
+    "pasteError": "无法粘贴该项目。",
+    "moveFailed": "移动失败",
+    "moveError": "无法移动该项目。",
+    "deleteFailed": "删除失败",
+    "deleteError": "无法删除该项目。"
+  },
+  "menu": {
+    "newFile": "新建文件",
+    "newFolder": "新建文件夹",
+    "rename": "重命名",
+    "copy": "复制",
+    "cut": "剪切",
+    "paste": "粘贴",
+    "delete": "删除",
+    "copyPath": "复制路径",
+    "openIn": "在…中打开"
+  }
+}

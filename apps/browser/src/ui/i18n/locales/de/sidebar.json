@@ -31,6 +31,23 @@
     "openRemote": "Remote-Repository öffnen",
     "openInFileManager": "In {{fileManager}} öffnen",
     "deleteWorktree": "Worktree löschen",
+    "deleteWorktreeTitle": "Worktree löschen?",
     "newMateFor": "Neuer Mate für {{label}}"
+  },
+  "terminalTitle": "Terminal",
+  "terminalShow": "Terminal {{index}} anzeigen",
+  "terminalClose": "Terminal schließen",
+  "contextMenu": {
+    "rename": "Umbenennen",
+    "fork": "Chat verforken",
+    "copyMarkdown": "Als Markdown kopieren",
+    "exportMarkdown": "Als Markdown exportieren…",
+    "markAsUnread": "Als ungelesen markieren",
+    "unpin": "Loslösen",
+    "pinGlobally": "Global anheften",
+    "archive": "Archivieren",
+    "permanentlyDelete": "Dauerhaft löschen",
+    "copyInstanceId": "Instanz-ID kopieren",
+    "openDataDirectory": "Datenverzeichnis öffnen"
   }
 }

@@ -1,0 +1,53 @@
+{
+  "newMate": "Новый Mate",
+  "search": {
+    "aria": "Поиск mates",
+    "placeholder": "Поиск mates…"
+  },
+  "pinned": "Закреплённые",
+  "mates": "Mates",
+  "settings": {
+    "open": "Настройки",
+    "close": "Закрыть настройки"
+  },
+  "ageGroups": {
+    "today": "Сегодня",
+    "yesterday": "Вчера",
+    "last7": "Последние 7 дней",
+    "last30": "Последние 30 дней",
+    "older": "Ранее"
+  },
+  "grouping": {
+    "byWorkspace": "Группировать по рабочей области",
+    "byAge": "Группировать по возрасту",
+    "age": "Возраст",
+    "workspace": "Рабочая область",
+    "aria": "Изменить режим группировки mates"
+  },
+  "workspace": {
+    "openInGithub": "Открыть в GitHub",
+    "openInGitlab": "Открыть в GitLab",
+    "openInBitbucket": "Открыть в Bitbucket",
+    "openRemote": "Открыть удалённый репозиторий",
+    "openInFileManager": "Открыть в {{fileManager}}",
+    "deleteWorktree": "Удалить worktree",
+    "deleteWorktreeTitle": "Удалить worktree?",
+    "newMateFor": "Новый mate для {{label}}"
+  },
+  "terminalTitle": "Терминал",
+  "terminalShow": "Показать терминал {{index}}",
+  "terminalClose": "Закрыть терминал",
+  "contextMenu": {
+    "rename": "Переименовать",
+    "fork": "Ветвь чата",
+    "copyMarkdown": "Копировать как Markdown",
+    "exportMarkdown": "Экспортировать как Markdown…",
+    "markAsUnread": "Отметить как непрочитанное",
+    "unpin": "Открепить",
+    "pinGlobally": "Закрепить глобально",
+    "archive": "Архивировать",
+    "permanentlyDelete": "Удалить навсегда",
+    "copyInstanceId": "Копировать ID экземпляра",
+    "openDataDirectory": "Открыть каталог данных"
+  }
+}

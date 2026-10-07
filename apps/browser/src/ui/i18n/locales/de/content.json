@@ -1,0 +1,144 @@
+{
+  "nav": {
+    "back": "Zurück",
+    "forward": "Vorwärts",
+    "reload": "Neu laden",
+    "stopLoading": "Laden stoppen"
+  },
+  "zoom": {
+    "out": "Vergrößern",
+    "in": "Verkleinern",
+    "reset": "Zoom zurücksetzen"
+  },
+  "colorScheme": {
+    "toggle": "Farbschema umschalten",
+    "current": "Aktuell:",
+    "aria": "Farbschema umschalten, aktuell: {{current}}",
+    "light": "Hell",
+    "dark": "Dunkel",
+    "system": "System ({{mode}})"
+  },
+  "search": {
+    "placeholder": "In Tab suchen...",
+    "previousAria": "Vorheriges Suchergebnis",
+    "previousMatch": "Vorheriger Treffer",
+    "nextAria": "Nächstes Suchergebnis",
+    "nextMatch": "Nächster Treffer",
+    "closeAria": "Suche schließen",
+    "close": "Suche schließen"
+  },
+  "basicAuth": {
+    "signInRequired": "Anmeldung erforderlich",
+    "realm": "Realm: {{realm}}",
+    "username": "Benutzername",
+    "usernamePlaceholder": "Benutzername eingeben",
+    "password": "Passwort",
+    "passwordPlaceholder": "Passwort eingeben",
+    "signIn": "Anmelden"
+  },
+  "unsavedClose": {
+    "title": "Ungespeicherte Dateiänderungen",
+    "description": "{{path}} hat ungespeicherte Änderungen. Was soll passieren, bevor es geschlossen wird?",
+    "saveAndClose": "Speichern und schließen",
+    "closeWithoutSave": "Ohne Speichern schließen"
+  },
+  "preview": {
+    "toggleChatPanel": "Chat-Bereich umschalten"
+  },
+  "device": {
+    "dimensions": "Abmessungen:",
+    "viewportWidth": "Viewport-Breite",
+    "viewportHeight": "Viewport-Höhe",
+    "rotate": "Viewport drehen",
+    "hideToolbar": "Geräte-Symbolleiste ausblenden"
+  },
+  "tabPreview": {
+    "imageAlt": "Vorschau des Tabs",
+    "copyUrlAria": "Aktuelle URL kopieren",
+    "copyUrl": "URL kopieren"
+  },
+  "watcher": {
+    "showActive": "Aktive Watcher anzeigen",
+    "title": "Watcher",
+    "open": "(Öffnen)",
+    "agentChat": "Agenten-Chat",
+    "showChatFor": "Chat für {{title}} anzeigen",
+    "showChat": "Chat anzeigen",
+    "stopTitle": "{{title}} stoppen",
+    "stopWatcher": "Watcher stoppen",
+    "commandUnavailable": "Befehl nicht verfügbar",
+    "copyScriptFor": "Skript für {{title}} kopieren",
+    "copiedScriptFor": "Skript für {{title}} kopiert",
+    "copied": "Kopiert",
+    "copyScript": "Skript kopieren",
+    "running": "läuft seit {{duration}}",
+    "expiresIn": "läuft ab in {{duration}}",
+    "expiring": "läuft ab"
+  },
+  "servers": {
+    "showLocal": "Lokale Server anzeigen",
+    "title": "Lokale Server",
+    "open": "(Öffnen)",
+    "global": "Global",
+    "agentChat": "Agenten-Chat",
+    "startedByAgent": "Von einem Agent-Shell gestartet",
+    "showChat": "Chat anzeigen",
+    "showTerminal": "Terminal anzeigen",
+    "stopProcess": "Prozess stoppen",
+    "stopProcessShortcut": "Prozess stoppen (Strg+C)",
+    "openInBrowser": "{{endpoint}} im Browser öffnen"
+  },
+  "breadcrumbs": {
+    "preview": "Vorschau",
+    "home": "Startseite"
+  },
+  "omniboxSuggestions": {
+    "runningLocally": "Lokal ausgeführt",
+    "searchOrEnterUrl": "Suchen oder URL eingeben",
+    "mostVisited": "Am häufigsten besucht",
+    "frequentSearches": "Häufige Suchen",
+    "reloadCurrentPage": "Aktuelle Seite neu laden",
+    "open": "{{input}} öffnen",
+    "searchFor": "Mit {{engine}} nach \"{{input}}\" suchen",
+    "recentPages": "Zuletzt besuchte Seiten",
+    "recentSearches": "Zuletzt verwendete Suchen"
+  },
+  "permissions": {
+    "desc": {
+      "mediaCameraMic": "möchte deine Kamera und dein Mikrofon verwenden",
+      "mediaCamera": "möchte deine Kamera verwenden",
+      "mediaMic": "möchte dein Mikrofon verwenden",
+      "mediaGeneric": "möchte Medienzugriff",
+      "geolocation": "möchte deinen Standort wissen",
+      "notifications": "möchte Benachrichtigungen senden",
+      "fullscreen": "möchte in den Vollbildmodus wechseln",
+      "clipboardRead": "möchte deine Zwischenablage lesen",
+      "displayCapture": "möchte deinen Bildschirm teilen",
+      "midi": "möchte auf MIDI-Geräte zugreifen",
+      "idleDetection": "möchte erkennen, wann du inaktiv bist",
+      "speakerSelection": "möchte Audioausgabe auswählen",
+      "storageAccess": "möchte Speicherzugriff",
+      "bluetooth": "möchte sich mit einem Bluetooth-Gerät verbinden",
+      "hid": "möchte sich mit einem HID-Gerät verbinden",
+      "serial": "möchte sich mit einem seriellen Port verbinden",
+      "usb": "möchte sich mit einem USB-Gerät verbinden",
+      "bluetoothPairing": "möchte sich mit einem Bluetooth-Gerät koppeln",
+      "generic": "fordert Zugriff an"
+    },
+    "unknownDevice": "Unbekanntes Gerät",
+    "hidDevice": "HID-Gerät",
+    "serialPort": "Serieller Port",
+    "usbDevice": "USB-Gerät",
+    "searchingDevices": "Suche nach Geräten...",
+    "selectDevice": "Gerät auswählen…",
+    "enterPin": "Pairing-PIN eingeben",
+    "pin": "PIN:",
+    "allow": "Erlauben",
+    "block": "Blockieren",
+    "always": "Immer",
+    "title": "Berechtigungsanfragen",
+    "requested_one": "{{count}} Berechtigung angefordert",
+    "requested_other": "{{count}} Berechtigungen angefordert",
+    "noPending": "Keine ausstehenden Anfragen"
+  }
+}

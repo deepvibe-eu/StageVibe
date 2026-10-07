@@ -1,0 +1,53 @@
+{
+  "newMate": "新建 Mate",
+  "search": {
+    "aria": "搜索 mates",
+    "placeholder": "搜索 mates…"
+  },
+  "pinned": "已固定",
+  "mates": "Mates",
+  "settings": {
+    "open": "设置",
+    "close": "关闭设置"
+  },
+  "ageGroups": {
+    "today": "今天",
+    "yesterday": "昨天",
+    "last7": "最近 7 天",
+    "last30": "最近 30 天",
+    "older": "更早"
+  },
+  "grouping": {
+    "byWorkspace": "按工作区分组",
+    "byAge": "按时间分组",
+    "age": "时间",
+    "workspace": "工作区",
+    "aria": "更改 mate 分组模式"
+  },
+  "workspace": {
+    "openInGithub": "在 GitHub 中打开",
+    "openInGitlab": "在 GitLab 中打开",
+    "openInBitbucket": "在 Bitbucket 中打开",
+    "openRemote": "打开远程仓库",
+    "openInFileManager": "在 {{fileManager}} 中打开",
+    "deleteWorktree": "删除工作树",
+    "deleteWorktreeTitle": "删除工作树？",
+    "newMateFor": "为 {{label}} 新建 mate"
+  },
+  "terminalTitle": "终端",
+  "terminalShow": "显示终端 {{index}}",
+  "terminalClose": "关闭终端",
+  "contextMenu": {
+    "rename": "重命名",
+    "fork": "复制对话",
+    "copyMarkdown": "复制为 Markdown",
+    "exportMarkdown": "导出为 Markdown…",
+    "markAsUnread": "标记为未读",
+    "unpin": "取消固定",
+    "pinGlobally": "全局固定",
+    "archive": "归档",
+    "permanentlyDelete": "永久删除",
+    "copyInstanceId": "复制实例 ID",
+    "openDataDirectory": "打开数据目录"
+  }
+}

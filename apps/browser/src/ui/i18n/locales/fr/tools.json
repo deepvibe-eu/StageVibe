@@ -1,0 +1,417 @@
+{
+  "copy": {
+    "renaming": "Renommage en cours",
+    "moving": "Déplacement en cours",
+    "copying": "Copie en cours",
+    "renamed": "Renommé",
+    "moved": "Déplacé",
+    "copied": "Copié"
+  },
+  "delete": {
+    "errorPath": "Erreur lors de la suppression de {{path}}",
+    "errorFile": "Erreur lors de la suppression du fichier",
+    "deleted": "(supprimé)"
+  },
+  "mkdir": {
+    "creatingPath": "Création de {{path}}…",
+    "creating": "Création du répertoire…",
+    "created": "Créé"
+  },
+  "read": {
+    "enabling": "Activation de {{name}}…",
+    "enabled": "Activé",
+    "readingLog": "Lecture du journal {{name}}…",
+    "readLog": "Lire le journal",
+    "readingShellOutput": "Lecture de la sortie du shell…",
+    "readShellOutput": "Lire la sortie du shell",
+    "readingMemory": "Lecture de la mémoire {{label}}…",
+    "readMemory": "Lire la mémoire",
+    "memoryOf": " de {{agentId}}",
+    "memoryIndex": "index",
+    "memoryFile": "fichier",
+    "memoryMetadata": "métadonnées",
+    "memoryContent": "contenu",
+    "readingPath": "Lecture de {{path}}…",
+    "readingFile": "Lecture du fichier…",
+    "read": "Lire"
+  },
+  "ls": {
+    "listingPath": "Liste de {{path}}…",
+    "listing": "Liste du répertoire…",
+    "listed": "Listé"
+  },
+  "glob": {
+    "searchingFor": "Recherche de {{pattern}}…",
+    "searchingFiles": "Recherche dans les fichiers…",
+    "foundLabel": "Trouvé",
+    "fileCount_one": "{{count}} fichier",
+    "fileCount_other": "{{count}} fichiers",
+    "matching": " correspondant à « {{pattern}} »"
+  },
+  "grep": {
+    "searchingFor": "Recherche de {{query}}…",
+    "searchingGrep": "Recherche avec grep…",
+    "foundLabel": "Trouvé",
+    "resultCount_one": "{{count}} résultat",
+    "resultCount_other": "{{count}} résultats",
+    "forQuery": " pour « {{query}} »"
+  },
+  "write": {
+    "expandDiff": "Développer le diff du code",
+    "collapseDiff": "Réduire le diff du code",
+    "openFile": "Ouvrir le fichier",
+    "openFileTooltip": "Cliquez pour voir le fichier complet",
+    "errorPath": "Erreur lors de l'édition de {{path}}",
+    "errorFile": "Erreur lors de l'édition du fichier",
+    "created": "(nouveau)"
+  },
+  "multiEdit": {
+    "expandDiff": "Développer le diff du code",
+    "collapseDiff": "Réduire le diff du code",
+    "openFile": "Ouvrir le fichier",
+    "openFileTooltip": "Cliquez pour voir le fichier complet",
+    "errorPath": "Erreur lors de l'édition de {{path}}",
+    "errorFile": "Erreur lors de l'édition du fichier"
+  },
+  "shell": {
+    "openingTerminal": "Ouverture d'un nouveau terminal…",
+    "closingTerminal": "Fermeture du terminal…",
+    "openedTerminal": "Nouveau terminal ouvert",
+    "closedTerminal": "Terminal fermé",
+    "runCommand": "Exécuter la commande",
+    "skippedCommand": "Commande ignorée",
+    "skipped": "(ignoré)",
+    "errorRunning": "Erreur lors de l'exécution : {{command}}",
+    "sendingInput": "Envoi de l'entrée",
+    "running": "Exécution de {{command}}",
+    "cancel": "Annuler",
+    "couldNotClose": "Impossible de fermer le terminal",
+    "sentInput": "Entrée envoyée",
+    "ranCommand": "Commande exécutée",
+    "statusTimedOut": "délai dépassé",
+    "statusSessionExited": "session terminée",
+    "statusExitZero": "sortie 0",
+    "statusExit": "sortie {{code}}",
+    "statusKilled": "arrêté",
+    "commandStatus": "Commande {{status}}",
+    "closeTerminal": "fermer le terminal {{sessionId}}",
+    "empty": "(vide)"
+  },
+  "shellApproval": {
+    "skip": "Ignorer",
+    "smartAllow": "Autoriser intelligemment",
+    "smartAllowTitle": "Demander uniquement pour les commandes risquées",
+    "smartAllowDescription": "Bascule cet agent vers l'approbation intelligente. Un classificateur rapide décide pour chaque commande — les commandes destructives ou de niveau système nécessitent toujours votre approbation.",
+    "allow": "Autoriser"
+  },
+  "console": {
+    "errorReading": "Erreur lors de la lecture des journaux de console",
+    "waiting": "Attente de {{delayMs}}ms avant de lire les journaux…",
+    "waitingFilter": "Attente de {{delayMs}}ms avant de lire les journaux (filtre : « {{filter}} »)…",
+    "readingFiltered": "Lecture des journaux filtrés par « {{filter}} »…",
+    "reading": "Lecture des journaux de console…",
+    "noLogs": "Aucun journal trouvé",
+    "noLogsMatching": "Aucun journal trouvé correspondant à « {{filter}} »",
+    "readLabel": "Lire",
+    "logCount_one": "{{count}} journal de console",
+    "logCount_other": "{{count}} journaux de console",
+    "from": " de {{hostname}}",
+    "readingFrom": "Lecture des journaux de console de {{hostname}}…"
+  },
+  "sandbox": {
+    "errorWithExplanation": "Erreur : {{explanation}}",
+    "errorGeneric": "Erreur lors de l'exécution d'un script",
+    "script": "Script",
+    "error": "Erreur",
+    "result": "Résultat",
+    "loading": "Chargement…",
+    "preposition": {
+      "on": "sur",
+      "from": "de",
+      "of": "de"
+    },
+    "methods": {
+      "cssEnable": {
+        "inProgress": "Activation de l'inspection CSS",
+        "completed": "Inspection CSS activée"
+      },
+      "cssGetComputedStyleForNode": {
+        "inProgress": "Lecture des styles calculés",
+        "completed": "Styles calculés lus"
+      },
+      "cssGetMatchedStylesForNode": {
+        "inProgress": "Lecture des règles CSS",
+        "completed": "Règles CSS lues"
+      },
+      "cssGetInlineStylesForNode": {
+        "inProgress": "Lecture des styles en ligne",
+        "completed": "Styles en ligne lus"
+      },
+      "cssGetStyleSheetText": {
+        "inProgress": "Lecture de la feuille de style",
+        "completed": "Feuille de style lue"
+      },
+      "domEnable": {
+        "inProgress": "Activation de l'inspection DOM",
+        "completed": "Inspection DOM activée"
+      },
+      "domGetDocument": {
+        "inProgress": "Lecture du document",
+        "completed": "Document lu"
+      },
+      "domQuerySelector": {
+        "inProgress": "Interrogation de l'élément",
+        "completed": "Élément interrogé"
+      },
+      "domQuerySelectorAll": {
+        "inProgress": "Interrogation des éléments",
+        "completed": "Éléments interrogés"
+      },
+      "domGetOuterHTML": {
+        "inProgress": "Lecture du HTML de l'élément",
+        "completed": "HTML de l'élément lu"
+      },
+      "domResolveNode": {
+        "inProgress": "Résolution de l'élément",
+        "completed": "Élément résolu"
+      },
+      "domGetBoxModel": {
+        "inProgress": "Lecture du modèle de boîte",
+        "completed": "Modèle de boîte lu"
+      },
+      "runtimeEnable": {
+        "inProgress": "Activation du runtime",
+        "completed": "Runtime activé"
+      },
+      "runtimeEvaluate": {
+        "inProgress": "Exécution d'un script",
+        "completed": "Script exécuté"
+      },
+      "runtimeCallFunctionOn": {
+        "inProgress": "Appel de fonction",
+        "completed": "Fonction appelée"
+      },
+      "runtimeGetProperties": {
+        "inProgress": "Lecture des propriétés",
+        "completed": "Propriétés lues"
+      },
+      "pageEnable": {
+        "inProgress": "Activation de l'inspection de page",
+        "completed": "Inspection de page activée"
+      },
+      "pageGetFrameTree": {
+        "inProgress": "Lecture des cadres",
+        "completed": "Cadres lus"
+      },
+      "pageCaptureScreenshot": {
+        "inProgress": "Capture d'écran en cours",
+        "completed": "Capture d'écran effectuée"
+      },
+      "networkEnable": {
+        "inProgress": "Activation de l'inspection réseau",
+        "completed": "Inspection réseau activée"
+      },
+      "networkGetResponseBody": {
+        "inProgress": "Lecture de la réponse",
+        "completed": "Réponse lue"
+      }
+    },
+    "fallbackInspect": {
+      "inProgress": "Inspection de {{domain}}",
+      "completed": "{{domain}} inspecté"
+    },
+    "fallbackScript": {
+      "inProgress": "Exécution du script",
+      "completed": "Script exécuté"
+    },
+    "runningScript": "Exécution d'un script…",
+    "ranScript": "Script exécuté",
+    "parsingAttachment": "Analyse de la pièce jointe…",
+    "parsedAttachment": "Pièce jointe analysée",
+    "parsingAttachments_one": "Analyse de {{count}} pièce jointe…",
+    "parsingAttachments_other": "Analyse de {{count}} pièces jointes…",
+    "parsedAttachments_one": "{{count}} pièce jointe analysée",
+    "parsedAttachments_other": "{{count}} pièces jointes analysées",
+    "preparingAttachment": "Préparation de la pièce jointe…",
+    "preparedAttachment": "Pièce jointe préparée",
+    "preparingAttachments_one": "Préparation de {{count}} pièce jointe…",
+    "preparingAttachments_other": "Préparation de {{count}} pièces jointes…",
+    "preparedAttachments_one": "{{count}} pièce jointe préparée",
+    "preparedAttachments_other": "{{count}} pièces jointes préparées",
+    "readingAttachment": "Lecture de la pièce jointe…",
+    "readAttachment": "Pièce jointe lue",
+    "readingAttachments_one": "Lecture de {{count}} pièce jointe…",
+    "readingAttachments_other": "Lecture de {{count}} pièces jointes…",
+    "readAttachments_one": "{{count}} pièce jointe lue",
+    "readAttachments_other": "{{count}} pièces jointes lues",
+    "writing": "Écriture de {{name}}{{suffix}}…",
+    "wrote": "Écrit {{name}}{{suffix}}",
+    "writingFiles_one": "Écriture de {{count}} fichier{{suffix}}…",
+    "writingFiles_other": "Écriture de {{count}} fichiers{{suffix}}…",
+    "wroteFiles_one": "{{count}} fichier{{suffix}} écrit",
+    "wroteFiles_other": "{{count}} fichiers{{suffix}} écrits",
+    "fromAttachment": " de la pièce jointe",
+    "fromAttachments": " de {{count}} pièces jointes",
+    "runningScriptOnTabs_one": "Exécution d'un script sur {{count}} onglet…",
+    "runningScriptOnTabs_other": "Exécution d'un script sur {{count}} onglets…",
+    "ranScriptOnTabs_one": "Script exécuté sur {{count}} onglet",
+    "ranScriptOnTabs_other": "Script exécuté sur {{count}} onglets",
+    "labelWriting": "{{label}}{{suffix}}, écriture de {{file}}…",
+    "labelWrote": "{{label}}{{suffix}}, {{file}} écrit",
+    "fileCount_one": "{{count}} fichier",
+    "fileCount_other": "{{count}} fichiers",
+    "attachment": "piece jointe",
+    "mediaImage": "image",
+    "mediaVideo": "vidéo",
+    "mediaAudio": "audio"
+  },
+  "docs": {
+    "searchLatest": "Recherche dans la dernière documentation…",
+    "searchLatestFor": "Recherche dans la dernière documentation pour {{name}}…",
+    "foundLabel": "Trouvé",
+    "foundDocs_one": "{{count}} doc pour {{name}}",
+    "foundDocs_other": "{{count}} docs pour {{name}}",
+    "readingLatest": "Lecture de la dernière documentation…",
+    "readingLatestFor": "Lecture de la dernière documentation pour {{libraryId}}…",
+    "readLatest": "Lire la dernière documentation",
+    "forLibrary": " pour {{libraryId}}"
+  },
+  "linting": {
+    "checkingForIssues": "Vérification des problèmes…",
+    "errorChecking": "Erreur lors de la vérification des diagnostics de linting",
+    "noIssuesFound": "Aucun problème de linting trouvé",
+    "noIssues": "Aucun problème de linting",
+    "foundLabel": "Trouvé",
+    "errorCount_one": "{{count}} erreur",
+    "errorCount_other": "{{count}} erreurs",
+    "warningCount_one": "{{count}} avertissement",
+    "warningCount_other": "{{count}} avertissements",
+    "inFiles_one": " dans {{count}} fichier",
+    "inFiles_other": " dans {{count}} fichiers"
+  },
+  "watcher": {
+    "creating": "Création du watcher",
+    "skipped": "Watcher ignoré",
+    "failed": "Watcher échoué",
+    "created": "Watcher créé",
+    "triggered": "Déclenché",
+    "timedOut": "Délai dépassé",
+    "outcomeFailed": "Échec",
+    "stoppedManually": "Arrêté manuellement",
+    "stoppedAppClosed": "Arrêté à la fermeture de l'application",
+    "expires": "Expire {{when}}",
+    "runsForUpTo": "S'exécute jusqu'à {{duration}}",
+    "defaultTitle": "Watcher",
+    "stop": "Arrêter le watcher",
+    "stopNamed": "Arrêter {{title}}"
+  },
+  "externalAgent": {
+    "needsApproval": "{{toolName}} nécessite une approbation",
+    "failed": "{{toolName}} échoué",
+    "denied": "{{toolName}} refusé",
+    "completedPlan": "Plan terminé",
+    "runningPlan": "Plan en cours",
+    "changedFiles_one": "{{count}} fichier modifié",
+    "changedFiles_other": "{{count}} fichiers modifiés",
+    "changingFiles_one": "Modification de {{count}} fichier",
+    "changingFiles_other": "Modification de {{count}} fichiers",
+    "finished": "{{toolName}} terminé",
+    "running": "{{toolName}} en cours",
+    "deny": "Refuser",
+    "allow": "Autoriser"
+  },
+  "askQuestions": {
+    "cancelledAgentStopped": "Questions annulées (agent arrêté)",
+    "writingQuestions": "Rédaction de quelques questions…",
+    "waitingResponse": "En attente de réponse…",
+    "sentAnswersMessage": "L'utilisateur a envoyé les réponses et le message",
+    "dismissed": "L'utilisateur a rejeté les questions",
+    "answered": "Questions répondues",
+    "userQuestions": "Questions de l'utilisateur",
+    "answer": {
+      "empty": "(vide)",
+      "none": "(aucune)",
+      "yes": "Oui",
+      "no": "Non"
+    }
+  },
+  "planTool": {
+    "creating": "Création du plan…",
+    "failed": "Échec de la création du plan",
+    "openPlan": "Ouvrir le plan",
+    "implement": "Implémenter",
+    "updating": "Mise à jour du plan…",
+    "completedOf": "Terminé {{completed}} sur {{total}}"
+  },
+  "logTool": {
+    "creating": "Création du journal {{channel}}…",
+    "enabled": "Activé",
+    "updating": "Mise à jour du journal {{channel}}…",
+    "updated": "Mis à jour",
+    "channelLog": "Journal {{channel}}"
+  },
+  "fallback": {
+    "finished": "Terminé",
+    "error": "Erreur"
+  },
+  "exploring": {
+    "thought": "Réflexion",
+    "codebase": "A exploré la base de code",
+    "enabledNames": "{{names}} activé(s)",
+    "enabledCountPlugins_one": "{{count}} plugin activé",
+    "enabledCountPlugins_other": "{{count}} plugins activés",
+    "enabledCountSkills_one": "{{count}} compétence activée",
+    "enabledCountSkills_other": "{{count}} compétences activées",
+    "exploredOnly": "Exploré {{list}}",
+    "foundOnly": "Trouvé {{list}}",
+    "enabledAndExplored": "{{enabled}}, exploré {{list}}",
+    "enabledAndFound": "{{enabled}}, trouvé {{list}}",
+    "checkedLintingNoIssues": "Vérifié le linting - aucun problème",
+    "theBrowser": "le navigateur",
+    "documentation": "documentation",
+    "filesWord": "fichiers",
+    "files_one": "{{count}} fichier",
+    "files_other": "{{count}} fichiers",
+    "docs_one": "{{count}} doc",
+    "docs_other": "{{count}} docs",
+    "consoleLogs_one": "{{count}} journal de console",
+    "consoleLogs_other": "{{count}} journaux de console",
+    "screenshots_one": "{{count}} capture d'écran{{suffix}}",
+    "screenshots_other": "{{count}} captures d'écran{{suffix}}",
+    "styles": "styles{{suffix}}",
+    "dom": "DOM{{suffix}}",
+    "scripts_one": "{{count}} script{{suffix}}",
+    "scripts_other": "{{count}} scripts{{suffix}}",
+    "sandboxFiles_one": "{{count}} fichier sandbox",
+    "sandboxFiles_other": "{{count}} fichiers sandbox",
+    "attachmentOne": "1 {{noun}}",
+    "attachmentMany": "{{count}} {{noun}}s",
+    "attachmentGeneric": "piece jointe",
+    "hostSuffixSingle": " sur {{hostname}}",
+    "hostSuffixMany": " sur {{count}} onglets",
+    "lintErrors_one": "{{count}} erreur",
+    "lintErrors_other": "{{count}} erreurs",
+    "lintWarnings_one": "{{count}} avertissement",
+    "lintWarnings_other": "{{count}} avertissements",
+    "listSeparator": ", ",
+    "listConjunction": " et ",
+    "inProgress": {
+      "enabling": "Activation de {{name}}…",
+      "readingFile": "Lecture du fichier…",
+      "listingDirectory": "Liste du répertoire…",
+      "exploringFiles": "Exploration des fichiers…",
+      "exploringDocumentation": "Exploration de la documentation…",
+      "readingDocsFor": "Lecture de la documentation pour {{libraryId}}…",
+      "searchingDocsFor": "Recherche de documentation pour {{name}}…",
+      "exploringTheBrowser": "Exploration du navigateur…",
+      "readingLogsFrom": "Lecture des journaux de {{hostname}}…",
+      "checkingLinting": "Vérification du linting…",
+      "thinking": "Réflexion…",
+      "exploring": "Exploration…"
+    }
+  },
+  "unknown": {
+    "calling": "Appel de l'outil {{type}}…",
+    "finished": "Appel de l'outil {{type}} terminé"
+  }
+}

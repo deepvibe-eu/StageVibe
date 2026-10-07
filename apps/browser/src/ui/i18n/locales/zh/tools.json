@@ -1,0 +1,417 @@
+{
+  "copy": {
+    "renaming": "正在重命名",
+    "moving": "正在移动",
+    "copying": "正在复制",
+    "renamed": "已重命名",
+    "moved": "已移动",
+    "copied": "已复制"
+  },
+  "delete": {
+    "errorPath": "删除 {{path}} 时出错",
+    "errorFile": "删除文件时出错",
+    "deleted": "（已删除）"
+  },
+  "mkdir": {
+    "creatingPath": "正在创建 {{path}}…",
+    "creating": "正在创建目录…",
+    "created": "已创建"
+  },
+  "read": {
+    "enabling": "正在启用 {{name}}…",
+    "enabled": "已启用",
+    "readingLog": "正在读取日志 {{name}}…",
+    "readLog": "读取日志",
+    "readingShellOutput": "正在读取 shell 输出…",
+    "readShellOutput": "读取 shell 输出",
+    "readingMemory": "正在读取内存 {{label}}…",
+    "readMemory": "读取内存",
+    "memoryOf": "（来自 {{agentId}}）",
+    "memoryIndex": "索引",
+    "memoryFile": "文件",
+    "memoryMetadata": "元数据",
+    "memoryContent": "内容",
+    "readingPath": "正在读取 {{path}}…",
+    "readingFile": "正在读取文件…",
+    "read": "读取"
+  },
+  "ls": {
+    "listingPath": "正在列出 {{path}}…",
+    "listing": "正在列出目录…",
+    "listed": "已列出"
+  },
+  "glob": {
+    "searchingFor": "正在搜索 {{pattern}}…",
+    "searchingFiles": "正在搜索文件…",
+    "foundLabel": "找到",
+    "fileCount_one": "{{count}} 个文件",
+    "fileCount_other": "{{count}} 个文件",
+    "matching": " 匹配 \"{{pattern}}\""
+  },
+  "grep": {
+    "searchingFor": "正在搜索 {{query}}…",
+    "searchingGrep": "正在使用 grep 搜索…",
+    "foundLabel": "找到",
+    "resultCount_one": "{{count}} 个结果",
+    "resultCount_other": "{{count}} 个结果",
+    "forQuery": "（查询 \"{{query}}\"）"
+  },
+  "write": {
+    "expandDiff": "展开代码差异",
+    "collapseDiff": "折叠代码差异",
+    "openFile": "打开文件",
+    "openFileTooltip": "点击查看完整文件",
+    "errorPath": "编辑 {{path}} 时出错",
+    "errorFile": "编辑文件时出错",
+    "created": "（新建）"
+  },
+  "multiEdit": {
+    "expandDiff": "展开代码差异",
+    "collapseDiff": "折叠代码差异",
+    "openFile": "打开文件",
+    "openFileTooltip": "点击查看完整文件",
+    "errorPath": "编辑 {{path}} 时出错",
+    "errorFile": "编辑文件时出错"
+  },
+  "shell": {
+    "openingTerminal": "正在打开新终端…",
+    "closingTerminal": "正在关闭终端…",
+    "openedTerminal": "已打开新终端",
+    "closedTerminal": "已关闭终端",
+    "runCommand": "运行命令",
+    "skippedCommand": "跳过命令",
+    "skipped": "（已跳过）",
+    "errorRunning": "运行错误：{{command}}",
+    "sendingInput": "正在发送输入",
+    "running": "正在运行 {{command}}",
+    "cancel": "取消",
+    "couldNotClose": "无法关闭终端",
+    "sentInput": "已发送输入",
+    "ranCommand": "已运行命令",
+    "statusTimedOut": "超时",
+    "statusSessionExited": "会话已退出",
+    "statusExitZero": "退出 0",
+    "statusExit": "退出 {{code}}",
+    "statusKilled": "已终止",
+    "commandStatus": "命令 {{status}}",
+    "closeTerminal": "关闭终端 {{sessionId}}",
+    "empty": "（空）"
+  },
+  "shellApproval": {
+    "skip": "跳过",
+    "smartAllow": "智能允许",
+    "smartAllowTitle": "仅对危险命令询问",
+    "smartAllowDescription": "将此代理切换到智能批准。快速分类器会判断每个命令——破坏性或系统级命令仍需要您的批准。",
+    "allow": "允许"
+  },
+  "console": {
+    "errorReading": "读取控制台日志时出错",
+    "waiting": "正在等待 {{delayMs}}ms 后读取日志…",
+    "waitingFilter": "正在等待 {{delayMs}}ms 后读取日志（筛选：\"{{filter}}\"）…",
+    "readingFiltered": "正在读取筛选后的日志 \"{{filter}}\"…",
+    "reading": "正在读取控制台日志…",
+    "noLogs": "未找到日志",
+    "noLogsMatching": "未找到匹配 \"{{filter}}\" 的日志",
+    "readLabel": "读取",
+    "logCount_one": "{{count}} 条控制台日志",
+    "logCount_other": "{{count}} 条控制台日志",
+    "from": "（来自 {{hostname}}）",
+    "readingFrom": "正在从 {{hostname}} 读取控制台日志…"
+  },
+  "sandbox": {
+    "errorWithExplanation": "错误：{{explanation}}",
+    "errorGeneric": "运行脚本时出错",
+    "script": "脚本",
+    "error": "错误",
+    "result": "结果",
+    "loading": "正在加载…",
+    "preposition": {
+      "on": "在",
+      "from": "来自",
+      "of": "的"
+    },
+    "methods": {
+      "cssEnable": {
+        "inProgress": "正在启用 CSS 检查",
+        "completed": "已启用 CSS 检查"
+      },
+      "cssGetComputedStyleForNode": {
+        "inProgress": "正在读取计算样式",
+        "completed": "已读取计算样式"
+      },
+      "cssGetMatchedStylesForNode": {
+        "inProgress": "正在读取 CSS 规则",
+        "completed": "已读取 CSS 规则"
+      },
+      "cssGetInlineStylesForNode": {
+        "inProgress": "正在读取内联样式",
+        "completed": "已读取内联样式"
+      },
+      "cssGetStyleSheetText": {
+        "inProgress": "正在读取样式表",
+        "completed": "已读取样式表"
+      },
+      "domEnable": {
+        "inProgress": "正在启用 DOM 检查",
+        "completed": "已启用 DOM 检查"
+      },
+      "domGetDocument": {
+        "inProgress": "正在读取文档",
+        "completed": "已读取文档"
+      },
+      "domQuerySelector": {
+        "inProgress": "正在查询元素",
+        "completed": "已查询元素"
+      },
+      "domQuerySelectorAll": {
+        "inProgress": "正在查询元素",
+        "completed": "已查询元素"
+      },
+      "domGetOuterHTML": {
+        "inProgress": "正在读取元素 HTML",
+        "completed": "已读取元素 HTML"
+      },
+      "domResolveNode": {
+        "inProgress": "正在解析元素",
+        "completed": "已解析元素"
+      },
+      "domGetBoxModel": {
+        "inProgress": "正在读取盒模型",
+        "completed": "已读取盒模型"
+      },
+      "runtimeEnable": {
+        "inProgress": "正在启用运行时",
+        "completed": "已启用运行时"
+      },
+      "runtimeEvaluate": {
+        "inProgress": "正在运行脚本",
+        "completed": "已运行脚本"
+      },
+      "runtimeCallFunctionOn": {
+        "inProgress": "正在调用函数",
+        "completed": "已调用函数"
+      },
+      "runtimeGetProperties": {
+        "inProgress": "正在读取属性",
+        "completed": "已读取属性"
+      },
+      "pageEnable": {
+        "inProgress": "正在启用页面检查",
+        "completed": "已启用页面检查"
+      },
+      "pageGetFrameTree": {
+        "inProgress": "正在读取框架",
+        "completed": "已读取框架"
+      },
+      "pageCaptureScreenshot": {
+        "inProgress": "正在截图",
+        "completed": "已截图"
+      },
+      "networkEnable": {
+        "inProgress": "正在启用网络检查",
+        "completed": "已启用网络检查"
+      },
+      "networkGetResponseBody": {
+        "inProgress": "正在读取响应",
+        "completed": "已读取响应"
+      }
+    },
+    "fallbackInspect": {
+      "inProgress": "正在检查 {{domain}}",
+      "completed": "已检查 {{domain}}"
+    },
+    "fallbackScript": {
+      "inProgress": "正在运行脚本",
+      "completed": "已运行脚本"
+    },
+    "runningScript": "正在运行脚本…",
+    "ranScript": "已运行脚本",
+    "parsingAttachment": "正在解析附件…",
+    "parsedAttachment": "已解析附件",
+    "parsingAttachments_one": "正在解析 {{count}} 个附件…",
+    "parsingAttachments_other": "正在解析 {{count}} 个附件…",
+    "parsedAttachments_one": "已解析 {{count}} 个附件",
+    "parsedAttachments_other": "已解析 {{count}} 个附件",
+    "preparingAttachment": "正在准备附件…",
+    "preparedAttachment": "已准备附件",
+    "preparingAttachments_one": "正在准备 {{count}} 个附件…",
+    "preparingAttachments_other": "正在准备 {{count}} 个附件…",
+    "preparedAttachments_one": "已准备 {{count}} 个附件",
+    "preparedAttachments_other": "已准备 {{count}} 个附件",
+    "readingAttachment": "正在读取附件…",
+    "readAttachment": "已读取附件",
+    "readingAttachments_one": "正在读取 {{count}} 个附件…",
+    "readingAttachments_other": "正在读取 {{count}} 个附件…",
+    "readAttachments_one": "已读取 {{count}} 个附件",
+    "readAttachments_other": "已读取 {{count}} 个附件",
+    "writing": "正在写入 {{name}}{{suffix}}…",
+    "wrote": "已写入 {{name}}{{suffix}}",
+    "writingFiles_one": "正在写入 {{count}} 个文件{{suffix}}…",
+    "writingFiles_other": "正在写入 {{count}} 个文件{{suffix}}…",
+    "wroteFiles_one": "已写入 {{count}} 个文件{{suffix}}",
+    "wroteFiles_other": "已写入 {{count}} 个文件{{suffix}}",
+    "fromAttachment": "（来自附件）",
+    "fromAttachments": "（来自 {{count}} 个附件）",
+    "runningScriptOnTabs_one": "正在 {{count}} 个标签页上运行脚本…",
+    "runningScriptOnTabs_other": "正在 {{count}} 个标签页上运行脚本…",
+    "ranScriptOnTabs_one": "已在 {{count}} 个标签页上运行脚本",
+    "ranScriptOnTabs_other": "已在 {{count}} 个标签页上运行脚本",
+    "labelWriting": "{{label}}{{suffix}}，正在写入 {{file}}…",
+    "labelWrote": "{{label}}{{suffix}}，已写入 {{file}}",
+    "fileCount_one": "{{count}} 个文件",
+    "fileCount_other": "{{count}} 个文件",
+    "attachment": "附件",
+    "mediaImage": "图片",
+    "mediaVideo": "视频",
+    "mediaAudio": "音频"
+  },
+  "docs": {
+    "searchLatest": "正在搜索最新文档…",
+    "searchLatestFor": "正在为 {{name}} 搜索最新文档…",
+    "foundLabel": "找到",
+    "foundDocs_one": "为 {{name}} 找到 {{count}} 个文档",
+    "foundDocs_other": "为 {{name}} 找到 {{count}} 个文档",
+    "readingLatest": "正在读取最新文档…",
+    "readingLatestFor": "正在为 {{libraryId}} 读取最新文档…",
+    "readLatest": "读取最新文档",
+    "forLibrary": "（为 {{libraryId}}）"
+  },
+  "linting": {
+    "checkingForIssues": "正在检查问题…",
+    "errorChecking": "检查 linting 诊断时出错",
+    "noIssuesFound": "未发现 linting 问题",
+    "noIssues": "无 linting 问题",
+    "foundLabel": "找到",
+    "errorCount_one": "{{count}} 个错误",
+    "errorCount_other": "{{count}} 个错误",
+    "warningCount_one": "{{count}} 个警告",
+    "warningCount_other": "{{count}} 个警告",
+    "inFiles_one": "（在 {{count}} 个文件中）",
+    "inFiles_other": "（在 {{count}} 个文件中）"
+  },
+  "watcher": {
+    "creating": "正在创建 watcher",
+    "skipped": "Watcher 已跳过",
+    "failed": "Watcher 失败",
+    "created": "已创建 watcher",
+    "triggered": "已触发",
+    "timedOut": "超时",
+    "outcomeFailed": "失败",
+    "stoppedManually": "手动停止",
+    "stoppedAppClosed": "应用关闭时停止",
+    "expires": "于 {{when}} 过期",
+    "runsForUpTo": "最长运行 {{duration}}",
+    "defaultTitle": "Watcher",
+    "stop": "停止 watcher",
+    "stopNamed": "停止 {{title}}"
+  },
+  "externalAgent": {
+    "needsApproval": "{{toolName}} 需要批准",
+    "failed": "{{toolName}} 失败",
+    "denied": "{{toolName}} 被拒绝",
+    "completedPlan": "已完成计划",
+    "runningPlan": "正在运行计划",
+    "changedFiles_one": "更改了 {{count}} 个文件",
+    "changedFiles_other": "更改了 {{count}} 个文件",
+    "changingFiles_one": "正在更改 {{count}} 个文件",
+    "changingFiles_other": "正在更改 {{count}} 个文件",
+    "finished": "已完成 {{toolName}}",
+    "running": "正在运行 {{toolName}}",
+    "deny": "拒绝",
+    "allow": "允许"
+  },
+  "askQuestions": {
+    "cancelledAgentStopped": "问题已取消（代理已停止）",
+    "writingQuestions": "正在撰写问题…",
+    "waitingResponse": "正在等待响应…",
+    "sentAnswersMessage": "用户发送了答案和消息",
+    "dismissed": "用户忽略了问题",
+    "answered": "问题已回答",
+    "userQuestions": "用户问题",
+    "answer": {
+      "empty": "（空）",
+      "none": "（无）",
+      "yes": "是",
+      "no": "否"
+    }
+  },
+  "planTool": {
+    "creating": "正在创建计划…",
+    "failed": "创建计划失败",
+    "openPlan": "打开计划",
+    "implement": "执行",
+    "updating": "正在更新计划…",
+    "completedOf": "已完成 {{completed}} / {{total}}"
+  },
+  "logTool": {
+    "creating": "正在创建 {{channel}} 日志…",
+    "enabled": "已启用",
+    "updating": "正在更新 {{channel}} 日志…",
+    "updated": "已更新",
+    "channelLog": "{{channel}} 日志"
+  },
+  "fallback": {
+    "finished": "完成",
+    "error": "错误"
+  },
+  "exploring": {
+    "thought": "思考",
+    "codebase": "已探索代码库",
+    "enabledNames": "已启用 {{names}}",
+    "enabledCountPlugins_one": "已启用 {{count}} 个插件",
+    "enabledCountPlugins_other": "已启用 {{count}} 个插件",
+    "enabledCountSkills_one": "已启用 {{count}} 个技能",
+    "enabledCountSkills_other": "已启用 {{count}} 个技能",
+    "exploredOnly": "已探索 {{list}}",
+    "foundOnly": "已找到 {{list}}",
+    "enabledAndExplored": "{{enabled}}，已探索 {{list}}",
+    "enabledAndFound": "{{enabled}}，已找到 {{list}}",
+    "checkedLintingNoIssues": "已检查 linting - 无问题",
+    "theBrowser": "浏览器",
+    "documentation": "文档",
+    "filesWord": "文件",
+    "files_one": "{{count}} 个文件",
+    "files_other": "{{count}} 个文件",
+    "docs_one": "{{count}} 个文档",
+    "docs_other": "{{count}} 个文档",
+    "consoleLogs_one": "{{count}} 条控制台日志",
+    "consoleLogs_other": "{{count}} 条控制台日志",
+    "screenshots_one": "{{count}} 张截图{{suffix}}",
+    "screenshots_other": "{{count}} 张截图{{suffix}}",
+    "styles": "样式{{suffix}}",
+    "dom": "DOM{{suffix}}",
+    "scripts_one": "{{count}} 个脚本{{suffix}}",
+    "scripts_other": "{{count}} 个脚本{{suffix}}",
+    "sandboxFiles_one": "{{count}} 个沙盒文件",
+    "sandboxFiles_other": "{{count}} 个沙盒文件",
+    "attachmentOne": "1 个 {{noun}}",
+    "attachmentMany": "{{count}} 个 {{noun}}",
+    "attachmentGeneric": "附件",
+    "hostSuffixSingle": "（在 {{hostname}} 上）",
+    "hostSuffixMany": "（在 {{count}} 个标签页上）",
+    "lintErrors_one": "{{count}} 个错误",
+    "lintErrors_other": "{{count}} 个错误",
+    "lintWarnings_one": "{{count}} 个警告",
+    "lintWarnings_other": "{{count}} 个警告",
+    "listSeparator": "， ",
+    "listConjunction": " 和 ",
+    "inProgress": {
+      "enabling": "正在启用 {{name}}…",
+      "readingFile": "正在读取文件…",
+      "listingDirectory": "正在列出目录…",
+      "exploringFiles": "正在探索文件…",
+      "exploringDocumentation": "正在探索文档…",
+      "readingDocsFor": "正在为 {{libraryId}} 读取文档…",
+      "searchingDocsFor": "正在为 {{name}} 搜索文档…",
+      "exploringTheBrowser": "正在探索浏览器…",
+      "readingLogsFrom": "正在从 {{hostname}} 读取日志…",
+      "checkingLinting": "正在检查 linting…",
+      "thinking": "正在思考…",
+      "exploring": "正在探索…"
+    }
+  },
+  "unknown": {
+    "calling": "正在调用工具 {{type}}…",
+    "finished": "已完成调用工具 {{type}}"
+  }
+}

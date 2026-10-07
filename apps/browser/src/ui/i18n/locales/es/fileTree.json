@@ -1,0 +1,40 @@
+{
+  "hideTree": "Ocultar árbol de archivos",
+  "files": "Archivos",
+  "changedFiles": "Archivos modificados",
+  "searchInContent": "Buscar en contenido",
+  "searchFiles": "Buscar archivos",
+  "noWorkspaces": "No hay espacios de trabajo montados.",
+  "loading": "Cargando…",
+  "loadMore": "Cargar más",
+  "diffLoading": "Cargando diff…",
+  "notGitRepo": "No es un repositorio git",
+  "treeClean": "Árbol de trabajo limpio",
+  "confirmDeleteFile": "¿Eliminar {{path}}?",
+  "confirmDeleteItems": "¿Eliminar {{count}} elementos?",
+  "toast": {
+    "renameFailed": "Renombrado fallido",
+    "renameError": "No se pudo renombrar el elemento.",
+    "newFileFailed": "Nuevo archivo fallido",
+    "newFileError": "No se pudo crear un nuevo archivo.",
+    "newFolderFailed": "Nueva carpeta fallida",
+    "newFolderError": "No se pudo crear una nueva carpeta.",
+    "pasteFailed": "Pegado fallido",
+    "pasteError": "No se pudo pegar el elemento.",
+    "moveFailed": "Movido fallido",
+    "moveError": "No se pudo mover el elemento.",
+    "deleteFailed": "Eliminado fallido",
+    "deleteError": "No se pudo eliminar el elemento."
+  },
+  "menu": {
+    "newFile": "Nuevo Archivo",
+    "newFolder": "Nueva Carpeta",
+    "rename": "Renombrar",
+    "copy": "Copiar",
+    "cut": "Cortar",
+    "paste": "Pegar",
+    "delete": "Eliminar",
+    "copyPath": "Copiar ruta",
+    "openIn": "Abrir en…"
+  }
+}

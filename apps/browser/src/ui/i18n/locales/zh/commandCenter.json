@@ -1,0 +1,87 @@
+{
+  "loading": "正在加载…",
+  "noResults": "无结果",
+  "title": "命令中心",
+  "closeOverlay": "关闭命令中心",
+  "searchFiles": "搜索文件…",
+  "searchAll": "搜索 mates、标签页、终端、设置…",
+  "modes": {
+    "all": "全部",
+    "agents": "Mates",
+    "browser": "浏览器",
+    "terminals": "终端",
+    "files": "文件",
+    "settings": "设置"
+  },
+  "switchMode": "切换到 {{mode}} 模式",
+  "cycleHint": "按 Tab 循环切换命令中心模式",
+  "cancel": "取消",
+  "save": "保存",
+  "delete": "删除",
+  "rename": "重命名",
+  "pin": "固定",
+  "unpin": "取消固定",
+  "deleteConfirm": "删除 \"{{title}}\"？",
+  "searchFilenamesOnly": "仅搜索文件名",
+  "searchInContent": "在内容中搜索",
+  "excludeGitignored": "排除 gitignore 的",
+  "includeGitignored": "包含 gitignore 的",
+  "copyUrl": "复制网址",
+  "close": "关闭",
+  "showingResultsFor": "显示 {{label}} 的结果",
+  "showResultsFor": "显示结果",
+  "untitledTab": "无标题标签页",
+  "lastChanged": "最后更改",
+  "globalAgent": "全局",
+  "agentChat": "代理对话",
+  "terminal": "终端",
+  "shell": "Shell",
+  "sourceAgent": "代理",
+  "sourceManual": "手动",
+  "exportMarkdown": "将当前对话导出为 Markdown…",
+  "exportMarkdownSubtitle": "将完整对话保存到文件",
+  "copyMarkdown": "将当前对话复制为 Markdown",
+  "copyMarkdownSubtitle": "将完整对话放到剪贴板",
+  "settings": {
+    "modelsProviders": {
+      "title": "模型和提供商",
+      "subtitle": "配置模型提供商和编码计划"
+    },
+    "apiKeys": {
+      "title": "设置 API 密钥",
+      "subtitle": "连接 Anthropic、OpenAI、Google 和其他提供商"
+    },
+    "customProviders": {
+      "title": "自定义提供商",
+      "subtitle": "管理自定义模型端点"
+    },
+    "agentGeneral": {
+      "title": "通用 Mate 设置",
+      "subtitle": "配置默认 mate 行为"
+    },
+    "skillsContext": {
+      "title": "技能和上下文文件",
+      "subtitle": "管理技能和上下文文件偏好"
+    },
+    "worktrees": {
+      "title": "工作树",
+      "subtitle": "管理工作树设置脚本"
+    },
+    "plugins": {
+      "title": "插件",
+      "subtitle": "配置捆绑和已启用的插件"
+    },
+    "personalization": {
+      "title": "个性化",
+      "subtitle": "配置 UI 大小、主题颜色、通知和程序坞行为"
+    },
+    "browsing": {
+      "title": "浏览设置",
+      "subtitle": "配置浏览器行为和权限"
+    },
+    "history": {
+      "title": "历史记录",
+      "subtitle": "打开浏览历史记录"
+    }
+  }
+}

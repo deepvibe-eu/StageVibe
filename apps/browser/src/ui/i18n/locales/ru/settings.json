@@ -1,0 +1,731 @@
+{
+  "general": {
+    "title": "Общие",
+    "powerSave": {
+      "title": "Не давать приложению заснуть во время работы агентов",
+      "description": "Предотвратить приостановку приложения во время выполнения агентами циклов инструментов или другой активной работы. Ожидание вопросов или одобрения инструментов всё ещё считается простаиванием.",
+      "macNote": "Чтобы предотвратить сон в режиме батареи на устройствах macOS, в том числе при закрытой крышке, необходимо включить режим «Не заснуть» в правом нижнем углу боковой панели."
+    },
+    "notifications": {
+      "soundsTitle": "Звуки уведомлений",
+      "soundsDescription": "Воспроизводить звук, когда агент завершает работу, задаёт вопрос или сталкивается с ошибкой.",
+      "loudness": "Громкость",
+      "loudnessAria": "Громкость звука уведомлений",
+      "soundPack": "Набор звуков",
+      "previewAria": "Предпрослушать звук",
+      "useCustomSound": "Использовать собственный звук…",
+      "importFailed": "Не удалось импортировать собственный звук",
+      "importFailedFallback": "Не удалось импортировать собственный звук.",
+      "importedTitle": "Собственный звук импортирован",
+      "importedMessage": "{{name}} выбран для уведомлений.",
+      "dockBounceTitle": "Подпрыгивание значка в доке",
+      "dockBounceDescription": "Заставить значок в доке подпрыгивать, когда агент завершает работу, задаёт вопрос или сталкивается с ошибкой, когда окно не в фокусе."
+    },
+    "soundLoudness": {
+      "off": "Выкл",
+      "subtle": "Тихо",
+      "default": "Громко"
+    }
+  },
+  "archived": {
+    "title": "Архивные чаты",
+    "description": "Архивные агенты остановлены и скрыты из списка чатов.",
+    "searchAria": "Поиск в архивных чатах",
+    "searchPlaceholder": "Поиск в архивных чатах",
+    "loading": "Загрузка архивных чатов",
+    "loadFailed": "Не удалось загрузить архивные чаты.",
+    "loadFailedRetry": "Не удалось загрузить архивные чаты. Пожалуйста, попробуйте ещё раз.",
+    "noMatch": "Нет подходящих архивных чатов.",
+    "empty": "Чаты, которые вы архивируете, появятся здесь.",
+    "untitled": "Без названия",
+    "deleteAria": "Удалить {{title}} навсегда",
+    "unarchive": "Извлечь из архива",
+    "showMore": "Показать ещё",
+    "deleteFailed": "Не удалось удалить чат навсегда.",
+    "unarchiveFailed": "Не удалось извлечь чат из архива.",
+    "deleteDialogTitle": "Удалить чат навсегда?",
+    "deleteDialogDescription": "Это удалит историю чата и вложения. Это действие нельзя отменить.",
+    "deletePermanently": "Удалить навсегда",
+    "cancel": "Отмена"
+  },
+  "websitePermissions": {
+    "title": "Разрешения веб-сайтов",
+    "noSiteSelected": "Веб-сайт не выбран. Пожалуйста, выберите веб-сайт на странице настроек браузера.",
+    "summaryNone": "Нет пользовательских разрешений для этого сайта. Все разрешения используют глобальные настройки по умолчанию.",
+    "summaryCount_one": "пользовательское разрешение установлено для этого сайта.",
+    "summaryCount_other": "пользовательских разрешений установлено для этого сайта.",
+    "permissionSettingsTitle": "Настройки разрешений",
+    "permissionSettingsDescription": "Настройте, как этот сайт может получить доступ к функциям браузера.",
+    "customSetting": "Пользовательская настройка",
+    "types": {
+      "media": "Камера и микрофон",
+      "geolocation": "Местоположение",
+      "notifications": "Уведомления",
+      "fullscreen": "Полноэкранный режим",
+      "bluetooth": "Bluetooth",
+      "hid": "HID-устройства",
+      "serial": "Последовательные порты",
+      "usb": "USB-устройства",
+      "clipboard-read": "Чтение буфера обмена",
+      "display-capture": "Захват экрана",
+      "midi": "MIDI-устройства",
+      "idle-detection": "Обнаружение простоя",
+      "speaker-selection": "Выбор динамика",
+      "storage-access": "Доступ к хранилищу"
+    },
+    "settings": {
+      "default": "По умолчанию",
+      "ask": "Спрашивать",
+      "allow": "Разрешить",
+      "block": "Блокировать"
+    },
+    "optionDefaultDescription": "Использовать глобальную настройку ({{label}})",
+    "optionAskDescription": "Спрашивать каждый раз",
+    "optionAllowDescription": "Всегда разрешать для этого сайта",
+    "optionBlockDescription": "Всегда блокировать для этого сайта"
+  },
+  "clearData": {
+    "title": "Очистить данные",
+    "selectTitle": "Выберите данные для очистки",
+    "selectError": "Пожалуйста, выберите хотя бы один тип данных для очистки",
+    "clearing": "Очистка...",
+    "clearLast24h": "Очистить последние 24 часа",
+    "clearAllTime": "Очистить всё время",
+    "success": "Данные успешно очищены",
+    "successCleared": "Успешно очищено {{items}}",
+    "failed": "Не удалось очистить данные",
+    "options": {
+      "history": {
+        "label": "История браузера",
+        "description": "URL-адреса, посещения и поисковые запросы"
+      },
+      "downloads": {
+        "label": "История загрузок",
+        "description": "Список загруженных файлов (не сами файлы)"
+      },
+      "cookies": {
+        "label": "Файлы cookie",
+        "description": "Файлы cookie сайтов и сеансы входа"
+      },
+      "cache": {
+        "label": "Кэшированные изображения и файлы",
+        "description": "HTTP-кэш для более быстрой загрузки страниц"
+      },
+      "storage": {
+        "label": "Локальное хранилище",
+        "description": "Данные localStorage и sessionStorage"
+      },
+      "indexedDB": {
+        "label": "IndexedDB",
+        "description": "Структурированные данные, хранимые веб-сайтами"
+      },
+      "cacheStorage": {
+        "label": "Cache Storage",
+        "description": "Хранилище кэша API, используемое веб-приложениями"
+      },
+      "serviceWorkers": {
+        "label": "Service Workers",
+        "description": "Фоновые скрипты, обеспечивающие офлайн-функциональность"
+      },
+      "favicons": {
+        "label": "Кэшированные фавиконки",
+        "description": "Значки и изображения сайтов"
+      },
+      "permissionExceptions": {
+        "label": "Настройки разрешений сайтов",
+        "description": "Сохранённые выборы Разрешить/Блокировать для камеры, местоположения и т.д."
+      }
+    },
+    "items": {
+      "history_one": "{{count}} элемент истории",
+      "history_other": "{{count}} элементов истории",
+      "favicons_one": "{{count}} фавиконка",
+      "favicons_other": "{{count}} фавиконок",
+      "downloads": "загрузок",
+      "cookies": "файлов cookie",
+      "cache": "кэш",
+      "storage": "хранилище",
+      "permissionExceptions": "настройки разрешений сайтов"
+    }
+  },
+  "account": {
+    "title": "Аккаунт",
+    "authenticate": {
+      "title": "Аутентификация",
+      "description": "Получите доступ к новейшим моделям через Stagewise."
+    },
+    "unknownUser": "Неизвестный пользователь",
+    "signedIn": "Вход выполнен",
+    "fields": {
+      "email": "Эл. почта",
+      "plan": "План",
+      "status": "Статус",
+      "expires": "Истекает",
+      "machineId": "ID машины"
+    },
+    "planFree": "Бесплатный",
+    "statusActive": "Активен",
+    "statusInactive": "Неактивен",
+    "signOut": "Выйти",
+    "openConsole": "Открыть консоль",
+    "usage": {
+      "title": "Использование",
+      "loading": "Загрузка использования...",
+      "failed": "Не удалось загрузить данные об использовании.",
+      "credits": "Кредиты",
+      "remaining": "Осталось {{credits}}",
+      "percentLeft": "Осталось {{percent}}% · сбрасывается {{time}}",
+      "windows": {
+        "daily": "Дневной",
+        "weekly": "Недельный",
+        "monthly": "Месячный"
+      },
+      "resetNow": "сейчас",
+      "resetInHours": "через {{hours}}ч",
+      "resetInDays": "через {{days}}д"
+    },
+    "telemetry": {
+      "title": "Телеметрия",
+      "description": "Управляйте тем, какие данные об использовании собираются для улучшения StageVibe.",
+      "anonymous": "Помогите улучшить StageVibe, делясь анонимизированными событиями.",
+      "full": "Делитесь идентифицируемыми данными чата и использования со stagewise."
+    }
+  },
+  "browsing": {
+    "general": "Общие",
+    "searchEngine": {
+      "title": "Поисковая система по умолчанию",
+      "cannotDeleteDefault": "Нельзя удалить поисковую систему по умолчанию",
+      "remove": "Удалить поисковую систему",
+      "removeFailed": "Не удалось удалить поисковую систему",
+      "addTitle": "Добавить поисковую систему",
+      "name": "Название",
+      "namePlaceholder": "Моя поисковая система",
+      "keyword": "Ключевое слово",
+      "keywordPlaceholder": "mysearch.com",
+      "keywordHint": "Ключевое слово для идентификации этой поисковой системы",
+      "searchUrl": "URL поиска",
+      "searchUrlPlaceholder": "https://example.com/search?q=%s",
+      "searchUrlHint": "URL с %s, куда будет вставлен поисковый запрос",
+      "urlInvalid": "URL должен быть допустимым и содержать заполнитель %s",
+      "adding": "Добавление...",
+      "cancel": "Отмена"
+    },
+    "page": {
+      "homeTitle": "Домашняя страница StageVibe",
+      "homeDescription": "Открыть домашнюю страницу StageVibe",
+      "customTitle": "Пользовательский URL",
+      "customDescription": "Открыть конкретный URL",
+      "urlPlaceholder": "https://example.com"
+    },
+    "newTab": {
+      "title": "Страница новой вкладки",
+      "description": "Выберите, какая страница открывается при создании новой вкладки."
+    },
+    "startup": {
+      "title": "При запуске браузера",
+      "description": "Выберите, какая страница открывается при запуске stagewise."
+    },
+    "permissionDefaults": {
+      "title": "Разрешения по умолчанию",
+      "description": "Установите поведение по умолчанию, когда веб-сайты запрашивают эти разрешения.",
+      "askEveryTime": "Спрашивать каждый раз",
+      "alwaysAllow": "Всегда разрешать",
+      "alwaysBlock": "Всегда блокировать"
+    },
+    "overrides": {
+      "title": "Настройки для конкретных сайтов",
+      "emptyDescription": "Сайты с пользовательскими настройками разрешений появятся здесь.",
+      "empty": "Нет веб-сайтов с пользовательскими настройками разрешений.",
+      "description": "Сайты с пользовательскими настройками разрешений. Нажмите для просмотра или редактирования.",
+      "count_one": "{{count}} пользовательское разрешение",
+      "count_other": "{{count}} пользовательских разрешений"
+    },
+    "privacy": {
+      "title": "Конфиденциальность",
+      "description": "Управляйте настройками конфиденциальности и передачи данных."
+    }
+  },
+  "history": {
+    "title": "История",
+    "searchPlaceholder": "Поиск в истории",
+    "untitled": "Без названия",
+    "copyLink": "Копировать ссылку",
+    "copied": "Скопировано!",
+    "pageCount_one": "{{count}} страница",
+    "pageCount_other": "{{count}} страниц",
+    "loadFailed": "Не удалось загрузить историю",
+    "loadMoreFailed": "Не удалось загрузить больше истории",
+    "techDetails": "Технические подробности (режим разработчика)",
+    "retry": "Повторить",
+    "noMatch": "Не найдена история, соответствующая вашему запросу",
+    "empty": "Пока нет истории"
+  },
+  "about": {
+    "title": "О программе",
+    "fields": {
+      "bundleId": "ID пакета",
+      "releaseChannel": "Канал обновлений",
+      "platform": "Платформа",
+      "architecture": "Архитектура",
+      "author": "Автор",
+      "copyright": "Авторское право",
+      "license": "Лицензия",
+      "homepage": "Домашняя страница",
+      "otherVersions": "Другие версии"
+    },
+    "otherVersions": {
+      "na": "Н/Д",
+      "showLess": "Показать меньше",
+      "viewAll": "Показать все",
+      "none": "Нет дополнительных версий"
+    },
+    "update": {
+      "checking": "Проверка обновлений",
+      "downloading": "Загрузка обновления...",
+      "upToDate": "Актуальная версия",
+      "checkAgain": "Проверить снова",
+      "installRestart": "Установить обновление и перезапустить",
+      "check": "Проверить обновления",
+      "downloadingName": "Обновление {{name}} загружается",
+      "readyName": "Обновление {{name}} готово к установке"
+    },
+    "channel": {
+      "title": "Канал обновлений",
+      "description": "Выберите, из какого предрелизного канала получать обновления.",
+      "beta": "Бета",
+      "betaDescription": "Более стабильные предрелизные обновления",
+      "alpha": "Альфа",
+      "alphaDescription": "Передовые обновления, включая альфа- и бета-версии"
+    },
+    "licenseDialog": {
+      "githubRepository": "Репозиторий GitHub",
+      "noText": "Текст лицензии недоступен для этого пакета."
+    },
+    "licenses": {
+      "title": "Лицензии открытого исходного кода",
+      "description": "Это программное обеспечение включает пакеты с открытым исходным кодом. Просмотрите их лицензии ниже.",
+      "loading": "Загрузка...",
+      "collapse": "Свернуть",
+      "viewAll": "Показать все",
+      "total": "Всего",
+      "searchPlaceholder": "Поиск пакетов или лицензий...",
+      "noMatch": "Не найдены пакеты, соответствующие «{{search}}»",
+      "viewRepository": "Посмотреть репозиторий",
+      "viewLicenseText": "Посмотреть текст лицензии",
+      "support": "Вы можете поддержать нашу работу, подкинув нам",
+      "supportLink": "☕️☕️ кофе ☕️☕️"
+    },
+    "appData": {
+      "title": "Данные приложения",
+      "description": "Откройте папку данных для устранения неполадок или сбросьте StageVibe до чистой установки.",
+      "openFolder": "Открыть папку",
+      "delete": "Удалить данные приложения",
+      "deleteConfirm": "Удалить все данные приложения и перезапустить? Это нельзя отменить. Идентификатор установки будет сохранён.",
+      "dataPath": "Путь к данным"
+    },
+    "viewFullLicense": "Посмотреть полный текст лицензии"
+  },
+  "plugins": {
+    "title": "Плагины",
+    "description": "Включайте или отключайте плагины для расширения возможностей агента с помощью дополнительных навыков.",
+    "enabledSection": "Включено",
+    "disabledSection": "Отключено",
+    "meta": {
+      "skills_one": "{{count}} навык",
+      "skills_other": "{{count}} навыков",
+      "credentialsGeneric": "учётные данные",
+      "credentials_one": "{{count}} учётные данные",
+      "credentials_other": "{{count}} учётных данных"
+    },
+    "credential": {
+      "enterPlaceholder": "Введите {{label}}...",
+      "save": "Сохранить",
+      "clear": "Очистить",
+      "learnMore": "(Подробнее)"
+    }
+  },
+  "skills": {
+    "title": "Навыки и контекстные файлы",
+    "description": "Конфигурация для каждой рабочей области, контекстные файлы и навыки для агента StageVibe.",
+    "globalTab": "Глобальные",
+    "workspace": {
+      "skillsTitle": "Навыки",
+      "skillsDescription": "Включите или отключите навыки для этой рабочей области.",
+      "noSkills": "В этой рабочей области не обнаружены навыки.",
+      "contextTitle": "Контекстные файлы",
+      "contextDescription": "Управление контекстными файлами рабочей области, используемыми ИИ-агентом.",
+      "includeAgentsMd": "Включить в контекст агента"
+    },
+    "global": {
+      "sourceTitle": "Навыки {{label}}",
+      "skillCount_one": "{{count}} навык",
+      "skillCount_other": "{{count}} навыков",
+      "noSkills": "В этом каталоге не найдены навыки."
+    }
+  },
+  "modelPresets": {
+    "invalid": "Недействительно",
+    "invalidModel": "Недействительная модель",
+    "noModel": "Нет модели",
+    "unknown": "Неизвестно",
+    "add": "Добавить",
+    "searchPlaceholder": "Поиск…",
+    "noModelsAvailable": "Нет доступных моделей",
+    "noResults": "Нет результатов",
+    "thinking": "Мышление",
+    "off": "Выкл",
+    "resetToDefault": "Сбросить до默认值",
+    "fallbackCount_one": "{{count}} запасной вариант",
+    "fallbackCount_other": "{{count}} запасных вариантов",
+    "validCount": "({{count}} действительных)",
+    "thinkingLabel": "Мышление: {{value}}",
+    "utilityEmpty": "Модель не настроена, используется основная модель чата.",
+    "defaultTitle": "Модели утилит по умолчанию",
+    "defaultDescription": "Эти модели используются для фоновых задач, когда не задана специфичная для пресета конфигурация. Агент пробует каждую модель по порядку, пока одна не сработает.",
+    "titleGeneration": "Генерация заголовков",
+    "titleGenerationDescription": "Модели, используемые для генерации заголовков разговоров.",
+    "contextCompression": "Сжатие контекста",
+    "contextCompressionDescription": "Модели, используемые для сжатия истории разговора.",
+    "presetsTitle": "Пресеты",
+    "presetsDescription": "Именованные конфигурации моделей для переключения одним нажатием. Показываются в верхней части выбора модели.",
+    "addPreset": "Добавить пресет",
+    "noPresets": "Пресеты не настроены.",
+    "noPresetsHint": "Создайте пресет для быстрого переключения между конфигурациями моделей.",
+    "editor": {
+      "newTitle": "Новый пресет",
+      "editTitle": "Редактировать пресет",
+      "newDescription": "Создайте именованную конфигурацию модели для переключения одним нажатием.",
+      "editDescription": "Обновите этот пресет конфигурации модели.",
+      "name": "Название",
+      "namePlaceholder": "напр., Быстрое кодирование, Глубокое рассуждение",
+      "modelsTitle": "Модели",
+      "modelsDescription": "Перетащите для изменения порядка. Первая модель — основная; остальные — запасные. Нажмите на значок мозга, чтобы настроить мышление для каждой модели.",
+      "main": "Основная",
+      "fallback": "Запасная {{index}}",
+      "titleGeneration": "Генерация заголовков",
+      "titleGenerationDescription": "Модели для генерации заголовков, когда этот пресет активен. Если пусто, используется основная модель.",
+      "contextCompression": "Сжатие контекста",
+      "contextCompressionDescription": "Модели для сжатия контекста, когда этот пресет активен. Если пусто, используется основная модель.",
+      "usesMainModel": "Использует основную модель.",
+      "cancel": "Отмена",
+      "saveChanges": "Сохранить изменения",
+      "createPreset": "Создать пресет"
+    }
+  },
+  "customProviders": {
+    "title": "Пользовательские провайдеры",
+    "subtitle": "Добавьте пользовательские API-конечные точки для самостоятельно размещённых или сторонних LLM-сервисов.",
+    "saveError": "Не удалось сохранить провайдера",
+    "apiSpecGroups": { "generic": "Общие", "cloud": "Облако" },
+    "apiSpec": {
+      "openaiChatCompletions": "OpenAI (Chat Completions)",
+      "openaiResponses": "OpenAI (Responses)",
+      "anthropic": "Anthropic",
+      "google": "Google",
+      "azure": "Azure OpenAI",
+      "amazonBedrock": "Amazon Bedrock",
+      "googleVertex": "Google Vertex AI"
+    },
+    "awsAuth": {
+      "accessKeys": "Ключи доступа",
+      "profile": "Именованный профиль",
+      "defaultChain": "Цепочка учётных данных по умолчанию"
+    },
+    "bedrock": {
+      "region": "Регион AWS",
+      "optionalOverride": "(необязательное переопределение)",
+      "regionPlaceholder": "us-east-1",
+      "fromProfileOrEnv": "из профиля / AWS_REGION",
+      "detectedRegion": "Определённый регион:",
+      "fromAwsRegion": " (из AWS_REGION)",
+      "authMethod": "Метод аутентификации",
+      "accessKeyId": "ID ключа доступа",
+      "secretAccessKey": "Секретный ключ доступа",
+      "leaveBlank": "Оставьте пустым, чтобы сохранить текущий ключ",
+      "enterSecret": "Введите секретный ключ доступа...",
+      "profile": "Профиль AWS",
+      "selectProfile": "Выберите профиль...",
+      "loadingProfiles": "Загрузка профилей…",
+      "defaultProfile": "по умолчанию",
+      "notFound": "{{name}} (не найден)",
+      "noProfiles": "Профили не найдены в ~/.aws/config или ~/.aws/credentials. Введите имя вручную, если нужно.",
+      "ssoHintPrefix": "Профили SSO требуют активного сеанса. Если запросы завершаются с ошибкой истёкшего токена, запустите",
+      "ssoHintCommand": "aws sso login --profile <name>",
+      "ssoHintSuffix": "в терминале.",
+      "defaultChainHint": "Учётные данные будут получены из стандартной цепочки провайдеров AWS: переменные окружения, файл общих учётных данных, метаданные ECS/EC2 экземпляра и SSO.",
+      "loadProfilesFailed": "Не удалось загрузить профили AWS"
+    },
+    "fields": {
+      "resourceName": "Имя ресурса",
+      "orUseBaseUrl": "(или используйте Base URL)",
+      "baseUrl": "Base URL",
+      "overridesResourceName": "(переопределяет имя ресурса)",
+      "apiVersion": "Версия API",
+      "apiKey": "API-ключ",
+      "optional": "(необязательно)",
+      "projectId": "ID проекта",
+      "location": "Расположение",
+      "serviceAccount": "Учётные данные сервисного аккаунта (JSON)",
+      "enterApiKey": "Введите API-ключ...",
+      "keepCredentials": "Оставьте пустым, чтобы сохранить текущие учётные данные"
+    },
+    "form": {
+      "name": "Название",
+      "namePlaceholder": "Мой Azure OpenAI",
+      "providerType": "Тип провайдера",
+      "credentialsReentry": "Смена типов провайдеров очищает существующие учётные данные. Введите новые учётные данные для этого провайдера перед сохранением.",
+      "modelIdMapping": "Сопоставление ID моделей",
+      "optional": "(необязательно)",
+      "suggestedMapping": "Предложенное сопоставление",
+      "suggestedMappingTooltip": "Сопоставьте встроенные модели Claude с соответствующими профилями кросс-регионального вывода Bedrock для вашего региона. Отключите, чтобы редактировать сопоставление вручную.",
+      "mappingHint": "Сопоставьте встроенные ID моделей с ID, которые ожидает эта конечная точка, например, когда провайдер использует другое именование.",
+      "invalidJson": "Недействительный JSON",
+      "saveChanges": "Сохранить изменения",
+      "addProvider": "Добавить провайдера",
+      "cancel": "Отмена"
+    },
+    "dialog": {
+      "editTitle": "Редактировать провайдера",
+      "addTitle": "Добавить пользовательского провайдера",
+      "description": "Настройте пользовательскую API-конечную точку для LLM-сервисов."
+    },
+    "card": {
+      "profileMode": "профиль:{{name}}",
+      "defaultChain": "цепочка по умолчанию",
+      "accessKeys": "ключи доступа",
+      "fromProfile": "из профиля",
+      "fromEnvironment": "из окружения",
+      "noProject": "нет проекта",
+      "notConfigured": "не настроено",
+      "noUrl": "URL не установлен"
+    },
+    "list": {
+      "empty": "Пользовательские провайдеры ещё не настроены.",
+      "addProvider": "Добавить провайдера",
+      "deleteConfirm": "Следующие пользовательские модели используют этого провайдера и перестанут работать:\n\n{{names}}\n\nВсё равно удалить?"
+    }
+  },
+  "modelsProviders": {
+    "apiKey": {
+      "label": "API-ключ",
+      "validating": "проверка...",
+      "updated": "Обновлено",
+      "placeholder": "Введите API-ключ...",
+      "save": "Сохранить",
+      "clear": "Очистить",
+      "getKey": "Получить ваш API-ключ {{name}}",
+      "createKey": "Создать ключ",
+      "validationFailed": "Запрос на проверку не удался. Пожалуйста, попробуйте ещё раз."
+    },
+    "baseUrl": {
+      "invalid": "Base URL должен начинаться с http:// или https://.",
+      "refreshFailed": "Не удалось обновить модели с этой конечной точки.",
+      "rollbackUnknown": "неизвестная ошибка отката",
+      "rollbackFailed": "{{message}} Не удалось восстановить предыдущую конечную точку: {{rollback}}",
+      "overrideLabel": "Переопределение Base URL",
+      "saving": "Сохранение...",
+      "save": "Сохранить",
+      "hint": "Необязательно. Оставьте пустым, чтобы использовать конечную точку по умолчанию этого провайдера.",
+      "hintWithDefault": "Необязательно. Оставьте пустым, чтобы использовать конечную точку по умолчанию этого провайдера ({{url}})."
+    },
+    "card": {
+      "usage": "Использование ·",
+      "percentLeft": "{{label}} осталось {{percent}}%",
+      "requiresPlan": "Требуется тарифный план Pro или Ultra",
+      "upgrade": "Перейти на Pro",
+      "rename": "Переименовать провайдера",
+      "delete": "Удалить провайдера"
+    },
+    "type": {
+      "connected": "Подключено",
+      "connectedCount": "{{count}} подключено"
+    },
+    "add": {
+      "connectionFailed": "Подключение не удалось. Пожалуйста, попробуйте ещё раз.",
+      "customEndpointTitle": "Добавить пользовательскую конечную точку",
+      "connectTitle": "Подключить {{name}}",
+      "title": "Добавить провайдера",
+      "description": "Подключите агента кодирования или источник моделей."
+    },
+    "connect": {
+      "urlPlaceholder": "https://example.com/v1",
+      "enterBaseUrl": "Введите base URL...",
+      "enterApiKey": "Введите API-ключ...",
+      "connectAnyway": "Всё равно подключить (сохранить ключ без проверки)",
+      "notInstalled": "{{name}} не установлен или не найден в PATH вашей оболочки.",
+      "installationGuide": "Руководство по установке",
+      "checkAgain": "Проверить снова",
+      "ollamaHint": "Введите base URL вашего экземпляра Ollama. По умолчанию — http://localhost:11434.",
+      "back": "Назад",
+      "connecting": "Подключение...",
+      "checking": "Проверка...",
+      "discover": "Обнаружить",
+      "connect": "Подключить",
+      "searchPlaceholder": "Поиск провайдеров...",
+      "noMatch": "Нет провайдеров, соответствующих «{{query}}»",
+      "sectionCodingAgents": "Агенты кодирования",
+      "sectionCodingAgentsDesc": "Используйте внешнего агента кодирования и его собственную обвязку.",
+      "sectionStagewise": "Агент Stagewise",
+      "sectionStagewiseDesc": "Выберите, какая модель питает обвязку stagewise.",
+      "sectionPlans": "Подписки и планы",
+      "sectionApiKeys": "API-ключи",
+      "sectionSelfHosted": "Самостоятельное размещение",
+      "sectionCustomEndpoints": "Пользовательские конечные точки",
+      "addCustomEndpoint": "Добавить пользовательскую конечную точку"
+    },
+    "instances": {
+      "empty": "Провайдеры не настроены.",
+      "emptyHint": "Настройте, как агент подключается к LLM-провайдерам."
+    },
+    "customModel": {
+      "jsonErrorProviderOptions": "Недействительный JSON в опциях провайдера",
+      "jsonErrorHeaders": "Недействительный JSON в заголовках",
+      "saveFailed": "Не удалось сохранить модель.",
+      "editTitle": "Редактировать модель",
+      "addTitle": "Добавить пользовательскую модель",
+      "description": "Определите модель и назначьте её провайдеру или пользовательской конечной точке.",
+      "modelId": "ID модели",
+      "duplicate": "Этот ID модели уже существует.",
+      "displayName": "Отображаемое название",
+      "fieldDescription": "Описание",
+      "optional": "(необязательно)",
+      "contextWindow": "Окно контекста",
+      "endpoint": "Конечная точка",
+      "capabilities": "Возможности",
+      "thinking": "Мышление",
+      "toolCalling": "Вызов инструментов",
+      "inputModalities": "Модальности ввода",
+      "outputModalities": "Модальности вывода",
+      "modalities": {
+        "text": "текст",
+        "image": "изображение",
+        "audio": "аудио",
+        "video": "видео",
+        "file": "файл"
+      },
+      "advanced": "Дополнительно",
+      "providerOptions": "Опции провайдера (JSON)",
+      "headers": "Заголовки (JSON)",
+      "saving": "Сохранение...",
+      "saveChanges": "Сохранить изменения",
+      "addModel": "Добавить модель",
+      "cancel": "Отмена",
+      "endpointPlaceholder": "Выберите конечную точку...",
+      "groupBuiltIn": "Встроенные",
+      "groupCodingPlan": "План кодирования",
+      "groupCustom": "Пользовательские"
+    },
+    "models": {
+      "edit": "Редактировать",
+      "disable": "Отключить {{name}}",
+      "enable": "Включить {{name}}",
+      "contextK": "{{count}}k контекст",
+      "modelCount_one": "{{count}} модель",
+      "modelCount_other": "{{count}} моделей",
+      "emptyInstance": "Нет доступных моделей для этого экземпляра.",
+      "enabledOf": "{{enabled}} из {{total}} включено",
+      "reloadFailed": "Не удалось перезагрузить модели.",
+      "noModelsAvailable": "Нет доступных моделей для этого провайдера.",
+      "noEnabledMatchSearch": "Нет включённых моделей, соответствующих вашему поиску. Переключитесь на «Все», чтобы включить отключённые модели.",
+      "noEnabled": "Модели не включены. Переключитесь на «Все», чтобы включить модели.",
+      "noMatchSearch": "Модели не соответствуют вашему поиску. Попробуйте другое название модели или ID.",
+      "tabAll": "Все",
+      "tabEnabledOnly": "Только включённые",
+      "filterPlaceholder": "Фильтр моделей...",
+      "addModel": "Добавить модель",
+      "reload": "Перезагрузить модели",
+      "bulkActions": "Групповые действия с моделями",
+      "enableAll": "Включить все модели",
+      "disableAll": "Отключить все модели"
+    },
+    "selfHosted": {
+      "refreshFailed": "Не удалось обновить модели.",
+      "enterBaseUrl": "Введите base URL...",
+      "saving": "Сохранение...",
+      "save": "Сохранить",
+      "hint": "Отредактируйте base URL и нажмите «Сохранить», чтобы повторно обнаружить доступные модели."
+    },
+    "detail": {
+      "providerName": "Имя провайдера",
+      "rename": "Переименовать {{name}}",
+      "deleteProvider": "Удалить провайдера",
+      "connection": "Подключение",
+      "stagewiseNote": "Использует вашу учётную запись stagewise. Все встроенные модели доступны через Stagewise Inference по умолчанию.",
+      "models": "Модели"
+    },
+    "page": {
+      "title": "Модели и провайдеры",
+      "providers": "Провайдеры",
+      "providersDescription": "Настройте, как агент подключается к LLM-провайдерам. Добавьте API-ключи, подключите планы кодирования или настройте пользовательские конечные точки.",
+      "addProvider": "Добавить провайдера"
+    }
+  },
+  "worktree": {
+    "title": "Worktrees",
+    "description": "Настройте скрипты и очистите управляемые StageVibe Git worktrees.",
+    "loading": "Загрузка репозиториев...",
+    "empty": "Пока нет известных Git-репозиториев. Подключите Git-рабочую область, чтобы настроить worktrees здесь.",
+    "worktreeCount_one": "Используется {{count}} worktree",
+    "worktreeCount_other": "Используется {{count}} worktrees",
+    "variantShell": "Shell (.sh)",
+    "variantPowershell": "PowerShell (.ps1)",
+    "script": "Скрипт",
+    "scriptDescription": "Запускается для новых worktrees, когда ветка с этим файлом при извлечении. Выполняется вариант для платформы worktree.",
+    "codexDetected": "Обнаружена настройка Codex.",
+    "codexNote": "Она настроена в основном worktree для этой платформы и может использоваться как запасной вариант при создании worktrees.",
+    "reset": "Сброс",
+    "saving": "Сохранение...",
+    "save": "Сохранить",
+    "varsAria": "Показать переменные окружения скрипта настройки",
+    "varsButton": "Доступные переменные",
+    "varsTitle": "Переменные окружения скрипта настройки",
+    "varsDescription": "Эти переменные пути доступны при выполнении скрипта настройки worktree.",
+    "varSource": "Путь исходного worktree",
+    "varTarget": "Путь целевого worktree",
+    "varMain": "Путь основного worktree",
+    "varsFooter": "В POSIX-скриптах оболочки обращайтесь к ним через $STAGEWISE_. В PowerShell используйте $env:STAGEWISE_.",
+    "copyAria": "Копировать {{value}}",
+    "managedTitle": "Управляемые worktrees",
+    "managedDescription": "Контролируемые Stagewise экземпляры worktree для этого репозитория.",
+    "filterPlaceholder": "Фильтр worktrees...",
+    "managedEmpty": "Нет управляемых stagewise worktrees для этого репозитория.",
+    "noMatch": "Нет worktrees, соответствующих фильтру.",
+    "neverUsed": "Никогда не использовался",
+    "minutesAgo": "{{count}}м назад",
+    "hoursAgo": "{{count}}ч назад",
+    "daysAgo": "{{count}}д назад",
+    "deleteAria": "Удалить {{name}}",
+    "cannotDeleteAria": "Нельзя удалить {{name}}",
+    "deleteTitle": "Удалить worktree?",
+    "deleteDescription": "Это удалит локальную извлечённую ветку worktree. Ветка не будет удалена.",
+    "deleting": "Удаление...",
+    "deleteWorktree": "Удалить worktree",
+    "cancel": "Отмена",
+    "savedTitle": "Скрипт настройки worktree сохранён",
+    "savedMessage": "Ваш скрипт настройки обновлён.",
+    "saveFailedTitle": "Не удалось сохранить скрипт настройки",
+    "deletedTitle": "Worktree удалён",
+    "deletedMessage": "Локальная извлечённая ветка worktree была удалена.",
+    "deleteFailedTitle": "Не удалось удалить worktree"
+  },
+  "personalization": {
+    "title": "Персонализация",
+    "appearance": {
+      "title": "Внешний вид",
+      "description": "Выберите, следует ли StageVibe использовать системный внешний вид или всегда использовать светлую или тёмную тему.",
+      "system": "Система",
+      "light": "Светлая",
+      "dark": "Тёмная"
+    },
+    "colorScheme": {
+      "title": "Цветовая схема",
+      "description": "Адаптируйте цветовой стиль вашей установки StageVibe по своему вкусу.",
+      "useTheme": "Использовать тему {{name}}"
+    },
+    "language": {
+      "title": "Язык",
+      "description": "Выберите язык, используемый в интерфейсе StageVibe."
+    }
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "boot": {
+    "reconnecting": "Reconnexion en cours… (tentative {{attempt}}/10)",
+    "connectionFailed": "Échec de la connexion après {{attempt}} tentatives",
+    "restart": "Veuillez redémarrer l'application"
+  }
+}

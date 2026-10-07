@@ -1,0 +1,179 @@
+{
+  "toggleSidebar": {
+    "show": "Afficher la barre latérale",
+    "hide": "Masquer la barre latérale"
+  },
+  "toggleContent": {
+    "show": "Afficher le panneau de contenu",
+    "hide": "Masquer le panneau de contenu"
+  },
+  "toggleFileTree": {
+    "show": "Afficher l'arborescence",
+    "hide": "Masquer l'arborescence"
+  },
+  "newBrowserTab": {
+    "label": "Ouvrir un nouvel onglet de navigation",
+    "tooltip": "Ouvrir l'onglet de navigation"
+  },
+  "newTerminalTab": {
+    "label": "Ouvrir un nouvel onglet de terminal",
+    "tooltip": "Ouvrir l'onglet de terminal"
+  },
+  "composer": {
+    "placeholder": "Utilisez / pour planifier et exécuter des commandes. Utilisez @ pour le contexte.",
+    "pressToSend": "Appuyez sur ↵ pour envoyer maintenant",
+    "stop": "Arrêter mate",
+    "selectElements": "Sélectionner les éléments de contexte",
+    "stopSelecting": "Arrêter la sélection d'éléments",
+    "addElements": "Ajouter des éléments de référence",
+    "attachFile": "Joindre un fichier",
+    "sendMessage": "Envoyer le message"
+  },
+  "common": {
+    "search": "Rechercher…",
+    "editYourMessage": "Modifier votre message…",
+    "dismissNotification": "Ignorer la notification"
+  },
+  "actions": {
+    "more": "Plus d'actions",
+    "restoreCheckpoint": "Restaurer le point de contrôle",
+    "expandAll": "Tout développer",
+    "collapseAll": "Tout réduire"
+  },
+  "revert": {
+    "title": "Garder ou annuler les fichiers ?",
+    "description": "Voulez-vous annuler les modifications de fichiers apportées après ce message ?",
+    "revertFiles": "Annuler les fichiers",
+    "keep": "Garder"
+  },
+  "omnibox": {
+    "placeholder": "Rechercher ou taper une URL",
+    "noSuggestions": "Aucune suggestion trouvée.",
+    "noHistory": "Pas encore d'historique de navigation."
+  },
+  "status": {
+    "queued": "{{count}} en attente",
+    "reorder": "Réordonner le message en attente",
+    "sendNow": "Envoyer maintenant",
+    "removeFromQueue": "Retirer de la file d'attente",
+    "openPlan": "Ouvrir le plan",
+    "implement": "Implémenter",
+    "implementing": "Implémentation en cours",
+    "clearLog": "Effacer le journal",
+    "entries_one": "{{count}} entrée",
+    "entries_other": "{{count}} entrées",
+    "back": "Retour",
+    "next": "Suivant",
+    "send": "Envoyer",
+    "cancelQuestion": "Annuler la question"
+  },
+  "validation": {
+    "required": "Ce champ est requis",
+    "invalidEmail": "Format d'e-mail invalide",
+    "mustBeNumber": "Doit être un nombre",
+    "minValue": "La valeur minimale est {{min}}",
+    "maxValue": "La valeur maximale est {{max}}",
+    "minLength": "La longueur minimale est {{minLength}}",
+    "maxLength": "La longueur maximale est {{maxLength}}",
+    "selectOption": "Veuillez sélectionner une option",
+    "enterValue": "Veuillez entrer une valeur",
+    "selectAtLeastOne": "Sélectionnez au moins une option",
+    "otherPlaceholder": "Autre (veuillez entrer)…"
+  },
+  "thinking": {
+    "thinking": "Réflexion en cours…",
+    "thoughtFor": "Réfléchi pendant {{duration}}",
+    "thought": "Réflexion"
+  },
+  "workspaceSetup": {
+    "running": "Configuration en cours",
+    "failed": "Configuration échouée",
+    "titleRunning": "Configuration du worktree en cours",
+    "titleFailed": "Configuration du worktree échouée",
+    "titleDone": "Configuration du worktree terminée",
+    "startedAt": "Démarré à {{time}} · {{duration}}",
+    "finishedIn": "Terminé en {{duration}}",
+    "script": "Script",
+    "exit": "Quitter",
+    "status": "Statut",
+    "output": "Sortie",
+    "errors": "Erreurs",
+    "noOutput": "Aucune sortie capturée pour l'instant."
+  },
+  "mention": {
+    "tabIcon": "Icône de l'onglet",
+    "navigated": "L'onglet est maintenant sur une URL différente.",
+    "closed": "L'onglet est fermé.",
+    "restarted": "Le navigateur a été redémarré.",
+    "openOriginal": "Ouvrir l'URL originale dans un nouvel onglet"
+  },
+  "modelSelect": {
+    "noResults": "Aucun résultat",
+    "openSettingsAria": "Ouvrir les paramètres du modèle",
+    "settings": "Paramètres du modèle",
+    "presets": "Préréglages",
+    "detailsFor": "Détails du modèle pour {{name}}"
+  },
+  "elementAttachment": {
+    "scrollTo": "Faire défiler vers l'élément dans l'onglet",
+    "noLongerExists": "L'élément n'existe plus dans le DOM",
+    "checking": "Vérification de l'existence de l'élément…",
+    "frameLocation": "Emplacement du cadre",
+    "withinFrame": "Situé dans un cadre (iframe, etc.)",
+    "frameTitle": "Titre du cadre",
+    "reactTree": "Arborescence des composants React",
+    "relatedSources": "Fichiers sources associés"
+  },
+  "workspaceMention": {
+    "contextFiles": "Fichiers de contexte",
+    "skills": "Compétences"
+  },
+  "chatHistory": {
+    "mateMessageDisplay": "Affichage du message mate",
+    "scrollToBottom": "Faire défiler vers le bas"
+  },
+  "dropZone": "Zone de dépôt du panneau de conversation",
+  "noMateSelected": "Aucun mate sélectionné",
+  "contextUsage": "Historique de conversation compact",
+  "errors": {
+    "retry": "Réessayer",
+    "configureOtherApiKeys": "Configurer d'autres clés API",
+    "configureApiKeys": "Configurer les clés API",
+    "upgradePlan": "Mettre à niveau le plan",
+    "buyCredits": "Acheter des crédits dans la console",
+    "usageLimitReached": "Limite d'utilisation atteinte",
+    "descriptionUltra": "Vous avez utilisé tous vos crédits inclus.{{reset}}",
+    "descriptionPro": "Vous avez atteint la limite de votre plan Pro.{{reset}}",
+    "descriptionFree": "Vous avez atteint la limite de votre plan gratuit.{{reset}}",
+    "limitResets": " Votre limite se réinitialise {{when}}.",
+    "modelNotAvailableOnPlan": "{{model}} n'est pas disponible sur le plan {{plan}}",
+    "modelNotAvailableOnPlanGeneric": "Modèle non disponible sur le plan {{plan}}",
+    "byokDescription": "Ce modèle est accessible uniquement via BYOK ou un plan Pro. Obtenez votre plan ou configurez votre propre clé API.",
+    "subscriptionRequired": "Abonnement requis",
+    "subscriptionRequiredDescription": "L'accès au modèle IA via Stagewise Inference nécessite un abonnement. Mettez à niveau votre plan, configurez vos propres clés API ou connectez un plan de codage pour continuer.",
+    "upstreamDescription": "Le fournisseur IA en amont est temporairement saturé. Veuillez basculer vers un autre modèle ou réessayer.",
+    "modelTemporarilyUnavailable": "{{model}} est temporairement indisponible",
+    "modelTemporarilyUnavailableGeneric": "Le modèle est temporairement indisponible",
+    "waitingForConnection": "En attente de connexion…",
+    "waitingForConnectionDescription": "Votre appareil semble être hors ligne. L'agent réessayera automatiquement une fois l'accès Internet rétabli.",
+    "lastNetworkError": "Dernière erreur réseau : {{message}}",
+    "notLoggedIn": "Non connecté",
+    "notLoggedInDescription": "Vous n'êtes pas connecté à stagewise et vous n'avez configuré aucune autre méthode d'accès au modèle IA.",
+    "logIn": "Se connecter à stagewise",
+    "heading": "Erreur",
+    "errorCode": "(Code : {{code}})",
+    "whatToDo": "Que faire si le problème persiste ?",
+    "reportPrefix": "Si cette erreur persiste, vous pouvez",
+    "reportLink": "la signaler sur GitHub",
+    "reportSuffix": ". Veuillez inclure le message d'erreur et la trace de pile (si disponible) pour nous aider à diagnostiquer le problème.",
+    "time": {
+      "shortly": "bientôt",
+      "inMinutes_one": "dans {{count}} minute",
+      "inMinutes_other": "dans {{count}} minutes",
+      "inHours_one": "dans {{count}} heure",
+      "inHours_other": "dans {{count}} heures",
+      "inDays_one": "dans {{count}} jour",
+      "inDays_other": "dans {{count}} jours"
+    }
+  }
+}

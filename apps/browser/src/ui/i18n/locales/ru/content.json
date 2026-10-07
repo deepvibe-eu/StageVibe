@@ -1,0 +1,144 @@
+{
+  "nav": {
+    "back": "Назад",
+    "forward": "Вперёд",
+    "reload": "Перезагрузить",
+    "stopLoading": "Остановить загрузку"
+  },
+  "zoom": {
+    "out": "Уменьшить",
+    "in": "Увеличить",
+    "reset": "Сбросить масштаб"
+  },
+  "colorScheme": {
+    "toggle": "Переключить цветовую схему",
+    "current": "Текущая:",
+    "aria": "Переключить цветовую схему, текущая: {{current}}",
+    "light": "Светлая",
+    "dark": "Тёмная",
+    "system": "Системная ({{mode}})"
+  },
+  "search": {
+    "placeholder": "Поиск на вкладке...",
+    "previousAria": "Предыдущий результат поиска",
+    "previousMatch": "Предыдущее совпадение",
+    "nextAria": "Следующий результат поиска",
+    "nextMatch": "Следующее совпадение",
+    "closeAria": "Закрыть поиск",
+    "close": "Закрыть поиск"
+  },
+  "basicAuth": {
+    "signInRequired": "Требуется вход",
+    "realm": "Область: {{realm}}",
+    "username": "Имя пользователя",
+    "usernamePlaceholder": "Введите имя пользователя",
+    "password": "Пароль",
+    "passwordPlaceholder": "Введите пароль",
+    "signIn": "Войти"
+  },
+  "unsavedClose": {
+    "title": "Несохранённые изменения файла",
+    "description": "{{path}} имеет несохранённые изменения. Что должно произойти перед закрытием?",
+    "saveAndClose": "Сохранить и закрыть",
+    "closeWithoutSave": "Закрыть без сохранения"
+  },
+  "preview": {
+    "toggleChatPanel": "Переключить панель чата"
+  },
+  "device": {
+    "dimensions": "Размеры:",
+    "viewportWidth": "Ширина области просмотра",
+    "viewportHeight": "Высота области просмотра",
+    "rotate": "Повернуть область просмотра",
+    "hideToolbar": "Скрыть панель инструментов устройства"
+  },
+  "tabPreview": {
+    "imageAlt": "Предпросмотр вкладки",
+    "copyUrlAria": "Копировать текущий URL",
+    "copyUrl": "Копировать URL"
+  },
+  "watcher": {
+    "showActive": "Показать активные watchers",
+    "title": "Watchers",
+    "open": "(Открыть)",
+    "agentChat": "Чат агента",
+    "showChatFor": "Показать чат для {{title}}",
+    "showChat": "Показать чат",
+    "stopTitle": "Остановить {{title}}",
+    "stopWatcher": "Остановить watcher",
+    "commandUnavailable": "Команда недоступна",
+    "copyScriptFor": "Копировать скрипт для {{title}}",
+    "copiedScriptFor": "Скопирован скрипт для {{title}}",
+    "copied": "Скопировано",
+    "copyScript": "Копировать скрипт",
+    "running": "работает {{duration}}",
+    "expiresIn": "истекает через {{duration}}",
+    "expiring": "истекает"
+  },
+  "servers": {
+    "showLocal": "Показать локальные серверы",
+    "title": "Локальные серверы",
+    "open": "(Открыть)",
+    "global": "Глобальные",
+    "agentChat": "Чат агента",
+    "startedByAgent": "Запущен оболочкой агента",
+    "showChat": "Показать чат",
+    "showTerminal": "Показать терминал",
+    "stopProcess": "Остановить процесс",
+    "stopProcessShortcut": "Остановить процесс (Ctrl+C)",
+    "openInBrowser": "Открыть {{endpoint}} в браузере"
+  },
+  "breadcrumbs": {
+    "preview": "Предпросмотр",
+    "home": "Главная"
+  },
+  "omniboxSuggestions": {
+    "runningLocally": "Работает локально",
+    "searchOrEnterUrl": "Поиск или ввод URL",
+    "mostVisited": "Часто посещаемые",
+    "frequentSearches": "Частые поисковые запросы",
+    "reloadCurrentPage": "Перезагрузить текущую страницу",
+    "open": "Открыть {{input}}",
+    "searchFor": "Искать «{{input}}» с {{engine}}",
+    "recentPages": "Недавние страницы",
+    "recentSearches": "Недавние поисковые запросы"
+  },
+  "permissions": {
+    "desc": {
+      "mediaCameraMic": "хочет использовать вашу камеру и микрофон",
+      "mediaCamera": "хочет использовать вашу камеру",
+      "mediaMic": "хочет использовать ваш микрофон",
+      "mediaGeneric": "хочет доступ к медиа",
+      "geolocation": "хочет узнать ваше местоположение",
+      "notifications": "хочет отправлять уведомления",
+      "fullscreen": "хочет войти в полноэкранный режим",
+      "clipboardRead": "хочет читать ваш буфер обмена",
+      "displayCapture": "хочет демонстрировать ваш экран",
+      "midi": "хочет получить доступ к MIDI-устройствам",
+      "idleDetection": "хочет определять, когда вы бездействуете",
+      "speakerSelection": "хочет выбрать аудиовыход",
+      "storageAccess": "хочет доступ к хранилищу",
+      "bluetooth": "хочет подключиться к Bluetooth-устройству",
+      "hid": "хочет подключиться к HID-устройству",
+      "serial": "хочет подключиться к последовательному порту",
+      "usb": "хочет подключиться к USB-устройству",
+      "bluetoothPairing": "хочет выполнить сопряжение с Bluetooth-устройством",
+      "generic": "запрашивает доступ"
+    },
+    "unknownDevice": "Неизвестное устройство",
+    "hidDevice": "HID-устройство",
+    "serialPort": "Последовательный порт",
+    "usbDevice": "USB-устройство",
+    "searchingDevices": "Поиск устройств...",
+    "selectDevice": "Выберите устройство…",
+    "enterPin": "Введите PIN-код сопряжения",
+    "pin": "PIN:",
+    "allow": "Разрешить",
+    "block": "Блокировать",
+    "always": "Всегда",
+    "title": "Запросы разрешений",
+    "requested_one": "Запрошено {{count}} разрешение",
+    "requested_other": "Запрошено {{count}} разрешений",
+    "noPending": "Нет ожидающих запросов"
+  }
+}

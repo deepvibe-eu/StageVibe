@@ -1,4 +1,717 @@
 {
+  "general": {
+    "title": "Allgemein",
+    "powerSave": {
+      "title": "App während der Agentenarbeit aktiv halten",
+      "description": "App-Suspension verhindern, während Agenten Werkzeugschleifen oder andere aktive Arbeiten ausführen. Das Warten auf Fragen oder Werkzeuggenehmigung gilt noch als im Leerlauf.",
+      "macNote": "Um den Ruhezustand im Batteriemodus auf macOS-Geräten zu verhindern, auch wenn der Deckel geschlossen ist, musst du den Modus „Wach bleiben\" in der rechten unteren Ecke der Seitenleiste aktivieren."
+    },
+    "notifications": {
+      "soundsTitle": "Benachrichtigungstöne",
+      "soundsDescription": "Einen Ton abspielen, wenn der Agent die Arbeit beendet, eine Frage stellt oder auf einen Fehler stößt.",
+      "loudness": "Lautstärke",
+      "loudnessAria": "Benachrichtigungslautstärke",
+      "soundPack": "Soundpaket",
+      "previewAria": "Soundvorschau",
+      "useCustomSound": "Eigenen Sound verwenden…",
+      "importFailed": "Import des benutzerdefinierten Sounds fehlgeschlagen",
+      "importFailedFallback": "Import des benutzerdefinierten Sounds fehlgeschlagen.",
+      "importedTitle": "Eigener Sound importiert",
+      "importedMessage": "{{name}} ist jetzt für Benachrichtigungen ausgewählt.",
+      "dockBounceTitle": "Dock-Symbol bounce",
+      "dockBounceDescription": "Das Dock-Symbol springen lassen, wenn der Agent die Arbeit beendet, eine Frage stellt oder auf einen Fehler stößt, während das Fenster nicht fokussiert ist."
+    },
+    "soundLoudness": {
+      "off": "Aus",
+      "subtle": "Subtil",
+      "default": "Laut"
+    }
+  },
+  "archived": {
+    "title": "Archivierte Chats",
+    "description": "Archivierte Agenten werden gestoppt und in deiner Chat-Liste ausgeblendet.",
+    "searchAria": "Archivierte Chats durchsuchen",
+    "searchPlaceholder": "Archivierte Chats durchsuchen",
+    "loading": "Archivierte Chats werden geladen",
+    "loadFailed": "Archivierte Chats konnten nicht geladen werden.",
+    "loadFailedRetry": "Archivierte Chats konnten nicht geladen werden. Bitte versuche es erneut.",
+    "noMatch": "Keine passenden archivierten Chats.",
+    "empty": "Chats, die du archivierst, erscheinen hier.",
+    "untitled": "Unbenannter Chat",
+    "deleteAria": "{{title}} dauerhaft löschen",
+    "unarchive": "Wiederherstellen",
+    "showMore": "Mehr anzeigen",
+    "deleteFailed": "Chat konnte nicht dauerhaft gelöscht werden.",
+    "unarchiveFailed": "Chat konnte nicht wiederhergestellt werden.",
+    "deleteDialogTitle": "Chat dauerhaft löschen?",
+    "deleteDialogDescription": "Dies löscht den Chatverlauf und Anhänge. Diese Aktion kann nicht rückgängig gemacht werden.",
+    "deletePermanently": "Dauerhaft löschen",
+    "cancel": "Abbrechen"
+  },
+  "websitePermissions": {
+    "title": "Website-Berechtigungen",
+    "noSiteSelected": "Keine Website ausgewählt. Bitte wähle eine Website aus den Browsing-Einstellungen.",
+    "summaryNone": "Keine benutzerdefinierten Berechtigungen für diese Site festgelegt. Alle Berechtigungen verwenden globale Standardwerte.",
+    "summaryCount_one": "benutzerdefinierte Berechtigung für diese Site festgelegt.",
+    "summaryCount_other": "benutzerdefinierte Berechtigungen für diese Site festgelegt.",
+    "permissionSettingsTitle": "Berechtigungseinstellungen",
+    "permissionSettingsDescription": "Konfiguriere, wie diese Site auf Browser-Funktionen zugreifen kann.",
+    "customSetting": "Benutzerdefinierte Einstellung",
+    "types": {
+      "media": "Kamera & Mikrofon",
+      "geolocation": "Standort",
+      "notifications": "Benachrichtigungen",
+      "fullscreen": "Vollbild",
+      "bluetooth": "Bluetooth",
+      "hid": "HID-Geräte",
+      "serial": "Serielle Ports",
+      "usb": "USB-Geräte",
+      "clipboard-read": "Zwischenablage lesen",
+      "display-capture": "Bildschirmfreigabe",
+      "midi": "MIDI-Geräte",
+      "idle-detection": "Leerlauferkennung",
+      "speaker-selection": "Lautsprecherauswahl",
+      "storage-access": "Speicherzugriff"
+    },
+    "settings": {
+      "default": "Standard",
+      "ask": "Fragen",
+      "allow": "Erlauben",
+      "block": "Blockieren"
+    },
+    "optionDefaultDescription": "Globalen Standard verwenden ({{label}})",
+    "optionAskDescription": "Jedes Mal fragen",
+    "optionAllowDescription": "Immer für diese Site erlauben",
+    "optionBlockDescription": "Immer für diese Site blockieren"
+  },
+  "clearData": {
+    "title": "Daten löschen",
+    "selectTitle": "Zu löschende Daten auswählen",
+    "selectError": "Bitte wähle mindestens einen Datentyp zum Löschen aus",
+    "clearing": "Wird gelöscht...",
+    "clearLast24h": "Letzte 24 Stunden löschen",
+    "clearAllTime": "Gesamte Zeit löschen",
+    "success": "Daten erfolgreich gelöscht",
+    "successCleared": "{{items}} erfolgreich gelöscht",
+    "failed": "Daten konnten nicht gelöscht werden",
+    "options": {
+      "history": {
+        "label": "Browserverlauf",
+        "description": "URLs, Besuche und Suchbegriffe"
+      },
+      "downloads": {
+        "label": "Download-Verlauf",
+        "description": "Liste heruntergeladener Dateien (nicht die Dateien selbst)"
+      },
+      "cookies": {
+        "label": "Cookies",
+        "description": "Site-Cookies und Anmeldesitzungen"
+      },
+      "cache": {
+        "label": "Zwischengespeicherte Bilder und Dateien",
+        "description": "HTTP-Cache für schnelleres Laden von Seiten"
+      },
+      "storage": {
+        "label": "Lokaler Speicher",
+        "description": "localStorage- und sessionStorage-Daten"
+      },
+      "indexedDB": {
+        "label": "IndexedDB",
+        "description": "Strukturierte Daten, die von Websites gespeichert werden"
+      },
+      "cacheStorage": {
+        "label": "Cache-Speicher",
+        "description": "Cache-API-Speicher, der von Web-Apps verwendet wird"
+      },
+      "serviceWorkers": {
+        "label": "Service Workers",
+        "description": "Hintergrundskripte, die Offline-Funktionen ermöglichen"
+      },
+      "favicons": {
+        "label": "Zwischengespeicherte Favicons",
+        "description": "Site-Symbole und -Bilder"
+      },
+      "permissionExceptions": {
+        "label": "Site-Berechtigungseinstellungen",
+        "description": "Gespeicherte Allow/Block-Entscheidungen für Kamera, Standort usw."
+      }
+    },
+    "items": {
+      "history_one": "{{count}} Verlaufseintrag",
+      "history_other": "{{count}} Verlaufseinträge",
+      "favicons_one": "{{count}} Favicon",
+      "favicons_other": "{{count}} Favicons",
+      "downloads": "Downloads",
+      "cookies": "Cookies",
+      "cache": "Cache",
+      "storage": "Speicher",
+      "permissionExceptions": "Site-Berechtigungseinstellungen"
+    }
+  },
+  "account": {
+    "title": "Konto",
+    "authenticate": {
+      "title": "Authentifizieren",
+      "description": "Erhalte Zugang zu den neuesten Modellen mit Stagewise."
+    },
+    "unknownUser": "Unbekannter Benutzer",
+    "signedIn": "Angemeldet",
+    "fields": {
+      "email": "E-Mail",
+      "plan": "Tarif",
+      "status": "Status",
+      "expires": "Läuft ab",
+      "machineId": "Maschinen-ID"
+    },
+    "planFree": "Kostenlos",
+    "statusActive": "Aktiv",
+    "statusInactive": "Inaktiv",
+    "signOut": "Abmelden",
+    "openConsole": "Konsole öffnen",
+    "usage": {
+      "title": "Nutzung",
+      "loading": "Nutzung wird geladen...",
+      "failed": "Nutzungsdaten konnten nicht geladen werden.",
+      "credits": "Credits",
+      "remaining": "{{credits}} verbleibend",
+      "percentLeft": "{{percent}}% übrig · setzt {{time}} zurück",
+      "windows": {
+        "daily": "Täglich",
+        "weekly": "Wöchentlich",
+        "monthly": "Monatlich"
+      },
+      "resetNow": "jetzt",
+      "resetInHours": "in {{hours}}h",
+      "resetInDays": "in {{days}}d"
+    },
+    "telemetry": {
+      "title": "Telemetrie",
+      "description": "Steuere, welche Nutzungsdaten gesammelt werden, um StageVibe zu verbessern.",
+      "anonymous": "Hilf StageVibe zu verbessern, indem du anonymisierte Ereignisse teilst.",
+      "full": "Teile identifizierbare Chat- und Nutzungsdaten mit stagewise."
+    }
+  },
+  "browsing": {
+    "general": "Allgemein",
+    "searchEngine": {
+      "title": "Standard-Suchmaschine",
+      "cannotDeleteDefault": "Standard-Suchmaschine kann nicht gelöscht werden",
+      "remove": "Suchmaschine entfernen",
+      "removeFailed": "Suchmaschine konnte nicht entfernt werden",
+      "addTitle": "Suchmaschine hinzufügen",
+      "name": "Name",
+      "namePlaceholder": "Meine Suchmaschine",
+      "keyword": "Schlüsselwort",
+      "keywordPlaceholder": "meinesuche.com",
+      "keywordHint": "Das Schlüsselwort zur Identifizierung dieser Suchmaschine",
+      "searchUrl": "Such-URL",
+      "searchUrlPlaceholder": "https://beispiel.de/suche?q=%s",
+      "searchUrlHint": "URL mit %s, wo der Suchbegriff eingefügt werden soll",
+      "urlInvalid": "URL muss gültig sein und %s-Platzhalter enthalten",
+      "adding": "Wird hinzugefügt...",
+      "cancel": "Abbrechen"
+    },
+    "page": {
+      "homeTitle": "StageVibe Startseite",
+      "homeDescription": "StageVibe-Startseite öffnen",
+      "customTitle": "Benutzerdefinierte URL",
+      "customDescription": "Bestimmte URL öffnen",
+      "urlPlaceholder": "https://beispiel.de"
+    },
+    "newTab": {
+      "title": "Neue Tab-Seite",
+      "description": "Wähle, welche Seite geöffnet wird, wenn du einen neuen Tab erstellst."
+    },
+    "startup": {
+      "title": "Beim Browser-Start",
+      "description": "Wähle, welche Seite geöffnet wird, wenn stagewise startet."
+    },
+    "permissionDefaults": {
+      "title": "Berechtigungsstandards",
+      "description": "Lege das Standardverhalten fest, wenn Websites diese Berechtigungen anfordern.",
+      "askEveryTime": "Jedes Mal fragen",
+      "alwaysAllow": "Immer erlauben",
+      "alwaysBlock": "Immer blockieren"
+    },
+    "overrides": {
+      "title": "Website-spezifische Einstellungen",
+      "emptyDescription": "Sites mit benutzerdefinierten Berechtigungseinstellungen werden hier angezeigt.",
+      "empty": "Noch keine Websites mit benutzerdefinierten Berechtigungseinstellungen.",
+      "description": "Sites mit benutzerdefinierten Berechtigungseinstellungen. Klicken zum Anzeigen oder Bearbeiten.",
+      "count_one": "{{count}} benutzerdefinierte Berechtigung",
+      "count_other": "{{count}} benutzerdefinierte Berechtigungen"
+    },
+    "privacy": {
+      "title": "Datenschutz",
+      "description": "Verwalte deine Datenschutz- und Datenfreigabe-Einstellungen."
+    }
+  },
+  "history": {
+    "title": "Verlauf",
+    "searchPlaceholder": "Verlauf durchsuchen",
+    "untitled": "Unbenannt",
+    "copyLink": "Link kopieren",
+    "copied": "Kopiert!",
+    "pageCount_one": "{{count}} Seite",
+    "pageCount_other": "{{count}} Seiten",
+    "loadFailed": "Verlauf konnte nicht geladen werden",
+    "loadMoreFailed": "Mehr Verlauf konnte nicht geladen werden",
+    "techDetails": "Technische Details (Entwicklermodus)",
+    "retry": "Erneut versuchen",
+    "noMatch": "Kein Verlauf gefunden, der deiner Suche entspricht",
+    "empty": "Noch kein Verlauf"
+  },
+  "about": {
+    "title": "Über",
+    "fields": {
+      "bundleId": "Bundle-ID",
+      "releaseChannel": "Release-Kanal",
+      "platform": "Plattform",
+      "architecture": "Architektur",
+      "author": "Autor",
+      "copyright": "Urheberrecht",
+      "license": "Lizenz",
+      "homepage": "Homepage",
+      "otherVersions": "Andere Versionen"
+    },
+    "otherVersions": {
+      "na": "N/V",
+      "showLess": "Weniger anzeigen",
+      "viewAll": "Alle anzeigen",
+      "none": "Keine zusätzlichen Versionen"
+    },
+    "update": {
+      "checking": "Suche nach Updates",
+      "downloading": "Update wird heruntergeladen...",
+      "upToDate": "Aktuell",
+      "checkAgain": "Erneut prüfen",
+      "installRestart": "Update installieren & Neustarten",
+      "check": "Nach Updates suchen",
+      "downloadingName": "Update {{name}} wird heruntergeladen",
+      "readyName": "Update {{name}} ist bereit zur Installation"
+    },
+    "channel": {
+      "title": "Update-Kanal",
+      "description": "Wähle, welchen Pre-Release-Kanal du für Updates verwenden möchtest.",
+      "beta": "Beta",
+      "betaDescription": "Stabilere Pre-Release-Updates",
+      "alpha": "Alpha",
+      "alphaDescription": "Neueste Updates inklusive Alpha- und Beta-Releases"
+    },
+    "licenseDialog": {
+      "githubRepository": "GitHub-Repository",
+      "noText": "Keine Lizenztext für dieses Paket verfügbar."
+    },
+    "licenses": {
+      "title": "Open-Source-Lizenzen",
+      "description": "Diese Software enthält Open-Source-Pakete. Ihre Lizenzen findest du unten.",
+      "loading": "Wird geladen...",
+      "collapse": "Einklappen",
+      "viewAll": "Alle anzeigen",
+      "total": "Gesamt",
+      "searchPlaceholder": "Pakete oder Lizenzen suchen...",
+      "noMatch": "Keine Pakete gefunden, die \"{{search}}\" entsprechen",
+      "viewRepository": "Repository anzeigen",
+      "viewLicenseText": "Lizenztext anzeigen",
+      "support": "Du kannst unsere Arbeit unterstützen, indem du uns",
+      "supportLink": "☕️☕️ Kaffee ☕️☕️ spendierst"
+    },
+    "appData": {
+      "title": "App-Daten",
+      "description": "Öffne den Datenordner zur Fehlerbehebung oder setze StageVibe auf eine saubere Installation zurück.",
+      "openFolder": "Ordner öffnen",
+      "delete": "App-Daten löschen",
+      "deleteConfirm": "Alle App-Daten löschen und neu starten? Dies kann nicht rückgängig gemacht werden. Deine Installations-ID wird beibehalten.",
+      "dataPath": "Datenpfad"
+    },
+    "viewFullLicense": "Vollständigen Lizenztext anzeigen"
+  },
+  "plugins": {
+    "title": "Plugins",
+    "description": "Aktiviere oder deaktiviere Plugins, um die Fähigkeiten des Agents mit zusätzlichen Skills zu erweitern.",
+    "enabledSection": "Aktiviert",
+    "disabledSection": "Deaktiviert",
+    "meta": {
+      "skills_one": "{{count}} Skill",
+      "skills_other": "{{count}} Skills",
+      "credentialsGeneric": "Anmeldedaten",
+      "credentials_one": "{{count}} Anmeldedaten",
+      "credentials_other": "{{count}} Anmeldedaten"
+    },
+    "credential": {
+      "enterPlaceholder": "{{label}} eingeben...",
+      "save": "Speichern",
+      "clear": "Löschen",
+      "learnMore": "(Mehr erfahren)"
+    }
+  },
+  "skills": {
+    "title": "Skills & Kontextdateien",
+    "description": "Workspace-spezifische Konfiguration, Kontextdateien und Skills für den StageVibe-Agent.",
+    "globalTab": "Global",
+    "workspace": {
+      "skillsTitle": "Skills",
+      "skillsDescription": "Aktiviere oder deaktiviere Skills für diesen Workspace.",
+      "noSkills": "Keine Skills in diesem Workspace erkannt.",
+      "contextTitle": "Kontextdateien",
+      "contextDescription": "Verwalte Workspace-Kontextdateien, die vom KI-Agent verwendet werden.",
+      "includeAgentsMd": "In Agent-Kontext einschließen"
+    },
+    "global": {
+      "sourceTitle": "{{label}} Skills",
+      "skillCount_one": "{{count}} Skill",
+      "skillCount_other": "{{count}} Skills",
+      "noSkills": "Keine Skills in diesem Verzeichnis gefunden."
+    }
+  },
+  "modelPresets": {
+    "invalid": "Ungültig",
+    "invalidModel": "Ungültiges Modell",
+    "noModel": "Kein Modell",
+    "unknown": "Unbekannt",
+    "add": "Hinzufügen",
+    "searchPlaceholder": "Suchen…",
+    "noModelsAvailable": "Keine Modelle verfügbar",
+    "noResults": "Keine Ergebnisse",
+    "thinking": "Denkend",
+    "off": "Aus",
+    "resetToDefault": "Auf Standard zurücksetzen",
+    "fallbackCount_one": "{{count}} Fallback",
+    "fallbackCount_other": "{{count}} Fallbacks",
+    "validCount": "({{count}} gültig)",
+    "thinkingLabel": "Denkend: {{value}}",
+    "utilityEmpty": "Kein Modell konfiguriert, verwendet Haupt-Chat-Modell.",
+    "defaultTitle": "Standard-Dienstprogrammmodelle",
+    "defaultDescription": "Diese Modelle werden für Hintergrundaufgaben verwendet, wenn keine voreingestellte Konfiguration festgelegt ist. Der Agent probiert jedes Modell der Reihe nach aus, bis eines funktioniert.",
+    "titleGeneration": "Titelgenerierung",
+    "titleGenerationDescription": "Modelle zur Generierung von Konversationstiteln.",
+    "contextCompression": "Kontextkomprimierung",
+    "contextCompressionDescription": "Modelle zur Komprimierung des Konversationsverlaufs.",
+    "presetsTitle": "Voreinstellungen",
+    "presetsDescription": "Benannte Modellkonfigurationen für einfaches Wechseln. Wird oben im Modellauswahl angezeigt.",
+    "addPreset": "Voreinstellung hinzufügen",
+    "noPresets": "Keine Voreinstellungen konfiguriert.",
+    "noPresetsHint": "Erstelle eine Voreinstellung, um schnell zwischen Modellkonfigurationen zu wechseln.",
+    "editor": {
+      "newTitle": "Neue Voreinstellung",
+      "editTitle": "Voreinstellung bearbeiten",
+      "newDescription": "Erstelle eine benannte Modellkonfiguration für einfaches Wechseln.",
+      "editDescription": "Aktualisiere diese Modellkonfigurations-Voreinstellung.",
+      "name": "Name",
+      "namePlaceholder": "z.B. Schnelles Coden, Tiefes Denken",
+      "modelsTitle": "Modelle",
+      "modelsDescription": "Zum Neuordnen ziehen. Erstes Modell ist das Hauptmodell; der Rest sind Fallbacks. Klicke auf das Gehirn-Symbol, um das Denken pro Modell zu konfigurieren.",
+      "main": "Haupt",
+      "fallback": "Fallback {{index}}",
+      "titleGeneration": "Titelgenerierung",
+      "titleGenerationDescription": "Modelle für die Titelgenerierung, wenn diese Voreinstellung aktiv ist. Wenn leer, wird das Hauptmodell verwendet.",
+      "contextCompression": "Kontextkomprimierung",
+      "contextCompressionDescription": "Modelle für die Kontextkomprimierung, wenn diese Voreinstellung aktiv ist. Wenn leer, wird das Hauptmodell verwendet.",
+      "usesMainModel": "Verwendet Hauptmodell.",
+      "cancel": "Abbrechen",
+      "saveChanges": "Änderungen speichern",
+      "createPreset": "Voreinstellung erstellen"
+    }
+  },
+  "customProviders": {
+    "title": "Benutzerdefinierte Anbieter",
+    "subtitle": "Füge benutzerdefinierte API-Endpunkte für selbst gehostete oder Drittanbieter-LLM-Dienste hinzu.",
+    "saveError": "Anbieter konnte nicht gespeichert werden",
+    "apiSpecGroups": {
+      "generic": "Generisch",
+      "cloud": "Cloud"
+    },
+    "apiSpec": {
+      "openaiChatCompletions": "OpenAI (Chat Completions)",
+      "openaiResponses": "OpenAI (Responses)",
+      "anthropic": "Anthropic",
+      "google": "Google",
+      "azure": "Azure OpenAI",
+      "amazonBedrock": "Amazon Bedrock",
+      "googleVertex": "Google Vertex AI"
+    },
+    "awsAuth": {
+      "accessKeys": "Zugriffsschlüssel",
+      "profile": "Benanntes Profil",
+      "defaultChain": "Standard-Anmeldekette"
+    },
+    "bedrock": {
+      "region": "AWS-Region",
+      "optionalOverride": "(optionale Überschreibung)",
+      "regionPlaceholder": "us-east-1",
+      "fromProfileOrEnv": "von Profil / AWS_REGION",
+      "detectedRegion": "Erkannte Region:",
+      "fromAwsRegion": " (von AWS_REGION)",
+      "authMethod": "Authentifizierungsmethode",
+      "accessKeyId": "Zugriffsschlüssel-ID",
+      "secretAccessKey": "Geheimer Zugriffsschlüssel",
+      "leaveBlank": "Leer lassen, um aktuellen Schlüssel zu behalten",
+      "enterSecret": "Geheimen Zugriffsschlüssel eingeben...",
+      "profile": "AWS-Profil",
+      "selectProfile": "Profil auswählen...",
+      "loadingProfiles": "Profile werden geladen...",
+      "defaultProfile": "standard",
+      "notFound": "{{name}} (nicht gefunden)",
+      "noProfiles": "Keine Profile in ~/.aws/config oder ~/.aws/credentials gefunden. Bei Bedarf manuell einen Namen eingeben.",
+      "ssoHintPrefix": "SSO-Profile erfordern eine aktive Sitzung. Wenn Anfragen mit einem abgelaufenen Token-Fehler fehlschlagen, führe",
+      "ssoHintCommand": "aws sso login --profile <name>",
+      "ssoHintSuffix": "in deinem Terminal aus.",
+      "defaultChainHint": "Anmeldedaten werden aus der standardmäßigen AWS-Anbieterkette aufgelöst: Umgebungsvariablen, gemeinsame Anmeldedatei, ECS/EC2-Instanzmetadaten und SSO.",
+      "loadProfilesFailed": "AWS-Profile konnten nicht geladen werden"
+    },
+    "fields": {
+      "resourceName": "Ressourcenname",
+      "orUseBaseUrl": "(oder Base-URL verwenden)",
+      "baseUrl": "Base-URL",
+      "overridesResourceName": "(überschreibt Ressourcennamen)",
+      "apiVersion": "API-Version",
+      "apiKey": "API-Schlüssel",
+      "optional": "(optional)",
+      "projectId": "Projekt-ID",
+      "location": "Standort",
+      "serviceAccount": "Dienstkonto-Anmeldedaten (JSON)",
+      "enterApiKey": "API-Schlüssel eingeben...",
+      "keepCredentials": "Leer lassen, um aktuelle Anmeldedaten zu behalten"
+    },
+    "form": {
+      "name": "Name",
+      "namePlaceholder": "Mein Azure OpenAI",
+      "providerType": "Anbietertyp",
+      "credentialsReentry": "Das Ändern von Anbietertypen löscht die vorhandenen Anmeldedaten. Gib neue Anmeldedaten für diesen Anbieter ein, bevor du speicherst.",
+      "modelIdMapping": "Modell-ID-Zuordnung",
+      "optional": "(optional)",
+      "suggestedMapping": "Vorgeschlagene Zuordnung",
+      "suggestedMappingTooltip": "Ordne die integrierten Claude-Modelle den passenden Bedrock-Region-übergreifenden Inferenzprofilen für deine Region zu. Deaktiviere, um die Zuordnung manuell zu bearbeiten.",
+      "mappingHint": "Ordne integrierte Modell-IDs den IDs zu, die dieser Endpunkt erwartet, z.B. wenn der Anbieter andere Namenskonventionen verwendet.",
+      "invalidJson": "Ungültiges JSON",
+      "saveChanges": "Änderungen speichern",
+      "addProvider": "Anbieter hinzufügen",
+      "cancel": "Abbrechen"
+    },
+    "dialog": {
+      "editTitle": "Anbieter bearbeiten",
+      "addTitle": "Benutzerdefinierten Anbieter hinzufügen",
+      "description": "Konfiguriere einen benutzerdefinierten API-Endpunkt für LLM-Dienste."
+    },
+    "card": {
+      "profileMode": "Profil:{{name}}",
+      "defaultChain": "Standardkette",
+      "accessKeys": "Zugriffsschlüssel",
+      "fromProfile": "von Profil",
+      "fromEnvironment": "von Umgebung",
+      "noProject": "kein Projekt",
+      "notConfigured": "nicht konfiguriert",
+      "noUrl": "Keine URL festgelegt"
+    },
+    "list": {
+      "empty": "Noch keine benutzerdefinierten Anbieter konfiguriert.",
+      "addProvider": "Anbieter hinzufügen",
+      "deleteConfirm": "Die folgenden benutzerdefinierten Modelle verwenden diesen Anbieter und werden nicht mehr funktionieren:\n\n{{names}}\n\nTrotzdem löschen?"
+    }
+  },
+  "modelsProviders": {
+    "apiKey": {
+      "label": "API-Schlüssel",
+      "validating": "wird validiert...",
+      "updated": "Aktualisiert",
+      "placeholder": "API-Schlüssel eingeben...",
+      "save": "Speichern",
+      "clear": "Löschen",
+      "getKey": "Hole deinen {{name}} API-Schlüssel",
+      "createKey": "Schlüssel erstellen",
+      "validationFailed": "Validierungsanfrage fehlgeschlagen. Bitte versuche es erneut."
+    },
+    "baseUrl": {
+      "invalid": "Die Base-URL muss mit http:// oder https:// beginnen.",
+      "refreshFailed": "Modelle von diesem Endpunkt konnten nicht aktualisiert werden.",
+      "rollbackUnknown": "unbekannter Rollback-Fehler",
+      "rollbackFailed": "{{message}} Vorheriger Endpunkt konnte nicht wiederhergestellt werden: {{rollback}}",
+      "overrideLabel": "Base-URL-Überschreibung",
+      "saving": "Wird gespeichert...",
+      "save": "Speichern",
+      "hint": "Optional. Leer lassen, um den Standardendpunkt dieses Anbieters zu verwenden.",
+      "hintWithDefault": "Optional. Leer lassen, um den Standardendpunkt dieses Anbieters zu verwenden ({{url}})."
+    },
+    "card": {
+      "usage": "Nutzung ·",
+      "percentLeft": "{{label}} {{percent}}% übrig",
+      "requiresPlan": "Erfordert Pro- oder Ultra-Tarif",
+      "upgrade": "Auf Pro upgraden",
+      "rename": "Anbieter umbenennen",
+      "delete": "Anbieter löschen"
+    },
+    "type": {
+      "connected": "Verbunden",
+      "connectedCount": "{{count}} verbunden"
+    },
+    "add": {
+      "connectionFailed": "Verbindung fehlgeschlagen. Bitte versuche es erneut.",
+      "customEndpointTitle": "Benutzerdefinierten Endpunkt hinzufügen",
+      "connectTitle": "{{name}} verbinden",
+      "title": "Anbieter hinzufügen",
+      "description": "Verbinde einen Coding-Agent oder Modellquell."
+    },
+    "connect": {
+      "urlPlaceholder": "https://beispiel.de/v1",
+      "enterBaseUrl": "Base-URL eingeben...",
+      "enterApiKey": "API-Schlüssel eingeben...",
+      "connectAnyway": "Trotzdem verbinden (Schlüssel ohne Validierung speichern)",
+      "notInstalled": "{{name}} ist nicht installiert oder konnte nicht in deinem Shell-PATH gefunden werden.",
+      "installationGuide": "Installationsanleitung",
+      "checkAgain": "Erneut prüfen",
+      "ollamaHint": "Gib die Base-URL deiner Ollama-Instanz ein. Standard ist http://localhost:11434.",
+      "back": "Zurück",
+      "connecting": "Verbindung wird hergestellt...",
+      "checking": "Wird geprüft...",
+      "discover": "Entdecken",
+      "connect": "Verbinden",
+      "searchPlaceholder": "Anbieter suchen...",
+      "noMatch": "Keine Anbieter entsprechen \"{{query}}\"",
+      "sectionCodingAgents": "Coding-Agenten",
+      "sectionCodingAgentsDesc": "Verwende einen externen Coding-Agent und seinen nativen Harness.",
+      "sectionStagewise": "Stagewise-Agent",
+      "sectionStagewiseDesc": "Wähle, welches Modell den stagewise-Harness antreibt.",
+      "sectionPlans": "Abonnements & Tarife",
+      "sectionApiKeys": "API-Schlüssel",
+      "sectionSelfHosted": "Selbst gehostet",
+      "sectionCustomEndpoints": "Benutzerdefinierte Endpunkte",
+      "addCustomEndpoint": "Benutzerdefinierten Endpunkt hinzufügen"
+    },
+    "instances": {
+      "empty": "Keine Anbieter konfiguriert.",
+      "emptyHint": "Konfiguriere, wie der Agent eine Verbindung zu LLM-Anbietern herstellt."
+    },
+    "customModel": {
+      "jsonErrorProviderOptions": "Ungültiges JSON in Anbieteroptionen",
+      "jsonErrorHeaders": "Ungültiges JSON in Headern",
+      "saveFailed": "Modell konnte nicht gespeichert werden.",
+      "editTitle": "Modell bearbeiten",
+      "addTitle": "Benutzerdefiniertes Modell hinzufügen",
+      "description": "Definiere ein Modell und weise es einem Anbieter oder benutzerdefinierten Endpunkt zu.",
+      "modelId": "Modell-ID",
+      "duplicate": "Diese Modell-ID existiert bereits.",
+      "displayName": "Anzeigename",
+      "fieldDescription": "Beschreibung",
+      "optional": "(optional)",
+      "contextWindow": "Kontextfenster",
+      "endpoint": "Endpunkt",
+      "capabilities": "Fähigkeiten",
+      "thinking": "Denken",
+      "toolCalling": "Werkzeugaufrufe",
+      "inputModalities": "Eingabemodalitäten",
+      "outputModalities": "Ausgabemodalitäten",
+      "modalities": {
+        "text": "Text",
+        "image": "Bild",
+        "audio": "Audio",
+        "video": "Video",
+        "file": "Datei"
+      },
+      "advanced": "Erweitert",
+      "providerOptions": "Anbieteroptionen (JSON)",
+      "headers": "Header (JSON)",
+      "saving": "Wird gespeichert...",
+      "saveChanges": "Änderungen speichern",
+      "addModel": "Modell hinzufügen",
+      "cancel": "Abbrechen",
+      "endpointPlaceholder": "Endpunkt auswählen...",
+      "groupBuiltIn": "Integriert",
+      "groupCodingPlan": "Coding-Plan",
+      "groupCustom": "Benutzerdefiniert"
+    },
+    "models": {
+      "edit": "Bearbeiten",
+      "disable": "{{name}} deaktivieren",
+      "enable": "{{name}} aktivieren",
+      "contextK": "{{count}}k Kontext",
+      "modelCount_one": "{{count}} Modell",
+      "modelCount_other": "{{count}} Modelle",
+      "emptyInstance": "Keine Modelle für diese Instanz verfügbar.",
+      "enabledOf": "{{enabled}} von {{total}} aktiviert",
+      "reloadFailed": "Modelle konnten nicht neu geladen werden.",
+      "noModelsAvailable": "Keine Modelle für diesen Anbieter verfügbar.",
+      "noEnabledMatchSearch": "Keine aktivierten Modelle entsprechen deiner Suche. Wechsle zu Alle, um deaktivierte Modelle einzuschließen.",
+      "noEnabled": "Keine Modelle aktiviert. Wechsle zu Alle, um Modelle zu aktivieren.",
+      "noMatchSearch": "Keine Modelle entsprechen deiner Suche. Versuche einen anderen Modellnamen oder eine andere ID.",
+      "tabAll": "Alle",
+      "tabEnabledOnly": "Nur aktiviert",
+      "filterPlaceholder": "Modelle filtern...",
+      "addModel": "Modell hinzufügen",
+      "reload": "Modelle neu laden",
+      "bulkActions": "Massenaktionen für Modelle",
+      "enableAll": "Alle Modelle aktivieren",
+      "disableAll": "Alle Modelle deaktivieren"
+    },
+    "selfHosted": {
+      "refreshFailed": "Modelle konnten nicht aktualisiert werden.",
+      "enterBaseUrl": "Base-URL eingeben...",
+      "saving": "Wird gespeichert...",
+      "save": "Speichern",
+      "hint": "Bearbeite die Base-URL und klicke auf Speichern, um verfügbare Modelle erneut zu entdecken."
+    },
+    "detail": {
+      "providerName": "Anbietername",
+      "rename": "{{name}} umbenennen",
+      "deleteProvider": "Anbieter löschen",
+      "connection": "Verbindung",
+      "stagewiseNote": "Verwendet dein stagewise-Konto. Alle integrierten Modelle sind standardmäßig über Stagewise Inference verfügbar.",
+      "models": "Modelle"
+    },
+    "page": {
+      "title": "Modelle & Anbieter",
+      "providers": "Anbieter",
+      "providersDescription": "Konfiguriere, wie der Agent eine Verbindung zu LLM-Anbietern herstellt. Füge API-Schlüssel hinzu, verbinde Coding-Pläne oder richte benutzerdefinierte Endpunkte ein.",
+      "addProvider": "Anbieter hinzufügen"
+    }
+  },
+  "worktree": {
+    "title": "Worktrees",
+    "description": "Konfiguriere Skripte und bereinige StageVibe-verwaltete Git-Worktrees.",
+    "loading": "Repositories werden geladen...",
+    "empty": "Noch keine bekannten Git-Repositories. Verbinde einmal einen Git-Workspace, um hier die Worktree-Einrichtung zu konfigurieren.",
+    "worktreeCount_one": "{{count}} Worktree verwendet",
+    "worktreeCount_other": "{{count}} Worktrees verwendet",
+    "variantShell": "Shell (.sh)",
+    "variantPowershell": "PowerShell (.ps1)",
+    "script": "Skript",
+    "scriptDescription": "Wird für neue Worktrees ausgeführt, wenn der ausgecheckte Branch diese Datei enthält. Die Variante für die Plattform des Worktrees wird ausgeführt.",
+    "codexDetected": "Codex-Einrichtung erkannt.",
+    "codexNote": "Es ist im Haupt-Worktree für diese Plattform konfiguriert und kann als Fallback beim Erstellen von Worktrees verwendet werden.",
+    "reset": "Zurücksetzen",
+    "saving": "Wird gespeichert...",
+    "save": "Speichern",
+    "varsAria": "Umgebungsvariablen des Einrichtungsskripts anzeigen",
+    "varsButton": "Verfügbare Variablen",
+    "varsTitle": "Umgebungsvariablen des Einrichtungsskripts",
+    "varsDescription": "Diese Pfadvariablen sind verfügbar, wenn das Worktree-Einrichtungsskript ausgeführt wird.",
+    "varSource": "Quell-Worktree-Pfad",
+    "varTarget": "Ziel-Worktree-Pfad",
+    "varMain": "Haupt-Worktree-Pfad",
+    "varsFooter": "In POSIX-Shell-Skripten greife über $STAGEWISE_ zu. In PowerShell verwende $env:STAGEWISE_.",
+    "copyAria": "{{value}} kopieren",
+    "managedTitle": "Verwaltete Worktrees",
+    "managedDescription": "Stagewise-kontrollierte Worktree-Instanzen für dieses Repository.",
+    "filterPlaceholder": "Worktrees filtern...",
+    "managedEmpty": "Keine stagewise-verwalteten Worktrees für dieses Repository.",
+    "noMatch": "Keine Worktrees entsprechen deinem Filter.",
+    "neverUsed": "Nie verwendet",
+    "minutesAgo": "vor {{count}}m",
+    "hoursAgo": "vor {{count}}h",
+    "daysAgo": "vor {{count}}d",
+    "deleteAria": "{{name}} löschen",
+    "cannotDeleteAria": "{{name}} kann nicht gelöscht werden",
+    "deleteTitle": "Worktree löschen?",
+    "deleteDescription": "Dies entfernt den lokalen Worktree-Checkout. Der Branch wird nicht gelöscht.",
+    "deleting": "Wird gelöscht...",
+    "deleteWorktree": "Worktree löschen",
+    "cancel": "Abbrechen",
+    "savedTitle": "Worktree-Einrichtungsskript gespeichert",
+    "savedMessage": "Dein Einrichtungsskript wurde aktualisiert.",
+    "saveFailedTitle": "Einrichtungsskript konnte nicht gespeichert werden",
+    "deletedTitle": "Worktree gelöscht",
+    "deletedMessage": "Der lokale Worktree-Checkout wurde entfernt.",
+    "deleteFailedTitle": "Worktree konnte nicht gelöscht werden"
+  },
   "personalization": {
     "title": "Personalisierung",
     "appearance": {

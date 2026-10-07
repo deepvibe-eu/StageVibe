@@ -1,0 +1,40 @@
+{
+  "hideTree": "Скрыть дерево файлов",
+  "files": "Файлы",
+  "changedFiles": "Изменённые файлы",
+  "searchInContent": "Поиск в содержимом",
+  "searchFiles": "Поиск файлов",
+  "noWorkspaces": "Нет подключённых рабочих областей.",
+  "loading": "Загрузка…",
+  "loadMore": "Загрузить ещё",
+  "diffLoading": "Загрузка diff…",
+  "notGitRepo": "Не Git-репозиторий",
+  "treeClean": "Рабочее дерево чистое",
+  "confirmDeleteFile": "Удалить {{path}}?",
+  "confirmDeleteItems": "Удалить {{count}} элементов?",
+  "toast": {
+    "renameFailed": "Переименование не удалось",
+    "renameError": "Не удалось переименовать элемент.",
+    "newFileFailed": "Создание файла не удалось",
+    "newFileError": "Не удалось создать новый файл.",
+    "newFolderFailed": "Создание папки не удалось",
+    "newFolderError": "Не удалось создать новую папку.",
+    "pasteFailed": "Вставка не удалась",
+    "pasteError": "Не удалось вставить элемент.",
+    "moveFailed": "Перемещение не удалось",
+    "moveError": "Не удалось переместить элемент.",
+    "deleteFailed": "Удаление не удалось",
+    "deleteError": "Не удалось удалить элемент."
+  },
+  "menu": {
+    "newFile": "Новый файл",
+    "newFolder": "Новая папка",
+    "rename": "Переименовать",
+    "copy": "Копировать",
+    "cut": "Вырезать",
+    "paste": "Вставить",
+    "delete": "Удалить",
+    "copyPath": "Копировать путь",
+    "openIn": "Открыть в…"
+  }
+}

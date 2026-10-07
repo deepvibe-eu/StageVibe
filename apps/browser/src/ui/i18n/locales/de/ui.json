@@ -1,0 +1,140 @@
+{
+  "errorBoundary": {
+    "title": "Etwas ist schief gelaufen",
+    "description": "Ein unerwarteter Fehler ist aufgetreten. Bitte lade die App neu.",
+    "reload": "Neu laden"
+  },
+  "fileMenu": {
+    "openInFileView": "In Dateiansicht öffnen",
+    "revealIn": "Anzeigen in {{manager}}"
+  },
+  "openIn": {
+    "label": "In {{target}} öffnen",
+    "menu": "Öffnen in…"
+  },
+  "mermaid": {
+    "loading": "Diagramm wird geladen...",
+    "errorPrefix": "Mermaid-Fehler: {{error}}",
+    "showCode": "Code anzeigen",
+    "chart": "Mermaid-Diagramm",
+    "openInTab": "Mermaid-Diagramm in Tab öffnen"
+  },
+  "releaseNotes": {
+    "title": "Was ist neu",
+    "gotIt": "Verstanden"
+  },
+  "idePicker": {
+    "group": "Dateien öffnen in:",
+    "placeholder": "Dateien öffnen in…"
+  },
+  "tutorial": {
+    "close": "Tutorial schließen",
+    "back": "Zurück",
+    "okay": "OK",
+    "finish": "Fertig",
+    "next": "Weiter"
+  },
+  "codingPlan": {
+    "connectionFailed": "Verbindung fehlgeschlagen. Bitte versuche es erneut.",
+    "disconnectionFailed": "Trennung fehlgeschlagen. Bitte versuche es erneut.",
+    "connected": "Verbunden",
+    "apiKeyLabel": "{{plan}} API-Schlüssel",
+    "enterApiKey": "API-Schlüssel eingeben...",
+    "disconnecting": "Wird getrennt...",
+    "disconnect": "Trennen",
+    "connecting": "Wird verbunden...",
+    "connect": "Verbinden",
+    "createKey": "Schlüssel erstellen"
+  },
+  "signIn": {
+    "lastUsed": "Zuletzt verwendet",
+    "title": "Authentifizieren",
+    "description": "Wähle eine Anmeldemethode, um fortzufahren.",
+    "providerGoogle": "Google",
+    "providerGithub": "GitHub",
+    "providerEmail": "E-Mail",
+    "providerOther": "dein Anbieter",
+    "socialFailed": "Social Sign-In konnte nicht abgeschlossen werden.",
+    "emailFailed": "E-Mail Sign-In konnte nicht abgeschlossen werden.",
+    "securityNotReady": "Sicherheitsüberprüfung nicht bereit. Bitte warte einen Moment.",
+    "securityFailed": "Sicherheitsüberprüfung fehlgeschlagen. Bitte versuche es erneut.",
+    "sendCodeFailed": "Verifizierungscode konnte nicht gesendet werden.",
+    "verifyCodeFailed": "Code konnte nicht verifiziert werden.",
+    "enterEmail": "Gib deine E-Mail ein, um einen Verifizierungscode zu erhalten.",
+    "sentCode": "Wir haben einen Code an {{email}} gesendet. Gib ihn unten ein.",
+    "waitingBrowser": "Bitte schließe die Anmeldung mit {{provider}} in deinem Browser ab und kehre dann zu StageVibe zurück.",
+    "continueGoogle": "Mit Google fortfahren",
+    "continueGithub": "Mit GitHub fortfahren",
+    "continueEmail": "Mit E-Mail fortfahren",
+    "or": "oder",
+    "useApiKeys": "Verwende deine eigenen API-Schlüssel",
+    "useSubscription": "Verwende bestehendes Abonnement",
+    "loading": "Wird geladen...",
+    "sendCode": "Code senden",
+    "back": "Zurück zu Anmeldeoptionen",
+    "waitingSignIn": "Warte auf Abschluss der Anmeldung in deinem Browser…",
+    "verifying": "Wird verifiziert...",
+    "verify": "Verifizieren",
+    "useDifferentEmail": "Andere E-Mail verwenden"
+  },
+  "domBadge": {
+    "elementScreenshot": "Element-Screenshot",
+    "nodeType": "Knotentyp",
+    "size": "Größe",
+    "text": "Text",
+    "xpath": "XPath",
+    "page": "Seite",
+    "selectedElement": "Ausgewähltes Element: {{fileName}}"
+  },
+  "textclip": {
+    "copyToClipboard": "In Zwischenablage kopieren",
+    "pastedText": "Eingefügter Text",
+    "characters": "{{count}} Zeichen",
+    "useRawText": "Rohtext verwenden"
+  },
+  "mermaidEditor": {
+    "viewDiagram": "Diagramm anzeigen",
+    "view": "Ansicht",
+    "sideBySide": "Nebeneinander",
+    "split": "Teilen",
+    "editSource": "Quellcode bearbeiten",
+    "edit": "Bearbeiten"
+  },
+  "thinking": {
+    "title": "Denken",
+    "close": "Schließen",
+    "enable": "Denken aktivieren",
+    "current": "Aktuell: {{label}}",
+    "effort": "Aufwand",
+    "defaultLabel": "Standard: {{label}}",
+    "default": "Standard",
+    "reset": "Auf Standard zurücksetzen"
+  },
+  "diff": {
+    "label": "Diff"
+  },
+  "markdownEditor": {
+    "saving": "Wird gespeichert…",
+    "saved": "Gespeichert",
+    "saveFailed": "Speichern fehlgeschlagen"
+  },
+  "table": {
+    "copyAsCsv": "Tabelle als CSV kopieren",
+    "downloadAsCsv": "Als CSV herunterladen"
+  },
+  "attachmentLink": {
+    "copied": "Kopiert",
+    "copy": "Kopieren",
+    "openAria": "{{target}} öffnen",
+    "clickToOpen": "Klicken zum Öffnen in Dateiansicht",
+    "clickToOpenReadOnly": "Klicken zum Öffnen (nur lesen)"
+  },
+  "streamdown": {
+    "openInContentTab": "In Inhalts-Tab öffnen",
+    "openInBrowser": "Im Browser öffnen",
+    "downloadImage": "Bild herunterladen",
+    "image": "Bild",
+    "imageTitle": "Bild",
+    "openImageAria": "{{name}} in Tab öffnen"
+  }
+}

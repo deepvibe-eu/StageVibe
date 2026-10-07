@@ -1,0 +1,87 @@
+{
+  "loading": "Chargement…",
+  "noResults": "Aucun résultat",
+  "title": "Centre de commande",
+  "closeOverlay": "Fermer le centre de commande",
+  "searchFiles": "Rechercher des fichiers…",
+  "searchAll": "Rechercher des mates, onglets, terminaux, paramètres…",
+  "modes": {
+    "all": "Tout",
+    "agents": "Mates",
+    "browser": "Navigateur",
+    "terminals": "Terminaux",
+    "files": "Fichiers",
+    "settings": "Paramètres"
+  },
+  "switchMode": "Passer en mode {{mode}}",
+  "cycleHint": "Appuyez sur Tab pour parcourir les modes du centre de commande",
+  "cancel": "Annuler",
+  "save": "Enregistrer",
+  "delete": "Supprimer",
+  "rename": "Renommer",
+  "pin": "Épingler",
+  "unpin": "Désépingler",
+  "deleteConfirm": "Supprimer « {{title}} » ?",
+  "searchFilenamesOnly": "Rechercher uniquement dans les noms de fichiers",
+  "searchInContent": "Rechercher dans le contenu",
+  "excludeGitignored": "Exclure gitignored",
+  "includeGitignored": "Inclure gitignored",
+  "copyUrl": "Copier l'URL",
+  "close": "Fermer",
+  "showingResultsFor": "Affichage des résultats pour {{label}}",
+  "showResultsFor": "Afficher les résultats pour",
+  "untitledTab": "Onglet sans titre",
+  "lastChanged": "Dernière modification",
+  "globalAgent": "Global",
+  "agentChat": "Conversation de l'agent",
+  "terminal": "Terminal",
+  "shell": "Shell",
+  "sourceAgent": "Agent",
+  "sourceManual": "Manuel",
+  "exportMarkdown": "Exporter la conversation actuelle en Markdown…",
+  "exportMarkdownSubtitle": "Enregistrer la conversation complète dans un fichier",
+  "copyMarkdown": "Copier la conversation actuelle en Markdown",
+  "copyMarkdownSubtitle": "Mettre la conversation complète dans le presse-papiers",
+  "settings": {
+    "modelsProviders": {
+      "title": "Modèles et fournisseurs",
+      "subtitle": "Configurer les fournisseurs de modèles et les plans de codage"
+    },
+    "apiKeys": {
+      "title": "Définir les clés API",
+      "subtitle": "Connecter Anthropic, OpenAI, Google et d'autres fournisseurs"
+    },
+    "customProviders": {
+      "title": "Fournisseurs personnalisés",
+      "subtitle": "Gérer les points de terminaison de modèles personnalisés"
+    },
+    "agentGeneral": {
+      "title": "Paramètres généraux du Mate",
+      "subtitle": "Configurer le comportement par défaut du mate"
+    },
+    "skillsContext": {
+      "title": "Compétences et fichiers de contexte",
+      "subtitle": "Gérer les préférences de compétences et fichiers de contexte"
+    },
+    "worktrees": {
+      "title": "Worktrees",
+      "subtitle": "Gérer les scripts de configuration des worktrees"
+    },
+    "plugins": {
+      "title": "Plugins",
+      "subtitle": "Configurer les plugins groupés et activés"
+    },
+    "personalization": {
+      "title": "Personnalisation",
+      "subtitle": "Configurer la taille de l'UI, les couleurs du thème, les notifications et le comportement du dock"
+    },
+    "browsing": {
+      "title": "Paramètres de navigation",
+      "subtitle": "Configurer le comportement du navigateur et les permissions"
+    },
+    "history": {
+      "title": "Historique",
+      "subtitle": "Ouvrir l'historique de navigation"
+    }
+  }
+}

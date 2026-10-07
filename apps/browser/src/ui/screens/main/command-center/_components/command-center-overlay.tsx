@@ -19,7 +19,7 @@ export function CommandCenterOverlay({
     >
       <button
         type="button"
-        aria-label={t('close')}
+        aria-label={t('closeOverlay')}
         className="absolute inset-0 cursor-default"
         onClick={onClose}
       />

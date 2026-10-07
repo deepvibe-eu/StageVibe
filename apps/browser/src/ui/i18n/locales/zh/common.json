@@ -1,0 +1,7 @@
+{
+  "boot": {
+    "reconnecting": "正在重新连接… (尝试 {{attempt}}/10)",
+    "connectionFailed": "连接失败，已尝试 {{attempt}} 次",
+    "restart": "请重新启动应用程序"
+  }
+}

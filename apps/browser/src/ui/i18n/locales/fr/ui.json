@@ -1,0 +1,140 @@
+{
+  "errorBoundary": {
+    "title": "Une erreur s'est produite",
+    "description": "Une erreur inattendue s'est produite. Veuillez recharger l'application.",
+    "reload": "Recharger"
+  },
+  "fileMenu": {
+    "openInFileView": "Ouvrir en vue fichier",
+    "revealIn": "Révéler dans {{manager}}"
+  },
+  "openIn": {
+    "label": "Ouvrir dans {{target}}",
+    "menu": "Ouvrir dans…"
+  },
+  "mermaid": {
+    "loading": "Chargement du diagramme…",
+    "errorPrefix": "Erreur Mermaid : {{error}}",
+    "showCode": "Afficher le code",
+    "chart": "Diagramme Mermaid",
+    "openInTab": "Ouvrir le diagramme Mermaid dans un onglet"
+  },
+  "releaseNotes": {
+    "title": "Nouveautés",
+    "gotIt": "Compris"
+  },
+  "idePicker": {
+    "group": "Ouvrir les fichiers dans :",
+    "placeholder": "Ouvrir les fichiers dans…"
+  },
+  "tutorial": {
+    "close": "Fermer le tutoriel",
+    "back": "Retour",
+    "okay": "D'accord",
+    "finish": "Terminer",
+    "next": "Suivant"
+  },
+  "codingPlan": {
+    "connectionFailed": "Échec de la connexion. Veuillez réessayer.",
+    "disconnectionFailed": "Échec de la déconnexion. Veuillez réessayer.",
+    "connected": "Connecté",
+    "apiKeyLabel": "Clé API {{plan}}",
+    "enterApiKey": "Entrer la clé API…",
+    "disconnecting": "Déconnexion en cours…",
+    "disconnect": "Se déconnecter",
+    "connecting": "Connexion en cours…",
+    "connect": "Connecter",
+    "createKey": "Créer une clé"
+  },
+  "signIn": {
+    "lastUsed": "Dernière utilisation",
+    "title": "S'authentifier",
+    "description": "Choisissez une méthode de connexion pour continuer.",
+    "providerGoogle": "Google",
+    "providerGithub": "GitHub",
+    "providerEmail": "E-mail",
+    "providerOther": "votre fournisseur",
+    "socialFailed": "Échec de la connexion sociale.",
+    "emailFailed": "Échec de la connexion par e-mail.",
+    "securityNotReady": "Vérification de sécurité non prête. Veuillez patienter un instant.",
+    "securityFailed": "Échec de la vérification de sécurité. Veuillez réessayer.",
+    "sendCodeFailed": "Échec de l'envoi du code de vérification.",
+    "verifyCodeFailed": "Échec de la vérification du code.",
+    "enterEmail": "Entrez votre e-mail pour recevoir un code de vérification.",
+    "sentCode": "Nous avons envoyé un code à {{email}}. Entrez-le ci-dessous.",
+    "waitingBrowser": "Veuillez terminer la connexion avec {{provider}} dans votre navigateur, puis revenez sur StageVibe.",
+    "continueGoogle": "Continuer avec Google",
+    "continueGithub": "Continuer avec GitHub",
+    "continueEmail": "Continuer avec l'e-mail",
+    "or": "ou",
+    "useApiKeys": "Utilisez vos propres clés API",
+    "useSubscription": "Utiliser un abonnement existant",
+    "loading": "Chargement…",
+    "sendCode": "Envoyer le code",
+    "back": "Retour aux options de connexion",
+    "waitingSignIn": "En attente de votre connexion dans votre navigateur…",
+    "verifying": "Vérification…",
+    "verify": "Vérifier",
+    "useDifferentEmail": "Utiliser un autre e-mail"
+  },
+  "domBadge": {
+    "elementScreenshot": "Capture d'écran de l'élément",
+    "nodeType": "Type de nœud",
+    "size": "Taille",
+    "text": "Texte",
+    "xpath": "XPath",
+    "page": "Page",
+    "selectedElement": "Élément sélectionné : {{fileName}}"
+  },
+  "textclip": {
+    "copyToClipboard": "Copier dans le presse-papiers",
+    "pastedText": "Texte collé",
+    "characters": "{{count}} caractères",
+    "useRawText": "Utiliser le texte brut"
+  },
+  "mermaidEditor": {
+    "viewDiagram": "Voir le diagramme",
+    "view": "Vue",
+    "sideBySide": "Côte à côte",
+    "split": "Diviser",
+    "editSource": "Éditer la source",
+    "edit": "Éditer"
+  },
+  "thinking": {
+    "title": "Réflexion",
+    "close": "Fermer",
+    "enable": "Activer la réflexion",
+    "current": "Actuel : {{label}}",
+    "effort": "Effort",
+    "defaultLabel": "Par défaut : {{label}}",
+    "default": "Par défaut",
+    "reset": "Réinitialiser par défaut"
+  },
+  "diff": {
+    "label": "Diff"
+  },
+  "markdownEditor": {
+    "saving": "Enregistrement…",
+    "saved": "Enregistré",
+    "saveFailed": "Échec de l'enregistrement"
+  },
+  "table": {
+    "copyAsCsv": "Copier le tableau en CSV",
+    "downloadAsCsv": "Télécharger en CSV"
+  },
+  "attachmentLink": {
+    "copied": "Copié",
+    "copy": "Copier",
+    "openAria": "Ouvrir {{target}}",
+    "clickToOpen": "Cliquer pour ouvrir en vue fichier",
+    "clickToOpenReadOnly": "Cliquer pour ouvrir (lecture seule)"
+  },
+  "streamdown": {
+    "openInContentTab": "Ouvrir dans l'onglet de contenu",
+    "openInBrowser": "Ouvrir dans le navigateur",
+    "downloadImage": "Télécharger l'image",
+    "image": "image",
+    "imageTitle": "Image",
+    "openImageAria": "Ouvrir {{name}} dans un onglet"
+  }
+}

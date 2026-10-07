@@ -1,0 +1,179 @@
+{
+  "toggleSidebar": {
+    "show": "显示侧边栏",
+    "hide": "隐藏侧边栏"
+  },
+  "toggleContent": {
+    "show": "显示内容面板",
+    "hide": "隐藏内容面板"
+  },
+  "toggleFileTree": {
+    "show": "显示文件树",
+    "hide": "隐藏文件树"
+  },
+  "newBrowserTab": {
+    "label": "打开新浏览器标签页",
+    "tooltip": "打开浏览标签页"
+  },
+  "newTerminalTab": {
+    "label": "打开新终端标签页",
+    "tooltip": "打开终端标签页"
+  },
+  "composer": {
+    "placeholder": "使用 / 规划和运行命令。使用 @ 获取上下文。",
+    "pressToSend": "按 ↵ 立即发送",
+    "stop": "停止 mate",
+    "selectElements": "选择上下文元素",
+    "stopSelecting": "停止选择元素",
+    "addElements": "添加引用元素",
+    "attachFile": "附加文件",
+    "sendMessage": "发送消息"
+  },
+  "common": {
+    "search": "搜索…",
+    "editYourMessage": "编辑您的消息…",
+    "dismissNotification": "关闭通知"
+  },
+  "actions": {
+    "more": "更多操作",
+    "restoreCheckpoint": "恢复检查点",
+    "expandAll": "全部展开",
+    "collapseAll": "全部折叠"
+  },
+  "revert": {
+    "title": "保留还是还原文件？",
+    "description": "您想还原此消息后所做的文件更改吗？",
+    "revertFiles": "还原文件",
+    "keep": "保留"
+  },
+  "omnibox": {
+    "placeholder": "搜索或输入网址",
+    "noSuggestions": "未找到建议。",
+    "noHistory": "暂无浏览历史。"
+  },
+  "status": {
+    "queued": "{{count}} 个排队中",
+    "reorder": "重新排序排队的消息",
+    "sendNow": "立即发送",
+    "removeFromQueue": "从队列移除",
+    "openPlan": "打开计划",
+    "implement": "执行",
+    "implementing": "正在执行",
+    "clearLog": "清除日志",
+    "entries_one": "{{count}} 条记录",
+    "entries_other": "{{count}} 条记录",
+    "back": "返回",
+    "next": "下一个",
+    "send": "发送",
+    "cancelQuestion": "取消问题"
+  },
+  "validation": {
+    "required": "此字段为必填",
+    "invalidEmail": "无效的邮箱格式",
+    "mustBeNumber": "必须是数字",
+    "minValue": "最小值为 {{min}}",
+    "maxValue": "最大值为 {{max}}",
+    "minLength": "最小长度为 {{minLength}}",
+    "maxLength": "最大长度为 {{maxLength}}",
+    "selectOption": "请选择一个选项",
+    "enterValue": "请输入值",
+    "selectAtLeastOne": "请至少选择一个选项",
+    "otherPlaceholder": "其他（请输入）…"
+  },
+  "thinking": {
+    "thinking": "思考中…",
+    "thoughtFor": "思考了 {{duration}}",
+    "thought": "思考"
+  },
+  "workspaceSetup": {
+    "running": "设置运行中",
+    "failed": "设置失败",
+    "titleRunning": "工作树设置运行中",
+    "titleFailed": "工作树设置失败",
+    "titleDone": "工作树设置完成",
+    "startedAt": "开始于 {{time}} · {{duration}}",
+    "finishedIn": "完成于 {{duration}}",
+    "script": "脚本",
+    "exit": "退出",
+    "status": "状态",
+    "output": "输出",
+    "errors": "错误",
+    "noOutput": "尚未捕获输出。"
+  },
+  "mention": {
+    "tabIcon": "标签页图标",
+    "navigated": "标签页当前在不同的网址上。",
+    "closed": "标签页已关闭。",
+    "restarted": "浏览器已重启。",
+    "openOriginal": "在新标签页中打开原始网址"
+  },
+  "modelSelect": {
+    "noResults": "无结果",
+    "openSettingsAria": "打开模型设置",
+    "settings": "模型设置",
+    "presets": "预设",
+    "detailsFor": "{{name}} 的模型详情"
+  },
+  "elementAttachment": {
+    "scrollTo": "在标签页中滚动到元素",
+    "noLongerExists": "元素在 DOM 中已不存在",
+    "checking": "正在检查元素是否存在…",
+    "frameLocation": "框架位置",
+    "withinFrame": "位于框架内（iframe 等）",
+    "frameTitle": "框架标题",
+    "reactTree": "React 组件树",
+    "relatedSources": "相关源文件"
+  },
+  "workspaceMention": {
+    "contextFiles": "上下文文件",
+    "skills": "技能"
+  },
+  "chatHistory": {
+    "mateMessageDisplay": "Mate 消息显示",
+    "scrollToBottom": "滚动到底部"
+  },
+  "dropZone": "对话面板拖放区",
+  "noMateSelected": "未选择 mate",
+  "contextUsage": "紧凑的对话历史",
+  "errors": {
+    "retry": "重试",
+    "configureOtherApiKeys": "配置其他 API 密钥",
+    "configureApiKeys": "配置 API 密钥",
+    "upgradePlan": "升级套餐",
+    "buyCredits": "在控制台购买积分",
+    "usageLimitReached": "已达使用量限制",
+    "descriptionUltra": "您已用完所有包含的积分。{{reset}}",
+    "descriptionPro": "您已达到 Pro 套餐限制。{{reset}}",
+    "descriptionFree": "您已达到免费套餐限制。{{reset}}",
+    "limitResets": " 您的限制将于 {{when}} 重置。",
+    "modelNotAvailableOnPlan": "{{model}} 在 {{plan}} 套餐上不可用",
+    "modelNotAvailableOnPlanGeneric": "该模型在 {{plan}} 套餐上不可用",
+    "byokDescription": "此模型仅可通过 BYOK 或 Pro 套餐访问。获取您的套餐或配置您自己的 API 密钥。",
+    "subscriptionRequired": "需要订阅",
+    "subscriptionRequiredDescription": "通过 Stagewise 推理进行 AI 模型访问需要订阅。升级您的套餐、配置您自己的 API 密钥或连接编码计划以继续。",
+    "upstreamDescription": "上游 AI 提供商暂时满负荷。请切换到其他模型或重试。",
+    "modelTemporarilyUnavailable": "{{model}} 暂时不可用",
+    "modelTemporarilyUnavailableGeneric": "模型暂时不可用",
+    "waitingForConnection": "等待连接…",
+    "waitingForConnectionDescription": "您的设备似乎处于离线状态。代理将在网络再次可用时自动重试。",
+    "lastNetworkError": "上次网络错误：{{message}}",
+    "notLoggedIn": "未登录",
+    "notLoggedInDescription": "您未登录 stagewise，也未配置任何其他 AI 模型访问方式。",
+    "logIn": "登录 stagewise",
+    "heading": "错误",
+    "errorCode": "（代码：{{code}}）",
+    "whatToDo": "如果问题持续存在该怎么办？",
+    "reportPrefix": "如果此错误持续发生，您可以",
+    "reportLink": "在 GitHub 上报告",
+    "reportSuffix": "。请包含错误信息和堆栈跟踪（如果有）以帮助我们诊断问题。",
+    "time": {
+      "shortly": "很快",
+      "inMinutes_one": "{{count}} 分钟后",
+      "inMinutes_other": "{{count}} 分钟后",
+      "inHours_one": "{{count}} 小时后",
+      "inHours_other": "{{count}} 小时后",
+      "inDays_one": "{{count}} 天后",
+      "inDays_other": "{{count}} 天后"
+    }
+  }
+}

@@ -1,0 +1,179 @@
+{
+  "toggleSidebar": {
+    "show": "Показать боковую панель",
+    "hide": "Скрыть боковую панель"
+  },
+  "toggleContent": {
+    "show": "Показать панель контента",
+    "hide": "Скрыть панель контента"
+  },
+  "toggleFileTree": {
+    "show": "Показать дерево файлов",
+    "hide": "Скрыть дерево файлов"
+  },
+  "newBrowserTab": {
+    "label": "Открыть новую вкладку браузера",
+    "tooltip": "Открыть вкладку браузера"
+  },
+  "newTerminalTab": {
+    "label": "Открыть новую вкладку терминала",
+    "tooltip": "Открыть вкладку терминала"
+  },
+  "composer": {
+    "placeholder": "Используйте / для планирования и выполнения команд. Используйте @ для контекста.",
+    "pressToSend": "Нажмите ↵ для отправки",
+    "stop": "Остановить mate",
+    "selectElements": "Выбрать элементы контекста",
+    "stopSelecting": "Прекратить выбор элементов",
+    "addElements": "Добавить ссылочные элементы",
+    "attachFile": "Прикрепить файл",
+    "sendMessage": "Отправить сообщение"
+  },
+  "common": {
+    "search": "Поиск…",
+    "editYourMessage": "Редактировать ваше сообщение...",
+    "dismissNotification": "Закрыть уведомление"
+  },
+  "actions": {
+    "more": "Дополнительные действия",
+    "restoreCheckpoint": "Восстановить контрольную точку",
+    "expandAll": "Развернуть всё",
+    "collapseAll": "Свернуть всё"
+  },
+  "revert": {
+    "title": "Сохранить или отменить файлы?",
+    "description": "Хотите отменить изменения файлов, сделанные после этого сообщения?",
+    "revertFiles": "Отменить файлы",
+    "keep": "Сохранить"
+  },
+  "omnibox": {
+    "placeholder": "Поиск или ввод URL",
+    "noSuggestions": "Предложений не найдено.",
+    "noHistory": "Пока нет истории браузера."
+  },
+  "status": {
+    "queued": "{{count}} в очереди",
+    "reorder": "Изменить порядок сообщения в очереди",
+    "sendNow": "Отправить сейчас",
+    "removeFromQueue": "Удалить из очереди",
+    "openPlan": "Открыть план",
+    "implement": "Реализовать",
+    "implementing": "Реализация",
+    "clearLog": "Очистить журнал",
+    "entries_one": "{{count}} запись",
+    "entries_other": "{{count}} записей",
+    "back": "Назад",
+    "next": "Далее",
+    "send": "Отправить",
+    "cancelQuestion": "Отменить вопрос"
+  },
+  "validation": {
+    "required": "Это поле обязательно",
+    "invalidEmail": "Неверный формат email",
+    "mustBeNumber": "Должно быть числом",
+    "minValue": "Минимальное значение {{min}}",
+    "maxValue": "Максимальное значение {{max}}",
+    "minLength": "Минимальная длина {{minLength}}",
+    "maxLength": "Максимальная длина {{maxLength}}",
+    "selectOption": "Пожалуйста, выберите вариант",
+    "enterValue": "Пожалуйста, введите значение",
+    "selectAtLeastOne": "Выберите хотя бы один вариант",
+    "otherPlaceholder": "Другое (пожалуйста, введите)..."
+  },
+  "thinking": {
+    "thinking": "Думаю...",
+    "thoughtFor": "Думал {{duration}}",
+    "thought": "Мысль"
+  },
+  "workspaceSetup": {
+    "running": "Настройка выполняется",
+    "failed": "Настройка не удалась",
+    "titleRunning": "Настройка worktree выполняется",
+    "titleFailed": "Настройка worktree не удалась",
+    "titleDone": "Настройка worktree завершена",
+    "startedAt": "Начато в {{time}} · {{duration}}",
+    "finishedIn": "Завершено за {{duration}}",
+    "script": "Скрипт",
+    "exit": "Выход",
+    "status": "Статус",
+    "output": "Вывод",
+    "errors": "Ошибки",
+    "noOutput": "Вывод пока не захвачен."
+  },
+  "mention": {
+    "tabIcon": "Значок вкладки",
+    "navigated": "Вкладка теперь на другом URL.",
+    "closed": "Вкладка закрыта.",
+    "restarted": "Браузер был перезапущен.",
+    "openOriginal": "Открыть оригинальный URL в новой вкладке"
+  },
+  "modelSelect": {
+    "noResults": "Нет результатов",
+    "openSettingsAria": "Открыть настройки модели",
+    "settings": "Настройки модели",
+    "presets": "Пресеты",
+    "detailsFor": "Детали модели для {{name}}"
+  },
+  "elementAttachment": {
+    "scrollTo": "Прокрутить к элементу во вкладке",
+    "noLongerExists": "Элемент больше не существует в DOM",
+    "checking": "Проверка существования элемента...",
+    "frameLocation": "Расположение фрейма",
+    "withinFrame": "Находится внутри фрейма (iframe и т.д.)",
+    "frameTitle": "Заголовок фрейма",
+    "reactTree": "Дерево React-компонентов",
+    "relatedSources": "Связанные исходные файлы"
+  },
+  "workspaceMention": {
+    "contextFiles": "Контекстные файлы",
+    "skills": "Навыки"
+  },
+  "chatHistory": {
+    "mateMessageDisplay": "Отображение сообщений mate",
+    "scrollToBottom": "Прокрутить вниз"
+  },
+  "dropZone": "Область сброса панели чата",
+  "noMateSelected": "Mate не выбран",
+  "contextUsage": "Сжатая история разговора",
+  "errors": {
+    "retry": "Повторить",
+    "configureOtherApiKeys": "Настроить другие API-ключи",
+    "configureApiKeys": "Настроить API-ключи",
+    "upgradePlan": "Перейти на другой план",
+    "buyCredits": "Купить кредиты в консоли",
+    "usageLimitReached": "Лимит использования достигнут",
+    "descriptionUltra": "Вы использовали все включённые кредиты.{{reset}}",
+    "descriptionPro": "Вы достигли лимита плана Pro.{{reset}}",
+    "descriptionFree": "Вы достигли лимита бесплатного плана.{{reset}}",
+    "limitResets": " Ваш лимит сбрасывается {{when}}.",
+    "modelNotAvailableOnPlan": "{{model}} недоступен на плане {{plan}}",
+    "modelNotAvailableOnPlanGeneric": "Модель недоступна на плане {{plan}}",
+    "byokDescription": "Эта модель доступна только через BYOK или план Pro. Получите план или настройте собственный API-ключ.",
+    "subscriptionRequired": "Требуется подписка",
+    "subscriptionRequiredDescription": "Доступ к ИИ-моделям через Stagewise Inference требует подписки. Перейдите на другой план, настройте собственные API-ключи или подключите план кодирования, чтобы продолжить.",
+    "upstreamDescription": "Восходящий ИИ-провайдер временно перегружен. Пожалуйста, переключитесь на другую модель или попробуйте снова.",
+    "modelTemporarilyUnavailable": "{{model}} временно недоступна",
+    "modelTemporarilyUnavailableGeneric": "Модель временно недоступна",
+    "waitingForConnection": "Ожидание подключения...",
+    "waitingForConnectionDescription": "Ваше устройство, похоже, не в сети. Агент автоматически повторит попытку, когда интернет-доступ снова станет доступен.",
+    "lastNetworkError": "Последняя ошибка сети: {{message}}",
+    "notLoggedIn": "Не выполнен вход",
+    "notLoggedInDescription": "Вы не вошли в stagewise и не настроили другой способ доступа к ИИ-моделям.",
+    "logIn": "Войти в stagewise",
+    "heading": "Ошибка",
+    "errorCode": "(Код: {{code}})",
+    "whatToDo": "Что делать, если проблема сохраняется?",
+    "reportPrefix": "Если эта ошибка продолжает возникать, вы можете",
+    "reportLink": "сообщить о ней на GitHub",
+    "reportSuffix": ". Пожалуйста, включите сообщение об ошибке и трассировку стека (если доступно), чтобы помочь нам диагностировать проблему.",
+    "time": {
+      "shortly": "скоро",
+      "inMinutes_one": "через {{count}} минуту",
+      "inMinutes_other": "через {{count}} минут",
+      "inHours_one": "через {{count}} час",
+      "inHours_other": "через {{count}} часов",
+      "inDays_one": "через {{count}} день",
+      "inDays_other": "через {{count}} дней"
+    }
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "newMate": "Nuevo Mate",
+  "search": {
+    "aria": "Buscar mates",
+    "placeholder": "Buscar mates…"
+  },
+  "pinned": "Fijados",
+  "mates": "Mates",
+  "settings": {
+    "open": "Configuración",
+    "close": "Cerrar configuración"
+  },
+  "ageGroups": {
+    "today": "Hoy",
+    "yesterday": "Ayer",
+    "last7": "Últimos 7 días",
+    "last30": "Últimos 30 días",
+    "older": "Anteriores"
+  },
+  "grouping": {
+    "byWorkspace": "Agrupar por Espacio de trabajo",
+    "byAge": "Agrupar por Antigüedad",
+    "age": "Antigüedad",
+    "workspace": "Espacio de trabajo",
+    "aria": "Cambiar modo de agrupación de mates"
+  },
+  "workspace": {
+    "openInGithub": "Abrir en GitHub",
+    "openInGitlab": "Abrir en GitLab",
+    "openInBitbucket": "Abrir en Bitbucket",
+    "openRemote": "Abrir repositorio remoto",
+    "openInFileManager": "Abrir en {{fileManager}}",
+    "deleteWorktree": "Eliminar worktree",
+    "deleteWorktreeTitle": "¿Eliminar worktree?",
+    "newMateFor": "Nuevo mate para {{label}}"
+  },
+  "terminalTitle": "Terminal",
+  "terminalShow": "Mostrar terminal {{index}}",
+  "terminalClose": "Cerrar terminal",
+  "contextMenu": {
+    "rename": "Renombrar",
+    "fork": "Bifurcar chat",
+    "copyMarkdown": "Copiar como Markdown",
+    "exportMarkdown": "Exportar como Markdown…",
+    "markAsUnread": "Marcar como no leído",
+    "unpin": "Desfijar",
+    "pinGlobally": "Fijar globalmente",
+    "archive": "Archivar",
+    "permanentlyDelete": "Eliminar permanentemente",
+    "copyInstanceId": "Copiar ID de instancia",
+    "openDataDirectory": "Abrir directorio de datos"
+  }
+}

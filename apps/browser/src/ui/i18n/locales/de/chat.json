@@ -80,6 +80,61 @@
     "selectAtLeastOne": "Wähle mindestens eine Option",
     "otherPlaceholder": "Andere (bitte eingeben)..."
   },
+  "thinking": {
+    "thinking": "Denke nach...",
+    "thoughtFor": "{{duration}} nachgedacht",
+    "thought": "Gedanke"
+  },
+  "workspaceSetup": {
+    "running": "Einrichtung läuft",
+    "failed": "Einrichtung fehlgeschlagen",
+    "titleRunning": "Worktree-Einrichtung läuft",
+    "titleFailed": "Worktree-Einrichtung fehlgeschlagen",
+    "titleDone": "Worktree-Einrichtung abgeschlossen",
+    "startedAt": "Gestartet um {{time}} · {{duration}}",
+    "finishedIn": "Abgeschlossen in {{duration}}",
+    "script": "Skript",
+    "exit": "Beenden",
+    "status": "Status",
+    "output": "Ausgabe",
+    "errors": "Fehler",
+    "noOutput": "Noch keine Ausgabe erfasst."
+  },
+  "mention": {
+    "tabIcon": "Tab-Symbol",
+    "navigated": "Tab ist jetzt auf einer anderen URL.",
+    "closed": "Tab ist geschlossen.",
+    "restarted": "Browser wurde neu gestartet.",
+    "openOriginal": "Original-URL in neuem Tab öffnen"
+  },
+  "modelSelect": {
+    "noResults": "Keine Ergebnisse",
+    "openSettingsAria": "Modelleinstellungen öffnen",
+    "settings": "Modelleinstellungen",
+    "presets": "Voreinstellungen",
+    "detailsFor": "Modelldetails für {{name}}"
+  },
+  "elementAttachment": {
+    "scrollTo": "Zu Element im Tab scrollen",
+    "noLongerExists": "Element existiert nicht mehr im DOM",
+    "checking": "Wird geprüft, ob Element existiert...",
+    "frameLocation": "Frame-Standort",
+    "withinFrame": "Befindet sich in Frame (iframe, etc.)",
+    "frameTitle": "Frame-Titel",
+    "reactTree": "React-Komponentenbaum",
+    "relatedSources": "Zugehörige Quelldateien"
+  },
+  "workspaceMention": {
+    "contextFiles": "Kontextdateien",
+    "skills": "Skills"
+  },
+  "chatHistory": {
+    "mateMessageDisplay": "Mate-Nachrichtenanzeige",
+    "scrollToBottom": "Nach unten scrollen"
+  },
+  "dropZone": "Chat-Bereich Ablagezone",
+  "noMateSelected": "Kein Mate ausgewählt",
+  "contextUsage": "Komprimierter Konversationsverlauf",
   "errors": {
     "retry": "Erneut versuchen",
     "configureOtherApiKeys": "Andere API-Schlüssel konfigurieren",

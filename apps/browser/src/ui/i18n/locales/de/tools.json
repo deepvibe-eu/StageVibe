@@ -16,5 +16,402 @@
     "creatingPath": "Erstelle {{path}}...",
     "creating": "Verzeichnis wird erstellt...",
     "created": "Erstellt"
+  },
+  "read": {
+    "enabling": "Aktiviere {{name}}...",
+    "enabled": "Aktiviert",
+    "readingLog": "Lese Protokoll {{name}}…",
+    "readLog": "Protokoll lesen",
+    "readingShellOutput": "Lese Shell-Ausgabe...",
+    "readShellOutput": "Shell-Ausgabe lesen",
+    "readingMemory": "Lese Speicher {{label}}...",
+    "readMemory": "Speicher lesen",
+    "memoryOf": " von {{agentId}}",
+    "memoryIndex": "Index",
+    "memoryFile": "Datei",
+    "memoryMetadata": "Metadaten",
+    "memoryContent": "Inhalt",
+    "readingPath": "Lese {{path}}...",
+    "readingFile": "Lese Datei...",
+    "read": "Lesen"
+  },
+  "ls": {
+    "listingPath": "Liste {{path}}...",
+    "listing": "Liste Verzeichnis...",
+    "listed": "Aufgelistet"
+  },
+  "glob": {
+    "searchingFor": "Suche nach {{pattern}}...",
+    "searchingFiles": "Suche in Dateien...",
+    "foundLabel": "Gefunden",
+    "fileCount_one": "{{count}} Datei",
+    "fileCount_other": "{{count}} Dateien",
+    "matching": " entspricht \"{{pattern}}\""
+  },
+  "grep": {
+    "searchingFor": "Suche nach {{query}}...",
+    "searchingGrep": "Suche mit grep...",
+    "foundLabel": "Gefunden",
+    "resultCount_one": "{{count}} Ergebnis",
+    "resultCount_other": "{{count}} Ergebnisse",
+    "forQuery": " für \"{{query}}\""
+  },
+  "write": {
+    "expandDiff": "Code-Diff erweitern",
+    "collapseDiff": "Code-Diff einklappen",
+    "openFile": "Datei öffnen",
+    "openFileTooltip": "Klicken für vollständige Datei",
+    "errorPath": "Fehler beim Bearbeiten von {{path}}",
+    "errorFile": "Fehler beim Bearbeiten der Datei",
+    "created": "(neu)"
+  },
+  "multiEdit": {
+    "expandDiff": "Code-Diff erweitern",
+    "collapseDiff": "Code-Diff einklappen",
+    "openFile": "Datei öffnen",
+    "openFileTooltip": "Klicken für vollständige Datei",
+    "errorPath": "Fehler beim Bearbeiten von {{path}}",
+    "errorFile": "Fehler beim Bearbeiten der Datei"
+  },
+  "shell": {
+    "openingTerminal": "Öffne neues Terminal…",
+    "closingTerminal": "Schließe Terminal…",
+    "openedTerminal": "Neues Terminal geöffnet",
+    "closedTerminal": "Terminal geschlossen",
+    "runCommand": "Befehl ausführen",
+    "skippedCommand": "Befehl übersprungen",
+    "skipped": "(übersprungen)",
+    "errorRunning": "Fehler beim Ausführen: {{command}}",
+    "sendingInput": "Sende Eingabe",
+    "running": "Führe {{command}} aus",
+    "cancel": "Abbrechen",
+    "couldNotClose": "Terminal konnte nicht geschlossen werden",
+    "sentInput": "Eingabe gesendet",
+    "ranCommand": "Befehl ausgeführt",
+    "statusTimedOut": "Zeitüberschreitung",
+    "statusSessionExited": "Sitzung beendet",
+    "statusExitZero": "Exit 0",
+    "statusExit": "Exit {{code}}",
+    "statusKilled": "beendet",
+    "commandStatus": "Befehl {{status}}",
+    "closeTerminal": "Terminal {{sessionId}} schließen",
+    "empty": "(leer)"
+  },
+  "shellApproval": {
+    "skip": "Überspringen",
+    "smartAllow": "Smart erlauben",
+    "smartAllowTitle": "Nur nach risikoreichen Befehlen fragen",
+    "smartAllowDescription": "Schaltet diesen Agent auf Smart-Zustimmung um. Ein schneller Klassifikator entscheidet pro Befehl – destruktive oder System-Level-Befehle erfordern weiterhin deine Genehmigung.",
+    "allow": "Erlauben"
+  },
+  "console": {
+    "errorReading": "Fehler beim Lesen der Konsolenprotokolle",
+    "waiting": "Warte {{delayMs}}ms vor dem Lesen der Protokolle...",
+    "waitingFilter": "Warte {{delayMs}}ms vor dem Lesen der Protokolle (Filter: \"{{filter}}\")...",
+    "readingFiltered": "Lese Protokolle gefiltert nach \"{{filter}}\"...",
+    "reading": "Lese Konsolenprotokolle...",
+    "noLogs": "Keine Protokolle gefunden",
+    "noLogsMatching": "Keine Protokolle gefunden, die \"{{filter}}\" entsprechen",
+    "readLabel": "Lesen",
+    "logCount_one": "{{count}} Konsolenprotokoll",
+    "logCount_other": "{{count}} Konsolenprotokolle",
+    "from": " von {{hostname}}",
+    "readingFrom": "Lese Konsolenprotokolle von {{hostname}}..."
+  },
+  "sandbox": {
+    "errorWithExplanation": "Fehler: {{explanation}}",
+    "errorGeneric": "Fehler beim Ausführen eines Skripts",
+    "script": "Skript",
+    "error": "Fehler",
+    "result": "Ergebnis",
+    "loading": "Wird geladen...",
+    "preposition": {
+      "on": "auf",
+      "from": "von",
+      "of": "von"
+    },
+    "methods": {
+      "cssEnable": {
+        "inProgress": "CSS-Inspektion wird aktiviert",
+        "completed": "CSS-Inspektion aktiviert"
+      },
+      "cssGetComputedStyleForNode": {
+        "inProgress": "Berechnete Stile werden gelesen",
+        "completed": "Berechnete Stile gelesen"
+      },
+      "cssGetMatchedStylesForNode": {
+        "inProgress": "CSS-Regeln werden gelesen",
+        "completed": "CSS-Regeln gelesen"
+      },
+      "cssGetInlineStylesForNode": {
+        "inProgress": "Inline-Stile werden gelesen",
+        "completed": "Inline-Stile gelesen"
+      },
+      "cssGetStyleSheetText": {
+        "inProgress": "Stylesheet wird gelesen",
+        "completed": "Stylesheet gelesen"
+      },
+      "domEnable": {
+        "inProgress": "DOM-Inspektion wird aktiviert",
+        "completed": "DOM-Inspektion aktiviert"
+      },
+      "domGetDocument": {
+        "inProgress": "Dokument wird gelesen",
+        "completed": "Dokument gelesen"
+      },
+      "domQuerySelector": {
+        "inProgress": "Element wird abgefragt",
+        "completed": "Element abgefragt"
+      },
+      "domQuerySelectorAll": {
+        "inProgress": "Elemente werden abgefragt",
+        "completed": "Elemente abgefragt"
+      },
+      "domGetOuterHTML": {
+        "inProgress": "Element-HTML wird gelesen",
+        "completed": "Element-HTML gelesen"
+      },
+      "domResolveNode": {
+        "inProgress": "Element wird aufgelöst",
+        "completed": "Element aufgelöst"
+      },
+      "domGetBoxModel": {
+        "inProgress": "Box-Modell wird gelesen",
+        "completed": "Box-Modell gelesen"
+      },
+      "runtimeEnable": {
+        "inProgress": "Runtime wird aktiviert",
+        "completed": "Runtime aktiviert"
+      },
+      "runtimeEvaluate": {
+        "inProgress": "Skript wird ausgeführt",
+        "completed": "Skript ausgeführt"
+      },
+      "runtimeCallFunctionOn": {
+        "inProgress": "Funktion wird aufgerufen",
+        "completed": "Funktion aufgerufen"
+      },
+      "runtimeGetProperties": {
+        "inProgress": "Eigenschaften werden gelesen",
+        "completed": "Eigenschaften gelesen"
+      },
+      "pageEnable": {
+        "inProgress": "Seiteninspektion wird aktiviert",
+        "completed": "Seiteninspektion aktiviert"
+      },
+      "pageGetFrameTree": {
+        "inProgress": "Frames werden gelesen",
+        "completed": "Frames gelesen"
+      },
+      "pageCaptureScreenshot": {
+        "inProgress": "Screenshot wird aufgenommen",
+        "completed": "Screenshot aufgenommen"
+      },
+      "networkEnable": {
+        "inProgress": "Netzwerkinspektion wird aktiviert",
+        "completed": "Netzwerkinspektion aktiviert"
+      },
+      "networkGetResponseBody": {
+        "inProgress": "Antwort wird gelesen",
+        "completed": "Antwort gelesen"
+      }
+    },
+    "fallbackInspect": {
+      "inProgress": "Inspeziere {{domain}}",
+      "completed": "{{domain}} inspiziert"
+    },
+    "fallbackScript": {
+      "inProgress": "Skript wird ausgeführt",
+      "completed": "Skript ausgeführt"
+    },
+    "runningScript": "Skript wird ausgeführt...",
+    "ranScript": "Skript ausgeführt",
+    "parsingAttachment": "Anhang wird analysiert...",
+    "parsedAttachment": "Anhang analysiert",
+    "parsingAttachments_one": "{{count}} Anhang wird analysiert...",
+    "parsingAttachments_other": "{{count}} Anhänge werden analysiert...",
+    "parsedAttachments_one": "{{count}} Anhang analysiert",
+    "parsedAttachments_other": "{{count}} Anhänge analysiert",
+    "preparingAttachment": "Anhang wird vorbereitet...",
+    "preparedAttachment": "Anhang vorbereitet",
+    "preparingAttachments_one": "{{count}} Anhang wird vorbereitet...",
+    "preparingAttachments_other": "{{count}} Anhänge werden vorbereitet...",
+    "preparedAttachments_one": "{{count}} Anhang vorbereitet",
+    "preparedAttachments_other": "{{count}} Anhänge vorbereitet",
+    "readingAttachment": "Anhang wird gelesen...",
+    "readAttachment": "Anhang gelesen",
+    "readingAttachments_one": "{{count}} Anhang wird gelesen...",
+    "readingAttachments_other": "{{count}} Anhänge werden gelesen...",
+    "readAttachments_one": "{{count}} Anhang gelesen",
+    "readAttachments_other": "{{count}} Anhänge gelesen",
+    "writing": "Schreibe {{name}}{{suffix}}...",
+    "wrote": "Geschrieben {{name}}{{suffix}}",
+    "writingFiles_one": "Schreibe {{count}} Datei{{suffix}}...",
+    "writingFiles_other": "Schreibe {{count}} Dateien{{suffix}}...",
+    "wroteFiles_one": "{{count}} Datei{{suffix}} geschrieben",
+    "wroteFiles_other": "{{count}} Dateien{{suffix}} geschrieben",
+    "fromAttachment": " von Anhang",
+    "fromAttachments": " von {{count}} Anhängen",
+    "runningScriptOnTabs_one": "Führe Skript auf {{count}} Tab aus...",
+    "runningScriptOnTabs_other": "Führe Skript auf {{count}} Tabs aus...",
+    "ranScriptOnTabs_one": "Skript auf {{count}} Tab ausgeführt",
+    "ranScriptOnTabs_other": "Skript auf {{count}} Tabs ausgeführt",
+    "labelWriting": "{{label}}{{suffix}}, schreibe {{file}}...",
+    "labelWrote": "{{label}}{{suffix}}, {{file}} geschrieben",
+    "fileCount_one": "{{count}} Datei",
+    "fileCount_other": "{{count}} Dateien",
+    "attachment": "Anhang",
+    "mediaImage": "Bild",
+    "mediaVideo": "Video",
+    "mediaAudio": "Audio"
+  },
+  "docs": {
+    "searchLatest": "Suche neueste Dokumente...",
+    "searchLatestFor": "Suche neueste Dokumente für {{name}}...",
+    "foundLabel": "Gefunden",
+    "foundDocs_one": "{{count}} Dokument für {{name}}",
+    "foundDocs_other": "{{count}} Dokumente für {{name}}",
+    "readingLatest": "Lese neueste Dokumente...",
+    "readingLatestFor": "Lese neueste Dokumente für {{libraryId}}...",
+    "readLatest": "Neueste Dokumente lesen",
+    "forLibrary": " für {{libraryId}}"
+  },
+  "linting": {
+    "checkingForIssues": "Prüfe auf Probleme...",
+    "errorChecking": "Fehler beim Prüfen der Linting-Diagnose",
+    "noIssuesFound": "Keine Linting-Probleme gefunden",
+    "noIssues": "Keine Linting-Probleme",
+    "foundLabel": "Gefunden",
+    "errorCount_one": "{{count}} Fehler",
+    "errorCount_other": "{{count}} Fehler",
+    "warningCount_one": "{{count}} Warnung",
+    "warningCount_other": "{{count}} Warnungen",
+    "inFiles_one": " in {{count}} Datei",
+    "inFiles_other": " in {{count}} Dateien"
+  },
+  "watcher": {
+    "creating": "Watcher wird erstellt",
+    "skipped": "Watcher übersprungen",
+    "failed": "Watcher fehlgeschlagen",
+    "created": "Watcher erstellt",
+    "triggered": "Ausgelöst",
+    "timedOut": "Zeitüberschreitung",
+    "outcomeFailed": "Fehlgeschlagen",
+    "stoppedManually": "Manuell gestoppt",
+    "stoppedAppClosed": "Gestoppt, als App geschlossen wurde",
+    "expires": "Läuft ab {{when}}",
+    "runsForUpTo": "Läuft bis zu {{duration}}",
+    "defaultTitle": "Watcher",
+    "stop": "Watcher stoppen",
+    "stopNamed": "{{title}} stoppen"
+  },
+  "externalAgent": {
+    "needsApproval": "{{toolName}} benötigt Genehmigung",
+    "failed": "{{toolName}} fehlgeschlagen",
+    "denied": "{{toolName}} abgelehnt",
+    "completedPlan": "Plan abgeschlossen",
+    "runningPlan": "Plan wird ausgeführt",
+    "changedFiles_one": "{{count}} Datei geändert",
+    "changedFiles_other": "{{count}} Dateien geändert",
+    "changingFiles_one": "{{count}} Datei wird geändert",
+    "changingFiles_other": "{{count}} Dateien werden geändert",
+    "finished": "{{toolName}} abgeschlossen",
+    "running": "{{toolName}} wird ausgeführt",
+    "deny": "Ablehnen",
+    "allow": "Erlauben"
+  },
+  "askQuestions": {
+    "cancelledAgentStopped": "Fragen abgebrochen (Agent gestoppt)",
+    "writingQuestions": "Fragen werden aufgeschrieben...",
+    "waitingResponse": "Warte auf Antwort...",
+    "sentAnswersMessage": "Benutzer hat Antworten und Nachricht gesendet",
+    "dismissed": "Benutzer hat Fragen verworfen",
+    "answered": "Fragen beantwortet",
+    "userQuestions": "Benutzerfragen",
+    "answer": {
+      "empty": "(leer)",
+      "none": "(keine)",
+      "yes": "Ja",
+      "no": "Nein"
+    }
+  },
+  "planTool": {
+    "creating": "Plan wird erstellt...",
+    "failed": "Plan konnte nicht erstellt werden",
+    "openPlan": "Plan öffnen",
+    "implement": "Umsetzen",
+    "updating": "Plan wird aktualisiert...",
+    "completedOf": "Abgeschlossen {{completed}} von {{total}}"
+  },
+  "logTool": {
+    "creating": "{{channel}} Protokoll wird erstellt...",
+    "enabled": "Aktiviert",
+    "updating": "{{channel}} Protokoll wird aktualisiert...",
+    "updated": "Aktualisiert",
+    "channelLog": "{{channel}} Protokoll"
+  },
+  "fallback": {
+    "finished": "Abgeschlossen",
+    "error": "Fehler"
+  },
+  "exploring": {
+    "thought": "Gedanke",
+    "codebase": "Codebasis erkundet",
+    "enabledNames": "{{names}} aktiviert",
+    "enabledCountPlugins_one": "{{count}} Plugin aktiviert",
+    "enabledCountPlugins_other": "{{count}} Plugins aktiviert",
+    "enabledCountSkills_one": "{{count}} Skill aktiviert",
+    "enabledCountSkills_other": "{{count}} Skills aktiviert",
+    "exploredOnly": "{{list}} erkundet",
+    "foundOnly": "{{list}} gefunden",
+    "enabledAndExplored": "{{enabled}}, {{list}} erkundet",
+    "enabledAndFound": "{{enabled}}, {{list}} gefunden",
+    "checkedLintingNoIssues": "Linting geprüft - keine Probleme",
+    "theBrowser": "der Browser",
+    "documentation": "Dokumentation",
+    "filesWord": "Dateien",
+    "files_one": "{{count}} Datei",
+    "files_other": "{{count}} Dateien",
+    "docs_one": "{{count}} Dokument",
+    "docs_other": "{{count}} Dokumente",
+    "consoleLogs_one": "{{count}} Konsolenprotokoll",
+    "consoleLogs_other": "{{count}} Konsolenprotokolle",
+    "screenshots_one": "{{count}} Screenshot{{suffix}}",
+    "screenshots_other": "{{count}} Screenshots{{suffix}}",
+    "styles": "Stile{{suffix}}",
+    "dom": "DOM{{suffix}}",
+    "scripts_one": "{{count}} Skript{{suffix}}",
+    "scripts_other": "{{count}} Skripte{{suffix}}",
+    "sandboxFiles_one": "{{count}} Sandbox-Datei",
+    "sandboxFiles_other": "{{count}} Sandbox-Dateien",
+    "attachmentOne": "1 {{noun}}",
+    "attachmentMany": "{{count}} {{noun}}s",
+    "attachmentGeneric": "Anhang",
+    "hostSuffixSingle": " auf {{hostname}}",
+    "hostSuffixMany": " auf {{count}} Tabs",
+    "lintErrors_one": "{{count}} Fehler",
+    "lintErrors_other": "{{count}} Fehler",
+    "lintWarnings_one": "{{count}} Warnung",
+    "lintWarnings_other": "{{count}} Warnungen",
+    "listSeparator": ", ",
+    "listConjunction": " und ",
+    "inProgress": {
+      "enabling": "{{name}} wird aktiviert...",
+      "readingFile": "Datei wird gelesen...",
+      "listingDirectory": "Verzeichnis wird aufgelistet...",
+      "exploringFiles": "Dateien werden erkundet...",
+      "exploringDocumentation": "Dokumentation wird erkundet...",
+      "readingDocsFor": "Dokumente für {{libraryId}} werden gelesen...",
+      "searchingDocsFor": "Dokumente für {{name}} werden gesucht...",
+      "exploringTheBrowser": "Browser wird erkundet...",
+      "readingLogsFrom": "Protokolle von {{hostname}} werden gelesen...",
+      "checkingLinting": "Linting wird geprüft...",
+      "thinking": "Denke nach...",
+      "exploring": "Erkunde..."
+    }
+  },
+  "unknown": {
+    "calling": "Rufe Werkzeug {{type}} auf...",
+    "finished": "Aufruf von Werkzeug {{type}} abgeschlossen"
   }
 }

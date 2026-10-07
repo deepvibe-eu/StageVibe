@@ -1,0 +1,87 @@
+{
+  "loading": "Wird geladen…",
+  "noResults": "Keine Ergebnisse",
+  "title": "Befehlszentrale",
+  "closeOverlay": "Befehlszentrale schließen",
+  "searchFiles": "Dateien suchen…",
+  "searchAll": "Mates, Tabs, Terminals, Einstellungen suchen…",
+  "modes": {
+    "all": "Alle",
+    "agents": "Mates",
+    "browser": "Browser",
+    "terminals": "Terminals",
+    "files": "Dateien",
+    "settings": "Einstellungen"
+  },
+  "switchMode": "Zum {{mode}}-Modus wechseln",
+  "cycleHint": "Tab drücken, um Befehlszentrale-Modi durchzuschalten",
+  "cancel": "Abbrechen",
+  "save": "Speichern",
+  "delete": "Löschen",
+  "rename": "Umbenennen",
+  "pin": "Anheften",
+  "unpin": "Loslösen",
+  "deleteConfirm": "\"{{title}}\" löschen?",
+  "searchFilenamesOnly": "Nur Dateinamen suchen",
+  "searchInContent": "Im Inhalt suchen",
+  "excludeGitignored": "Gitignoriere ausschließen",
+  "includeGitignored": "Gitignoriere einschließen",
+  "copyUrl": "URL kopieren",
+  "close": "Schließen",
+  "showingResultsFor": "Ergebnisse für {{label}} angezeigt",
+  "showResultsFor": "Ergebnisse anzeigen für",
+  "untitledTab": "Unbenannter Tab",
+  "lastChanged": "Zuletzt geändert",
+  "globalAgent": "Global",
+  "agentChat": "Agenten-Chat",
+  "terminal": "Terminal",
+  "shell": "Shell",
+  "sourceAgent": "Agent",
+  "sourceManual": "Manuell",
+  "exportMarkdown": "Aktuellen Chat als Markdown exportieren…",
+  "exportMarkdownSubtitle": "Die vollständige Konversation in einer Datei speichern",
+  "copyMarkdown": "Aktuellen Chat als Markdown kopieren",
+  "copyMarkdownSubtitle": "Die vollständige Konversation in die Zwischenablage einfügen",
+  "settings": {
+    "modelsProviders": {
+      "title": "Modelle & Anbieter",
+      "subtitle": "Modellanbieter und Coding-Pläne konfigurieren"
+    },
+    "apiKeys": {
+      "title": "API-Schlüssel festlegen",
+      "subtitle": "Anthropic, OpenAI, Google und andere Anbieter verbinden"
+    },
+    "customProviders": {
+      "title": "Benutzerdefinierte Anbieter",
+      "subtitle": "Benutzerdefinierte Modell-Endpunkte verwalten"
+    },
+    "agentGeneral": {
+      "title": "Allgemeine Mate-Einstellungen",
+      "subtitle": "Standard-Mate-Verhalten konfigurieren"
+    },
+    "skillsContext": {
+      "title": "Skills & Kontextdateien",
+      "subtitle": "Skill- und Kontextdatei-Einstellungen verwalten"
+    },
+    "worktrees": {
+      "title": "Worktrees",
+      "subtitle": "Worktree-Einrichtungsskripte verwalten"
+    },
+    "plugins": {
+      "title": "Plugins",
+      "subtitle": "Bündelte und aktivierte Plugins konfigurieren"
+    },
+    "personalization": {
+      "title": "Personalisierung",
+      "subtitle": "UI-Größe, Theme-Farben, Benachrichtigungen und Dock-Verhalten konfigurieren"
+    },
+    "browsing": {
+      "title": "Browsing-Einstellungen",
+      "subtitle": "Browser-Verhalten und Berechtigungen konfigurieren"
+    },
+    "history": {
+      "title": "Verlauf",
+      "subtitle": "Browserverlauf öffnen"
+    }
+  }
+}
