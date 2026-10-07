@@ -22,6 +22,7 @@ import {
   ALWAYS_ENABLED_GLOBAL_SKILL_PREFIXES,
   GLOBAL_SKILL_SOURCES,
 } from '@shared/global-skill-prefixes';
+import { useTranslation } from 'react-i18next';
 
 // =============================================================================
 // Vertical overflow detection (like useIsTruncated but for height)
@@ -199,13 +200,16 @@ function SkillRow({
 }
 
 function WorkspaceDetails({ mount }: { mount: MountEntry }) {
+  const { t } = useTranslation('settings');
   return (
     <div className="space-y-8">
       <section className="space-y-3">
         <div>
-          <h2 className="font-medium text-foreground text-lg">Skills</h2>
+          <h2 className="font-medium text-foreground text-lg">
+            {t('skills.workspace.skillsTitle')}
+          </h2>
           <p className="text-muted-foreground text-sm">
-            Enable or disable skills for this workspace.
+            {t('skills.workspace.skillsDescription')}
           </p>
         </div>
         {mount.skills.length > 0 ? (
@@ -216,7 +220,7 @@ function WorkspaceDetails({ mount }: { mount: MountEntry }) {
         ) : (
           <div className="rounded-lg border border-derived-subtle p-4">
             <p className="text-center text-muted-foreground text-sm">
-              No skills detected in this workspace.
+              {t('skills.workspace.noSkills')}
             </p>
           </div>
         )}
@@ -224,9 +228,11 @@ function WorkspaceDetails({ mount }: { mount: MountEntry }) {
       <hr className="border-derived-subtle border-t" />
       <section className="space-y-3">
         <div>
-          <h2 className="font-medium text-foreground text-lg">Context files</h2>
+          <h2 className="font-medium text-foreground text-lg">
+            {t('skills.workspace.contextTitle')}
+          </h2>
           <p className="text-muted-foreground text-sm">
-            Manage workspace context files used by the AI agent.
+            {t('skills.workspace.contextDescription')}
           </p>
         </div>
         <WorkspaceContextFilesList workspacePath={mount.path} />
@@ -242,6 +248,7 @@ function WorkspaceDetails({ mount }: { mount: MountEntry }) {
 type GlobalSkillEntry = AppState['globalSkills'][number];
 
 function GlobalSkillsDetails() {
+  const { t } = useTranslation('settings');
   const preferences = useKartonState((s) => s.preferences);
   const updatePreferences = useKartonProcedure((p) => p.preferences.update);
   const globalSkills = useKartonState((s) => s.globalSkills);
@@ -343,7 +350,7 @@ function GlobalSkillsDetails() {
               >
                 <div className="flex items-center gap-3">
                   <h3 className="font-medium text-foreground text-lg">
-                    {source.label} skills
+                    {t('skills.global.sourceTitle', { label: source.label })}
                   </h3>
                   {!isAlwaysEnabled && (
                     <div onClick={(e) => e.stopPropagation()}>
@@ -360,7 +367,7 @@ function GlobalSkillsDetails() {
                 <p className="text-muted-foreground text-sm">
                   {source.directory}
                   {skills.length > 0 &&
-                    ` · ${skills.length} skill${skills.length === 1 ? '' : 's'}`}
+                    ` · ${t('skills.global.skillCount', { count: skills.length })}`}
                 </p>
               </div>
               {/* Per-skill toggles (only when dir is enabled) */}
@@ -386,7 +393,7 @@ function GlobalSkillsDetails() {
               {/* Empty state when dir is enabled but no skills found */}
               {dirEnabled && skills.length === 0 && (
                 <p className="text-sm text-subtle-foreground italic">
-                  No skills found in this directory.
+                  {t('skills.global.noSkills')}
                 </p>
               )}
             </section>
@@ -406,6 +413,7 @@ function WorkspaceContextFilesList({
 }: {
   workspacePath: string;
 }) {
+  const { t } = useTranslation('settings');
   const preferences = useKartonState((s) => s.preferences);
   const updatePreferences = useKartonProcedure((p) => p.preferences.update);
 
@@ -468,7 +476,7 @@ function WorkspaceContextFilesList({
                 : 'text-subtle-foreground',
             )}
           >
-            Include in agent context
+            {t('skills.workspace.includeAgentsMd')}
           </p>
         </div>
         <div onClick={(e) => e.stopPropagation()}>
@@ -488,6 +496,7 @@ function WorkspaceContextFilesList({
 // =============================================================================
 
 export function SkillsContextSection() {
+  const { t } = useTranslation('settings');
   const workspaceMounts = useKartonState(
     useComparingSelector(
       (s): MountEntry[] => {
@@ -519,7 +528,7 @@ export function SkillsContextSection() {
   // Build the tab list: "Global" first, then workspace tabs.
   const tabItems = useMemo(
     () => [
-      { id: GLOBAL_TAB_ID, label: 'Global' },
+      { id: GLOBAL_TAB_ID, label: t('skills.globalTab') },
       ...workspaceMounts.map((mount) => {
         const display = getWorkspaceDisplayInfo({
           path: mount.path,
@@ -532,7 +541,7 @@ export function SkillsContextSection() {
         };
       }),
     ],
-    [workspaceMounts],
+    [workspaceMounts, t],
   );
 
   const selectedMount = useMemo(
@@ -560,11 +569,10 @@ export function SkillsContextSection() {
           {/* Header */}
           <div>
             <h1 className="font-semibold text-foreground text-xl">
-              Skills & Context files
+              {t('skills.title')}
             </h1>
             <p className="text-muted-foreground text-sm">
-              Per-workspace configuration, context files, and skills for the
-              StageVibe agent.
+              {t('skills.description')}
             </p>
           </div>
           <div className="space-y-8">

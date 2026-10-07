@@ -345,6 +345,25 @@
       "learnMore": "(Learn more)"
     }
   },
+  "skills": {
+    "title": "Skills & Context files",
+    "description": "Per-workspace configuration, context files, and skills for the StageVibe agent.",
+    "globalTab": "Global",
+    "workspace": {
+      "skillsTitle": "Skills",
+      "skillsDescription": "Enable or disable skills for this workspace.",
+      "noSkills": "No skills detected in this workspace.",
+      "contextTitle": "Context files",
+      "contextDescription": "Manage workspace context files used by the AI agent.",
+      "includeAgentsMd": "Include in agent context"
+    },
+    "global": {
+      "sourceTitle": "{{label}} skills",
+      "skillCount_one": "{{count}} skill",
+      "skillCount_other": "{{count}} skills",
+      "noSkills": "No skills found in this directory."
+    }
+  },
   "personalization": {
     "title": "Personalization",
     "appearance": {
