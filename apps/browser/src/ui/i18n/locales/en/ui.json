@@ -91,5 +91,26 @@
     "pastedText": "Pasted text",
     "characters": "{{count}} characters",
     "useRawText": "Use raw text"
+  },
+  "mermaidEditor": {
+    "viewDiagram": "View diagram",
+    "view": "View",
+    "sideBySide": "Side by side",
+    "split": "Split",
+    "editSource": "Edit source",
+    "edit": "Edit"
+  },
+  "thinking": {
+    "title": "Thinking",
+    "close": "Close",
+    "enable": "Enable thinking",
+    "current": "Current: {{label}}",
+    "effort": "Effort",
+    "defaultLabel": "Default: {{label}}",
+    "default": "Default",
+    "reset": "Reset to default"
+  },
+  "diff": {
+    "label": "Diff"
   }
 }

@@ -1,4 +1,5 @@
 import { GitBranchIcon } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { DiffLineStats } from '@ui/components/diff-line-stats';
 
 export function DiffButtonContent({
@@ -10,10 +11,11 @@ export function DiffButtonContent({
   removed: number;
   showLabel?: boolean;
 }) {
+  const { t } = useTranslation('ui');
   return (
     <>
       <GitBranchIcon className="size-3.5 shrink-0" />
-      {showLabel && <span>Diff</span>}
+      {showLabel && <span>{t('diff.label')}</span>}
       <DiffLineStats added={added} removed={removed} stacked />
     </>
   );

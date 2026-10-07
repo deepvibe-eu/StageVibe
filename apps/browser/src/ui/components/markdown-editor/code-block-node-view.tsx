@@ -4,6 +4,7 @@ import {
   type NodeViewProps,
 } from '@tiptap/react';
 import { useState, useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { cn } from '@ui/utils';
 import { Mermaid } from '../ui/mermaid';
 
@@ -39,6 +40,7 @@ export function CodeBlockNodeView({ node }: NodeViewProps) {
  * but visually hidden in "view" mode.
  */
 function MermaidCodeBlock({ node }: { node: NodeViewProps['node'] }) {
+  const { t } = useTranslation('ui');
   const [mode, setMode] = useState<MermaidMode>('view');
   const [debouncedChart, setDebouncedChart] = useState(node.textContent);
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -73,9 +75,9 @@ function MermaidCodeBlock({ node }: { node: NodeViewProps['node'] }) {
               mode === 'view' && 'mermaid-toggle-btn-active',
             )}
             onClick={() => setMode('view')}
-            title="View diagram"
+            title={t('mermaidEditor.viewDiagram')}
           >
-            View
+            {t('mermaidEditor.view')}
           </button>
           <button
             type="button"
@@ -84,9 +86,9 @@ function MermaidCodeBlock({ node }: { node: NodeViewProps['node'] }) {
               mode === 'split' && 'mermaid-toggle-btn-active',
             )}
             onClick={() => setMode('split')}
-            title="Side by side"
+            title={t('mermaidEditor.sideBySide')}
           >
-            Split
+            {t('mermaidEditor.split')}
           </button>
           <button
             type="button"
@@ -95,9 +97,9 @@ function MermaidCodeBlock({ node }: { node: NodeViewProps['node'] }) {
               mode === 'edit' && 'mermaid-toggle-btn-active',
             )}
             onClick={() => setMode('edit')}
-            title="Edit source"
+            title={t('mermaidEditor.editSource')}
           >
-            Edit
+            {t('mermaidEditor.edit')}
           </button>
         </div>
       </div>

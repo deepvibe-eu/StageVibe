@@ -7,6 +7,7 @@ import {
 import { Switch } from '@stagewise/stage-ui/components/switch';
 import type { ModelThinkingOverride } from '@shared/karton-contracts/ui/shared-types';
 import { useId } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   getDefaultThinkingOption,
   getModelThinkingDisplayState,
@@ -32,6 +33,7 @@ export function ModelThinkingPanel({
   onValueChange: (value: string) => void;
   onReset: () => void;
 }) {
+  const { t } = useTranslation('ui');
   const labelId = useId();
   const display = getModelThinkingDisplayState(model, override, defaultOptions);
   if (!display) return null;
@@ -44,7 +46,9 @@ export function ModelThinkingPanel({
     <>
       <div className="flex items-start justify-between gap-2 border-derived-subtle border-b px-2.5 py-2">
         <div className="min-w-0">
-          <h4 className="truncate font-semibold text-foreground">Thinking</h4>
+          <h4 className="truncate font-semibold text-foreground">
+            {t('thinking.title')}
+          </h4>
           <p className="truncate text-muted-foreground">
             {model.modelDisplayName}
           </p>
@@ -57,7 +61,7 @@ export function ModelThinkingPanel({
             className="h-5 px-1.5"
             onClick={onClose}
           >
-            Close
+            {t('thinking.close')}
           </Button>
         )}
       </div>
@@ -70,9 +74,11 @@ export function ModelThinkingPanel({
             onClick={() => onEnabledChange(!display.enabled)}
           >
             <p id={labelId} className="font-medium text-foreground">
-              Enable thinking
+              {t('thinking.enable')}
             </p>
-            <p className="text-muted-foreground">Current: {display.label}</p>
+            <p className="text-muted-foreground">
+              {t('thinking.current', { label: display.label })}
+            </p>
           </button>
           <Switch
             checked={display.enabled}
@@ -84,9 +90,11 @@ export function ModelThinkingPanel({
 
         <div className="space-y-2">
           <div>
-            <p className="font-medium text-foreground">Effort</p>
+            <p className="font-medium text-foreground">
+              {t('thinking.effort')}
+            </p>
             <p className="text-muted-foreground">
-              Default: {defaultOption.label}
+              {t('thinking.defaultLabel', { label: defaultOption.label })}
             </p>
           </div>
           <RadioGroup
@@ -102,7 +110,9 @@ export function ModelThinkingPanel({
                 <Radio value={option.value} size="xs" />
                 <span>{option.label}</span>
                 {option.value === defaultOption.value && (
-                  <span className="text-muted-foreground">Default</span>
+                  <span className="text-muted-foreground">
+                    {t('thinking.default')}
+                  </span>
                 )}
               </RadioLabel>
             ))}
