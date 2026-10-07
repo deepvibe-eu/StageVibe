@@ -1,4 +1,32 @@
 {
+  "general": {
+    "title": "General",
+    "powerSave": {
+      "title": "Keep app awake while agents work",
+      "description": "Prevent app suspension while agents run tool loops or other active work. Waiting for questions or tool approval still counts as idle.",
+      "macNote": "To prevent sleep in battery mode on macOS devices, including when the lid is closed, you must enable “Keep awake” mode in the bottom-right corner of the sidebar."
+    },
+    "notifications": {
+      "soundsTitle": "Notification sounds",
+      "soundsDescription": "Play a sound when the agent finishes work, asks a question, or encounters an error.",
+      "loudness": "Loudness",
+      "loudnessAria": "Notification sound loudness",
+      "soundPack": "Sound pack",
+      "previewAria": "Preview sound",
+      "useCustomSound": "Use custom sound…",
+      "importFailed": "Custom sound import failed",
+      "importFailedFallback": "Custom sound import failed.",
+      "importedTitle": "Custom sound imported",
+      "importedMessage": "{{name}} is now selected for notifications.",
+      "dockBounceTitle": "Dock icon bounce",
+      "dockBounceDescription": "Bounce the dock icon when the agent finishes, asks a question, or encounters an error while the window is not focused."
+    },
+    "soundLoudness": {
+      "off": "Off",
+      "subtle": "Subtle",
+      "default": "Loud"
+    }
+  },
   "personalization": {
     "title": "Personalization",
     "appearance": {
