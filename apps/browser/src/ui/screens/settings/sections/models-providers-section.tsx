@@ -1062,7 +1062,7 @@ function AddProviderGrid({
                     type="url"
                     placeholder={
                       selectedPlan.configurableEndpoint.placeholder ??
-                      'https://example.com/v1'
+                      t('modelsProviders.connect.urlPlaceholder')
                     }
                     value={endpoint}
                     onValueChange={(value) => {
@@ -1085,7 +1085,9 @@ function AddProviderGrid({
                   autoFocus
                   type={isSelfHosted ? 'text' : 'password'}
                   placeholder={
-                    isSelfHosted ? 'Enter base URL...' : 'Enter API key...'
+                    isSelfHosted
+                      ? t('modelsProviders.connect.enterBaseUrl')
+                      : t('modelsProviders.connect.enterApiKey')
                   }
                   value={apiKey}
                   onValueChange={(v) => {
@@ -1118,7 +1120,7 @@ function AddProviderGrid({
                     'self-start',
                   )}
                 >
-                  Connect anyway (save key without validation)
+                  {t('modelsProviders.connect.connectAnyway')}
                 </button>
               )}
 
@@ -1129,7 +1131,9 @@ function AddProviderGrid({
                 >
                   <p className="text-warning-foreground">
                     {localAgentError ??
-                      `${selectedDisplayName} is not installed or could not be found in your shell PATH.`}
+                      t('modelsProviders.connect.notInstalled', {
+                        name: selectedDisplayName,
+                      })}
                   </p>
                   <div className="mt-1 flex items-center gap-2">
                     <button
@@ -1142,7 +1146,7 @@ function AddProviderGrid({
                         size: 'xs',
                       })}
                     >
-                      Installation guide
+                      {t('modelsProviders.connect.installationGuide')}
                       <IconArrowUpRightOutline18 className="size-3" />
                     </button>
                     <button
@@ -1153,7 +1157,7 @@ function AddProviderGrid({
                         size: 'xs',
                       })}
                     >
-                      Check again
+                      {t('modelsProviders.connect.checkAgain')}
                     </button>
                   </div>
                 </div>
@@ -1191,8 +1195,7 @@ function AddProviderGrid({
 
               {!error && isSelfHosted && (
                 <p className="text-subtle-foreground text-xs">
-                  Enter the base URL of your Ollama instance. Default is
-                  http://localhost:11434.
+                  {t('modelsProviders.connect.ollamaHint')}
                 </p>
               )}
 
@@ -1205,7 +1208,7 @@ function AddProviderGrid({
 
             <div className="flex justify-end gap-2">
               <Button variant="ghost" size="sm" onClick={handleBack}>
-                Back
+                {t('modelsProviders.connect.back')}
               </Button>
               <Button
                 variant="primary"
@@ -1219,12 +1222,12 @@ function AddProviderGrid({
                 onClick={() => void handleConnect(selected, apiKey)}
               >
                 {isConnecting
-                  ? 'Connecting...'
+                  ? t('modelsProviders.connect.connecting')
                   : localAgentStatus === 'checking'
-                    ? 'Checking...'
+                    ? t('modelsProviders.connect.checking')
                     : isSelfHosted
-                      ? 'Discover'
-                      : 'Connect'}
+                      ? t('modelsProviders.connect.discover')
+                      : t('modelsProviders.connect.connect')}
               </Button>
             </div>
           </div>
@@ -1235,7 +1238,7 @@ function AddProviderGrid({
               <Input
                 ref={searchInputRef}
                 type="text"
-                placeholder="Search providers..."
+                placeholder={t('modelsProviders.connect.searchPlaceholder')}
                 value={searchQuery}
                 onValueChange={setSearchQuery}
                 className="w-full"
@@ -1245,13 +1248,15 @@ function AddProviderGrid({
               <div className="space-y-4 px-0.5 pr-2">
                 {noResults && (
                   <p className="py-4 text-center text-muted-foreground text-xs">
-                    No providers match &quot;{query}&quot;
+                    {t('modelsProviders.connect.noMatch', { query })}
                   </p>
                 )}
 
                 <ProviderTypeSection
-                  title="Coding Agents"
-                  description="Use an external coding agent and its native harness."
+                  title={t('modelsProviders.connect.sectionCodingAgents')}
+                  description={t(
+                    'modelsProviders.connect.sectionCodingAgentsDesc',
+                  )}
                   types={filteredExternalAgentTypes}
                   instanceCountByType={instanceCountByType}
                   onSelect={selectProviderType}
@@ -1266,10 +1271,10 @@ function AddProviderGrid({
                     )}
                   >
                     <p className="font-medium text-foreground text-xs">
-                      Stagewise Agent
+                      {t('modelsProviders.connect.sectionStagewise')}
                     </p>
                     <p className="text-muted-foreground text-xs">
-                      Choose what model powers the stagewise harness.
+                      {t('modelsProviders.connect.sectionStagewiseDesc')}
                     </p>
                   </div>
                 )}
@@ -1277,7 +1282,7 @@ function AddProviderGrid({
                 {(filteredStagewiseModelTypes.length > 0 ||
                   filteredCodingPlans.length > 0) && (
                   <ProviderTypeSection
-                    title="Subscriptions & Plans"
+                    title={t('modelsProviders.connect.sectionPlans')}
                     types={filteredStagewiseModelTypes}
                     instanceCountByType={instanceCountByType}
                     onSelect={selectProviderType}
@@ -1310,7 +1315,9 @@ function AddProviderGrid({
                           </span>
                           {instanceCount > 0 && (
                             <span className="shrink-0 text-2xs text-subtle-foreground">
-                              {instanceCount} connected
+                              {t('modelsProviders.type.connectedCount', {
+                                count: instanceCount,
+                              })}
                             </span>
                           )}
                         </button>
@@ -1320,14 +1327,14 @@ function AddProviderGrid({
                 )}
 
                 <ProviderTypeSection
-                  title="API Keys"
+                  title={t('modelsProviders.connect.sectionApiKeys')}
                   types={filteredApiKeyTypes}
                   instanceCountByType={instanceCountByType}
                   onSelect={selectProviderType}
                 />
 
                 <ProviderTypeSection
-                  title="Self-Hosted"
+                  title={t('modelsProviders.connect.sectionSelfHosted')}
                   types={filteredSelfHostedTypes}
                   instanceCountByType={instanceCountByType}
                   onSelect={selectProviderType}
@@ -1336,7 +1343,7 @@ function AddProviderGrid({
                 {customProviderMatches && (
                   <div className="space-y-2">
                     <p className="font-medium text-foreground text-xs">
-                      Custom Endpoints
+                      {t('modelsProviders.connect.sectionCustomEndpoints')}
                     </p>
                     <button
                       type="button"
@@ -1351,7 +1358,7 @@ function AddProviderGrid({
                     >
                       <IconPlusOutline18 className="size-4 shrink-0 text-foreground" />
                       <span className="min-w-0 flex-1 text-foreground text-xs">
-                        Add custom endpoint
+                        {t('modelsProviders.connect.addCustomEndpoint')}
                       </span>
                     </button>
                   </div>
@@ -1378,6 +1385,7 @@ function ProviderInstancesSection({
   onRename: (instanceId: string) => void;
   onDelete: (instanceId: string) => void;
 }) {
+  const { t } = useTranslation('settings');
   const preferences = useKartonState((s) => s.preferences);
   const instances = preferences.providerInstances ?? [];
   const [showAddProvider, setShowAddProvider] = useState(false);
@@ -1420,10 +1428,10 @@ function ProviderInstancesSection({
       ) : (
         <div className="rounded-lg border border-derived border-dashed px-4 py-6 text-center">
           <p className="text-muted-foreground text-sm">
-            No providers configured.
+            {t('modelsProviders.instances.empty')}
           </p>
           <p className="mt-1 text-muted-foreground text-xs">
-            Configure how the agent connects to LLM providers.
+            {t('modelsProviders.instances.emptyHint')}
           </p>
         </div>
       )}
@@ -1461,6 +1469,7 @@ function CustomModelDialog({
   providerInstances: ProviderInstance[];
   defaultProviderInstanceId?: string;
 }) {
+  const { t } = useTranslation('settings');
   const track = useTrack();
   const telemetryLevel = useKartonState(
     (state) => state.preferences.privacy.telemetryLevel,
@@ -1609,12 +1618,12 @@ function CustomModelDialog({
         value: inst.id,
         label: inst.name,
         group: inst.typeId.endsWith('-api')
-          ? 'Built-in'
+          ? t('modelsProviders.customModel.groupBuiltIn')
           : inst.typeId === 'coding-plan'
-            ? 'Coding Plan'
-            : 'Custom',
+            ? t('modelsProviders.customModel.groupCodingPlan')
+            : t('modelsProviders.customModel.groupCustom'),
       }));
-  }, [providerInstances]);
+  }, [providerInstances, t]);
 
   const handleSave = async () => {
     setSaveError(null);
@@ -1625,7 +1634,7 @@ function CustomModelDialog({
       try {
         providerOptions = JSON.parse(providerOptionsJson);
       } catch {
-        setJsonError('Invalid JSON in Provider Options');
+        setJsonError(t('modelsProviders.customModel.jsonErrorProviderOptions'));
         return;
       }
     }
@@ -1633,7 +1642,7 @@ function CustomModelDialog({
       try {
         headers = JSON.parse(headersJson);
       } catch {
-        setJsonError('Invalid JSON in Headers');
+        setJsonError(t('modelsProviders.customModel.jsonErrorHeaders'));
         return;
       }
     }
@@ -1661,7 +1670,9 @@ function CustomModelDialog({
       onOpenChange(false);
     } catch (error) {
       setSaveError(
-        error instanceof Error ? error.message : 'Failed to save model.',
+        error instanceof Error
+          ? error.message
+          : t('modelsProviders.customModel.saveFailed'),
       );
     } finally {
       setIsSaving(false);
@@ -1673,9 +1684,13 @@ function CustomModelDialog({
       <DialogContent className="max-h-[85vh] sm:max-w-md">
         <DialogClose />
         <DialogHeader>
-          <DialogTitle>{model ? 'Edit Model' : 'Add Custom Model'}</DialogTitle>
+          <DialogTitle>
+            {model
+              ? t('modelsProviders.customModel.editTitle')
+              : t('modelsProviders.customModel.addTitle')}
+          </DialogTitle>
           <DialogDescription>
-            Define a model and assign it to a provider or custom endpoint.
+            {t('modelsProviders.customModel.description')}
           </DialogDescription>
         </DialogHeader>
 
@@ -1685,7 +1700,9 @@ function CustomModelDialog({
         >
           <div className="space-y-4">
             <div className="space-y-1.5">
-              <p className="font-medium text-foreground text-xs">Model ID</p>
+              <p className="font-medium text-foreground text-xs">
+                {t('modelsProviders.customModel.modelId')}
+              </p>
               <Input
                 placeholder="gpt-4o-mini"
                 value={modelId}
@@ -1697,14 +1714,14 @@ function CustomModelDialog({
               />
               {isDuplicate && (
                 <p className="text-error-foreground text-xs">
-                  This model ID already exists.
+                  {t('modelsProviders.customModel.duplicate')}
                 </p>
               )}
             </div>
 
             <div className="space-y-1.5">
               <p className="font-medium text-foreground text-xs">
-                Display Name
+                {t('modelsProviders.customModel.displayName')}
               </p>
               <Input
                 placeholder="GPT-4o Mini"
@@ -1716,9 +1733,9 @@ function CustomModelDialog({
 
             <div className="space-y-1.5">
               <p className="font-medium text-foreground text-xs">
-                Description{' '}
+                {t('modelsProviders.customModel.fieldDescription')}{' '}
                 <span className="font-normal text-muted-foreground">
-                  (optional)
+                  {t('modelsProviders.customModel.optional')}
                 </span>
               </p>
               <Input
@@ -1731,7 +1748,7 @@ function CustomModelDialog({
 
             <div className="space-y-1.5">
               <p className="font-medium text-foreground text-xs">
-                Context Window
+                {t('modelsProviders.customModel.contextWindow')}
               </p>
               <Input
                 type="number"
@@ -1744,7 +1761,9 @@ function CustomModelDialog({
             </div>
 
             <div className="space-y-1.5">
-              <p className="font-medium text-foreground text-xs">Endpoint</p>
+              <p className="font-medium text-foreground text-xs">
+                {t('modelsProviders.customModel.endpoint')}
+              </p>
               <ModelEndpointSelect
                 value={providerInstanceId}
                 onChange={setProviderInstanceId}
@@ -1755,7 +1774,7 @@ function CustomModelDialog({
             {/* Capabilities */}
             <div className="space-y-3 border-derived border-t pt-3">
               <p className="font-medium text-foreground text-xs">
-                Capabilities
+                {t('modelsProviders.customModel.capabilities')}
               </p>
 
               <div className="flex flex-wrap gap-x-4 gap-y-1.5">
@@ -1766,7 +1785,7 @@ function CustomModelDialog({
                     onCheckedChange={setThinkingEnabled}
                     size="xs"
                   />
-                  Thinking
+                  {t('modelsProviders.customModel.thinking')}
                 </label>
 
                 {/* biome-ignore lint/a11y/noLabelWithoutControl: base-ui Switch renders a button, label click delegates correctly */}
@@ -1778,13 +1797,13 @@ function CustomModelDialog({
                     }
                     size="xs"
                   />
-                  Tool Calling
+                  {t('modelsProviders.customModel.toolCalling')}
                 </label>
               </div>
 
               <div className="space-y-1.5">
                 <p className="text-muted-foreground text-xs">
-                  Input Modalities
+                  {t('modelsProviders.customModel.inputModalities')}
                 </p>
                 <div className="flex flex-wrap gap-x-4 gap-y-1.5">
                   {(['text', 'image', 'audio', 'video', 'file'] as const).map(
@@ -1807,7 +1826,7 @@ function CustomModelDialog({
                           }
                           size="xs"
                         />
-                        {mod}
+                        {t(`modelsProviders.customModel.modalities.${mod}`)}
                       </label>
                     ),
                   )}
@@ -1816,7 +1835,7 @@ function CustomModelDialog({
 
               <div className="space-y-1.5">
                 <p className="text-muted-foreground text-xs">
-                  Output Modalities
+                  {t('modelsProviders.customModel.outputModalities')}
                 </p>
                 <div className="flex flex-wrap gap-x-4 gap-y-1.5">
                   {(['text', 'image', 'audio', 'video', 'file'] as const).map(
@@ -1839,7 +1858,7 @@ function CustomModelDialog({
                           }
                           size="xs"
                         />
-                        {mod}
+                        {t(`modelsProviders.customModel.modalities.${mod}`)}
                       </label>
                     ),
                   )}
@@ -1856,13 +1875,13 @@ function CustomModelDialog({
                 <IconChevronDownOutline18
                   className={`size-3.5 transition-transform ${showAdvanced ? 'rotate-180' : ''}`}
                 />
-                Advanced
+                {t('modelsProviders.customModel.advanced')}
               </button>
               {showAdvanced && (
                 <div className="mt-3 space-y-3">
                   <div className="space-y-1.5">
                     <p className="font-medium text-foreground text-xs">
-                      Provider Options (JSON)
+                      {t('modelsProviders.customModel.providerOptions')}
                     </p>
                     <textarea
                       className="w-full rounded-lg border border-derived p-2 font-mono text-foreground text-xs focus:outline-none focus:ring-1 focus:ring-muted-foreground/35"
@@ -1877,7 +1896,7 @@ function CustomModelDialog({
                   </div>
                   <div className="space-y-1.5">
                     <p className="font-medium text-foreground text-xs">
-                      Headers (JSON)
+                      {t('modelsProviders.customModel.headers')}
                     </p>
                     <textarea
                       className="w-full rounded-lg border border-derived p-2 font-mono text-foreground text-xs focus:outline-none focus:ring-1 focus:ring-muted-foreground/35"
@@ -1907,7 +1926,11 @@ function CustomModelDialog({
             disabled={!canSave || isSaving}
             onClick={() => void handleSave()}
           >
-            {isSaving ? 'Saving...' : model ? 'Save Changes' : 'Add Model'}
+            {isSaving
+              ? t('modelsProviders.customModel.saving')
+              : model
+                ? t('modelsProviders.customModel.saveChanges')
+                : t('modelsProviders.customModel.addModel')}
           </Button>
           <Button
             variant="ghost"
@@ -1915,7 +1938,7 @@ function CustomModelDialog({
             disabled={isSaving}
             onClick={() => handleDialogOpenChange(false)}
           >
-            Cancel
+            {t('modelsProviders.customModel.cancel')}
           </Button>
         </DialogFooter>
       </DialogContent>
@@ -1937,6 +1960,7 @@ function ModelEndpointSelect({
   onChange: (value: string) => void;
   options: { value: string; label: string; group: string }[];
 }) {
+  const { t } = useTranslation('settings');
   // Group options
   const grouped = useMemo(() => {
     const groups = new Map<string, typeof options>();
@@ -1954,7 +1978,9 @@ function ModelEndpointSelect({
       onChange={(e) => onChange(e.target.value)}
       className="w-full rounded-lg border border-derived bg-background px-2 py-1.5 text-foreground text-xs focus:outline-none focus:ring-1 focus:ring-muted-foreground/35"
     >
-      <option value="">Select an endpoint...</option>
+      <option value="">
+        {t('modelsProviders.customModel.endpointPlaceholder')}
+      </option>
       {grouped.map(([group, opts]) => (
         <optgroup key={group} label={group}>
           {opts.map((opt) => (
