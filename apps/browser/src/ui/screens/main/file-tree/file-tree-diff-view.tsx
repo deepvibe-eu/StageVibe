@@ -6,6 +6,7 @@ import type {
   MountedWorkspaceGitDiffSummary,
 } from '@shared/karton-contracts/ui';
 import { DiffLineStats } from '@ui/components/diff-line-stats';
+import { useTranslation } from 'react-i18next';
 
 type DiffRow = MountedWorkspaceGitDiffEntry;
 
@@ -99,6 +100,7 @@ export function FileTreeDiffView({
   shownRelativePath: string | null;
   onOpenFile: (path: string, staged: boolean, oldPath?: string) => void;
 }) {
+  const { t } = useTranslation('fileTree');
   const rows: DiffRow[] = data?.entries ?? [];
 
   function handleRowClick(row: DiffRow) {
@@ -111,7 +113,7 @@ export function FileTreeDiffView({
   if (loading) {
     return (
       <div className="flex h-full items-center justify-center p-4 text-muted-foreground text-xs">
-        Loading diff…
+        {t('diffLoading')}
       </div>
     );
   }
@@ -119,7 +121,7 @@ export function FileTreeDiffView({
   if (data === null) {
     return (
       <div className="flex h-full items-center justify-center p-4 text-muted-foreground text-xs">
-        Not a git repository
+        {t('notGitRepo')}
       </div>
     );
   }
@@ -127,7 +129,7 @@ export function FileTreeDiffView({
   if (rows.length === 0) {
     return (
       <div className="flex h-full items-center justify-center p-4 text-muted-foreground text-xs">
-        Working tree clean
+        {t('treeClean')}
       </div>
     );
   }

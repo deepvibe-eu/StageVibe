@@ -7,6 +7,9 @@
   "noWorkspaces": "No mounted workspaces.",
   "loading": "Loading…",
   "loadMore": "Load more",
+  "diffLoading": "Loading diff…",
+  "notGitRepo": "Not a git repository",
+  "treeClean": "Working tree clean",
   "confirmDeleteFile": "Delete {{path}}?",
   "confirmDeleteItems": "Delete {{count}} items?",
   "toast": {
