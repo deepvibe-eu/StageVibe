@@ -1,6 +1,9 @@
 <div align="center">
 
-<img src=".github/assets/stagevibe-icon.svg" alt="StageVibe" height="72" />
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset=".github/assets/stagevibe-mark-white.png" />
+  <img src=".github/assets/stagevibe-mark-black.png" alt="StageVibe" height="72" />
+</picture>
 
 <h3>The Agentic IDE for Open-Source Models</h3>
 
@@ -22,8 +25,9 @@
 
 > **This repository is a personal fork of stagewise, called _StageVibe_.**
 > Upstream documentation is kept below for reference. The fork focuses on a
-> BYOK-first, local-first workflow and a few quality-of-life features that are
-> documented in [StageVibe fork](#stagevibe-fork) further down.
+> BYOK-first, local-first workflow, a full facelift and localization, and a
+> set of fixes — summarized in
+> [What's new in StageVibe](#whats-new-in-stagevibe) further down.
 
 **stagewise** is an open source agentic IDE for developers with a coding agent built right in.
 
@@ -91,62 +95,78 @@ Included models:
 - **Google**: Gemini 3.5 Flash, Gemini 3.1 Pro (Preview), Gemini 3 Flash, Gemini 3.1 Flash Lite
 - **xAI**: Grok 4.5
 
-## StageVibe fork
+## What's new in StageVibe
 
-This fork is built on top of upstream stagewise. It keeps the upstream
-architecture (Electron app, Karton transport, `agent-core`) and adds the
-following, focused changes.
+StageVibe is a personal, opinionated fork of stagewise. It keeps the upstream
+architecture (Electron app, Karton transport, `agent-core`, Stage UI) and
+layers a BYOK-first, local-first workflow on top — with a fresh coat of paint
+and a long list of fixes.
 
-### Bring Your Own Key first
+### Highlights
 
-Your own connections come first: coding plans, API keys and self-hosted/custom
-endpoints are listed before the hosted Stagewise Inference provider
-(`Settings → Models & Providers`). OpenRouter and Ollama work as usual.
+- **Facelift** — a dark-first design system: brand palette, light/dark/system
+  modes plus a theme picker, consistent panel spacing, rounded "card"
+  surfaces and improved dark-mode contrast.
+- **BYOK first** — your own connections (coding plans, API keys, self-hosted
+  and custom endpoints) are listed before the hosted Stagewise Inference
+  provider (`Settings → Models & Providers`). OpenRouter and Ollama work as
+  usual, and custom providers/models can be registered freely.
+- **Six languages** — the whole UI is localized (English, German, French,
+  Spanish, Russian, Simplified Chinese) and switchable at runtime under
+  `Settings → Personalization`. No hardcoded UI strings remain.
+- **Workspaces & Git** — per-workspace context files (`AGENTS.md`) and skills
+  panes, worktree setup scripts (including Codex detection), and one-click
+  create/switch for branches and worktrees.
+- **Chat & agent** — manual *and* automatic context compaction, Markdown
+  export of any conversation, notifications with sounds and dock bounce,
+  richer hotkeys, model presets and a thinking-effort panel.
+- **Privacy** — telemetry is **off** by default, and builds without a PostHog
+  key start normally (the client is never constructed).
+- **Platform** — portable Linux AppImage, an appearance-aware app icon
+  (light/dark) with a startup splash, and a one-time data-directory migration
+  from the previous profile.
 
 ### Manual context compaction
 
-Long conversations are compacted automatically once the context usage crosses
-a threshold, and you can also trigger it yourself:
-
-- Click the **context-usage ring** next to the chat input.
-- Or use the command center (`Ctrl/Cmd+K`).
-
-The agent then summarises older messages into a briefing and keeps the recent
-messages verbatim. All messages stay in the local SQLite database — only the
-prompt sent to the model is shortened (the briefing is marked in the UI). The
-usage ring updates immediately after a successful compaction.
+Long conversations are compacted automatically once context usage crosses a
+threshold, and you can trigger it yourself via the **context-usage ring** next
+to the composer or the command center (`Ctrl/Cmd+K`). The agent summarizes
+older messages into a briefing and keeps recent messages verbatim; only the
+prompt is shortened, all messages stay in the local SQLite database.
 
 ### Markdown export
 
-Every conversation can be exported or copied as Markdown, including tool
-calls, reasoning (optional) and a marker for compacted regions:
+Right-click a chat → **Copy as Markdown** / **Export as Markdown…** (or the
+command center). Includes tool calls, optional reasoning and a marker for
+compacted regions; file export opens a native save dialog
+(suggested name: `chat-title.md`).
 
-- Right-click a chat in the sidebar → **Copy as Markdown** / **Export as Markdown…**
-- Or the command center → _Export current chat as Markdown…_
+### Platform details
 
-File export opens a native save dialog (suggested name: `chat-title.md`).
-
-### Privacy
-
-- Telemetry defaults to **off**.
-- Builds without a PostHog key start normally (no crash) — the telemetry
-  client is not constructed at all.
-
-### Linux AppImage
-
-Besides `.rpm`/`.zip`, the fork can build a portable AppImage:
+Portable AppImage on Linux:
 
 ```bash
 pnpm -F stagewise make --targets AppImage
 # -> apps/browser/out/dev/make/AppImage/x64/*.AppImage
 ```
 
-### Data directories & migration
-
-After the StageVibe rename the app uses `~/…/stagevibe*` profiles and an `stagevibe`
-data root. On first launch a one-time migration moves an existing
+After the StageVibe rename the app uses `~/…/stagevibe*` profiles and a
+`stagevibe` data root. On first launch a one-time migration moves an existing
 `stagewise*` profile over (never clobbering existing data); isolated dev
 profiles fall back to the legacy `stagewise-dev` profile when seeding.
+
+### Fixed
+
+- The collapsed sidebar panel is now fully hidden, and the browser/file-tree
+  panel can always be re-opened (its width is restored).
+- Duplicate sidebar and new-tab buttons are gone, and the content toggle now
+  collapses the entire right column.
+- The native page is visible through the transparent UI by default instead of
+  only while hovering.
+- UI zoom is reset on load, and a stale UI-size preference is normalised.
+- Toasts are mounted and visible; Markdown export and manual compaction are
+  reachable; attachment cleanup and chat archiving no longer throw; queued
+  messages behave correctly on send/queue edge cases.
 
 ### Development
 
@@ -167,13 +187,13 @@ lists those runtime versions under “Other versions”.
 
 ### Roadmap
 
-- **Mavis skills**: bundle the Mavis agent personas and skills as built-in
-  skills (`apps/browser/bundled/skills/…`). Skills are discovered by the agent
-  via progressive disclosure and can also be invoked explicitly. Proprietary
-  scripts are **re-implemented from scratch**, not copied.
-- **i18n**: extract UI strings and add a language selector (German, French,
-  Russian, Chinese) under `Settings → General`.
-- **Layout**: relocate the console/terminal panel.
+- **Bundled skills** — keep re-authoring and bundling the Mate agent skills as
+  built-in skills (`apps/browser/bundled/skills/…`); proprietary scripts are
+  re-implemented from scratch, never copied.
+- **Localization coverage** — extend i18n to the Chromium page routes and grow
+  the community translations.
+- **Upstream sync** — periodically rebase on upstream stagewise for agent and
+  runtime improvements.
 
 ## License
 
