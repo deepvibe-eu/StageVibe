@@ -45,6 +45,8 @@ import type {
 const EMPTY_PERMISSION_REQUESTS: PermissionRequest[] = [];
 
 import TimeAgo from 'react-timeago';
+import { useTranslation } from 'react-i18next';
+import i18n from '@ui/i18n';
 
 // ============================================================================
 // Icon Rendering
@@ -139,41 +141,42 @@ function getRequestDescription(request: PermissionRequest): string {
       const { mediaTypes } = request as MediaPermissionRequest;
       const hasCamera = mediaTypes.includes('video');
       const hasMic = mediaTypes.includes('audio');
-      if (hasCamera && hasMic) return 'wants to use your camera and microphone';
-      if (hasCamera) return 'wants to use your camera';
-      if (hasMic) return 'wants to use your microphone';
-      return 'wants media access';
+      if (hasCamera && hasMic)
+        return i18n.t('content:permissions.desc.mediaCameraMic');
+      if (hasCamera) return i18n.t('content:permissions.desc.mediaCamera');
+      if (hasMic) return i18n.t('content:permissions.desc.mediaMic');
+      return i18n.t('content:permissions.desc.mediaGeneric');
     }
     case 'geolocation':
-      return 'wants to know your location';
+      return i18n.t('content:permissions.desc.geolocation');
     case 'notifications':
-      return 'wants to send notifications';
+      return i18n.t('content:permissions.desc.notifications');
     case 'fullscreen':
-      return 'wants to enter fullscreen';
+      return i18n.t('content:permissions.desc.fullscreen');
     case 'clipboard-read':
-      return 'wants to read your clipboard';
+      return i18n.t('content:permissions.desc.clipboardRead');
     case 'display-capture':
-      return 'wants to share your screen';
+      return i18n.t('content:permissions.desc.displayCapture');
     case 'midi':
-      return 'wants to access MIDI devices';
+      return i18n.t('content:permissions.desc.midi');
     case 'idle-detection':
-      return 'wants to detect when you are idle';
+      return i18n.t('content:permissions.desc.idleDetection');
     case 'speaker-selection':
-      return 'wants to select audio output';
+      return i18n.t('content:permissions.desc.speakerSelection');
     case 'storage-access':
-      return 'wants storage access';
+      return i18n.t('content:permissions.desc.storageAccess');
     case 'bluetooth':
-      return 'wants to connect to a Bluetooth device';
+      return i18n.t('content:permissions.desc.bluetooth');
     case 'hid':
-      return 'wants to connect to a HID device';
+      return i18n.t('content:permissions.desc.hid');
     case 'serial':
-      return 'wants to connect to a serial port';
+      return i18n.t('content:permissions.desc.serial');
     case 'usb':
-      return 'wants to connect to a USB device';
+      return i18n.t('content:permissions.desc.usb');
     case 'bluetooth-pairing':
-      return 'wants to pair with a Bluetooth device';
+      return i18n.t('content:permissions.desc.bluetoothPairing');
     default:
-      return 'is requesting access';
+      return i18n.t('content:permissions.desc.generic');
   }
 }
 
@@ -206,22 +209,25 @@ function getDevicesFromRequest(
     case 'bluetooth':
       return request.devices.map((d) => ({
         id: d.deviceId,
-        name: d.deviceName || 'Unknown Device',
+        name: d.deviceName || i18n.t('content:permissions.unknownDevice'),
       }));
     case 'hid':
       return request.devices.map((d) => ({
         id: d.deviceId,
-        name: d.productName || 'HID Device',
+        name: d.productName || i18n.t('content:permissions.hidDevice'),
       }));
     case 'serial':
       return request.ports.map((p) => ({
         id: p.portId,
-        name: p.displayName || p.portName || 'Serial Port',
+        name:
+          p.displayName ||
+          p.portName ||
+          i18n.t('content:permissions.serialPort'),
       }));
     case 'usb':
       return request.devices.map((d) => ({
         id: d.deviceId,
-        name: d.productName || 'USB Device',
+        name: d.productName || i18n.t('content:permissions.usbDevice'),
       }));
   }
 }
@@ -249,6 +255,7 @@ function PermissionRequestRow({
     pin?: string,
   ) => void;
 }) {
+  const { t } = useTranslation('content');
   const icons = getRequestIcons(request);
   const description = getRequestDescription(request);
   const isSimple = isSimpleRequest(request);
@@ -354,7 +361,7 @@ function PermissionRequestRow({
           <div className="flex flex-col gap-1">
             {devices.length === 0 ? (
               <span className="pl-1 text-muted-foreground text-xs">
-                Searching for devices...
+                {t('permissions.searchingDevices')}
               </span>
             ) : (
               <Select
@@ -364,7 +371,7 @@ function PermissionRequestRow({
                 onValueChange={setSelectedDevice}
                 triggerVariant="secondary"
                 size="md"
-                placeholder="Select a device…"
+                placeholder={t('permissions.selectDevice')}
                 items={devices.map((device) => ({
                   value: device.id,
                   label: device.name,
@@ -380,7 +387,7 @@ function PermissionRequestRow({
           <div className="flex items-center gap-2">
             <input
               type="text"
-              placeholder="Enter pairing PIN"
+              placeholder={t('permissions.enterPin')}
               value={pairingPin}
               onChange={(e) => setPairingPin(e.target.value)}
               className="h-7 w-full rounded-lg border border-derived bg-surface-1 px-2 font-mono text-foreground text-sm placeholder:text-subtle-foreground focus:outline-none focus:ring-1 focus:ring-derived-strong"
@@ -391,7 +398,9 @@ function PermissionRequestRow({
         {/* Bluetooth pairing PIN display */}
         {pairingRequest?.pairingKind === 'confirmPin' && pairingRequest.pin && (
           <div className="flex items-center gap-2">
-            <span className="text-muted-foreground text-sm">PIN:</span>
+            <span className="text-muted-foreground text-sm">
+              {t('permissions.pin')}
+            </span>
             <span className="rounded-lg bg-surface-1 px-2 py-0.5 font-medium font-mono text-base tracking-widest">
               {pairingRequest.pin}
             </span>
@@ -408,10 +417,10 @@ function PermissionRequestRow({
             disabled={!canAct}
             onClick={handleAccept}
           >
-            <IconCheckOutline18 className="size-3" /> Allow
+            <IconCheckOutline18 className="size-3" /> {t('permissions.allow')}
           </Button>
           <Button variant="secondary" size="xs" onClick={handleBlock}>
-            <IconBanOutline18 className="size-3" /> Block
+            <IconBanOutline18 className="size-3" /> {t('permissions.block')}
           </Button>
         </div>
       ) : (
@@ -422,7 +431,7 @@ function PermissionRequestRow({
             disabled={!canAct}
             onClick={handleAccept}
           >
-            <IconCheckOutline18 className="size-3" /> Allow
+            <IconCheckOutline18 className="size-3" /> {t('permissions.allow')}
           </Button>
           <Button
             variant="secondary"
@@ -430,10 +439,10 @@ function PermissionRequestRow({
             disabled={!canAct}
             onClick={handleAlwaysAllow}
           >
-            <IconCheckOutline18 className="size-3" /> Always
+            <IconCheckOutline18 className="size-3" /> {t('permissions.always')}
           </Button>
           <Button variant="secondary" size="xs" onClick={handleBlock}>
-            <IconBanOutline18 className="size-3" /> Block
+            <IconBanOutline18 className="size-3" /> {t('permissions.block')}
           </Button>
         </div>
       )}
@@ -452,6 +461,7 @@ export function ResourceRequestsControlButton({
   tabId: string;
   isActive: boolean;
 }) {
+  const { t } = useTranslation('content');
   const permissionRequests = useKartonState(
     (s) =>
       s.contentTabs.tabs[tabId]?.permissionRequests ??
@@ -620,8 +630,8 @@ export function ResourceRequestsControlButton({
 
   const tooltipText =
     permissionRequests.length === 0
-      ? 'Permission Requests'
-      : `${permissionRequests.length} permission${permissionRequests.length > 1 ? 's' : ''} requested`;
+      ? t('permissions.title')
+      : t('permissions.requested', { count: permissionRequests.length });
 
   const hasRequests = permissionRequests.length > 0;
 
@@ -659,7 +669,7 @@ export function ResourceRequestsControlButton({
         onMouseEnter={handlePopoverMouseEnter}
         onMouseLeave={handlePopoverMouseLeave}
       >
-        <PopoverTitle>Permission Requests</PopoverTitle>
+        <PopoverTitle>{t('permissions.title')}</PopoverTitle>
         <OverlayScrollbar
           className="max-h-64 w-full"
           contentClassName="flex flex-col divide-y divide-border-subtle px-1"
@@ -667,7 +677,7 @@ export function ResourceRequestsControlButton({
           {permissionRequests.length === 0 ? (
             <div className="flex items-center justify-center py-3">
               <span className="text-muted-foreground text-sm">
-                No pending requests
+                {t('permissions.noPending')}
               </span>
             </div>
           ) : (

@@ -56,5 +56,43 @@
     "imageAlt": "Preview of the tab",
     "copyUrlAria": "Copy current URL",
     "copyUrl": "Copy URL"
+  },
+  "permissions": {
+    "desc": {
+      "mediaCameraMic": "wants to use your camera and microphone",
+      "mediaCamera": "wants to use your camera",
+      "mediaMic": "wants to use your microphone",
+      "mediaGeneric": "wants media access",
+      "geolocation": "wants to know your location",
+      "notifications": "wants to send notifications",
+      "fullscreen": "wants to enter fullscreen",
+      "clipboardRead": "wants to read your clipboard",
+      "displayCapture": "wants to share your screen",
+      "midi": "wants to access MIDI devices",
+      "idleDetection": "wants to detect when you are idle",
+      "speakerSelection": "wants to select audio output",
+      "storageAccess": "wants storage access",
+      "bluetooth": "wants to connect to a Bluetooth device",
+      "hid": "wants to connect to a HID device",
+      "serial": "wants to connect to a serial port",
+      "usb": "wants to connect to a USB device",
+      "bluetoothPairing": "wants to pair with a Bluetooth device",
+      "generic": "is requesting access"
+    },
+    "unknownDevice": "Unknown Device",
+    "hidDevice": "HID Device",
+    "serialPort": "Serial Port",
+    "usbDevice": "USB Device",
+    "searchingDevices": "Searching for devices...",
+    "selectDevice": "Select a device…",
+    "enterPin": "Enter pairing PIN",
+    "pin": "PIN:",
+    "allow": "Allow",
+    "block": "Block",
+    "always": "Always",
+    "title": "Permission Requests",
+    "requested_one": "{{count}} permission requested",
+    "requested_other": "{{count}} permissions requested",
+    "noPending": "No pending requests"
   }
 }
