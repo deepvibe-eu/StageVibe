@@ -8,6 +8,7 @@ import {
 import { useIsTruncated } from '@ui/hooks/use-is-truncated';
 import { cn } from '@ui/utils';
 import { useCallback, useEffect, useId, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   CODING_PLANS,
   type CodingPlan,
@@ -66,6 +67,7 @@ export function CodingPlanCard({
   hideHeader,
   autoFocusInput,
 }: CodingPlanCardProps) {
+  const { t } = useTranslation('ui');
   const reactId = useId();
   const inputId = `coding-plan-${plan.id}-api-key-${reactId}`;
   const errorId = `${inputId}-error`;
@@ -115,7 +117,7 @@ export function CodingPlanCard({
         setLocalError(res.error);
       }
     } catch {
-      setLocalError('Connection failed. Please try again.');
+      setLocalError(t('codingPlan.connectionFailed'));
     } finally {
       connectInFlightRef.current = false;
       setIsConnecting(false);
@@ -134,7 +136,7 @@ export function CodingPlanCard({
       setLocalError(
         err instanceof Error
           ? err.message
-          : 'Disconnection failed. Please try again.',
+          : t('codingPlan.disconnectionFailed'),
       );
     } finally {
       disconnectInFlightRef.current = false;
@@ -156,7 +158,7 @@ export function CodingPlanCard({
               {plan.displayName}
               {isConnected && (
                 <span className="rounded-full border border-border-subtle bg-surface-1 px-1.5 py-[1px] font-medium text-[10px] text-muted-foreground">
-                  Connected
+                  {t('codingPlan.connected')}
                 </span>
               )}
             </h3>
@@ -170,14 +172,14 @@ export function CodingPlanCard({
       <div className="space-y-1">
         <div className="flex gap-1.5">
           <label htmlFor={inputId} className="sr-only">
-            {`${plan.displayName} API key`}
+            {t('codingPlan.apiKeyLabel', { plan: plan.displayName })}
           </label>
           <Input
             id={inputId}
             autoFocus={autoFocusInput && !isConnected}
             type="password"
             value={isConnected ? '••••••••••••••••' : localInput}
-            placeholder="Enter API key..."
+            placeholder={t('codingPlan.enterApiKey')}
             onValueChange={isConnected ? undefined : handleInputChange}
             onKeyDown={(e) => {
               if (isConnected) return;
@@ -210,7 +212,9 @@ export function CodingPlanCard({
               onClick={handleDisconnect}
               disabled={isDisconnecting}
             >
-              {isDisconnecting ? 'Disconnecting…' : 'Disconnect'}
+              {isDisconnecting
+                ? t('codingPlan.disconnecting')
+                : t('codingPlan.disconnect')}
             </Button>
           ) : (
             !isConnected &&
@@ -221,7 +225,9 @@ export function CodingPlanCard({
                 onClick={handleConnect}
                 disabled={isConnecting}
               >
-                {isConnecting ? 'Connecting…' : 'Connect'}
+                {isConnecting
+                  ? t('codingPlan.connecting')
+                  : t('codingPlan.connect')}
               </Button>
             )
           )}
@@ -248,7 +254,7 @@ export function CodingPlanCard({
                       'shrink-0',
                     )}
                   >
-                    Create key
+                    {t('codingPlan.createKey')}
                   </a>
                 </TooltipTrigger>
                 <TooltipContent>{plan.apiKeyUrl}</TooltipContent>

@@ -18,6 +18,7 @@ import {
   InlineBadge,
   InlineBadgeWrapper,
 } from '@ui/screens/main/agent-chat/chat/_components/rich-text/shared';
+import { useTranslation } from 'react-i18next';
 
 /** Maximum character count that allows inline expansion */
 const EXPAND_THRESHOLD = 10_000;
@@ -26,6 +27,7 @@ const EXPAND_THRESHOLD = 10_000;
  * Preview content component showing text content with copy functionality.
  */
 function TextPreviewContent({ content }: { content: string }) {
+  const { t } = useTranslation('ui');
   const [hasCopied, setHasCopied] = useState(false);
   const copyResetTimeoutRef = useRef<number | null>(null);
 
@@ -66,7 +68,7 @@ function TextPreviewContent({ content }: { content: string }) {
           buttonVariants({ variant: 'ghost', size: 'icon-xs' }),
           'absolute top-3 right-3 z-10 size-3 shrink-0 transition-opacity',
         )}
-        title="Copy to clipboard"
+        title={t('textclip.copyToClipboard')}
       >
         {hasCopied ? (
           <CopyCheckIcon className="size-3" />
@@ -76,9 +78,15 @@ function TextPreviewContent({ content }: { content: string }) {
       </span>
       <div className="max-w-96">
         <div className="flex items-center justify-start gap-1">
-          <h3 className="font-medium text-foreground text-xs">Pasted text</h3>
+          <h3 className="font-medium text-foreground text-xs">
+            {t('textclip.pastedText')}
+          </h3>
           <span className="font-mono text-2xs text-muted-foreground">
-            {'  '}({content.length.toLocaleString()} characters)
+            {'  '}(
+            {t('textclip.characters', {
+              count: content.length.toLocaleString(),
+            })}
+            )
           </span>
         </div>
         <p className="scrollbar-subtle mt-2 max-h-40 overflow-y-auto whitespace-pre-wrap font-mono text-2xs text-muted-foreground leading-tight">
@@ -98,6 +106,7 @@ function TextPreviewContent({ content }: { content: string }) {
  * that inlines the text and removes the attachment.
  */
 export function TextClipBadge(props: BadgeProps) {
+  const { t } = useTranslation('ui');
   const { fileName, blobUrl, viewOnly, selected, onDelete } = props;
   const isEditable = !viewOnly;
 
@@ -169,12 +178,12 @@ export function TextClipBadge(props: BadgeProps) {
                 className={cn(
                   'absolute top-1/2 right-px flex size-4 -translate-y-1/2 cursor-pointer items-center justify-center rounded-r bg-surface-1 opacity-0 transition-opacity group-hover/badge:opacity-100',
                 )}
-                title="Use raw text"
+                title={t('textclip.useRawText')}
               >
                 <Maximize2 className="size-2.5 text-foreground-subtle" />
               </span>
             </TooltipTrigger>
-            <TooltipContent>Use raw text</TooltipContent>
+            <TooltipContent>{t('textclip.useRawText')}</TooltipContent>
           </Tooltip>
         )}
       </span>

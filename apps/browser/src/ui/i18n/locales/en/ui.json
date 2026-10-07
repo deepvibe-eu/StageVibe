@@ -33,5 +33,63 @@
     "okay": "Okay",
     "finish": "Finish",
     "next": "Next"
+  },
+  "codingPlan": {
+    "connectionFailed": "Connection failed. Please try again.",
+    "disconnectionFailed": "Disconnection failed. Please try again.",
+    "connected": "Connected",
+    "apiKeyLabel": "{{plan}} API key",
+    "enterApiKey": "Enter API key...",
+    "disconnecting": "Disconnecting…",
+    "disconnect": "Disconnect",
+    "connecting": "Connecting…",
+    "connect": "Connect",
+    "createKey": "Create key"
+  },
+  "signIn": {
+    "lastUsed": "Last used",
+    "title": "Authenticate",
+    "description": "Choose a sign-in method to continue.",
+    "providerGoogle": "Google",
+    "providerGithub": "GitHub",
+    "providerEmail": "Email",
+    "providerOther": "your provider",
+    "socialFailed": "Failed to complete social sign-in.",
+    "emailFailed": "Failed to complete email sign-in.",
+    "securityNotReady": "Security verification not ready. Please wait a moment.",
+    "securityFailed": "Security verification failed. Please try again.",
+    "sendCodeFailed": "Failed to send verification code.",
+    "verifyCodeFailed": "Failed to verify code.",
+    "enterEmail": "Enter your email to receive a verification code.",
+    "sentCode": "We sent a code to {{email}}. Enter it below.",
+    "waitingBrowser": "Please finish signing in with {{provider}} in your browser, then return to StageVibe.",
+    "continueGoogle": "Continue with Google",
+    "continueGithub": "Continue with GitHub",
+    "continueEmail": "Continue with Email",
+    "or": "or",
+    "useApiKeys": "Use your own API keys",
+    "useSubscription": "Use existing subscription",
+    "loading": "Loading...",
+    "sendCode": "Send code",
+    "back": "Back to sign-in options",
+    "waitingSignIn": "Waiting for you to complete sign-in in your browser…",
+    "verifying": "Verifying...",
+    "verify": "Verify",
+    "useDifferentEmail": "Use a different email"
+  },
+  "domBadge": {
+    "elementScreenshot": "Element screenshot",
+    "nodeType": "Node type",
+    "size": "Size",
+    "text": "Text",
+    "xpath": "XPath",
+    "page": "Page",
+    "selectedElement": "Selected element: {{fileName}}"
+  },
+  "textclip": {
+    "copyToClipboard": "Copy to clipboard",
+    "pastedText": "Pasted text",
+    "characters": "{{count}} characters",
+    "useRawText": "Use raw text"
   }
 }
