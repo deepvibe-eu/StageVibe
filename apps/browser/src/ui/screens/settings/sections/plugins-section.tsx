@@ -23,6 +23,7 @@ import {
   IconChevronRightOutline18,
   IconChevronLeftOutline18,
 } from '@stagewise/icons';
+import { useTranslation } from 'react-i18next';
 
 enablePatches();
 
@@ -56,18 +57,19 @@ function PluginCard({
   isEnabled: boolean;
   onOpenDetails: () => void;
 }) {
+  const { t } = useTranslation('settings');
   const pluginMetaText = useMemo(() => {
     let text = '';
     if (plugin.skills.length > 0)
-      text += `${plugin.skills.length} ${plugin.skills.length === 1 ? 'skill' : 'skills'}`;
+      text += t('plugins.meta.skills', { count: plugin.skills.length });
 
     if (plugin.requiredCredentials?.length > 0) {
       if (text.length > 0) text += ', ';
-      text += 'credentials';
+      text += t('plugins.meta.credentialsGeneric');
     }
 
     return text;
-  }, [plugin.requiredCredentials, plugin.skills]);
+  }, [plugin.requiredCredentials, plugin.skills, t]);
   return (
     <div
       className={cn(
@@ -168,6 +170,7 @@ function CredentialFieldInput({
   onSave: (typeId: string, data: Record<string, string>) => Promise<void>;
   onDelete: (typeId: string) => Promise<void>;
 }) {
+  const { t } = useTranslation('settings');
   const DOTS = '\u2022'.repeat(32);
   const inputRef = useRef<HTMLInputElement>(null);
   const [inputValue, setInputValue] = useState('');
@@ -210,7 +213,11 @@ function CredentialFieldInput({
           type="password"
           value={showDots ? DOTS : inputValue}
           placeholder={
-            isConfigured ? undefined : `Enter ${label.toLowerCase()}...`
+            isConfigured
+              ? undefined
+              : t('plugins.credential.enterPlaceholder', {
+                  label: label.toLowerCase(),
+                })
           }
           onValueChange={(v) => {
             const newValue = v.replaceAll('\u2022', '');
@@ -245,11 +252,11 @@ function CredentialFieldInput({
             onClick={() => void handleSave()}
             disabled={isSaving}
           >
-            Save
+            {t('plugins.credential.save')}
           </Button>
         ) : isConfigured ? (
           <Button variant="ghost" size="sm" onClick={handleDelete}>
-            Clear
+            {t('plugins.credential.clear')}
           </Button>
         ) : null}
       </div>
@@ -268,7 +275,7 @@ function CredentialFieldInput({
                       buttonVariants({ variant: 'link', size: 'xs' }),
                     )}
                   >
-                    (Learn more)
+                    {t('plugins.credential.learnMore')}
                   </a>
                 </TooltipTrigger>
                 <TooltipContent>{metadata.helpUrl}</TooltipContent>
@@ -303,6 +310,7 @@ function PluginDetailView({
   ) => Promise<void>;
   deleteCredential: (typeId: string) => Promise<void>;
 }) {
+  const { t } = useTranslation('settings');
   const userVisibleCredentials = useMemo(
     () => plugin.requiredCredentials.filter((id) => id !== 'stagewise-auth'),
     [plugin.requiredCredentials],
@@ -311,15 +319,15 @@ function PluginDetailView({
   const pluginMetaText = useMemo(() => {
     const parts: string[] = [];
     if (plugin.skills.length > 0)
-      parts.push(
-        `${plugin.skills.length} ${plugin.skills.length === 1 ? 'skill' : 'skills'}`,
-      );
+      parts.push(t('plugins.meta.skills', { count: plugin.skills.length }));
     if (userVisibleCredentials.length > 0)
       parts.push(
-        `${userVisibleCredentials.length} ${userVisibleCredentials.length === 1 ? 'credential' : 'credentials'}`,
+        t('plugins.meta.credentials', {
+          count: userVisibleCredentials.length,
+        }),
       );
     return parts.join(', ');
-  }, [plugin.skills, userVisibleCredentials]);
+  }, [plugin.skills, userVisibleCredentials, t]);
 
   return (
     <div className="h-full w-full">
@@ -389,6 +397,7 @@ function PluginDetailView({
 }
 
 export function PluginsSection() {
+  const { t } = useTranslation('settings');
   const preferences = useKartonState((s) => s.preferences);
   const updatePreferences = useKartonProcedure((p) => p.preferences.update);
   const getConfiguredCredentialIds = useKartonProcedure(
@@ -478,16 +487,17 @@ export function PluginsSection() {
         <div className="mx-auto max-w-3xl space-y-8">
           {/* Header */}
           <div>
-            <h1 className="font-semibold text-foreground text-xl">Plugins</h1>
+            <h1 className="font-semibold text-foreground text-xl">
+              {t('plugins.title')}
+            </h1>
             <p className="text-muted-foreground text-sm">
-              Enable or disable plugins to extend the agent's capabilities with
-              additional skills.
+              {t('plugins.description')}
             </p>
           </div>
           {enabledPlugins.length > 0 && (
             <>
               <div className="pb-1.5 text-muted-foreground text-xs">
-                Enabled
+                {t('plugins.enabledSection')}
               </div>
               <div className="grid grid-cols-1 gap-3 lg:grid-cols-2">
                 {enabledPlugins.map((plugin) => (
@@ -504,7 +514,7 @@ export function PluginsSection() {
           {disabledPlugins.length > 0 && (
             <>
               <div className="mt-6 pb-1.5 text-subtle-foreground text-xs">
-                Disabled
+                {t('plugins.disabledSection')}
               </div>
               <div className="grid grid-cols-1 gap-3 lg:grid-cols-2">
                 {disabledPlugins.map((plugin) => (

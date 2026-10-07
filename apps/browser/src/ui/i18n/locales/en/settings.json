@@ -326,6 +326,25 @@
     },
     "viewFullLicense": "View full license text"
   },
+  "plugins": {
+    "title": "Plugins",
+    "description": "Enable or disable plugins to extend the agent's capabilities with additional skills.",
+    "enabledSection": "Enabled",
+    "disabledSection": "Disabled",
+    "meta": {
+      "skills_one": "{{count}} skill",
+      "skills_other": "{{count}} skills",
+      "credentialsGeneric": "credentials",
+      "credentials_one": "{{count}} credential",
+      "credentials_other": "{{count}} credentials"
+    },
+    "credential": {
+      "enterPlaceholder": "Enter {{label}}...",
+      "save": "Save",
+      "clear": "Clear",
+      "learnMore": "(Learn more)"
+    }
+  },
   "personalization": {
     "title": "Personalization",
     "appearance": {
