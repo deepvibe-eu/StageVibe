@@ -615,6 +615,21 @@
       "groupBuiltIn": "Built-in",
       "groupCodingPlan": "Coding Plan",
       "groupCustom": "Custom"
+    },
+    "models": {
+      "edit": "Edit",
+      "disable": "Disable {{name}}",
+      "enable": "Enable {{name}}",
+      "contextK": "{{count}}k context",
+      "modelCount_one": "{{count}} model",
+      "modelCount_other": "{{count}} models",
+      "emptyInstance": "No models available for this instance.",
+      "enabledOf": "{{enabled}} of {{total}} enabled",
+      "reloadFailed": "Failed to reload models.",
+      "noModelsAvailable": "No models are available for this provider.",
+      "noEnabledMatchSearch": "No enabled models match your search. Switch to All to include disabled models.",
+      "noEnabled": "No models are enabled. Switch to All to enable models.",
+      "noMatchSearch": "No models match your search. Try a different model name or ID."
     }
   },
   "personalization": {

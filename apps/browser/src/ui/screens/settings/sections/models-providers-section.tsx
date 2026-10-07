@@ -2055,6 +2055,7 @@ function BuiltInModelCard({
   onEditThinking: (event: React.MouseEvent<HTMLElement>) => void;
   vendorLabelOverride?: string;
 }) {
+  const { t } = useTranslation('settings');
   const vendorLabel =
     vendorLabelOverride ??
     (model.catalogModel?.officialProvider
@@ -2099,14 +2100,22 @@ function BuiltInModelCard({
               className="h-5 px-1.5 opacity-0 transition-opacity group-focus-within/model-card:opacity-100 group-hover/model-card:opacity-100"
               onClick={onEditThinking}
             >
-              Edit
+              {t('modelsProviders.models.edit')}
             </Button>
           )}
           <Switch
             checked={isEnabled}
             onCheckedChange={() => onToggle()}
             size="xs"
-            aria-label={`${isEnabled ? 'Disable' : 'Enable'} ${model.displayName}`}
+            aria-label={
+              isEnabled
+                ? t('modelsProviders.models.disable', {
+                    name: model.displayName,
+                  })
+                : t('modelsProviders.models.enable', {
+                    name: model.displayName,
+                  })
+            }
           />
         </div>
       </div>
@@ -2129,6 +2138,7 @@ function CustomModelCard({
   onEdit: () => void;
   onDelete: () => void;
 }) {
+  const { t } = useTranslation('settings');
   return (
     <div
       className={cn(
@@ -2144,7 +2154,9 @@ function CustomModelCard({
           </h3>
           <p className="truncate text-muted-foreground text-xs">
             {model.modelId} &middot; {endpointName} &middot;{' '}
-            {Math.round(model.contextWindowSize / 1000)}k context
+            {t('modelsProviders.models.contextK', {
+              count: Math.round(model.contextWindowSize / 1000),
+            })}
           </p>
           {model.description && (
             <p className="mt-0.5 truncate text-muted-foreground/70 text-xs">
@@ -2176,7 +2188,15 @@ function CustomModelCard({
             checked={isEnabled}
             onCheckedChange={() => onToggle()}
             size="xs"
-            aria-label={`${isEnabled ? 'Disable' : 'Enable'} ${model.displayName}`}
+            aria-label={
+              isEnabled
+                ? t('modelsProviders.models.disable', {
+                    name: model.displayName,
+                  })
+                : t('modelsProviders.models.enable', {
+                    name: model.displayName,
+                  })
+            }
           />
         </div>
       </div>
@@ -2205,6 +2225,7 @@ function InstanceModelGroup({
   onEditCustomModel: (model: CustomModel) => void;
   onDeleteCustomModel: (modelId: string) => void;
 }) {
+  const { t } = useTranslation('settings');
   const [expanded, setExpanded] = useState(true);
   const disabledSet = useMemo(
     () => new Set(getInstanceDisabledModelIds(preferences, instance.id)),
@@ -2248,7 +2269,9 @@ function InstanceModelGroup({
           {instance.name}
         </span>
         <span className="shrink-0 text-2xs text-muted-foreground transition-colors group-hover:text-foreground">
-          {entries.length + instanceCustomModels.length} models
+          {t('modelsProviders.models.modelCount', {
+            count: entries.length + instanceCustomModels.length,
+          })}
         </span>
         <IconChevronDownOutline18
           className={cn(
@@ -2336,7 +2359,7 @@ function InstanceModelGroup({
 
           {entries.length === 0 && instanceCustomModels.length === 0 && (
             <p className="px-3 py-2 text-muted-foreground text-xs">
-              No models available for this instance.
+              {t('modelsProviders.models.emptyInstance')}
             </p>
           )}
         </div>
@@ -2467,6 +2490,7 @@ function VendorModelGroup({
   defaultExpanded?: boolean;
   onlyEnabled?: boolean;
 }) {
+  const { t } = useTranslation('settings');
   const [expanded, setExpanded] = useState(defaultExpanded ?? true);
   const disabledSet = useMemo(
     () => new Set(getInstanceDisabledModelIds(preferences, instance.id)),
@@ -2499,7 +2523,10 @@ function VendorModelGroup({
           {group.displayName}
         </span>
         <span className="shrink-0 text-2xs text-muted-foreground transition-colors group-hover:text-foreground">
-          {enabledCount} of {group.entries.length} enabled
+          {t('modelsProviders.models.enabledOf', {
+            enabled: enabledCount,
+            total: group.entries.length,
+          })}
         </span>
         <IconChevronDownOutline18
           className={cn(
@@ -2537,6 +2564,7 @@ function ModelsSection({
   filterInstanceId?: string;
   filterInstance?: ProviderInstance;
 }) {
+  const { t } = useTranslation('settings');
   const preferences = useKartonState((s) => s.preferences);
   const updatePreferences = useKartonProcedure((p) => p.preferences.update);
   const refreshInstanceModels = useKartonProcedure(
@@ -2556,7 +2584,9 @@ function ModelsSection({
       await refreshInstanceModels(filterInstance.id);
     } catch (error) {
       setReloadError(
-        error instanceof Error ? error.message : 'Failed to reload models.',
+        error instanceof Error
+          ? error.message
+          : t('modelsProviders.models.reloadFailed'),
       );
     } finally {
       setIsReloading(false);
@@ -2654,12 +2684,12 @@ function ModelsSection({
     group.entries.some((entry) => !showEnabledOnly || isModelEnabled(entry)),
   );
   const noResultsMessage = !hasInstanceModels
-    ? 'No models are available for this provider.'
+    ? t('modelsProviders.models.noModelsAvailable')
     : showEnabledOnly
       ? hasSearch
-        ? 'No enabled models match your search. Switch to All to include disabled models.'
-        : 'No models are enabled. Switch to All to enable models.'
-      : 'No models match your search. Try a different model name or ID.';
+        ? t('modelsProviders.models.noEnabledMatchSearch')
+        : t('modelsProviders.models.noEnabled')
+      : t('modelsProviders.models.noMatchSearch');
 
   // --- Thinking panel state ---
   const [listScrollViewport, setListScrollViewport] =
