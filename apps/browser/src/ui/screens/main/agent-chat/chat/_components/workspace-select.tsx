@@ -1443,29 +1443,29 @@ function getWorkspaceActionValidationError(
   switch (config.selectedAction) {
     case 'create-worktree':
       if (config.worktreeNameLabel.trim().length === 0) {
-        return 'Worktree name is required.';
+        return i18n.t('workspace:worktreeNameRequired');
       }
       if (existingBranches.has(config.worktreeNameLabel)) {
-        return 'A branch with this name already exists.';
+        return i18n.t('workspace:branchExists');
       }
       if (existingWorktreeNames.has(config.worktreeNameLabel)) {
-        return 'A worktree with this name already exists.';
+        return i18n.t('workspace:worktreeExists');
       }
       return null;
     case 'create-branch':
       if (config.branchNameLabel.trim().length === 0) {
-        return 'Branch name is required.';
+        return i18n.t('workspace:branchNameRequired');
       }
       if (existingBranches.has(config.branchNameLabel)) {
-        return 'A branch with this name already exists.';
+        return i18n.t('workspace:branchExists');
       }
       return null;
     case 'switch-branch': {
       const target = checkoutBranchItems.find(
         (item) => item.value === config.switchBranchTarget,
       );
-      if (!target) return 'Branch is unavailable.';
-      if (target.disabled) return 'Branch is checked out in another worktree.';
+      if (!target) return i18n.t('workspace:branchUnavailable');
+      if (target.disabled) return i18n.t('workspace:branchCheckedOutElsewhere');
       return null;
     }
     case 'switch-worktree':
@@ -1474,7 +1474,7 @@ function getWorkspaceActionValidationError(
           (item) => item.value === config.switchWorktreeTarget,
         )
       ) {
-        return 'Worktree is unavailable.';
+        return i18n.t('workspace:worktreeUnavailable');
       }
       return null;
   }
@@ -1489,6 +1489,7 @@ function WorkspaceActionPickerContent({
   onCommit,
   onUpdateAction,
 }: WorkspaceActionPickerContentProps) {
+  const { t } = useTranslation('workspace');
   const validationError = getWorkspaceActionValidationError(
     config,
     sourceBranchItems,
@@ -1498,21 +1499,21 @@ function WorkspaceActionPickerContent({
 
   return (
     <>
-      <ActionGroupHeader>Worktree</ActionGroupHeader>
+      <ActionGroupHeader>{t('worktree')}</ActionGroupHeader>
 
       <ActionRow
         active={config.selectedAction === 'create-worktree'}
         onSelect={() => onCommit('create-worktree')}
         tutorialId="action-create-worktree"
       >
-        <span className="shrink-0 text-xs">Create worktree</span>
+        <span className="shrink-0 text-xs">{t('createWorktree')}</span>
         <NameChip
           name={config.worktreeNameLabel}
           onCommit={(next) =>
             onUpdateAction('create-worktree', { worktreeNameLabel: next })
           }
         />
-        <span className="shrink-0 text-xs">from</span>
+        <span className="shrink-0 text-xs">{t('from')}</span>
         <ActionBranchSelect
           items={sourceBranchItems}
           value={config.createWorktreeFrom}
@@ -1531,7 +1532,7 @@ function WorkspaceActionPickerContent({
         onSelect={() => onCommit('switch-worktree')}
         tutorialId="action-switch-worktree"
       >
-        <span className="shrink-0 text-xs">Use existing worktree</span>
+        <span className="shrink-0 text-xs">{t('useExistingWorktree')}</span>
         <ActionBranchSelect
           items={worktreeItems}
           value={config.switchWorktreeTarget}
@@ -1543,21 +1544,21 @@ function WorkspaceActionPickerContent({
         />
       </ActionRow>
 
-      <ActionGroupHeader>Branch</ActionGroupHeader>
+      <ActionGroupHeader>{t('branch')}</ActionGroupHeader>
 
       <ActionRow
         active={config.selectedAction === 'create-branch'}
         onSelect={() => onCommit('create-branch')}
         tutorialId="action-create-branch"
       >
-        <span className="shrink-0 text-xs">Create branch</span>
+        <span className="shrink-0 text-xs">{t('createBranch')}</span>
         <NameChip
           name={config.branchNameLabel}
           onCommit={(next) =>
             onUpdateAction('create-branch', { branchNameLabel: next })
           }
         />
-        <span className="shrink-0 text-xs">from</span>
+        <span className="shrink-0 text-xs">{t('from')}</span>
         <ActionBranchSelect
           items={sourceBranchItems}
           value={config.createBranchFrom}
@@ -1576,7 +1577,7 @@ function WorkspaceActionPickerContent({
         onSelect={() => onCommit('switch-branch')}
         tutorialId="action-switch-branch"
       >
-        <span className="shrink-0 text-xs">Use existing branch</span>
+        <span className="shrink-0 text-xs">{t('useExistingBranch')}</span>
         <ActionBranchSelect
           items={checkoutBranchItems}
           value={config.switchBranchTarget}
@@ -2079,30 +2080,32 @@ const WorkspaceActionSelect = memo(function WorkspaceActionSelect({
       case 'create-worktree':
         return (
           <>
-            create worktree{' '}
-            <SummaryHighlight>{config.worktreeNameLabel}</SummaryHighlight> from{' '}
+            {t('summary.createWorktree')}{' '}
+            <SummaryHighlight>{config.worktreeNameLabel}</SummaryHighlight>{' '}
+            {t('from')}{' '}
             <SummaryHighlight>{config.createWorktreeFrom}</SummaryHighlight>
           </>
         );
       case 'create-branch':
         return (
           <>
-            create branch{' '}
-            <SummaryHighlight>{config.branchNameLabel}</SummaryHighlight> from{' '}
+            {t('summary.createBranch')}{' '}
+            <SummaryHighlight>{config.branchNameLabel}</SummaryHighlight>{' '}
+            {t('from')}{' '}
             <SummaryHighlight>{config.createBranchFrom}</SummaryHighlight>
           </>
         );
       case 'switch-branch':
         return (
           <>
-            use existing branch{' '}
+            {t('summary.useBranch')}{' '}
             <SummaryHighlight>{config.switchBranchTarget}</SummaryHighlight>
           </>
         );
       case 'switch-worktree':
         return (
           <>
-            use existing worktree{' '}
+            {t('summary.useWorktree')}{' '}
             <SummaryHighlight>
               {getSelectItemDisplayText(
                 worktreeItems,
@@ -2112,7 +2115,7 @@ const WorkspaceActionSelect = memo(function WorkspaceActionSelect({
           </>
         );
     }
-  }, [config, worktreeItems]);
+  }, [config, worktreeItems, t]);
 
   const resolveAbsolute = useCallback((p: string) => p, []);
 
@@ -2646,15 +2649,16 @@ const CONNECT_NEW_KEY = '__new__';
 const GIT_OPTIONS_STALE_MS = 60_000;
 
 function ConnectActionSummary({ state }: { state: ConnectActionState }) {
+  const { t } = useTranslation('workspace');
   switch (state.selectedAction) {
     case 'create-worktree':
-      return <>Create new worktree</>;
+      return <>{t('createNewWorktree')}</>;
     case 'switch-worktree':
-      return <>Use worktree</>;
+      return <>{t('useWorktree')}</>;
     case 'create-branch':
-      return <>Create new branch</>;
+      return <>{t('createNewBranch')}</>;
     case 'switch-branch':
-      return <>Use branch</>;
+      return <>{t('useBranch')}</>;
   }
 }
 
@@ -2685,6 +2689,7 @@ function ConnectInlineActionSelect({
   loading,
   onUpdate,
 }: ConnectInlineActionSelectProps) {
+  const { t } = useTranslation('workspace');
   const [open, setOpen] = useState(false);
   const popupRef = useRef<HTMLDivElement>(null);
 
@@ -2757,7 +2762,7 @@ function ConnectInlineActionSelect({
               {loading ? (
                 <div className="flex items-center gap-2 px-2.5 py-2 text-muted-foreground text-xs">
                   <Loader2Icon className="size-3.5 shrink-0 animate-spin" />
-                  <span>Loading branches and worktrees…</span>
+                  <span>{t('loadingBranches')}</span>
                 </div>
               ) : (
                 <WorkspaceActionPickerContent
@@ -2798,6 +2803,7 @@ const ConnectWorkspaceSelect = memo(function ConnectWorkspaceSelectInner({
   recentPaths,
   onMount,
 }: ConnectWorkspaceSelectProps) {
+  const { t } = useTranslation('workspace');
   const track = useTrack();
   const listGitBranchesByPath = useKartonProcedure(
     (p: KartonProcedures) => p.toolbox.listGitBranchesByPath,
@@ -3299,7 +3305,7 @@ const ConnectWorkspaceSelect = memo(function ConnectWorkspaceSelectInner({
           <Button
             variant="ghost"
             size="xs"
-            aria-label="Connect workspace"
+            aria-label={t('connect')}
             data-tutorial="connect-workspace"
             className="h-6 shrink-0 px-0 text-muted-foreground hover:text-foreground"
           >
@@ -3314,7 +3320,7 @@ const ConnectWorkspaceSelect = memo(function ConnectWorkspaceSelectInner({
             className="h-6 shrink-0 px-0 text-muted-foreground hover:text-foreground"
           >
             <IconFolder5Outline18 className="size-3 shrink-0" />
-            <span>Connect workspace</span>
+            <span>{t('connect')}</span>
             <IconPlusFill18 className="size-3 shrink-0" />
           </Button>
         )}
@@ -3466,7 +3472,7 @@ const ConnectWorkspaceSelect = memo(function ConnectWorkspaceSelectInner({
               )}
             >
               <IconPlusFill18 className="size-3.5 shrink-0" />
-              <span>Connect new workspace</span>
+              <span>{t('connectNew')}</span>
             </button>
           </PopoverBase.Popup>
         </PopoverBase.Positioner>
@@ -3500,6 +3506,7 @@ export const WorkspaceSelect = memo(function WorkspaceSelect({
   workspaceActionConfigs,
   onWorkspaceActionConfigChange,
 }: WorkspaceSelectProps) {
+  const { t } = useTranslation('workspace');
   const [openAgent] = useOpenAgent();
   const [openWorkspaceActionPrefixes, setOpenWorkspaceActionPrefixes] =
     useState<Set<string>>(() => new Set());
@@ -3591,12 +3598,12 @@ export const WorkspaceSelect = memo(function WorkspaceSelect({
       path: string | undefined,
       config: WorkspaceActionConfig | null,
     ): Promise<ConnectMountResult> => {
-      if (!openAgent) return { ok: false, message: 'No active agent.' };
+      if (!openAgent) return { ok: false, message: t('noActiveAgent') };
       // Guard against mounting an already-mounted recent. The connect
       // popover already filters mounted paths out, but a stale
       // pathStates entry could conceivably reference one.
       if (path !== undefined && mountedPaths.has(path)) {
-        return { ok: false, message: 'Workspace is already connected.' };
+        return { ok: false, message: t('alreadyConnected') };
       }
 
       track('workspace-connect-started');
@@ -3609,8 +3616,7 @@ export const WorkspaceSelect = memo(function WorkspaceSelect({
       // the native picker resolves. Carry the selected config into the
       // below-input selector once the picked workspace mounts.
       if (path === undefined) {
-        if (!config)
-          return { ok: false, message: 'No workspace action selected.' };
+        if (!config) return { ok: false, message: t('noActionSelected') };
         const pendingId = ++pendingConnectActionIdRef.current;
         pendingConnectActionConfigsRef.current.push({
           id: pendingId,
@@ -3673,9 +3679,7 @@ export const WorkspaceSelect = memo(function WorkspaceSelect({
           return {
             ok: false,
             message:
-              error instanceof Error
-                ? error.message
-                : 'Failed to connect workspace.',
+              error instanceof Error ? error.message : t('connectFailed'),
           };
         }
       }
