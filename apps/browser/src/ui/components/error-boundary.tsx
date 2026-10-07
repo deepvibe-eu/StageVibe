@@ -2,6 +2,7 @@ import { Component } from 'react';
 import type { CSSProperties, ErrorInfo, ReactNode } from 'react';
 import posthog from 'posthog-js';
 import { Button } from '@stagewise/stage-ui/components/button';
+import i18n from '@ui/i18n';
 
 interface ErrorBoundaryProps {
   children: ReactNode;
@@ -36,9 +37,11 @@ export class ErrorBoundary extends Component<
     if (this.state.hasError) {
       return (
         <div className="flex h-screen w-screen flex-col items-center justify-center gap-4 bg-background text-foreground">
-          <h1 className="font-semibold text-xl">Something went wrong</h1>
+          <h1 className="font-semibold text-xl">
+            {i18n.t('ui:errorBoundary.title')}
+          </h1>
           <p className="text-muted-foreground text-sm">
-            An unexpected error occurred. Please reload the app.
+            {i18n.t('ui:errorBoundary.description')}
           </p>
           <Button
             variant="ghost"
@@ -51,7 +54,7 @@ export class ErrorBoundary extends Component<
             }
             onClick={() => window.location.reload()}
           >
-            Reload
+            {i18n.t('ui:errorBoundary.reload')}
           </Button>
         </div>
       );

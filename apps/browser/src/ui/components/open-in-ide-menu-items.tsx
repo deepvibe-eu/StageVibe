@@ -15,6 +15,7 @@ import { IconOpenExternalOutline18 } from '@stagewise/icons';
 import { getIDEFileUrl, IDE_SELECTION_ITEMS } from '@shared/ide-url';
 import type { OpenFilesInIde } from '@shared/karton-contracts/ui/shared-types';
 import { useKartonState } from '@ui/hooks/use-karton';
+import { useTranslation } from 'react-i18next';
 import { IdeLogo } from './ide-logo';
 
 type OpenTarget = 'file' | 'folder';
@@ -26,6 +27,7 @@ export function OpenInIdeMenuItems({
   absolutePath: string;
   target: OpenTarget;
 }) {
+  const { t } = useTranslation('ui');
   const installedIdes = useKartonState((state) => state.installedIdes);
   const path =
     target === 'folder' && !absolutePath.endsWith('/')
@@ -39,13 +41,15 @@ export function OpenInIdeMenuItems({
       {installedIdes.map((ide) => (
         <MenuItem key={ide} size="xs" onClick={() => open(ide)}>
           <IdeLogo ide={ide} className="size-3.5" />
-          <span>Open in {IDE_SELECTION_ITEMS[ide]}</span>
+          <span>{t('openIn.label', { target: IDE_SELECTION_ITEMS[ide] })}</span>
         </MenuItem>
       ))}
       {installedIdes.length > 1 && <MenuSeparator />}
       <MenuItem size="xs" onClick={() => open('fileManager')}>
         <IdeLogo ide="fileManager" className="size-3.5" />
-        <span>Open in {IDE_SELECTION_ITEMS.fileManager}</span>
+        <span>
+          {t('openIn.label', { target: IDE_SELECTION_ITEMS.fileManager })}
+        </span>
       </MenuItem>
     </>
   );
@@ -60,6 +64,7 @@ export function OpenInIdeMenu({
   target: OpenTarget;
   buttonClassName?: string;
 }) {
+  const { t } = useTranslation('ui');
   return (
     <Menu>
       <Tooltip>
@@ -69,13 +74,13 @@ export function OpenInIdeMenu({
               className={buttonClassName}
               variant="ghost"
               size="icon-xs"
-              aria-label="Open in…"
+              aria-label={t('openIn.menu')}
             >
               <IconOpenExternalOutline18 className="size-4" />
             </Button>
           </MenuTrigger>
         </TooltipTrigger>
-        <TooltipContent>Open in…</TooltipContent>
+        <TooltipContent>{t('openIn.menu')}</TooltipContent>
       </Tooltip>
       <MenuContent className="min-w-44" size="xs" align="end" sideOffset={4}>
         <OpenInIdeMenuItems absolutePath={absolutePath} target={target} />

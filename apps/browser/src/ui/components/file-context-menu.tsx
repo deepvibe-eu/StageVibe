@@ -4,6 +4,7 @@ import { Menu as MenuBase } from '@base-ui/react/menu';
 import { cn } from '@stagewise/stage-ui/lib/utils';
 import { nativeFileManagerLabel } from '@shared/ide-url';
 import { IconArrowUpRightOutline18 } from '@stagewise/icons';
+import { useTranslation } from 'react-i18next';
 
 const itemClassName = cn(
   'flex w-full cursor-default flex-row items-center justify-start gap-2',
@@ -23,6 +24,7 @@ export function FileContextMenu({
   onOpenFile?: () => void;
   children: ReactNode;
 }) {
+  const { t } = useTranslation('ui');
   const openInFileManager = () => {
     if (!resolvePath) return;
     const abs = resolvePath(relativePath);
@@ -57,7 +59,7 @@ export function FileContextMenu({
             {onOpenFile && (
               <MenuBase.Item className={itemClassName} onClick={onOpenFile}>
                 <IconArrowUpRightOutline18 className="size-3.5 shrink-0" />
-                <span>Open in file view</span>
+                <span>{t('fileMenu.openInFileView')}</span>
               </MenuBase.Item>
             )}
             {resolvePath && (
@@ -66,7 +68,9 @@ export function FileContextMenu({
                 onClick={openInFileManager}
               >
                 <IconArrowUpRightOutline18 className="size-3.5 shrink-0" />
-                <span>Reveal in {nativeFileManagerLabel}</span>
+                <span>
+                  {t('fileMenu.revealIn', { manager: nativeFileManagerLabel })}
+                </span>
               </MenuBase.Item>
             )}
           </MenuBase.Popup>

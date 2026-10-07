@@ -1,0 +1,15 @@
+{
+  "errorBoundary": {
+    "title": "Something went wrong",
+    "description": "An unexpected error occurred. Please reload the app.",
+    "reload": "Reload"
+  },
+  "fileMenu": {
+    "openInFileView": "Open in file view",
+    "revealIn": "Reveal in {{manager}}"
+  },
+  "openIn": {
+    "label": "Open in {{target}}",
+    "menu": "Open in…"
+  }
+}
