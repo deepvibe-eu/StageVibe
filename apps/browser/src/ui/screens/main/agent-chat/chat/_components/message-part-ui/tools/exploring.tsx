@@ -446,7 +446,7 @@ export const ExploringToolParts = memo(
     );
 
     const explorationFinishedText = useMemo(() => {
-      if (isReasoningOnly) return 'Thought';
+      if (isReasoningOnly) return t('exploring.thought');
 
       const {
         filesFound,
@@ -470,52 +470,67 @@ export const ExploringToolParts = memo(
         enabledWorkspaceSkills,
       } = explorationMetadata;
 
-      // Build "Enabled ..." prefix for skill reads (plugins + workspace)
-      let enabledPrefix = '';
+      const listSeparator = t('exploring.listSeparator');
+      const joinList = (parts: string[]): string =>
+        parts.length <= 1
+          ? (parts[0] ?? '')
+          : `${parts.slice(0, -1).join(listSeparator)}${t('exploring.listConjunction')}${parts.at(-1)}`;
+
+      // Build the "Enabled ..." phrase for skill reads (plugins + workspace)
       const allSkillNames: string[] = [
         ...Array.from(enabledPlugins.values()).map((p) => p.displayName),
         ...Array.from(enabledWorkspaceSkills),
       ];
+      let enabledText: string | null = null;
       if (allSkillNames.length > 0) {
-        if (allSkillNames.length <= 2)
-          enabledPrefix = `Enabled ${allSkillNames.join(', ')}`;
-        else {
-          const noun = enabledWorkspaceSkills.size > 0 ? 'skills' : 'plugins';
-          enabledPrefix = `Enabled ${allSkillNames.length} ${noun}`;
-        }
+        enabledText =
+          allSkillNames.length <= 2
+            ? t('exploring.enabledNames', {
+                names: allSkillNames.join(listSeparator),
+              })
+            : enabledWorkspaceSkills.size > 0
+              ? t('exploring.enabledCountSkills', {
+                  count: allSkillNames.length,
+                })
+              : t('exploring.enabledCountPlugins', {
+                  count: allSkillNames.length,
+                });
       }
+
+      const hostSuffix =
+        inspectedHostnames.size === 1
+          ? t('exploring.hostSuffixSingle', {
+              hostname: Array.from(inspectedHostnames)[0],
+            })
+          : inspectedHostnames.size > 1
+            ? t('exploring.hostSuffixMany', {
+                count: inspectedHostnames.size,
+              })
+            : '';
 
       const textParts: string[] = [];
       if (filesFound > 0 || filesRead > 0)
-        textParts.push(
-          `${filesFound + filesRead} file${filesFound + filesRead !== 1 ? 's' : ''}`,
-        );
+        textParts.push(t('exploring.files', { count: filesFound + filesRead }));
 
       if (docsRead > 0)
-        textParts.push(`${docsRead} doc${docsRead !== 1 ? 's' : ''}`);
+        textParts.push(t('exploring.docs', { count: docsRead }));
 
       if (consoleLogsRead > 0)
-        textParts.push(
-          `${consoleLogsRead} console log${consoleLogsRead !== 1 ? 's' : ''}`,
-        );
-
-      // Sandbox: build a descriptive browser segment
-      const hostSuffix =
-        inspectedHostnames.size === 1
-          ? ` on ${Array.from(inspectedHostnames)[0]}`
-          : inspectedHostnames.size > 1
-            ? ` on ${inspectedHostnames.size} tabs`
-            : '';
+        textParts.push(t('exploring.consoleLogs', { count: consoleLogsRead }));
 
       if (screenshotsTaken > 0)
         textParts.push(
-          `${screenshotsTaken} screenshot${screenshotsTaken !== 1 ? 's' : ''}${hostSuffix}`,
+          t('exploring.screenshots', {
+            count: screenshotsTaken,
+            suffix: hostSuffix,
+          }),
         );
 
-      if (stylesInspected > 0) textParts.push(`styles${hostSuffix}`);
+      if (stylesInspected > 0)
+        textParts.push(t('exploring.styles', { suffix: hostSuffix }));
 
       if (domInspected > 0 && stylesInspected === 0)
-        textParts.push(`DOM${hostSuffix}`);
+        textParts.push(t('exploring.dom', { suffix: hostSuffix }));
 
       if (
         sandboxScriptsRun > 0 &&
@@ -524,85 +539,76 @@ export const ExploringToolParts = memo(
         domInspected === 0
       )
         textParts.push(
-          `${sandboxScriptsRun} script${sandboxScriptsRun !== 1 ? 's' : ''}${hostSuffix}`,
+          t('exploring.scripts', {
+            count: sandboxScriptsRun,
+            suffix: hostSuffix,
+          }),
         );
 
       if (sandboxFilesWritten > 0)
         textParts.push(
-          `${sandboxFilesWritten} sandbox file${sandboxFilesWritten !== 1 ? 's' : ''}`,
+          t('exploring.sandboxFiles', { count: sandboxFilesWritten }),
         );
 
       if (attachmentLabels.length > 0) {
         const allSame = attachmentLabels.every(
           (l) => l === attachmentLabels[0],
         );
-        const noun = allSame ? attachmentLabels[0] : 'attachment';
+        const noun = allSame
+          ? attachmentLabels[0]!
+          : t('exploring.attachmentGeneric');
         textParts.push(
           attachmentLabels.length === 1
-            ? `1 ${noun}`
-            : `${attachmentLabels.length} ${noun}s`,
+            ? t('exploring.attachmentOne', { noun })
+            : t('exploring.attachmentMany', {
+                count: attachmentLabels.length,
+                noun,
+              }),
         );
       }
 
       const hasExploredFiles = filesFound > 0 || filesRead > 0;
 
-      if (hasCheckedLinting)
-        if (lintingErrors > 0 || lintingWarnings > 0) {
-          const lintParts: string[] = [];
-          if (lintingErrors > 0)
-            lintParts.push(
-              `${lintingErrors} error${lintingErrors !== 1 ? 's' : ''}`,
-            );
-          if (lintingWarnings > 0)
-            lintParts.push(
-              `${lintingWarnings} warning${lintingWarnings !== 1 ? 's' : ''}`,
-            );
-          textParts.push(lintParts.join(', '));
-        }
+      if (hasCheckedLinting && (lintingErrors > 0 || lintingWarnings > 0)) {
+        const lintParts: string[] = [];
+        if (lintingErrors > 0)
+          lintParts.push(t('exploring.lintErrors', { count: lintingErrors }));
+        if (lintingWarnings > 0)
+          lintParts.push(
+            t('exploring.lintWarnings', { count: lintingWarnings }),
+          );
+        textParts.push(lintParts.join(listSeparator));
+      }
 
       if (textParts.length === 0) {
         if (hasCheckedLinting && lintingErrors === 0 && lintingWarnings === 0) {
-          const lintText = 'Checked linting - no issues';
-          return enabledPrefix
-            ? `${enabledPrefix}, ${lintText.toLowerCase()}`
+          const lintText = t('exploring.checkedLintingNoIssues');
+          return enabledText
+            ? t('exploring.enabledAndFound', {
+                enabled: enabledText,
+                list: lintText,
+              })
             : lintText;
         }
-        if (hasUsedBrowserTools) textParts.push('the browser');
-        if (hasUsedContext7Tools) textParts.push('documentation');
-        if (hasUsedFileTools) textParts.push('files');
+        if (hasUsedBrowserTools) textParts.push(t('exploring.theBrowser'));
+        if (hasUsedContext7Tools) textParts.push(t('exploring.documentation'));
+        if (hasUsedFileTools) textParts.push(t('exploring.filesWord'));
       }
 
-      if (
-        !hasExploredFiles &&
-        hasCheckedLinting &&
-        lintingErrors &&
-        lintingWarnings
-      ) {
-        const foundText = `Found ${textParts.slice(0, -1).join(', ')} and ${textParts.at(-1)}`;
-        return enabledPrefix
-          ? `${enabledPrefix}, ${foundText.toLowerCase()}`
-          : foundText;
-      } else if (!hasExploredFiles && hasCheckedLinting) {
-        const foundText = `Found ${textParts.at(-1)}`;
-        return enabledPrefix
-          ? `${enabledPrefix}, ${foundText.toLowerCase()}`
-          : foundText;
+      if (!hasExploredFiles && hasCheckedLinting) {
+        const list = joinList(textParts);
+        return enabledText
+          ? t('exploring.enabledAndFound', { enabled: enabledText, list })
+          : t('exploring.foundOnly', { list });
       }
 
-      const exploredText =
-        textParts.length === 0
-          ? null
-          : textParts.length === 1
-            ? `explored ${textParts[0]}`
-            : `explored ${textParts.slice(0, -1).join(', ')} and ${textParts.at(-1)}`;
+      if (textParts.length === 0) return enabledText ?? t('exploring.codebase');
 
-      if (enabledPrefix && exploredText)
-        return `${enabledPrefix}, ${exploredText}`;
-      if (enabledPrefix) return enabledPrefix;
-      if (exploredText)
-        return exploredText.charAt(0).toUpperCase() + exploredText.slice(1);
-      return 'Explored the codebase';
-    }, [explorationMetadata, isReasoningOnly]);
+      const list = joinList(textParts);
+      return enabledText
+        ? t('exploring.enabledAndExplored', { enabled: enabledText, list })
+        : t('exploring.exploredOnly', { list });
+    }, [explorationMetadata, isReasoningOnly, t]);
 
     const explorationInProgressText = useMemo(() => {
       const lastNonReasoningPart = items
@@ -619,32 +625,42 @@ export const ExploringToolParts = memo(
           const pluginMatch = path.match(PLUGIN_SKILL_RE);
           if (pluginMatch) {
             const plugin = plugins.find((pl) => pl.id === pluginMatch[1]);
-            if (plugin) return `Enabling ${plugin.displayName}...`;
+            if (plugin)
+              return t('exploring.inProgress.enabling', {
+                name: plugin.displayName,
+              });
           }
           const wsMatch = path.match(WORKSPACE_SKILL_RE);
-          if (wsMatch?.[1]) return `Enabling ${wsMatch[1]}...`;
-          return 'Reading file...';
+          if (wsMatch?.[1])
+            return t('exploring.inProgress.enabling', { name: wsMatch[1] });
+          return t('exploring.inProgress.readingFile');
         }
         case 'tool-ls':
-          return 'Listing directory...';
+          return t('exploring.inProgress.listingDirectory');
         case 'tool-glob':
         case 'tool-grepSearch':
-          return 'Exploring files...';
+          return t('exploring.inProgress.exploringFiles');
         case 'tool-searchInLibraryDocs': {
           const p = lastNonReasoningPart as Extract<
             AgentToolUIPart,
             { type: 'tool-searchInLibraryDocs' }
           >;
-          if (!p.input?.libraryId) return 'Exploring documentation...';
-          return `Reading docs for ${p.input.libraryId}...`;
+          if (!p.input?.libraryId)
+            return t('exploring.inProgress.exploringDocumentation');
+          return t('exploring.inProgress.readingDocsFor', {
+            libraryId: p.input.libraryId,
+          });
         }
         case 'tool-listLibraryDocs': {
           const p = lastNonReasoningPart as Extract<
             AgentToolUIPart,
             { type: 'tool-listLibraryDocs' }
           >;
-          if (!p.input?.name) return 'Exploring documentation...';
-          return `Searching docs for ${p.input.name}...`;
+          if (!p.input?.name)
+            return t('exploring.inProgress.exploringDocumentation');
+          return t('exploring.inProgress.searchingDocsFor', {
+            name: p.input.name,
+          });
         }
         case 'tool-executeSandboxJs': {
           const p = lastNonReasoningPart as Extract<
@@ -660,14 +676,16 @@ export const ExploringToolParts = memo(
             { type: 'tool-readConsoleLogs' }
           >;
           const tab = activeTabs[p.input?.id ?? ''];
-          if (!tab) return 'Exploring the browser...';
+          if (!tab) return t('exploring.inProgress.exploringTheBrowser');
           const hostname = new URL(tab.url).hostname;
-          return `Reading logs from ${hostname}...`;
+          return t('exploring.inProgress.readingLogsFrom', { hostname });
         }
         case 'tool-getLintingDiagnostics':
-          return 'Checking linting...';
+          return t('exploring.inProgress.checkingLinting');
         default:
-          return isReasoningOnly ? 'Thinking...' : 'Exploring...';
+          return isReasoningOnly
+            ? t('exploring.inProgress.thinking')
+            : t('exploring.inProgress.exploring');
       }
     }, [items, activeTabs, plugins, isReasoningOnly, t]);
 
