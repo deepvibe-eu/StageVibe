@@ -92,6 +92,17 @@
     "preview": "Preview",
     "home": "Home"
   },
+  "omniboxSuggestions": {
+    "runningLocally": "Running locally",
+    "searchOrEnterUrl": "Search or enter a URL",
+    "mostVisited": "Most visited",
+    "frequentSearches": "Frequent searches",
+    "reloadCurrentPage": "Reload current page",
+    "open": "Open {{input}}",
+    "searchFor": "Search for \"{{input}}\" with {{engine}}",
+    "recentPages": "Recent pages",
+    "recentSearches": "Recent searches"
+  },
   "permissions": {
     "desc": {
       "mediaCameraMic": "wants to use your camera and microphone",

@@ -8,6 +8,7 @@ import {
   useLayoutEffect,
 } from 'react';
 import { Virtuoso } from 'react-virtuoso';
+import { useTranslation } from 'react-i18next';
 import { MessageUser } from './message-user';
 import { MessageAssistant } from './message-assistant';
 import { MessageLoading } from './message-loading';
@@ -196,6 +197,7 @@ function isEventFromEditableTarget(event: KeyboardEvent) {
 }
 
 export const ChatHistory = ({ flushTop = false }: { flushTop?: boolean }) => {
+  const { t } = useTranslation('chat');
   const topInset = flushTop ? 0 : CHAT_TOP_INSET;
   const [containerHeight, setContainerHeight] = useState(0);
   const [containerWidth, setContainerWidth] = useState(0);
@@ -1281,7 +1283,7 @@ export const ChatHistory = ({ flushTop = false }: { flushTop?: boolean }) => {
       <MountedPathsProvider value={resolvedMounts}>
         <AttachmentMetadataProvider messages={filteredMessages}>
           <section
-            aria-label="Mate message display"
+            aria-label={t('chatHistory.mateMessageDisplay')}
             className={cn(
               'pointer-events-auto block h-max min-h-[inherit] text-foreground text-sm focus-within:outline-none focus:outline-none',
             )}
@@ -1339,7 +1341,7 @@ export const ChatHistory = ({ flushTop = false }: { flushTop?: boolean }) => {
               <Tooltip>
                 <TooltipTrigger>
                   <Button
-                    aria-label="Scroll to bottom"
+                    aria-label={t('chatHistory.scrollToBottom')}
                     className="pointer-events-auto shadow-elevation-1"
                     size="icon-sm"
                     variant="secondary"
@@ -1348,7 +1350,9 @@ export const ChatHistory = ({ flushTop = false }: { flushTop?: boolean }) => {
                     <IconChevronDownOutline18 className="size-3.5" />
                   </Button>
                 </TooltipTrigger>
-                <TooltipContent>Scroll to bottom</TooltipContent>
+                <TooltipContent>
+                  {t('chatHistory.scrollToBottom')}
+                </TooltipContent>
               </Tooltip>
             </div>
           )}

@@ -15,6 +15,7 @@ import {
 } from '@stagewise/icons';
 import { useKartonProcedure } from '@ui/hooks/use-karton';
 import { useDebouncedValue } from '@ui/hooks/use-debounced-value';
+import { useTranslation } from 'react-i18next';
 
 /**
  * Determines if the input is a URL or search query, and returns the appropriate URL.
@@ -184,6 +185,7 @@ export function useOmniboxSuggestions(
   resetSuggestions: () => void;
 } {
   const getSuggestions = useKartonProcedure((p) => p.getOmniboxSuggestions);
+  const { t } = useTranslation('content');
 
   // Separate state for search suggestions (non-empty input) and default suggestions (empty input).
   // This prevents stale search results from bleeding into the empty-input view and vice versa.
@@ -250,7 +252,7 @@ export function useOmniboxSuggestions(
       key: 'local-ports',
       label: (
         <span className="inline-flex items-center gap-1.5">
-          Running locally
+          {t('omniboxSuggestions.runningLocally')}
           <span className="relative flex size-1.5">
             <span className="absolute inline-flex size-full animate-ping rounded-full bg-green-400 opacity-75" />
             <span className="relative inline-flex size-1.5 rounded-full bg-green-500" />
@@ -302,7 +304,7 @@ export function useOmniboxSuggestions(
               label: '',
               suggestionLabel: (
                 <span className="text-muted-foreground">
-                  Search or enter a URL
+                  {t('omniboxSuggestions.searchOrEnterUrl')}
                 </span>
               ),
               suggestionIcon: (
@@ -315,7 +317,7 @@ export function useOmniboxSuggestions(
         localPortsGroup,
         {
           key: 'most-visited',
-          label: 'Most visited',
+          label: t('omniboxSuggestions.mostVisited'),
           items:
             suggestions?.mostVisitedOrigins?.map((entry) => {
               let hostname: string;
@@ -352,7 +354,7 @@ export function useOmniboxSuggestions(
           ? [
               {
                 key: 'frequent-searches',
-                label: 'Frequent searches',
+                label: t('omniboxSuggestions.frequentSearches'),
                 items:
                   suggestions?.searchTerms.map((entry) => ({
                     type: 'past-search' as const,
@@ -383,7 +385,9 @@ export function useOmniboxSuggestions(
                   suggestionIcon: (
                     <IconRefreshAnticlockwiseOutline18 className="size-4 text-muted-foreground" />
                   ),
-                  suggestionLabel: <span>Reload current page</span>,
+                  suggestionLabel: (
+                    <span>{t('omniboxSuggestions.reloadCurrentPage')}</span>
+                  ),
                 },
               ],
             },
@@ -401,7 +405,7 @@ export function useOmniboxSuggestions(
                   label: input,
                   suggestionLabel: (
                     <span>
-                      Open <strong>{input.trim()}</strong>
+                      {t('omniboxSuggestions.open', { input: input.trim() })}
                     </span>
                   ),
                   suggestionIcon: (
@@ -423,11 +427,10 @@ export function useOmniboxSuggestions(
                   label: input,
                   suggestionLabel: (
                     <span className="text-muted-foreground">
-                      Search for "
-                      <strong className="text-foreground">
-                        {input.trim()}
-                      </strong>
-                      " with {engine.shortName}
+                      {t('omniboxSuggestions.searchFor', {
+                        input: input.trim(),
+                        engine: engine.shortName,
+                      })}
                     </span>
                   ),
                   suggestionIcon: (
@@ -447,7 +450,7 @@ export function useOmniboxSuggestions(
       localPortsGroup,
       {
         key: 'recent-pages',
-        label: 'Recent pages',
+        label: t('omniboxSuggestions.recentPages'),
         items:
           suggestions?.historyEntries.map((entry) => ({
             type: 'past-page' as const,
@@ -477,7 +480,7 @@ export function useOmniboxSuggestions(
         ? [
             {
               key: 'recent-searches',
-              label: 'Recent searches',
+              label: t('omniboxSuggestions.recentSearches'),
               items:
                 suggestions?.searchTerms.map((entry) => ({
                   type: 'past-search' as const,
@@ -503,6 +506,7 @@ export function useOmniboxSuggestions(
     searchEngineKeyword,
     searchSuggestions,
     defaultSuggestions,
+    t,
   ]);
 
   return {
