@@ -1,0 +1,31 @@
+{
+  "loading": "Loading…",
+  "noResults": "No results",
+  "searchFiles": "Search files…",
+  "searchAll": "Search mates, tabs, terminals, settings…",
+  "modes": {
+    "all": "All",
+    "agents": "Mates",
+    "browser": "Browser",
+    "terminals": "Terminals",
+    "files": "Files",
+    "settings": "Settings"
+  },
+  "switchMode": "Switch to {{mode}} mode",
+  "cycleHint": "Press Tab to cycle command center modes",
+  "cancel": "Cancel",
+  "save": "Save",
+  "delete": "Delete",
+  "rename": "Rename",
+  "pin": "Pin",
+  "unpin": "Unpin",
+  "deleteConfirm": "Delete \"{{title}}\"?",
+  "searchFilenamesOnly": "Search filenames only",
+  "searchInContent": "Search in content",
+  "excludeGitignored": "Exclude gitignored",
+  "includeGitignored": "Include gitignored",
+  "copyUrl": "Copy URL",
+  "close": "Close",
+  "showingResultsFor": "Showing results for {{label}}",
+  "showResultsFor": "Show results for"
+}

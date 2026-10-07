@@ -8,25 +8,26 @@ import {
 import type { ComponentType } from 'react';
 import { ShortcutKey } from '@stagewise/stage-ui/components/shortcut-key';
 import { cn } from '@ui/utils';
+import { useTranslation } from 'react-i18next';
 import type { CommandCenterMode } from '../command-center-model';
 
 type ModeDefinition = {
   mode: CommandCenterMode;
-  label: string;
+  labelKey: string;
   Icon?: ComponentType<{ className?: string }>;
 };
 
 const modes: ModeDefinition[] = [
-  { mode: 'global', label: 'All' },
-  { mode: 'agents', label: 'Mates', Icon: IconMsgWritingOutline18 },
-  { mode: 'browser', label: 'Browser', Icon: IconEarthSearchOutline18 },
+  { mode: 'global', labelKey: 'all' },
+  { mode: 'agents', labelKey: 'agents', Icon: IconMsgWritingOutline18 },
+  { mode: 'browser', labelKey: 'browser', Icon: IconEarthSearchOutline18 },
   {
     mode: 'terminals',
-    label: 'Terminals',
+    labelKey: 'terminals',
     Icon: IconSquareTerminalOutline18,
   },
-  { mode: 'files', label: 'Files', Icon: IconFolder5Outline18 },
-  { mode: 'settings', label: 'Settings', Icon: IconGear3Outline18 },
+  { mode: 'files', labelKey: 'files', Icon: IconFolder5Outline18 },
+  { mode: 'settings', labelKey: 'settings', Icon: IconGear3Outline18 },
 ];
 
 export function CommandCenterModeToggle({
@@ -36,16 +37,18 @@ export function CommandCenterModeToggle({
   mode: CommandCenterMode;
   onModeChange: (mode: CommandCenterMode) => void;
 }) {
+  const { t } = useTranslation('commandCenter');
   return (
     <div className="flex shrink-0 items-center gap-2.5 text-xs">
-      {modes.map(({ mode: value, label, Icon }) => {
+      {modes.map(({ mode: value, labelKey, Icon }) => {
         const isActive = value === mode;
+        const label = t(`modes.${labelKey}`);
 
         return (
           <button
             key={value}
             type="button"
-            aria-label={`Switch to ${label} mode`}
+            aria-label={t('switchMode', { mode: label })}
             aria-pressed={isActive}
             onClick={() => onModeChange(value)}
             className={cn(
@@ -67,11 +70,7 @@ export function CommandCenterModeToggle({
           </button>
         );
       })}
-      <ShortcutKey
-        aria-label="Press Tab to cycle command center modes"
-        className="shrink-0"
-        size="xs"
-      >
+      <ShortcutKey aria-label={t('cycleHint')} className="shrink-0" size="xs">
         Tab
       </ShortcutKey>
     </div>
