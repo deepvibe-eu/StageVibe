@@ -69,6 +69,7 @@ import {
   type EditorActions,
   useFileEditorController,
 } from './use-file-editor-controller';
+import { useTranslation } from 'react-i18next';
 
 const MONACO_THEME_NAME = 'stagewise-file-preview';
 
@@ -701,6 +702,7 @@ function FileTabToolbar({
   openExternalPath?: string;
   onInteract?: () => void;
 }) {
+  const { t } = useTranslation('filePreview');
   // Read-only files (attachment blobs, bundled plugins, agent app scratch)
   // cannot be edited, so collapse the save/undo/redo controls to a single
   // read-only indicator.
@@ -713,7 +715,7 @@ function FileTabToolbar({
       >
         <div className="flex items-center gap-1.5 px-2 text-muted-foreground text-xs">
           <IconLockKeyOutline18 className="size-4" />
-          <span>Read-only</span>
+          <span>{t('readOnly')}</span>
         </div>
         <div className="flex items-center">
           {openExternalPath && (
@@ -737,11 +739,14 @@ function FileTabToolbar({
     >
       <div className="flex items-center">
         <div className="flex items-center px-1">
-          <ToolbarTooltip label="Save file" shortcut={HotkeyActions.SAVE_FILE}>
+          <ToolbarTooltip
+            label={t('saveFile')}
+            shortcut={HotkeyActions.SAVE_FILE}
+          >
             <Button
               variant="ghost"
               size="icon-xs"
-              aria-label="Save file"
+              aria-label={t('saveFile')}
               disabled={
                 !actions?.isDirty || actions.isSaving || actions.externalChange
               }
@@ -757,22 +762,28 @@ function FileTabToolbar({
         </div>
         <div className="h-5 w-px bg-border-subtle" />
         <div className="flex items-center px-1">
-          <ToolbarTooltip label="Undo" shortcut={HotkeyActions.UNDO_FILE_EDIT}>
+          <ToolbarTooltip
+            label={t('undo')}
+            shortcut={HotkeyActions.UNDO_FILE_EDIT}
+          >
             <Button
               variant="ghost"
               size="icon-xs"
-              aria-label="Undo"
+              aria-label={t('undo')}
               disabled={!actions?.canUndo}
               onClick={() => actions?.undo()}
             >
               <IconUndoOutline18 className="size-4" />
             </Button>
           </ToolbarTooltip>
-          <ToolbarTooltip label="Redo" shortcut={HotkeyActions.REDO_FILE_EDIT}>
+          <ToolbarTooltip
+            label={t('redo')}
+            shortcut={HotkeyActions.REDO_FILE_EDIT}
+          >
             <Button
               variant="ghost"
               size="icon-xs"
-              aria-label="Redo"
+              aria-label={t('redo')}
               disabled={!actions?.canRedo}
               onClick={() => actions?.redo()}
             >
@@ -800,13 +811,12 @@ function FileTabToolbar({
  * edits) or explicitly overwrites the external changes.
  */
 function ExternalChangeBanner({ actions }: { actions: EditorActions }) {
+  const { t } = useTranslation('filePreview');
   return (
     <div className="flex shrink-0 items-center justify-between gap-2 border-border border-b bg-warning-solid/10 px-3 py-1.5 text-warning-foreground text-xs">
       <div className="flex min-w-0 items-center gap-1.5">
         <TriangleAlertIcon className="size-3.5 shrink-0" />
-        <span className="truncate">
-          This file changed on disk since you started editing.
-        </span>
+        <span className="truncate">{t('externalChange')}</span>
       </div>
       <div className="flex shrink-0 items-center gap-1">
         <Button
@@ -815,7 +825,7 @@ function ExternalChangeBanner({ actions }: { actions: EditorActions }) {
           onClick={() => actions.reload()}
           disabled={actions.isSaving}
         >
-          Reload
+          {t('reload')}
         </Button>
         <Button
           variant="warning"
@@ -823,7 +833,7 @@ function ExternalChangeBanner({ actions }: { actions: EditorActions }) {
           onClick={() => actions.forceSave()}
           disabled={actions.isSaving}
         >
-          Overwrite
+          {t('overwrite')}
         </Button>
       </div>
     </div>
@@ -844,13 +854,13 @@ function FileMoveBanner({
   toPath: string;
   onDismiss: () => void;
 }) {
+  const { t } = useTranslation('filePreview');
   return (
     <div className="flex shrink-0 items-center justify-between gap-2 border-border border-b bg-info-solid/10 px-3 py-1.5 text-info-foreground text-xs">
       <div className="flex min-w-0 items-center gap-1.5">
         <TriangleAlertIcon className="size-3.5 shrink-0" />
         <span className="truncate">
-          File moved from {fromPath} to {toPath}. Future edits will apply to the
-          new location.
+          {t('moved', { from: fromPath, to: toPath })}
         </span>
       </div>
       <Button
@@ -878,13 +888,12 @@ function FileDeletedBanner({
   onRecreate: () => void;
   isRecreating: boolean;
 }) {
+  const { t } = useTranslation('filePreview');
   return (
     <div className="flex shrink-0 items-center justify-between gap-2 border-border border-b bg-error-solid/10 px-3 py-1.5 text-error-foreground text-xs">
       <div className="flex min-w-0 items-center gap-1.5">
         <TriangleAlertIcon className="size-3.5 shrink-0" />
-        <span className="truncate">
-          This file was deleted outside of StageVibe.
-        </span>
+        <span className="truncate">{t('deletedExternally')}</span>
       </div>
       <div className="flex shrink-0 items-center gap-1">
         <Button
@@ -893,7 +902,7 @@ function FileDeletedBanner({
           onClick={onRecreate}
           disabled={isRecreating}
         >
-          {isRecreating ? 'Recreating…' : 'Re-create and save'}
+          {isRecreating ? t('recreating') : t('recreateAndSave')}
         </Button>
         <Button
           variant="destructive"
@@ -901,7 +910,7 @@ function FileDeletedBanner({
           onClick={onClose}
           disabled={isRecreating}
         >
-          Close
+          {t('close')}
         </Button>
       </div>
     </div>

@@ -1,0 +1,14 @@
+{
+  "readOnly": "Read-only",
+  "saveFile": "Save file",
+  "undo": "Undo",
+  "redo": "Redo",
+  "externalChange": "This file changed on disk since you started editing.",
+  "reload": "Reload",
+  "overwrite": "Overwrite",
+  "moved": "File moved from {{from}} to {{to}}. Future edits will apply to the new location.",
+  "deletedExternally": "This file was deleted outside of StageVibe.",
+  "recreating": "Recreating…",
+  "recreateAndSave": "Re-create and save",
+  "close": "Close"
+}
