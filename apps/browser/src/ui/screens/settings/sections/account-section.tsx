@@ -9,11 +9,14 @@ import { produceWithPatches } from 'immer';
 import type { TelemetryLevel } from '@shared/karton-contracts/ui/shared-types';
 import type { CurrentUsageResponse } from '@shared/karton-contracts/pages-api/types';
 import { SignInOptionsPanel } from '@ui/components/auth/sign-in-options-panel';
+import { useTranslation } from 'react-i18next';
+import i18n from '@ui/i18n';
 
 const CONSOLE_URL =
   import.meta.env.VITE_STAGEWISE_CONSOLE_URL || 'https://console.stagewise.io';
 
 export function AccountSection() {
+  const { t } = useTranslation('settings');
   const userAccount = useKartonState((s) => s.userAccount);
   const sendOtp = useKartonProcedure((p) => p.userAccount.sendOtp);
   const verifyOtp = useKartonProcedure((p) => p.userAccount.verifyOtp);
@@ -59,7 +62,9 @@ export function AccountSection() {
           <div className="mx-auto flex w-full max-w-3xl shrink-0 flex-col gap-8">
             {/* Header */}
             <div>
-              <h1 className="font-semibold text-foreground text-xl">Account</h1>
+              <h1 className="font-semibold text-foreground text-xl">
+                {t('account.title')}
+              </h1>
             </div>
             <AuthenticatedView
               email={userAccount.user?.email}
@@ -71,8 +76,8 @@ export function AccountSection() {
         ) : (
           <div className="mx-auto flex w-full max-w-3xl shrink-0 flex-col items-center">
             <SignInOptionsPanel
-              title="Authenticate"
-              description="Get access to the latest models with Stagewise."
+              title={t('account.authenticate.title')}
+              description={t('account.authenticate.description')}
               sendOtp={(email, token) => sendOtp(email, token ?? '')}
               verifyOtp={verifyOtp}
               signInSocial={signInSocial}
@@ -108,6 +113,7 @@ function AuthenticatedView({
   machineId?: string;
   onLogout: () => void;
 }) {
+  const { t } = useTranslation('settings');
   const openExternalUrl = useKartonProcedure((p) => p.openExternalUrl);
 
   return (
@@ -115,9 +121,9 @@ function AuthenticatedView({
       {/* User info */}
       <div className="flex flex-col gap-2">
         <h2 className="font-medium text-foreground text-lg">
-          {email ?? 'Unknown user'}
+          {email ?? t('account.unknownUser')}
         </h2>
-        <p className="text-muted-foreground text-sm">Signed in</p>
+        <p className="text-muted-foreground text-sm">{t('account.signedIn')}</p>
       </div>
 
       <hr className="border-border-subtle" />
@@ -127,7 +133,7 @@ function AuthenticatedView({
         <div className="flex flex-col gap-y-3">
           <div className="grid grid-cols-[140px_1fr] gap-x-4">
             <span className="font-medium text-muted-foreground text-sm">
-              Email
+              {t('account.fields.email')}
             </span>
             <span className="break-all text-foreground text-sm">{email}</span>
           </div>
@@ -136,24 +142,26 @@ function AuthenticatedView({
             <>
               <div className="grid grid-cols-[140px_1fr] gap-x-4">
                 <span className="font-medium text-muted-foreground text-sm">
-                  Plan
+                  {t('account.fields.plan')}
                 </span>
                 <span className="text-foreground text-sm capitalize">
-                  {subscription.plan ?? 'Free'}
+                  {subscription.plan ?? t('account.planFree')}
                 </span>
               </div>
               <div className="grid grid-cols-[140px_1fr] gap-x-4">
                 <span className="font-medium text-muted-foreground text-sm">
-                  Status
+                  {t('account.fields.status')}
                 </span>
                 <span className="text-foreground text-sm">
-                  {subscription.active ? 'Active' : 'Inactive'}
+                  {subscription.active
+                    ? t('account.statusActive')
+                    : t('account.statusInactive')}
                 </span>
               </div>
               {subscription.expiresAt && (
                 <div className="grid grid-cols-[140px_1fr] gap-x-4">
                   <span className="font-medium text-muted-foreground text-sm">
-                    Expires
+                    {t('account.fields.expires')}
                   </span>
                   <span className="text-foreground text-sm">
                     {new Date(subscription.expiresAt).toLocaleDateString()}
@@ -166,7 +174,7 @@ function AuthenticatedView({
           {machineId && (
             <div className="grid grid-cols-[140px_1fr] gap-x-4">
               <span className="font-medium text-muted-foreground text-sm">
-                Machine ID
+                {t('account.fields.machineId')}
               </span>
               <span className="break-all font-mono text-foreground text-sm">
                 {machineId}
@@ -189,24 +197,24 @@ function AuthenticatedView({
       {/* Actions */}
       <div className="flex justify-end gap-2">
         <Button variant="secondary" size="sm" onClick={onLogout}>
-          Sign out
+          {t('account.signOut')}
         </Button>
         <Button
           variant="primary"
           size="sm"
           onClick={() => void openExternalUrl(CONSOLE_URL)}
         >
-          Open Console
+          {t('account.openConsole')}
         </Button>
       </div>
     </>
   );
 }
 
-const WINDOW_LABELS: Record<string, string> = {
-  daily: 'Daily',
-  weekly: 'Weekly',
-  monthly: 'Monthly',
+const WINDOW_LABEL_KEYS: Record<string, string> = {
+  daily: 'daily',
+  weekly: 'weekly',
+  monthly: 'monthly',
 };
 
 function formatCredits(raw: number): string {
@@ -218,14 +226,16 @@ function formatResetTime(iso: string): string {
   const date = new Date(iso);
   const now = new Date();
   const diffMs = date.getTime() - now.getTime();
-  if (diffMs <= 0) return 'now';
+  if (diffMs <= 0) return i18n.t('settings:account.usage.resetNow');
   const diffH = Math.floor(diffMs / 3_600_000);
-  if (diffH < 24) return `in ${diffH}h`;
+  if (diffH < 24)
+    return i18n.t('settings:account.usage.resetInHours', { hours: diffH });
   const diffD = Math.floor(diffH / 24);
-  return `in ${diffD}d`;
+  return i18n.t('settings:account.usage.resetInDays', { days: diffD });
 }
 
 function UsageSection() {
+  const { t } = useTranslation('settings');
   const getUsageCurrent = useKartonProcedure(
     (p) => p.userAccount.getUsageCurrent,
   );
@@ -250,7 +260,7 @@ function UsageSection() {
             ? err.message
             : typeof err === 'string'
               ? err
-              : 'Failed to load usage data.';
+              : t('account.usage.failed');
         setError(message);
       })
       .finally(() => {
@@ -259,14 +269,18 @@ function UsageSection() {
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [t]);
 
   return (
     <div className="flex flex-col gap-4">
-      <h3 className="font-medium text-foreground">Usage</h3>
+      <h3 className="font-medium text-foreground">
+        {t('account.usage.title')}
+      </h3>
 
       {loading && (
-        <p className="text-muted-foreground text-sm">Loading usage...</p>
+        <p className="text-muted-foreground text-sm">
+          {t('account.usage.loading')}
+        </p>
       )}
 
       {error && <p className="text-error-foreground text-sm">{error}</p>}
@@ -276,10 +290,12 @@ function UsageSection() {
           {/* Credits */}
           <div className="grid grid-cols-[140px_1fr] gap-x-4">
             <span className="font-medium text-muted-foreground text-sm">
-              Credits
+              {t('account.usage.credits')}
             </span>
             <span className="text-foreground text-sm">
-              {formatCredits(usage.prepaidBalance)} remaining
+              {t('account.usage.remaining', {
+                credits: formatCredits(usage.prepaidBalance),
+              })}
             </span>
           </div>
 
@@ -297,11 +313,17 @@ function UsageSection() {
                 <div key={w.type} className="flex flex-col gap-1.5">
                   <div className="flex items-center justify-between">
                     <span className="font-medium text-foreground text-sm">
-                      {WINDOW_LABELS[w.type] ?? w.type}
+                      {WINDOW_LABEL_KEYS[w.type]
+                        ? t(
+                            `account.usage.windows.${WINDOW_LABEL_KEYS[w.type]}`,
+                          )
+                        : w.type}
                     </span>
                     <span className="text-muted-foreground text-sm">
-                      {remaining.toFixed(0)}% left &middot; resets{' '}
-                      {formatResetTime(w.resetsAt)}
+                      {t('account.usage.percentLeft', {
+                        percent: remaining.toFixed(0),
+                        time: formatResetTime(w.resetsAt),
+                      })}
                     </span>
                   </div>
                   <div className="h-1.5 overflow-hidden rounded-full bg-surface-1">
@@ -321,6 +343,7 @@ function UsageSection() {
 }
 
 function TelemetrySetting() {
+  const { t } = useTranslation('settings');
   const preferences = useKartonState((s) => s.preferences);
   const updatePreferences = useKartonProcedure((p) => p.preferences.update);
 
@@ -335,9 +358,11 @@ function TelemetrySetting() {
 
   return (
     <div className="flex flex-col gap-4">
-      <h3 className="font-medium text-foreground">Telemetry</h3>
+      <h3 className="font-medium text-foreground">
+        {t('account.telemetry.title')}
+      </h3>
       <p className="text-muted-foreground text-sm">
-        Control what usage data is collected to help improve StageVibe.
+        {t('account.telemetry.description')}
       </p>
 
       <div className="flex items-center gap-2">
@@ -353,7 +378,7 @@ function TelemetrySetting() {
           htmlFor="telemetry-anonymous-checkbox"
           className="text-muted-foreground text-xs"
         >
-          Help improve StageVibe by sharing anonymized events.
+          {t('account.telemetry.anonymous')}
         </label>
       </div>
       <div
@@ -375,7 +400,7 @@ function TelemetrySetting() {
           htmlFor="telemetry-full-checkbox"
           className="text-muted-foreground text-xs"
         >
-          Share identifiable chat and usage data with stagewise.
+          {t('account.telemetry.full')}
         </label>
       </div>
     </div>

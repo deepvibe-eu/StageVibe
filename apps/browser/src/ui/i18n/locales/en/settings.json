@@ -148,6 +148,49 @@
       "permissionExceptions": "site permission settings"
     }
   },
+  "account": {
+    "title": "Account",
+    "authenticate": {
+      "title": "Authenticate",
+      "description": "Get access to the latest models with Stagewise."
+    },
+    "unknownUser": "Unknown user",
+    "signedIn": "Signed in",
+    "fields": {
+      "email": "Email",
+      "plan": "Plan",
+      "status": "Status",
+      "expires": "Expires",
+      "machineId": "Machine ID"
+    },
+    "planFree": "Free",
+    "statusActive": "Active",
+    "statusInactive": "Inactive",
+    "signOut": "Sign out",
+    "openConsole": "Open Console",
+    "usage": {
+      "title": "Usage",
+      "loading": "Loading usage...",
+      "failed": "Failed to load usage data.",
+      "credits": "Credits",
+      "remaining": "{{credits}} remaining",
+      "percentLeft": "{{percent}}% left · resets {{time}}",
+      "windows": {
+        "daily": "Daily",
+        "weekly": "Weekly",
+        "monthly": "Monthly"
+      },
+      "resetNow": "now",
+      "resetInHours": "in {{hours}}h",
+      "resetInDays": "in {{days}}d"
+    },
+    "telemetry": {
+      "title": "Telemetry",
+      "description": "Control what usage data is collected to help improve StageVibe.",
+      "anonymous": "Help improve StageVibe by sharing anonymized events.",
+      "full": "Share identifiable chat and usage data with stagewise."
+    }
+  },
   "personalization": {
     "title": "Personalization",
     "appearance": {
