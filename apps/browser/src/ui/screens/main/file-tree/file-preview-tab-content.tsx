@@ -2003,14 +2003,14 @@ function SvgPreview({
                       </PopoverTrigger>
                       <PopoverContent align="end" className="w-80 gap-3 p-3">
                         <div className="font-medium text-foreground text-xs">
-                          Colors
+                          {t('colors')}
                         </div>
                         <div className="grid grid-cols-2 gap-3">
                           <div className="flex flex-col gap-1.5">
                             <span className="flex items-center justify-between gap-1 text-muted-foreground text-xs">
                               <span className="flex items-center gap-1">
                                 <IconTextBgColorOutline18 className="size-3" />
-                                Background
+                                {t('background')}
                               </span>
                               <HotkeyCombo
                                 action={HotkeyActions.CYCLE_SVG_BG}
@@ -2019,14 +2019,14 @@ function SvgPreview({
                             </span>
                             <Select<SvgPreviewBackground>
                               items={[
-                                { value: 'default', label: 'Default' },
-                                { value: 'light', label: 'Light' },
-                                { value: 'dark', label: 'Dark' },
+                                { value: 'default', label: t('bgDefault') },
+                                { value: 'light', label: t('bgLight') },
+                                { value: 'dark', label: t('bgDark') },
                                 {
                                   value: 'checkerboard',
-                                  label: 'Checkerboard',
+                                  label: t('bgCheckerboard'),
                                 },
-                                { value: 'custom', label: 'Custom' },
+                                { value: 'custom', label: t('bgCustom') },
                               ]}
                               value={background}
                               onValueChange={(value) => setBackground(value)}
@@ -2059,7 +2059,7 @@ function SvgPreview({
                             <span className="flex items-center justify-between gap-1 text-muted-foreground text-xs">
                               <span className="flex items-center gap-1">
                                 <IconTextColorOutline18 className="size-3" />
-                                Foreground
+                                {t('foreground')}
                               </span>
                               <HotkeyCombo
                                 action={HotkeyActions.CYCLE_SVG_FG}
@@ -2068,8 +2068,8 @@ function SvgPreview({
                             </span>
                             <Select<SvgCurrentColorMode>
                               items={[
-                                { value: 'default', label: 'Default' },
-                                { value: 'custom', label: 'Custom' },
+                                { value: 'default', label: t('bgDefault') },
+                                { value: 'custom', label: t('bgCustom') },
                               ]}
                               value={currentColorMode}
                               onValueChange={(value) =>
@@ -2109,7 +2109,7 @@ function SvgPreview({
             ) : null}
             <div className="flex h-7 items-center gap-1 rounded-md bg-surface-1 p-0.5">
               <ToolbarTooltip
-                label="Show SVG source"
+                label={t('showSvgSource')}
                 shortcut={HotkeyActions.TOGGLE_SVG_CODE_MODE}
               >
                 <button
@@ -2119,16 +2119,16 @@ function SvgPreview({
                     mode === 'source' &&
                       'bg-background text-foreground ring-1 ring-border-subtle',
                   )}
-                  aria-label="Show SVG source"
+                  aria-label={t('showSvgSource')}
                   aria-pressed={mode === 'source'}
                   onClick={() => persistMode('source')}
                 >
                   <IconSquareCodeOutline18 className="size-3.5" />
-                  {mode === 'source' ? <span>Code</span> : null}
+                  {mode === 'source' ? <span>{t('code')}</span> : null}
                 </button>
               </ToolbarTooltip>
               <ToolbarTooltip
-                label="Show SVG preview"
+                label={t('showSvgPreview')}
                 shortcut={HotkeyActions.TOGGLE_SVG_CODE_MODE}
               >
                 <button
@@ -2138,12 +2138,12 @@ function SvgPreview({
                     mode === 'preview' &&
                       'bg-background text-foreground ring-1 ring-border-subtle',
                   )}
-                  aria-label="Show SVG preview"
+                  aria-label={t('showSvgPreview')}
                   aria-pressed={mode === 'preview'}
                   onClick={() => persistMode('preview')}
                 >
                   <IconEye2Outline18 className="size-3.5" />
-                  {mode === 'preview' ? <span>Preview</span> : null}
+                  {mode === 'preview' ? <span>{t('previewLabel')}</span> : null}
                 </button>
               </ToolbarTooltip>
             </div>
@@ -2167,7 +2167,7 @@ function SvgPreview({
             wrapperProps={{
               role: 'region',
               tabIndex: 0,
-              'aria-label': 'SVG preview canvas',
+              'aria-label': t('svgPreviewCanvas'),
               'data-image-preview-canvas': 'true',
               onFocus: markPreviewFocused,
             }}
@@ -2175,10 +2175,8 @@ function SvgPreview({
             {imageError ? (
               <div className="flex flex-col items-center gap-2 text-muted-foreground">
                 <TriangleAlertIcon className="size-8" />
-                <span className="text-sm">Unable to render this SVG.</span>
-                <span className="text-xs">
-                  The file may be malformed or contain unsupported content.
-                </span>
+                <span className="text-sm">{t('svgRenderFailed')}</span>
+                <span className="text-xs">{t('svgMayBeMalformed')}</span>
               </div>
             ) : (
               <img
@@ -2236,6 +2234,7 @@ function MarkdownPreview({
   preview: FilePreviewResult;
   tabId: string;
 }) {
+  const { t } = useTranslation('filePreview');
   const cacheKey = getPreviewCacheKey(
     preview.workspaceKey,
     preview.relativePath,
@@ -2338,7 +2337,7 @@ function MarkdownPreview({
         right={
           <div className="flex h-7 items-center gap-1 rounded-md bg-surface-1 p-0.5">
             <ToolbarTooltip
-              label="Show markdown source"
+              label={t('showMarkdownSource')}
               shortcut={HotkeyActions.TOGGLE_MARKDOWN_PREVIEW}
             >
               <button
@@ -2348,16 +2347,16 @@ function MarkdownPreview({
                   mode === 'source' &&
                     'bg-background text-foreground ring-1 ring-border-subtle',
                 )}
-                aria-label="Show markdown source"
+                aria-label={t('showMarkdownSource')}
                 aria-pressed={mode === 'source'}
                 onClick={() => persistMode('source')}
               >
                 <IconSquareCodeOutline18 className="size-3.5" />
-                {mode === 'source' ? <span>Code</span> : null}
+                {mode === 'source' ? <span>{t('code')}</span> : null}
               </button>
             </ToolbarTooltip>
             <ToolbarTooltip
-              label="Show markdown preview"
+              label={t('showMarkdownPreview')}
               shortcut={HotkeyActions.TOGGLE_MARKDOWN_PREVIEW}
             >
               <button
@@ -2367,12 +2366,12 @@ function MarkdownPreview({
                   mode === 'preview' &&
                     'bg-background text-foreground ring-1 ring-border-subtle',
                 )}
-                aria-label="Show markdown preview"
+                aria-label={t('showMarkdownPreview')}
                 aria-pressed={mode === 'preview'}
                 onClick={() => persistMode('preview')}
               >
                 <IconEye2Outline18 className="size-3.5" />
-                {mode === 'preview' ? <span>Preview</span> : null}
+                {mode === 'preview' ? <span>{t('previewLabel')}</span> : null}
               </button>
             </ToolbarTooltip>
           </div>
@@ -2434,20 +2433,21 @@ function BinaryPreview({
   relativePath: string;
   revealInFolder: (workspaceKey: string, relativePath: string) => void;
 }) {
+  const { t } = useTranslation('filePreview');
   return (
     <div className="flex size-full flex-col bg-background">
       <FileTabToolbar actions={null} />
       <div className="flex min-h-0 flex-1 items-center justify-center">
         <div className="flex flex-col items-center gap-6 text-muted-foreground">
           <span className="font-normal text-muted-foreground text-sm">
-            Can't display this file inside StageVibe
+            {t('binaryCannotDisplay')}
           </span>
           <Button
             variant="secondary"
             size="sm"
             onClick={() => revealInFolder(workspaceKey, relativePath)}
           >
-            Reveal in {nativeFileManagerLabel}
+            {t('revealIn', { manager: nativeFileManagerLabel })}
           </Button>
         </div>
       </div>
@@ -2471,6 +2471,7 @@ function isMissingFileError(error: string | null): boolean {
 }
 
 function MissingFileNotice() {
+  const { t } = useTranslation('filePreview');
   return (
     <div className="flex size-full flex-col bg-background">
       <FileTabToolbar actions={null} />
@@ -2478,12 +2479,9 @@ function MissingFileNotice() {
         <div className="flex max-w-sm flex-col items-center gap-3 text-center text-muted-foreground">
           <IconDatabaseFillDuo18 className="size-12" />
           <span className="font-medium text-foreground text-sm">
-            This file is no longer available
+            {t('missingTitle')}
           </span>
-          <span className="text-xs">
-            It may have been deleted, moved, or removed together with the agent
-            it belonged to. The contents can no longer be loaded.
-          </span>
+          <span className="text-xs">{t('missingDescription')}</span>
         </div>
       </div>
     </div>
@@ -2507,6 +2505,7 @@ export function FilePreviewTabContent({ tab }: FilePreviewTabContentProps) {
 }
 
 function FileBackedPreviewTabContent({ tab }: FilePreviewTabContentProps) {
+  const { t } = useTranslation('filePreview');
   const getFilePreview = useKartonProcedure((p) => p.fileTree.getFilePreview);
   const getFileStat = useKartonProcedure((p) => p.fileTree.getFileStat);
   const clearFileNotice = useKartonProcedure((p) => p.browser.clearFileNotice);
@@ -2606,14 +2605,13 @@ function FileBackedPreviewTabContent({ tab }: FilePreviewTabContentProps) {
     try {
       result = await getFilePreview(workspaceKey, relativePath);
     } catch (err) {
-      const message =
-        err instanceof Error ? err.message : 'Failed to load file';
+      const message = err instanceof Error ? err.message : t('loadFailed');
       previewCache.set(cacheKey, { preview: null, error: message });
       setPreview(null);
       setError(message);
       return;
     }
-    const nextError = result ? null : 'File preview unavailable';
+    const nextError = result ? null : t('previewUnavailable');
     previewCache.set(cacheKey, { preview: result, error: nextError });
     setPreview(result);
     setError(nextError);
@@ -2650,7 +2648,7 @@ function FileBackedPreviewTabContent({ tab }: FilePreviewTabContentProps) {
 
     request
       .then((result) => {
-        const nextError = result ? null : 'File preview unavailable';
+        const nextError = result ? null : t('previewUnavailable');
         previewCache.set(cacheKey, {
           preview: result,
           error: nextError,
@@ -2660,8 +2658,7 @@ function FileBackedPreviewTabContent({ tab }: FilePreviewTabContentProps) {
         setError(nextError);
       })
       .catch((err) => {
-        const nextError =
-          err instanceof Error ? err.message : 'Failed to load file';
+        const nextError = err instanceof Error ? err.message : t('loadFailed');
         previewCache.set(cacheKey, {
           preview: null,
           error: nextError,
@@ -2692,7 +2689,7 @@ function FileBackedPreviewTabContent({ tab }: FilePreviewTabContentProps) {
   if (!tab.file) {
     return (
       <div className="flex size-full items-center justify-center bg-background text-muted-foreground text-sm">
-        Missing file metadata.
+        {t('missingMetadata')}
       </div>
     );
   }
@@ -2764,7 +2761,7 @@ function FileBackedPreviewTabContent({ tab }: FilePreviewTabContentProps) {
             <div className="flex size-full flex-col bg-background">
               <FileTabToolbar actions={null} />
               <div className="flex min-h-0 flex-1 items-center justify-center text-muted-foreground text-xs">
-                No cached content available.
+                {t('noCachedContent')}
               </div>
             </div>
           )}
@@ -2814,7 +2811,7 @@ function FileBackedPreviewTabContent({ tab }: FilePreviewTabContentProps) {
             <div className="flex min-h-0 flex-1 items-center justify-center text-muted-foreground text-xs">
               <div className="flex items-center gap-2">
                 <Loader2Icon className="size-3.5 animate-spin" />
-                <span>Loading file…</span>
+                <span>{t('loadingFile')}</span>
               </div>
             </div>
           </div>
@@ -2824,7 +2821,7 @@ function FileBackedPreviewTabContent({ tab }: FilePreviewTabContentProps) {
           <div className="flex size-full flex-col bg-background">
             <FileTabToolbar actions={null} />
             <div className="flex min-h-0 flex-1 items-center justify-center text-error-foreground text-sm">
-              {error ?? 'Failed to load file'}
+              {error ?? t('loadFailed')}
             </div>
           </div>
         ) : preview.truncated ? (
@@ -2832,7 +2829,7 @@ function FileBackedPreviewTabContent({ tab }: FilePreviewTabContentProps) {
             {preview.kind === 'text' || preview.kind === 'svg' ? (
               <>
                 <div className="shrink-0 border-border border-b px-3 py-1 text-warning-foreground text-xs">
-                  Preview truncated
+                  {t('previewTruncated')}
                 </div>
                 <div className="min-h-0 flex-1">
                   <TextEditorPreview preview={preview} tabId={tab.id} />
