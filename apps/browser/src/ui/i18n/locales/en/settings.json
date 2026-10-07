@@ -629,7 +629,36 @@
       "noModelsAvailable": "No models are available for this provider.",
       "noEnabledMatchSearch": "No enabled models match your search. Switch to All to include disabled models.",
       "noEnabled": "No models are enabled. Switch to All to enable models.",
-      "noMatchSearch": "No models match your search. Try a different model name or ID."
+      "noMatchSearch": "No models match your search. Try a different model name or ID.",
+      "tabAll": "All",
+      "tabEnabledOnly": "Enabled only",
+      "filterPlaceholder": "Filter models...",
+      "addModel": "Add Model",
+      "reload": "Reload models",
+      "bulkActions": "Bulk model actions",
+      "enableAll": "Enable all models",
+      "disableAll": "Disable all models"
+    },
+    "selfHosted": {
+      "refreshFailed": "Failed to refresh models.",
+      "enterBaseUrl": "Enter base URL...",
+      "saving": "Saving...",
+      "save": "Save",
+      "hint": "Edit the base URL and click Save to re-discover available models."
+    },
+    "detail": {
+      "providerName": "Provider name",
+      "rename": "Rename {{name}}",
+      "deleteProvider": "Delete provider",
+      "connection": "Connection",
+      "stagewiseNote": "Uses your stagewise account. All built-in models are available through Stagewise Inference by default.",
+      "models": "Models"
+    },
+    "page": {
+      "title": "Models & Providers",
+      "providers": "Providers",
+      "providersDescription": "Configure how the agent connects to LLM providers. Add API keys, connect coding plans, or set up custom endpoints.",
+      "addProvider": "Add Provider"
     }
   },
   "personalization": {

@@ -3140,14 +3140,18 @@ function ModelsSection({
         onValueChange={(value) => setModelVisibility(value as ModelVisibility)}
       >
         <TabsList className="w-auto">
-          <TabsTrigger value="all">All</TabsTrigger>
-          <TabsTrigger value="enabled">Enabled only</TabsTrigger>
+          <TabsTrigger value="all">
+            {t('modelsProviders.models.tabAll')}
+          </TabsTrigger>
+          <TabsTrigger value="enabled">
+            {t('modelsProviders.models.tabEnabledOnly')}
+          </TabsTrigger>
         </TabsList>
       </Tabs>
 
       <div className="flex items-center gap-2">
         <Input
-          placeholder="Filter models..."
+          placeholder={t('modelsProviders.models.filterPlaceholder')}
           value={searchQuery}
           onValueChange={setSearchQuery}
           size="sm"
@@ -3157,7 +3161,7 @@ function ModelsSection({
         {isTrulyCustom && (
           <Button variant="secondary" size="sm" onClick={handleAdd}>
             <IconPlusOutline18 className="size-3.5" />
-            Add Model
+            {t('modelsProviders.models.addModel')}
           </Button>
         )}
         {!isTrulyCustom && filterInstance && (
@@ -3172,7 +3176,7 @@ function ModelsSection({
             ) : (
               <IconRefreshAnticlockwiseOutline18 className="size-3.5" />
             )}
-            Reload models
+            {t('modelsProviders.models.reload')}
           </Button>
         )}
         {filterInstance && (
@@ -3182,7 +3186,7 @@ function ModelsSection({
                 variant="secondary"
                 size="icon-sm"
                 className="rounded-md"
-                aria-label="Bulk model actions"
+                aria-label={t('modelsProviders.models.bulkActions')}
               >
                 <IconDotsOutline18 className="size-4 rotate-90" />
               </Button>
@@ -3194,7 +3198,7 @@ function ModelsSection({
                 onClick={() => void handleSetAllModelsEnabled(true)}
               >
                 <IconCheck2Outline18 className="size-3.5 shrink-0" />
-                Enable all models
+                {t('modelsProviders.models.enableAll')}
               </MenuItem>
               <MenuItem
                 disabled={!hasInstanceModels || allInstanceModelsDisabled}
@@ -3202,7 +3206,7 @@ function ModelsSection({
                 onClick={() => void handleSetAllModelsEnabled(false)}
               >
                 <IconBanOutline18 className="size-3.5 shrink-0" />
-                Disable all models
+                {t('modelsProviders.models.disableAll')}
               </MenuItem>
             </MenuContent>
           </Menu>
@@ -3365,6 +3369,7 @@ function ProviderNameEditor({
   onEditingChange: (isEditing: boolean) => void;
   editable: boolean;
 }) {
+  const { t } = useTranslation('settings');
   const updateProviderInstance = useKartonProcedure(
     (p) => p.preferences.updateProviderInstance,
   );
@@ -3468,7 +3473,7 @@ function ProviderNameEditor({
       contentEditable
       suppressContentEditableWarning
       className="block min-w-0 max-w-md cursor-text truncate font-semibold text-foreground text-xl outline-none"
-      aria-label="Provider name"
+      aria-label={t('modelsProviders.detail.providerName')}
       onBlur={commitEdit}
       onKeyDown={(event) => {
         if (event.key === 'Enter') {
@@ -3513,7 +3518,7 @@ function ProviderNameEditor({
         size="icon-xs"
         className="ml-1 size-6 shrink-0 opacity-0 transition-opacity group-focus-within:opacity-100 group-hover:opacity-100"
         onClick={startEditing}
-        aria-label={`Rename ${displayName}`}
+        aria-label={t('modelsProviders.detail.rename', { name: displayName })}
       >
         <IconPenOutline18 className="size-4" />
       </Button>
@@ -3643,6 +3648,7 @@ export function CodingPlanEndpointConnection({
 // =============================================================================
 
 function SelfHostedConnection({ instance }: { instance: ProviderInstance }) {
+  const { t } = useTranslation('settings');
   const preferences = useKartonState((s) => s.preferences);
   const updateProviderInstance = useKartonProcedure(
     (p) => p.preferences.updateProviderInstance,
@@ -3685,7 +3691,11 @@ function SelfHostedConnection({ instance }: { instance: ProviderInstance }) {
         await updatePreferences(patches);
       }
     } catch (e) {
-      setError(e instanceof Error ? e.message : 'Failed to refresh models.');
+      setError(
+        e instanceof Error
+          ? e.message
+          : t('modelsProviders.selfHosted.refreshFailed'),
+      );
     } finally {
       setIsRefreshing(false);
     }
@@ -3713,7 +3723,10 @@ function SelfHostedConnection({ instance }: { instance: ProviderInstance }) {
               void handleRefresh();
             }
           }}
-          placeholder={displayInfo?.defaultBaseUrl ?? 'Enter base URL...'}
+          placeholder={
+            displayInfo?.defaultBaseUrl ??
+            t('modelsProviders.selfHosted.enterBaseUrl')
+          }
           disabled={isRefreshing}
           size="sm"
           style={{ maxWidth: 'none' }}
@@ -3726,12 +3739,14 @@ function SelfHostedConnection({ instance }: { instance: ProviderInstance }) {
             disabled={!baseUrl.trim() || isRefreshing}
             onClick={() => void handleRefresh()}
           >
-            {isRefreshing ? 'Saving...' : 'Save'}
+            {isRefreshing
+              ? t('modelsProviders.selfHosted.saving')
+              : t('modelsProviders.selfHosted.save')}
           </Button>
         )}
       </div>
       <p className="text-muted-foreground text-xs">
-        Edit the base URL and click Save to re-discover available models.
+        {t('modelsProviders.selfHosted.hint')}
       </p>
       {error && <TruncatedErrorText text={error} />}
     </div>
@@ -3743,6 +3758,7 @@ function SelfHostedConnection({ instance }: { instance: ProviderInstance }) {
 // =============================================================================
 
 export function ModelsProvidersSection() {
+  const { t } = useTranslation('settings');
   const preferences = useKartonState((s) => s.preferences);
   const [detailInstanceId, setDetailInstanceId] = useState<string | null>(null);
   const [detailRenameRequested, setDetailRenameRequested] = useState(false);
@@ -3877,7 +3893,7 @@ export function ModelsProvidersSection() {
                       }
                     >
                       <IconTrashOutline18 className="size-3.5" />
-                      Delete provider
+                      {t('modelsProviders.detail.deleteProvider')}
                     </MenuItem>
                   </MenuContent>
                 </Menu>
@@ -3888,7 +3904,7 @@ export function ModelsProvidersSection() {
             <section className="space-y-6">
               <div>
                 <h2 className="font-medium text-foreground text-lg">
-                  Connection
+                  {t('modelsProviders.detail.connection')}
                 </h2>
               </div>
 
@@ -3917,8 +3933,7 @@ export function ModelsProvidersSection() {
               {detailInstance.typeId === 'stagewise' && (
                 <div className="rounded-lg border border-derived p-3">
                   <p className="text-muted-foreground text-xs">
-                    Uses your stagewise account. All built-in models are
-                    available through Stagewise Inference by default.
+                    {t('modelsProviders.detail.stagewiseNote')}
                   </p>
                 </div>
               )}
@@ -3927,10 +3942,14 @@ export function ModelsProvidersSection() {
             {/* Models Section */}
             <section className="flex flex-col space-y-6">
               <div className="flex items-baseline gap-2">
-                <h2 className="font-medium text-foreground text-lg">Models</h2>
+                <h2 className="font-medium text-foreground text-lg">
+                  {t('modelsProviders.detail.models')}
+                </h2>
                 <span className="text-muted-foreground text-xs">
-                  {detailModelCounts.enabled} of {detailModelCounts.total}{' '}
-                  enabled
+                  {t('modelsProviders.models.enabledOf', {
+                    enabled: detailModelCounts.enabled,
+                    total: detailModelCounts.total,
+                  })}
                 </span>
               </div>
 
@@ -3953,7 +3972,7 @@ export function ModelsProvidersSection() {
           {/* Header */}
           <div>
             <h1 className="font-semibold text-foreground text-xl">
-              Models & Providers
+              {t('modelsProviders.page.title')}
             </h1>
           </div>
 
@@ -3962,11 +3981,10 @@ export function ModelsProvidersSection() {
             <div className="flex items-center justify-between">
               <div>
                 <h2 className="font-medium text-foreground text-lg">
-                  Providers
+                  {t('modelsProviders.page.providers')}
                 </h2>
                 <p className="text-muted-foreground text-sm">
-                  Configure how the agent connects to LLM providers. Add API
-                  keys, connect coding plans, or set up custom endpoints.
+                  {t('modelsProviders.page.providersDescription')}
                 </p>
               </div>
               <Button
@@ -3976,7 +3994,7 @@ export function ModelsProvidersSection() {
                 onClick={() => setShowAddProvider(true)}
               >
                 <IconPlusOutline18 className="size-3.5" />
-                Add Provider
+                {t('modelsProviders.page.addProvider')}
               </Button>
             </div>
 
