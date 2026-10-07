@@ -12,12 +12,14 @@ import {
 } from '@stagewise/stage-ui/components/tooltip';
 import { useKartonState, useKartonProcedure } from '@ui/hooks/use-karton';
 import { HotkeyActions } from '@shared/hotkeys';
+import { useTranslation } from 'react-i18next';
 
 interface ZoomBarProps {
   tabId: string;
 }
 
 export function ZoomBar({ tabId }: ZoomBarProps) {
+  const { t } = useTranslation('content');
   const zoomPercentage = useKartonState(
     (s) => s.contentTabs.tabs[tabId]?.zoomPercentage ?? 100,
   );
@@ -121,7 +123,7 @@ export function ZoomBar({ tabId }: ZoomBarProps) {
             <Button
               variant="ghost"
               size="icon-xs"
-              aria-label="Zoom out"
+              aria-label={t('zoom.out')}
               onClick={zoomOut}
             >
               <IconMagnifierMinusOutline18 className="size-4" />
@@ -129,7 +131,7 @@ export function ZoomBar({ tabId }: ZoomBarProps) {
           </TooltipTrigger>
           <TooltipContent>
             <span className="flex items-center gap-1.5">
-              <span>Zoom out</span>
+              <span>{t('zoom.out')}</span>
               <HotkeyCombo action={HotkeyActions.ZOOM_OUT} size="xs" />
             </span>
           </TooltipContent>
@@ -147,7 +149,7 @@ export function ZoomBar({ tabId }: ZoomBarProps) {
           </TooltipTrigger>
           <TooltipContent>
             <span className="flex items-center gap-1.5">
-              <span>Reset zoom</span>
+              <span>{t('zoom.reset')}</span>
               <HotkeyCombo action={HotkeyActions.ZOOM_RESET} size="xs" />
             </span>
           </TooltipContent>
@@ -157,7 +159,7 @@ export function ZoomBar({ tabId }: ZoomBarProps) {
             <Button
               variant="ghost"
               size="icon-xs"
-              aria-label="Zoom in"
+              aria-label={t('zoom.in')}
               onClick={zoomIn}
             >
               <IconMagnifierPlusOutline18 className="size-4" />
@@ -165,7 +167,7 @@ export function ZoomBar({ tabId }: ZoomBarProps) {
           </TooltipTrigger>
           <TooltipContent>
             <span className="flex items-center gap-1.5">
-              <span>Zoom in</span>
+              <span>{t('zoom.in')}</span>
               <HotkeyCombo action={HotkeyActions.ZOOM_IN} size="xs" />
             </span>
           </TooltipContent>

@@ -6,6 +6,7 @@ import enSettings from './locales/en/settings.json';
 import enChat from './locales/en/chat.json';
 import enSidebar from './locales/en/sidebar.json';
 import enTools from './locales/en/tools.json';
+import enContent from './locales/en/content.json';
 import deCommon from './locales/de/common.json';
 import deSettings from './locales/de/settings.json';
 import deChat from './locales/de/chat.json';
@@ -27,6 +28,7 @@ export const NAMESPACES = [
   'chat',
   'sidebar',
   'tools',
+  'content',
 ] as const;
 
 void i18n
@@ -40,6 +42,7 @@ void i18n
         chat: enChat,
         sidebar: enSidebar,
         tools: enTools,
+        content: enContent,
       },
       de: {
         common: deCommon,

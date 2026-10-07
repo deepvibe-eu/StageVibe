@@ -9,8 +9,10 @@ import {
   TooltipTrigger,
   TooltipContent,
 } from '@stagewise/stage-ui/components/tooltip';
+import { useTranslation } from 'react-i18next';
 
 export function ColorSchemeWidget({ tab }: { tab: TabState }) {
+  const { t } = useTranslation('content');
   const cycleColorScheme = useKartonProcedure(
     (p) => p.browser.cycleColorScheme,
   );
@@ -20,13 +22,25 @@ export function ColorSchemeWidget({ tab }: { tab: TabState }) {
     void cycleColorScheme(tab.id);
   }, [cycleColorScheme, tab.id]);
 
+  const modeLabel =
+    tab.colorScheme === 'light'
+      ? t('colorScheme.light')
+      : tab.colorScheme === 'dark'
+        ? t('colorScheme.dark')
+        : t('colorScheme.system', {
+            mode:
+              nativeColorScheme === 'light'
+                ? t('colorScheme.light')
+                : t('colorScheme.dark'),
+          });
+
   return (
     <Tooltip>
       <TooltipTrigger>
         <Button
           variant="ghost"
           size="icon-sm"
-          aria-label={`Toggle color scheme, current: ${tab.colorScheme === 'light' ? 'Light' : tab.colorScheme === 'dark' ? 'Dark' : `System (${nativeColorScheme === 'light' ? 'Light' : 'Dark'})`}`}
+          aria-label={t('colorScheme.aria', { current: modeLabel })}
           onClick={handleClick}
           className={
             'text-muted-foreground data-[active=true]:text-primary-solid data-[active=true]:hover:text-primary-solid'
@@ -57,14 +71,9 @@ export function ColorSchemeWidget({ tab }: { tab: TabState }) {
         </Button>
       </TooltipTrigger>
       <TooltipContent>
-        <span>Toggle color scheme</span>
+        <span>{t('colorScheme.toggle')}</span>
         <span className="mt-0.5 block text-muted-foreground text-xs">
-          Current:{' '}
-          {tab.colorScheme === 'light'
-            ? 'Light'
-            : tab.colorScheme === 'dark'
-              ? 'Dark'
-              : `System (${nativeColorScheme === 'light' ? 'Light' : 'Dark'})`}
+          {t('colorScheme.current')} {modeLabel}
         </span>
       </TooltipContent>
     </Tooltip>

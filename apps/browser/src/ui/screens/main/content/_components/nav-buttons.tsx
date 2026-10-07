@@ -14,6 +14,7 @@ import {
 import { IconMediaStopFill18 } from '@stagewise/icons';
 import type { TabState } from '@shared/karton-contracts/ui';
 import { HotkeyCombo } from '@ui/components/hotkey-combo';
+import { useTranslation } from 'react-i18next';
 
 interface NavButtonsProps {
   tabId: string;
@@ -21,6 +22,7 @@ interface NavButtonsProps {
 }
 
 export function NavButtons({ tabId, tab }: NavButtonsProps) {
+  const { t } = useTranslation('content');
   const goBack = useKartonProcedure((p) => p.browser.goBack);
   const goForward = useKartonProcedure((p) => p.browser.goForward);
   const reload = useKartonProcedure((p) => p.browser.reload);
@@ -39,7 +41,7 @@ export function NavButtons({ tabId, tab }: NavButtonsProps) {
               <Button
                 variant="ghost"
                 size="icon-sm"
-                aria-label="Back"
+                aria-label={t('nav.back')}
                 disabled={!canGoBack}
                 className={!canGoBack ? 'pointer-events-none' : undefined}
                 onClick={() => {
@@ -55,7 +57,7 @@ export function NavButtons({ tabId, tab }: NavButtonsProps) {
         />
         <TooltipContent>
           <span className="flex items-center gap-1.5">
-            <span>Back</span>
+            <span>{t('nav.back')}</span>
             <HotkeyCombo action={HotkeyActions.HISTORY_BACK} size="xs" />
           </span>
         </TooltipContent>
@@ -67,7 +69,7 @@ export function NavButtons({ tabId, tab }: NavButtonsProps) {
               <Button
                 variant="ghost"
                 size="icon-sm"
-                aria-label="Forward"
+                aria-label={t('nav.forward')}
                 disabled={!canGoForward}
                 className={!canGoForward ? 'pointer-events-none' : undefined}
                 onClick={() => {
@@ -83,7 +85,7 @@ export function NavButtons({ tabId, tab }: NavButtonsProps) {
         />
         <TooltipContent>
           <span className="flex items-center gap-1.5">
-            <span>Forward</span>
+            <span>{t('nav.forward')}</span>
             <HotkeyCombo action={HotkeyActions.HISTORY_FORWARD} size="xs" />
           </span>
         </TooltipContent>
@@ -92,7 +94,7 @@ export function NavButtons({ tabId, tab }: NavButtonsProps) {
         <Button
           variant="ghost"
           size="icon-sm"
-          aria-label="Stop loading"
+          aria-label={t('nav.stopLoading')}
           onClick={() => {
             stop(tabId);
           }}
@@ -105,7 +107,7 @@ export function NavButtons({ tabId, tab }: NavButtonsProps) {
             <Button
               variant="ghost"
               size="icon-sm"
-              aria-label="Reload"
+              aria-label={t('nav.reload')}
               onClick={() => {
                 reload(tabId);
               }}
@@ -115,7 +117,7 @@ export function NavButtons({ tabId, tab }: NavButtonsProps) {
           </TooltipTrigger>
           <TooltipContent>
             <span className="flex items-center gap-1.5">
-              <span>Reload</span>
+              <span>{t('nav.reload')}</span>
               <HotkeyCombo action={HotkeyActions.RELOAD} size="xs" />
             </span>
           </TooltipContent>

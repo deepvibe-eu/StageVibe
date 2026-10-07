@@ -1,0 +1,21 @@
+{
+  "nav": {
+    "back": "Back",
+    "forward": "Forward",
+    "reload": "Reload",
+    "stopLoading": "Stop loading"
+  },
+  "zoom": {
+    "out": "Zoom out",
+    "in": "Zoom in",
+    "reset": "Reset zoom"
+  },
+  "colorScheme": {
+    "toggle": "Toggle color scheme",
+    "current": "Current:",
+    "aria": "Toggle color scheme, current: {{current}}",
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System ({{mode}})"
+  }
+}
