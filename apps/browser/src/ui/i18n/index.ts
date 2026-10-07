@@ -11,6 +11,7 @@ import enFileTree from './locales/en/fileTree.json';
 import enFilePreview from './locales/en/filePreview.json';
 import enCommandCenter from './locales/en/commandCenter.json';
 import enUi from './locales/en/ui.json';
+import enWorkspace from './locales/en/workspace.json';
 import deCommon from './locales/de/common.json';
 import deSettings from './locales/de/settings.json';
 import deChat from './locales/de/chat.json';
@@ -37,6 +38,7 @@ export const NAMESPACES = [
   'filePreview',
   'commandCenter',
   'ui',
+  'workspace',
 ] as const;
 
 void i18n
@@ -55,6 +57,7 @@ void i18n
         filePreview: enFilePreview,
         commandCenter: enCommandCenter,
         ui: enUi,
+        workspace: enWorkspace,
       },
       de: {
         common: deCommon,

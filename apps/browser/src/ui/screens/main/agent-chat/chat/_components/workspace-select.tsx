@@ -97,6 +97,8 @@ import {
   WorkspaceSetupStatusIndicator,
 } from './workspace-setup-status';
 
+import i18n from '@ui/i18n';
+
 const EMPTY_SKILLS: string[] = [];
 type KartonState = KartonContract['state'];
 type KartonProcedures = KartonContract['serverProcedures'];
@@ -126,6 +128,7 @@ const WorkspaceBadge = memo(function WorkspaceBadge({
   mount: MountEntry;
   onUnmount: (prefix: string) => void;
 }) {
+  const { t } = useTranslation('workspace');
   const display = getWorkspaceDisplayInfo(mount);
   const gitRef = mount.git ? formatGitRef(mount.git) : null;
   const setupRun = useKartonState(
@@ -380,7 +383,7 @@ const WorkspaceBadge = memo(function WorkspaceBadge({
           <IconXmarkFill18 className="absolute size-3 text-muted-foreground opacity-0 group-hover/unmount:text-foreground group-hover/workspace:opacity-100 group-focus-visible/workspace:opacity-100" />
         </span>
       </TooltipTrigger>
-      <TooltipContent>Disconnect workspace</TooltipContent>
+      <TooltipContent>{t('disconnect')}</TooltipContent>
     </Tooltip>
   );
 
@@ -513,6 +516,7 @@ function MdSidePanelContent({
   viewportClassName: string;
   isIncludedInAgentContext: boolean;
 }) {
+  const { t } = useTranslation('workspace');
   const openFileTab = useKartonProcedure((p) => p.fileTree.openFileTab);
 
   return (
@@ -554,7 +558,7 @@ function MdSidePanelContent({
           className="absolute right-0 bottom-0 flex h-6 items-center gap-1 rounded-tl-lg border-derived border-t border-l bg-background px-2 py-1 text-muted-foreground text-xs hover:bg-muted hover:text-foreground dark:bg-surface-1"
         >
           <IconArrowUpRightOutline18 className="size-3" />
-          <span>Open in file view</span>
+          <span>{t('openInFileView')}</span>
         </button>
       </div>
     </>
@@ -576,6 +580,7 @@ function ContextFilesSidePanel({
   respectAgentsMd: boolean;
   onToggleAgentsMd: (checked: boolean) => void;
 }) {
+  const { t } = useTranslation('workspace');
   const agentsMdDisabled = mount.agentsMdContent === null;
   const [hoveredContextFile, setHoveredContextFile] = useState<Extract<
     SidePanelContent,
@@ -605,7 +610,7 @@ function ContextFilesSidePanel({
   return (
     <>
       <div className="border-derived-subtle border-b px-2.5 py-2">
-        <span className="font-semibold">Context files</span>
+        <span className="font-semibold">{t('contextFiles')}</span>
       </div>
       <div
         className="relative flex flex-col gap-1 px-2.5 py-2"
@@ -657,9 +662,7 @@ function ContextFilesSidePanel({
               </div>
             </TooltipTrigger>
             <TooltipContent>
-              {respectAgentsMd
-                ? 'Included in agent context'
-                : 'Not included in agent context'}
+              {respectAgentsMd ? t('included') : t('notIncluded')}
             </TooltipContent>
           </Tooltip>
         )}
@@ -694,6 +697,7 @@ function SkillsListSidePanel({
   disabledSkills: string[];
   onToggleSkill: (skillName: string, enabled: boolean) => void;
 }) {
+  const { t } = useTranslation('workspace');
   const sortedSkills = useMemo(
     () => [...skills].sort((a, b) => a.name.localeCompare(b.name)),
     [skills],
@@ -737,7 +741,7 @@ function SkillsListSidePanel({
   return (
     <>
       <div className="border-derived-subtle border-b px-2.5 py-2">
-        <span className="font-semibold">Skills</span>
+        <span className="font-semibold">{t('skills')}</span>
       </div>
       <div className="relative">
         <OverlayScrollbar
@@ -840,6 +844,7 @@ function WorkspacePreviewCardContent({
   onItemLeave: () => void;
   activeRow: 'contextFiles' | 'skillsList' | 'setupRun' | null;
 }) {
+  const { t } = useTranslation('workspace');
   const hasSkills = mount.skills.length > 0;
   const gitRef = mount.git ? formatGitRef(mount.git) : null;
   const gitStatus = mount.git ? formatGitStatus(mount.git.status) : null;
@@ -855,10 +860,10 @@ function WorkspacePreviewCardContent({
   const { requestTerminalFocus } = useTabUIState();
   const setupTitle = setupRun
     ? setupRun.status === 'running'
-      ? 'Worktree setup running'
+      ? t('setupRunning')
       : setupRun.status === 'failed'
-        ? 'Worktree setup failed'
-        : 'Worktree setup done'
+        ? t('setupFailed')
+        : t('setupDone')
     : null;
 
   const handleCopyPath = useCallback(
@@ -972,7 +977,7 @@ function WorkspacePreviewCardContent({
         onMouseEnter={(e) => onItemHover({ type: 'contextFiles' }, e)}
         onMouseLeave={onItemLeave}
       >
-        <span className="font-medium text-xs">Context files</span>
+        <span className="font-medium text-xs">{t('contextFiles')}</span>
         <IconChevronRightOutline18 className="ml-auto size-3 shrink-0" />
       </div>
 
@@ -987,7 +992,7 @@ function WorkspacePreviewCardContent({
           onMouseEnter={(e) => onItemHover({ type: 'skillsList' }, e)}
           onMouseLeave={onItemLeave}
         >
-          <span className="font-medium text-xs">Skills</span>
+          <span className="font-medium text-xs">{t('skills')}</span>
           <IconChevronRightOutline18 className="ml-auto size-3 shrink-0" />
         </div>
       )}
@@ -999,14 +1004,14 @@ function WorkspacePreviewCardContent({
               type="button"
               variant="ghost"
               size="icon-2xs"
-              aria-label="Open terminal"
+              aria-label={t('openTerminal')}
               onClick={handleOpenTerminal}
               className="text-muted-foreground hover:text-foreground focus-visible:text-foreground"
             >
               <IconSquareTerminalOutline18 className="size-3.5" />
             </Button>
           </TooltipTrigger>
-          <TooltipContent>Open terminal</TooltipContent>
+          <TooltipContent>{t('openTerminal')}</TooltipContent>
         </Tooltip>
         <Tooltip>
           <TooltipTrigger>
@@ -1021,7 +1026,9 @@ function WorkspacePreviewCardContent({
               <IconFolderOpenOutline18 className="size-3.5" />
             </Button>
           </TooltipTrigger>
-          <TooltipContent>Reveal in {nativeFileManagerLabel}</TooltipContent>
+          <TooltipContent>
+            {t('revealIn', { manager: nativeFileManagerLabel })}
+          </TooltipContent>
         </Tooltip>
         <Tooltip>
           <TooltipTrigger>
@@ -1029,14 +1036,14 @@ function WorkspacePreviewCardContent({
               type="button"
               variant="ghost"
               size="icon-2xs"
-              aria-label="Copy path"
+              aria-label={t('copyPath')}
               onClick={handleCopyPath}
               className="text-muted-foreground hover:text-foreground focus-visible:text-foreground"
             >
               <IconCopyOutline18 className="size-3.5" />
             </Button>
           </TooltipTrigger>
-          <TooltipContent>Copy path</TooltipContent>
+          <TooltipContent>{t('copyPath')}</TooltipContent>
         </Tooltip>
       </div>
     </div>
@@ -1607,6 +1614,7 @@ const WorkspaceActionSelect = memo(function WorkspaceActionSelect({
   onOpenChange?: (mountPrefix: string, open: boolean) => void;
   agentInstanceId: string;
 }) {
+  const { t } = useTranslation('workspace');
   const track = useTrack();
   const display = getWorkspaceDisplayInfo(mount);
   const gitRef = useMemo(
@@ -2142,7 +2150,7 @@ const WorkspaceActionSelect = memo(function WorkspaceActionSelect({
                 <IconXmarkFill18 className="absolute size-3 text-muted-foreground opacity-0 group-hover/unmount:text-foreground group-hover/workspace:opacity-100" />
               </span>
             </TooltipTrigger>
-            <TooltipContent>Disconnect workspace</TooltipContent>
+            <TooltipContent>{t('disconnect')}</TooltipContent>
           </Tooltip>
           <span className="shrink-0 truncate text-muted-foreground">
             {display.title}
