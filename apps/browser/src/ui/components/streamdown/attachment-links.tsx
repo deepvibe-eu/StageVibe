@@ -8,6 +8,7 @@ import {
 } from 'react';
 
 import { cn, stripMountPrefix } from '@ui/utils';
+import { useTranslation } from 'react-i18next';
 import {
   Tooltip,
   TooltipContent,
@@ -66,6 +67,7 @@ interface ColorBadgeProps {
 }
 
 export const ColorBadge = ({ color, children }: ColorBadgeProps) => {
+  const { t } = useTranslation('ui');
   const [hasCopied, setHasCopied] = useState(false);
   const [tooltipOpen, setTooltipOpen] = useState(false);
   const ignoreCloseRef = useRef(false);
@@ -115,7 +117,9 @@ export const ColorBadge = ({ color, children }: ColorBadgeProps) => {
           {children ?? color}
         </span>
       </TooltipTrigger>
-      <TooltipContent>{hasCopied ? 'Copied' : 'Copy'}</TooltipContent>
+      <TooltipContent>
+        {hasCopied ? t('attachmentLink.copied') : t('attachmentLink.copy')}
+      </TooltipContent>
     </Tooltip>
   );
 };
@@ -322,6 +326,7 @@ const WorkspaceFileClickWrapper = ({
   incomplete?: boolean;
   children: ReactNode;
 }) => {
+  const { t } = useTranslation('ui');
   const [openAgent] = useOpenAgent();
   const openFileTab = useKartonProcedure((p) => p.fileTree.openFileTab);
   const revealInFolder = useKartonProcedure((p) => p.fileTree.revealInFolder);
@@ -374,7 +379,9 @@ const WorkspaceFileClickWrapper = ({
             className={cn('inline cursor-pointer', incomplete && 'opacity-70')}
             onClick={handleClick}
             role="link"
-            aria-label={`Open ${displayPathWithLine}`}
+            aria-label={t('attachmentLink.openAria', {
+              target: displayPathWithLine,
+            })}
           >
             {children}
           </span>
@@ -387,7 +394,7 @@ const WorkspaceFileClickWrapper = ({
             {displayPathWithLine}
           </div>
           <div className="text-muted-foreground text-xs">
-            Click to open in file view
+            {t('attachmentLink.clickToOpen')}
           </div>
         </div>
       </TooltipContent>
@@ -413,6 +420,7 @@ const AttachmentFileClickWrapper = ({
   displayName?: string;
   children: ReactNode;
 }) => {
+  const { t } = useTranslation('ui');
   const [openAgent] = useOpenAgent();
   const openAttachmentTab = useKartonProcedure(
     (p) => p.fileTree.openAttachmentTab,
@@ -431,7 +439,9 @@ const AttachmentFileClickWrapper = ({
             className="inline cursor-pointer"
             onClick={handleClick}
             role="link"
-            aria-label={`Open ${displayName ?? attachmentId}`}
+            aria-label={t('attachmentLink.openAria', {
+              target: displayName ?? attachmentId,
+            })}
           >
             {children}
           </span>
@@ -443,7 +453,7 @@ const AttachmentFileClickWrapper = ({
             {displayName ?? attachmentId}
           </div>
           <div className="text-muted-foreground text-xs">
-            Click to open (read-only)
+            {t('attachmentLink.clickToOpenReadOnly')}
           </div>
         </div>
       </TooltipContent>

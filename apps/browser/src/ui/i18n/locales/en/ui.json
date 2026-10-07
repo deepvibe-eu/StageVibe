@@ -112,5 +112,29 @@
   },
   "diff": {
     "label": "Diff"
+  },
+  "markdownEditor": {
+    "saving": "Saving…",
+    "saved": "Saved",
+    "saveFailed": "Save failed"
+  },
+  "table": {
+    "copyAsCsv": "Copy table as CSV",
+    "downloadAsCsv": "Download as CSV"
+  },
+  "attachmentLink": {
+    "copied": "Copied",
+    "copy": "Copy",
+    "openAria": "Open {{target}}",
+    "clickToOpen": "Click to open in file view",
+    "clickToOpenReadOnly": "Click to open (read-only)"
+  },
+  "streamdown": {
+    "openInContentTab": "Open in content tab",
+    "openInBrowser": "Open in browser",
+    "downloadImage": "Download image",
+    "image": "image",
+    "imageTitle": "Image",
+    "openImageAria": "Open {{name}} in tab"
   }
 }

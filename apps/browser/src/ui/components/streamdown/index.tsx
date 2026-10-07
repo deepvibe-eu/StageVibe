@@ -34,6 +34,8 @@ import { Button } from '@stagewise/stage-ui/components/button';
 import { Checkbox } from '@stagewise/stage-ui/components/checkbox';
 import { OverlayScrollbar } from '@stagewise/stage-ui/components/overlay-scrollbar';
 import { CopyCheckIcon, CopyIcon, DownloadIcon } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import i18n from '@ui/i18n';
 import type { BundledLanguage } from 'shiki';
 import type { ExtraProps } from 'react-markdown';
 import {
@@ -122,7 +124,9 @@ function useChatLinkAltPressed(): boolean {
 }
 
 function getChatLinkTooltipText(isAltPressed: boolean): string {
-  return isAltPressed ? 'Open in content tab' : 'Open in browser';
+  return isAltPressed
+    ? i18n.t('ui:streamdown.openInContentTab')
+    : i18n.t('ui:streamdown.openInBrowser');
 }
 
 type AttachmentData =
@@ -643,6 +647,7 @@ const ImgComponent = ({
   ...props
 }: DetailedHTMLProps<ImgHTMLAttributes<HTMLImageElement>, HTMLImageElement> &
   ExtraProps) => {
+  const { t } = useTranslation('ui');
   const openImageTab = useOpenImageTab();
   const downloadImage = useCallback(async () => {
     if (!src) return;
@@ -682,7 +687,7 @@ const ImgComponent = ({
           variant="ghost"
           size="icon-xs"
           onClick={downloadImage}
-          title="Download image"
+          title={t('streamdown.downloadImage')}
         >
           <DownloadIcon className="size-3" />
         </Button>
@@ -692,12 +697,14 @@ const ImgComponent = ({
         <button
           type="button"
           className="max-w-full cursor-pointer rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-solid"
-          aria-label={`Open ${alt || 'image'} in tab`}
+          aria-label={t('streamdown.openImageAria', {
+            name: alt || t('streamdown.image'),
+          })}
           onMouseDown={(event) => event.stopPropagation()}
           onClick={(event) => {
             event.preventDefault();
             event.stopPropagation();
-            openImageTab(alt || 'Image', src);
+            openImageTab(alt || t('streamdown.imageTitle'), src);
           }}
         >
           <img

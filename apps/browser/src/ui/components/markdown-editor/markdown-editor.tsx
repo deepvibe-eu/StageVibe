@@ -5,6 +5,7 @@ import { CustomTaskItem } from './task-item-extension';
 import { ShikiCodeBlock } from './shiki-code-block';
 import { Markdown } from 'tiptap-markdown';
 import { useEffect, useRef, useCallback, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { cn } from '@ui/utils';
 import './markdown-editor.css';
 
@@ -123,6 +124,7 @@ export function MarkdownEditor({
 }
 
 function SaveIndicator({ status }: { status: SaveStatus }) {
+  const { t } = useTranslation('ui');
   if (status === 'idle') return null;
   return (
     <div
@@ -134,9 +136,9 @@ function SaveIndicator({ status }: { status: SaveStatus }) {
         status === 'error' && 'text-red-400',
       )}
     >
-      {status === 'saving' && 'Saving…'}
-      {status === 'saved' && 'Saved'}
-      {status === 'error' && 'Save failed'}
+      {status === 'saving' && t('markdownEditor.saving')}
+      {status === 'saved' && t('markdownEditor.saved')}
+      {status === 'error' && t('markdownEditor.saveFailed')}
     </div>
   );
 }
