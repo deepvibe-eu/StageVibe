@@ -5,6 +5,7 @@ import { Select } from '@stagewise/stage-ui/components/select';
 import { useKartonState, useKartonProcedure } from '@ui/hooks/use-karton';
 import { produceWithPatches, enablePatches } from 'immer';
 import { ChevronLeftIcon } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import type { ConfigurablePermissionType } from '@shared/karton-contracts/ui/shared-types';
 import {
   PermissionSetting,
@@ -13,33 +14,15 @@ import {
 
 enablePatches();
 
-/** Human-readable labels for permission types */
-const permissionTypeLabels: Record<ConfigurablePermissionType, string> = {
-  media: 'Camera & Microphone',
-  geolocation: 'Location',
-  notifications: 'Notifications',
-  fullscreen: 'Fullscreen',
-  bluetooth: 'Bluetooth',
-  hid: 'HID Devices',
-  serial: 'Serial Ports',
-  usb: 'USB Devices',
-  'clipboard-read': 'Clipboard Read',
-  'display-capture': 'Screen Capture',
-  midi: 'MIDI Devices',
-  'idle-detection': 'Idle Detection',
-  'speaker-selection': 'Speaker Selection',
-  'storage-access': 'Storage Access',
-};
-
-/** Human-readable labels for permission settings */
-const permissionSettingLabels: Record<PermissionSetting | -1, string> = {
-  [-1]: 'Default',
-  [PermissionSetting.Ask]: 'Ask',
-  [PermissionSetting.Allow]: 'Allow',
-  [PermissionSetting.Block]: 'Block',
+/** i18n key suffixes for permission settings */
+const PERMISSION_SETTING_KEYS: Record<PermissionSetting, string> = {
+  [PermissionSetting.Ask]: 'ask',
+  [PermissionSetting.Allow]: 'allow',
+  [PermissionSetting.Block]: 'block',
 };
 
 export function WebsitePermissionsSection() {
+  const { t } = useTranslation('settings');
   const settingsRoute = useKartonState((s) => s.appScreen.settingsRoute);
   const host =
     settingsRoute.section === 'website-permissions' ? settingsRoute.host : '';
@@ -122,20 +105,24 @@ export function WebsitePermissionsSection() {
   const getSettingOptions = useCallback(
     (permissionType: ConfigurablePermissionType) => {
       const defaultSetting = getDefaultSetting(permissionType);
-      const defaultLabel = permissionSettingLabels[defaultSetting];
+      const defaultLabel = t(
+        `websitePermissions.settings.${PERMISSION_SETTING_KEYS[defaultSetting]}`,
+      );
       const isDevicePermission =
         deviceSelectionPermissions.includes(permissionType);
 
       const options = [
         {
           value: '-1',
-          label: 'Default',
-          description: `Use global default (${defaultLabel})`,
+          label: t('websitePermissions.settings.default'),
+          description: t('websitePermissions.optionDefaultDescription', {
+            label: defaultLabel,
+          }),
         },
         {
           value: String(PermissionSetting.Ask),
-          label: 'Ask',
-          description: 'Ask every time',
+          label: t('websitePermissions.settings.ask'),
+          description: t('websitePermissions.optionAskDescription'),
         },
       ];
 
@@ -143,20 +130,20 @@ export function WebsitePermissionsSection() {
       if (!isDevicePermission) {
         options.push({
           value: String(PermissionSetting.Allow),
-          label: 'Allow',
-          description: 'Always allow for this site',
+          label: t('websitePermissions.settings.allow'),
+          description: t('websitePermissions.optionAllowDescription'),
         });
       }
 
       options.push({
         value: String(PermissionSetting.Block),
-        label: 'Block',
-        description: 'Always block for this site',
+        label: t('websitePermissions.settings.block'),
+        description: t('websitePermissions.optionBlockDescription'),
       });
 
       return options;
     },
-    [getDefaultSetting],
+    [getDefaultSetting, t],
   );
 
   // Count how many overrides are set for this host
@@ -183,12 +170,11 @@ export function WebsitePermissionsSection() {
                 <ChevronLeftIcon className="size-4" />
               </Button>
               <h1 className="font-semibold text-foreground text-xl">
-                Website Permissions
+                {t('websitePermissions.title')}
               </h1>
             </div>
             <p className="text-muted-foreground">
-              No website selected. Please select a website from the Browsing
-              Settings page.
+              {t('websitePermissions.noSiteSelected')}
             </p>
           </div>
         </OverlayScrollbar>
@@ -212,7 +198,7 @@ export function WebsitePermissionsSection() {
             </Button>
             <div className="flex flex-col">
               <h1 className="font-semibold text-foreground text-xl">
-                Website Permissions
+                {t('websitePermissions.title')}
               </h1>
               <span className="text-muted-foreground text-sm">{host}</span>
             </div>
@@ -221,14 +207,15 @@ export function WebsitePermissionsSection() {
           <div className="rounded-lg border border-border/30 bg-surface-1/50 p-4">
             <p className="text-muted-foreground text-sm">
               {overrideCount === 0 ? (
-                'No custom permissions set for this site. All permissions use global defaults.'
+                t('websitePermissions.summaryNone')
               ) : (
                 <>
                   <span className="font-medium text-foreground">
                     {overrideCount}
                   </span>{' '}
-                  custom permission{overrideCount !== 1 ? 's' : ''} set for this
-                  site.
+                  {t('websitePermissions.summaryCount', {
+                    count: overrideCount,
+                  })}
                 </>
               )}
             </p>
@@ -238,10 +225,10 @@ export function WebsitePermissionsSection() {
           <section className="space-y-4">
             <div>
               <h2 className="font-medium text-foreground text-lg">
-                Permission Settings
+                {t('websitePermissions.permissionSettingsTitle')}
               </h2>
               <p className="text-muted-foreground text-sm">
-                Configure how this site can access browser features.
+                {t('websitePermissions.permissionSettingsDescription')}
               </p>
             </div>
 
@@ -261,11 +248,11 @@ export function WebsitePermissionsSection() {
                   >
                     <div className="flex flex-col">
                       <span className="font-medium text-foreground text-sm">
-                        {permissionTypeLabels[permissionType]}
+                        {t(`websitePermissions.types.${permissionType}`)}
                       </span>
                       {isOverridden && (
                         <span className="text-primary text-xs">
-                          Custom setting
+                          {t('websitePermissions.customSetting')}
                         </span>
                       )}
                     </div>
