@@ -1,6 +1,8 @@
 {
   "loading": "Loading…",
   "noResults": "No results",
+  "title": "Command center",
+  "close": "Close command center",
   "searchFiles": "Search files…",
   "searchAll": "Search mates, tabs, terminals, settings…",
   "modes": {

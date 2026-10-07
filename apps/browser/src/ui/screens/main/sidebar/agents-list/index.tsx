@@ -2651,7 +2651,7 @@ export function AgentsList() {
         open={worktreeDelete !== null}
         isolated
         anchorPoint={worktreeDelete?.anchorPoint}
-        title="Delete worktree?"
+        title={t('workspace.deleteWorktreeTitle')}
         description={
           worktreeDelete?.loading
             ? 'Checking worktree status…'

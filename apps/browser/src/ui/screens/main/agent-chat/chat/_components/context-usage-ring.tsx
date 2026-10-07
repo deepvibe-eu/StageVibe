@@ -4,6 +4,7 @@ import {
   TooltipTrigger,
 } from '@stagewise/stage-ui/components/tooltip';
 import { memo, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { cn } from '@ui/utils';
 
 interface ContextUsageRingProps {
@@ -28,6 +29,7 @@ export const ContextUsageRing = memo(function ContextUsageRing({
   compacting = false,
   className,
 }: ContextUsageRingProps) {
+  const { t } = useTranslation('chat');
   const ringColor = useMemo(() => {
     if (percentage >= 90) return 'text-error-foreground';
     if (percentage >= 70) return 'text-warning-foreground';
@@ -84,7 +86,7 @@ export const ContextUsageRing = memo(function ContextUsageRing({
             type="button"
             onClick={onCompact}
             disabled={compacting}
-            aria-label="Compact conversation history"
+            aria-label={t('contextUsage')}
             className={cn(
               'relative flex shrink-0 cursor-pointer items-center justify-center rounded-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary-foreground disabled:cursor-progress',
               className,

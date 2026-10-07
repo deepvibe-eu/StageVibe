@@ -2,6 +2,7 @@ import {
   MessageEditStateProvider,
   useMessageEditState,
 } from '@ui/hooks/use-message-edit-state';
+import { useTranslation } from 'react-i18next';
 import { ChatDraftProvider } from '@ui/hooks/use-chat-draft';
 import {
   useMemo,
@@ -33,6 +34,7 @@ export function ChatPanel({ agentId }: { agentId?: string }) {
 }
 
 function ChatPanelInner({ agentId }: { agentId?: string }) {
+  const { t } = useTranslation('chat');
   const { forwardDropEvent } = useMessageEditState();
   const [openAgent, setOpenAgent, removeFromHistory] = useOpenAgent();
   const { focusAgentFromHotkey } = useAgentSwitcher();
@@ -125,7 +127,7 @@ function ChatPanelInner({ agentId }: { agentId?: string }) {
   if (!requestedAgent || !openAgentExists)
     return (
       <div className="flex size-full items-center justify-center text-muted-foreground">
-        No mate selected
+        {t('noMateSelected')}
       </div>
     );
 
@@ -140,7 +142,7 @@ function ChatPanelInner({ agentId }: { agentId?: string }) {
       onDragLeave={handleDragLeave}
       onDragOver={handleDragOver}
       role="region"
-      aria-label="Chat panel drop zone"
+      aria-label={t('dropZone')}
     >
       <OpenAgentContext.Provider value={deferredContext}>
         {isTransitioning ? (

@@ -1,5 +1,6 @@
 // This component manages the main layout of the companion UI. It is responsible for rendering the toolbar, the main content area, and the sidebar.
 
+import { useTranslation } from 'react-i18next';
 import {
   ResizablePanelGroup,
   ResizableHandle,
@@ -508,6 +509,7 @@ function DefaultLayoutInner({ show }: { show: boolean }) {
  * browses or edits.
  */
 function TerminalPanelBody() {
+  const { t } = useTranslation('sidebar');
   const { terminalIds, activeTerminalId, setActiveTerminalId } =
     useTerminalPanel();
   const closeTab = useKartonProcedure((p) => p.browser.closeTab);
@@ -524,14 +526,14 @@ function TerminalPanelBody() {
     <div className="flex size-full flex-col">
       <div className="flex h-7 shrink-0 items-center gap-1 border-derived border-b bg-surface-1 px-2">
         <span className="mr-auto font-mono text-subtle-foreground text-xs">
-          Terminal
+          {t('terminalTitle')}
         </span>
         {terminalIds.map((id, index) => (
           <button
             key={id}
             type="button"
             onClick={() => setActiveTerminalId(id)}
-            aria-label={`Show terminal ${index + 1}`}
+            aria-label={t('terminalShow', { index: index + 1 })}
             className={cn(
               'rounded px-1.5 py-0.5 font-mono text-xs transition-colors',
               id === activeTerminalId
@@ -545,7 +547,7 @@ function TerminalPanelBody() {
         <button
           type="button"
           onClick={handleClose}
-          aria-label="Close terminal"
+          aria-label={t('terminalClose')}
           className="rounded px-1 py-0.5 text-subtle-foreground transition-colors hover:text-foreground"
         >
           <XIcon className="size-3.5" />

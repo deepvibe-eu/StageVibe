@@ -132,6 +132,9 @@
     "mateMessageDisplay": "Mate message display",
     "scrollToBottom": "Scroll to bottom"
   },
+  "dropZone": "Chat panel drop zone",
+  "noMateSelected": "No mate selected",
+  "contextUsage": "Compact conversation history",
   "errors": {
     "retry": "Retry",
     "configureOtherApiKeys": "Configure other API keys",
