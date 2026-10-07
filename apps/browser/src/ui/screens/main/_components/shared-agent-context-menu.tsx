@@ -19,6 +19,7 @@ import {
   copyAgentHistoryAsMarkdown,
   saveAgentHistoryAsMarkdown,
 } from '../agent-chat/chat/_lib/export-agent-history';
+import { useTranslation } from 'react-i18next';
 
 export interface AgentContextMenuTarget {
   agentId: string;
@@ -118,6 +119,7 @@ export const SharedAgentContextMenuHost = memo(
     onArchiveRequest,
     onDeleteRequest,
   }: SharedAgentContextMenuHostProps) {
+    const { t } = useTranslation('sidebar');
     const revealWorkingDirectory = useKartonProcedure(
       (p) => p.agents.revealWorkingDirectory,
     );
@@ -247,7 +249,7 @@ export const SharedAgentContextMenuHost = memo(
                 }}
               >
                 <IconPen2Outline18 className="size-3.5 shrink-0" />
-                <span>Rename</span>
+                <span>{t('contextMenu.rename')}</span>
               </AgentMenuItem>
               <AgentMenuItem
                 onClick={() => {
@@ -256,7 +258,7 @@ export const SharedAgentContextMenuHost = memo(
                 }}
               >
                 <IconCopyOutline18 className="size-3.5 shrink-0" />
-                <span>Fork chat</span>
+                <span>{t('contextMenu.fork')}</span>
               </AgentMenuItem>
               <AgentMenuItem
                 onClick={() => {
@@ -265,7 +267,7 @@ export const SharedAgentContextMenuHost = memo(
                 }}
               >
                 <IconCopyOutline18 className="size-3.5 shrink-0" />
-                <span>Copy as Markdown</span>
+                <span>{t('contextMenu.copyMarkdown')}</span>
               </AgentMenuItem>
               <AgentMenuItem
                 onClick={() => {
@@ -274,7 +276,7 @@ export const SharedAgentContextMenuHost = memo(
                 }}
               >
                 <IconDownload4Outline18 className="size-3.5 shrink-0" />
-                <span>Export as Markdown…</span>
+                <span>{t('contextMenu.exportMarkdown')}</span>
               </AgentMenuItem>
               {canMarkAsUnread && (
                 <AgentMenuItem
@@ -284,7 +286,7 @@ export const SharedAgentContextMenuHost = memo(
                   }}
                 >
                   <IconEnvelopeOutline18 className="size-3.5 shrink-0" />
-                  <span>Mark as unread</span>
+                  <span>{t('contextMenu.markAsUnread')}</span>
                 </AgentMenuItem>
               )}
               {togglePinned && (
@@ -299,7 +301,11 @@ export const SharedAgentContextMenuHost = memo(
                   ) : (
                     <IconPinTackOutline18 className="size-3.5 shrink-0" />
                   )}
-                  <span>{isPinned ? 'Unpin' : 'Pin globally'}</span>
+                  <span>
+                    {isPinned
+                      ? t('contextMenu.unpin')
+                      : t('contextMenu.pinGlobally')}
+                  </span>
                 </AgentMenuItem>
               )}
               <AgentMenuItem
@@ -309,7 +315,7 @@ export const SharedAgentContextMenuHost = memo(
                 }}
               >
                 <ArchiveIcon className="size-3.5 shrink-0" />
-                <span>Archive</span>
+                <span>{t('contextMenu.archive')}</span>
               </AgentMenuItem>
               {canDelete !== false && (
                 <AgentMenuItem
@@ -319,7 +325,7 @@ export const SharedAgentContextMenuHost = memo(
                   }}
                 >
                   <IconTrash2Outline24 className="size-3.5 shrink-0" />
-                  <span>Permanently delete</span>
+                  <span>{t('contextMenu.permanentlyDelete')}</span>
                 </AgentMenuItem>
               )}
               {showDev && (
@@ -332,7 +338,7 @@ export const SharedAgentContextMenuHost = memo(
                     }}
                   >
                     <IconCopyIdOutline18 className="size-3.5 shrink-0" />
-                    <span>Copy instance ID</span>
+                    <span>{t('contextMenu.copyInstanceId')}</span>
                   </AgentMenuItem>
                   <AgentMenuItem
                     onClick={() => {
@@ -341,7 +347,7 @@ export const SharedAgentContextMenuHost = memo(
                     }}
                   >
                     <IconFolderOpenOutline18 className="size-3.5 shrink-0" />
-                    <span>Open data directory</span>
+                    <span>{t('contextMenu.openDataDirectory')}</span>
                   </AgentMenuItem>
                 </>
               )}

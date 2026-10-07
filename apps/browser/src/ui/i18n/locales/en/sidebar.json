@@ -32,5 +32,18 @@
     "openInFileManager": "Open in {{fileManager}}",
     "deleteWorktree": "Delete worktree",
     "newMateFor": "New mate for {{label}}"
+  },
+  "contextMenu": {
+    "rename": "Rename",
+    "fork": "Fork chat",
+    "copyMarkdown": "Copy as Markdown",
+    "exportMarkdown": "Export as Markdown…",
+    "markAsUnread": "Mark as unread",
+    "unpin": "Unpin",
+    "pinGlobally": "Pin globally",
+    "archive": "Archive",
+    "permanentlyDelete": "Permanently delete",
+    "copyInstanceId": "Copy instance ID",
+    "openDataDirectory": "Open data directory"
   }
 }
