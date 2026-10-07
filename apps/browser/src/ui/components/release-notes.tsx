@@ -9,6 +9,7 @@ import {
 } from '@stagewise/stage-ui/components/dialog';
 import { cn } from '@stagewise/stage-ui/lib/utils';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import ReactMarkdown, { type Components } from 'react-markdown';
 import releaseNotesMarkdown from '../../../../../.release-notes.md?raw';
 
@@ -67,6 +68,7 @@ export function ReleaseNotes({
 }
 
 export function WhatsNewDialog() {
+  const { t } = useTranslation('ui');
   const [open, setOpen] = useState(
     () => hasCurrentReleaseNotes && !wasCurrentVersionSeen(),
   );
@@ -83,13 +85,15 @@ export function WhatsNewDialog() {
       <DialogContent className="max-h-[80vh] max-w-2xl gap-4 overflow-hidden">
         <DialogClose />
         <DialogHeader>
-          <DialogTitle>What’s new</DialogTitle>
+          <DialogTitle>{t('releaseNotes.title')}</DialogTitle>
         </DialogHeader>
         <div className="scrollbar-subtle min-h-0 overflow-y-auto rounded-lg bg-surface-1 p-4">
           <ReleaseNotes>{releaseNotes}</ReleaseNotes>
         </div>
         <DialogFooter>
-          <Button onClick={() => handleOpenChange(false)}>Got it</Button>
+          <Button onClick={() => handleOpenChange(false)}>
+            {t('releaseNotes.gotIt')}
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

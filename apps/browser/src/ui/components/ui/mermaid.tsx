@@ -1,6 +1,7 @@
 import posthog from 'posthog-js';
 import type { MermaidConfig } from 'mermaid';
 import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { cn } from '@ui/utils';
 import { getMermaidCache } from '@ui/hooks/use-mermaid-cache';
 import { useOpenImageTab } from '@ui/hooks/use-open-image-tab';
@@ -39,6 +40,7 @@ export const Mermaid = ({
   config,
   openInTab = false,
 }: MermaidProps) => {
+  const { t } = useTranslation('ui');
   const openImageTab = useOpenImageTab();
   const cachedEntry = mermaidCache.get(chart, config);
 
@@ -118,7 +120,7 @@ export const Mermaid = ({
       <div className={cn('my-4 flex justify-center p-4', className)}>
         <div className="flex items-center space-x-2 text-muted-foreground">
           <div className="h-4 w-4 animate-spin rounded-full border-current border-b-2" />
-          <span className="text-sm">Loading diagram...</span>
+          <span className="text-sm">{t('mermaid.loading')}</span>
         </div>
       </div>
     );
@@ -132,10 +134,12 @@ export const Mermaid = ({
           className,
         )}
       >
-        <p className="font-mono text-error text-sm">Mermaid Error: {error}</p>
+        <p className="font-mono text-error text-sm">
+          {t('mermaid.errorPrefix', { error })}
+        </p>
         <details className="mt-2">
           <summary className="cursor-pointer text-error text-xs">
-            Show Code
+            {t('mermaid.showCode')}
           </summary>
           <pre className="mt-2 overflow-x-auto rounded bg-error/10 p-2 text-error text-xs">
             {chart}
@@ -151,7 +155,7 @@ export const Mermaid = ({
     return (
       <button
         type="button"
-        aria-label="Open Mermaid chart in tab"
+        aria-label={t('mermaid.openInTab')}
         className={cn(
           'my-4 flex cursor-pointer justify-center rounded-md',
           'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-solid',
@@ -169,7 +173,7 @@ export const Mermaid = ({
             exportedSvg.setAttribute('height', String(height));
           }
           openImageTab(
-            'Mermaid chart',
+            t('mermaid.chart'),
             `data:image/svg+xml;charset=utf-8,${encodeURIComponent(
               new XMLSerializer().serializeToString(exportedSvg),
             )}`,
@@ -183,7 +187,7 @@ export const Mermaid = ({
 
   return (
     <div
-      aria-label="Mermaid chart"
+      aria-label={t('mermaid.chart')}
       className={cn('my-4 flex justify-center', className)}
       dangerouslySetInnerHTML={{ __html: displaySvg }}
       role="img"

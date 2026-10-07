@@ -12,6 +12,7 @@ import { Button } from '@stagewise/stage-ui/components/button';
 import { IconXmarkFill18 } from '@stagewise/icons';
 import { useTutorial } from '@ui/contexts/tutorial';
 import { cn } from '@ui/utils';
+import { useTranslation } from 'react-i18next';
 
 // How long to wait for a step's target element before skipping the step.
 // Guards against stale selectors locking the UI behind the click shield.
@@ -213,6 +214,7 @@ function StepDescription({ children }: { children: string }) {
 }
 
 export function TutorialOverlay() {
+  const { t } = useTranslation('ui');
   const {
     activeTutorial,
     currentStep,
@@ -450,7 +452,7 @@ export function TutorialOverlay() {
                 variant="ghost"
                 size="icon-sm"
                 onClick={dismissTutorial}
-                aria-label="Close tutorial"
+                aria-label={t('tutorial.close')}
                 className="absolute top-2 right-2 z-10"
               >
                 <IconXmarkFill18 className="size-4" />
@@ -484,15 +486,15 @@ export function TutorialOverlay() {
                     disabled={currentStepIndex === 0}
                     onClick={goBack}
                   >
-                    Back
+                    {t('tutorial.back')}
                   </Button>
                 )}
                 <Button variant="primary" size="sm" onClick={goNext}>
                   {isSingleStepTutorial
-                    ? 'Okay'
+                    ? t('tutorial.okay')
                     : isLastStep
-                      ? 'Finish'
-                      : 'Next'}
+                      ? t('tutorial.finish')
+                      : t('tutorial.next')}
                 </Button>
               </div>
             </div>
@@ -511,6 +513,7 @@ export function TutorialOverlay() {
     goNext,
     goBack,
     dismissTutorial,
+    t,
   ]);
 
   if (!activeTutorial) return null;

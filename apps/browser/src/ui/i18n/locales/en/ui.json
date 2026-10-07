@@ -11,5 +11,27 @@
   "openIn": {
     "label": "Open in {{target}}",
     "menu": "Open in…"
+  },
+  "mermaid": {
+    "loading": "Loading diagram...",
+    "errorPrefix": "Mermaid Error: {{error}}",
+    "showCode": "Show Code",
+    "chart": "Mermaid chart",
+    "openInTab": "Open Mermaid chart in tab"
+  },
+  "releaseNotes": {
+    "title": "What’s new",
+    "gotIt": "Got it"
+  },
+  "idePicker": {
+    "group": "Open files in:",
+    "placeholder": "Open files in…"
+  },
+  "tutorial": {
+    "close": "Close tutorial",
+    "back": "Back",
+    "okay": "Okay",
+    "finish": "Finish",
+    "next": "Next"
   }
 }
