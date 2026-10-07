@@ -191,6 +191,61 @@
       "full": "Share identifiable chat and usage data with stagewise."
     }
   },
+  "browsing": {
+    "general": "General",
+    "searchEngine": {
+      "title": "Default Search Engine",
+      "cannotDeleteDefault": "Cannot delete default engine",
+      "remove": "Remove search engine",
+      "removeFailed": "Failed to remove search engine",
+      "addTitle": "Add Search Engine",
+      "name": "Name",
+      "namePlaceholder": "My Search Engine",
+      "keyword": "Keyword",
+      "keywordPlaceholder": "mysearch.com",
+      "keywordHint": "The keyword used to identify this search engine",
+      "searchUrl": "Search URL",
+      "searchUrlPlaceholder": "https://example.com/search?q=%s",
+      "searchUrlHint": "URL with %s where the search query should be inserted",
+      "urlInvalid": "URL must be valid and contain %s placeholder",
+      "adding": "Adding...",
+      "cancel": "Cancel"
+    },
+    "page": {
+      "homeTitle": "StageVibe Home",
+      "homeDescription": "Open the StageVibe home page",
+      "customTitle": "Custom URL",
+      "customDescription": "Open a specific URL",
+      "urlPlaceholder": "https://example.com"
+    },
+    "newTab": {
+      "title": "New Tab Page",
+      "description": "Choose what page opens when you create a new tab."
+    },
+    "startup": {
+      "title": "On Browser Start",
+      "description": "Choose what page opens when stagewise starts."
+    },
+    "permissionDefaults": {
+      "title": "Permission Defaults",
+      "description": "Set the default behavior when websites request these permissions.",
+      "askEveryTime": "Ask every time",
+      "alwaysAllow": "Always allow",
+      "alwaysBlock": "Always block"
+    },
+    "overrides": {
+      "title": "Website-Specific Settings",
+      "emptyDescription": "Sites with custom permission settings will appear here.",
+      "empty": "No websites have custom permission settings yet.",
+      "description": "Sites with custom permission settings. Click to view or edit.",
+      "count_one": "{{count}} custom permission",
+      "count_other": "{{count}} custom permissions"
+    },
+    "privacy": {
+      "title": "Privacy",
+      "description": "Manage your privacy and data sharing preferences."
+    }
+  },
   "personalization": {
     "title": "Personalization",
     "appearance": {

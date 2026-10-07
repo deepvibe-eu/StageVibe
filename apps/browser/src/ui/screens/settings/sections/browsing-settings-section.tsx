@@ -36,12 +36,14 @@ import {
   PermissionSetting,
   configurablePermissionTypes,
 } from '@shared/karton-contracts/ui/shared-types';
+import { useTranslation } from 'react-i18next';
 
 // =============================================================================
 // Search Engine Setting Component
 // =============================================================================
 
 function SearchEngineSetting() {
+  const { t } = useTranslation('settings');
   const preferences = useKartonState((s) => s.preferences);
   const searchEngines = useKartonState((s) => s.searchEngines);
   const updatePreferences = useKartonProcedure((p) => p.preferences.update);
@@ -94,7 +96,7 @@ function SearchEngineSetting() {
     setDeleteError(null);
     const result = await removeSearchEngine(id);
     if (!result.success) {
-      setDeleteError(result.error ?? 'Failed to remove search engine');
+      setDeleteError(result.error ?? t('browsing.searchEngine.removeFailed'));
     }
   };
 
@@ -116,7 +118,7 @@ function SearchEngineSetting() {
     <div className="space-y-3">
       <div>
         <h3 className="font-medium text-base text-foreground">
-          Default Search Engine
+          {t('browsing.searchEngine.title')}
         </h3>
       </div>
 
@@ -161,8 +163,8 @@ function SearchEngineSetting() {
                 disabled={engine.id === defaultEngineId}
                 title={
                   engine.id === defaultEngineId
-                    ? 'Cannot delete default engine'
-                    : 'Remove search engine'
+                    ? t('browsing.searchEngine.cannotDeleteDefault')
+                    : t('browsing.searchEngine.remove')
                 }
               >
                 <Trash2Icon className="size-4 text-muted-foreground" />
@@ -181,13 +183,13 @@ function SearchEngineSetting() {
           <DialogTrigger>
             <Button variant="secondary" size="sm">
               <PlusIcon className="mr-2 size-4" />
-              Add Search Engine
+              {t('browsing.searchEngine.addTitle')}
             </Button>
           </DialogTrigger>
           <DialogContent>
             <DialogClose />
             <DialogHeader>
-              <DialogTitle>Add Search Engine</DialogTitle>
+              <DialogTitle>{t('browsing.searchEngine.addTitle')}</DialogTitle>
             </DialogHeader>
 
             <div className="space-y-4">
@@ -196,11 +198,11 @@ function SearchEngineSetting() {
                   htmlFor="engine-name"
                   className="font-medium text-foreground text-sm"
                 >
-                  Name
+                  {t('browsing.searchEngine.name')}
                 </label>
                 <Input
                   id="engine-name"
-                  placeholder="My Search Engine"
+                  placeholder={t('browsing.searchEngine.namePlaceholder')}
                   value={newEngine.name}
                   onValueChange={(value) =>
                     setNewEngine((prev) => ({ ...prev, name: value }))
@@ -213,18 +215,18 @@ function SearchEngineSetting() {
                   htmlFor="engine-keyword"
                   className="font-medium text-foreground text-sm"
                 >
-                  Keyword
+                  {t('browsing.searchEngine.keyword')}
                 </label>
                 <Input
                   id="engine-keyword"
-                  placeholder="mysearch.com"
+                  placeholder={t('browsing.searchEngine.keywordPlaceholder')}
                   value={newEngine.keyword}
                   onValueChange={(value) =>
                     setNewEngine((prev) => ({ ...prev, keyword: value }))
                   }
                 />
                 <p className="text-muted-foreground text-xs">
-                  The keyword used to identify this search engine
+                  {t('browsing.searchEngine.keywordHint')}
                 </p>
               </div>
 
@@ -233,22 +235,22 @@ function SearchEngineSetting() {
                   htmlFor="engine-url"
                   className="font-medium text-foreground text-sm"
                 >
-                  Search URL
+                  {t('browsing.searchEngine.searchUrl')}
                 </label>
                 <Input
                   id="engine-url"
-                  placeholder="https://example.com/search?q=%s"
+                  placeholder={t('browsing.searchEngine.searchUrlPlaceholder')}
                   value={newEngine.url}
                   onValueChange={(value) =>
                     setNewEngine((prev) => ({ ...prev, url: value }))
                   }
                 />
                 <p className="text-muted-foreground text-xs">
-                  URL with %s where the search query should be inserted
+                  {t('browsing.searchEngine.searchUrlHint')}
                 </p>
                 {newEngine.url && !isUrlValid && (
                   <p className="text-error-foreground text-xs">
-                    URL must be valid and contain %s placeholder
+                    {t('browsing.searchEngine.urlInvalid')}
                   </p>
                 )}
               </div>
@@ -267,17 +269,17 @@ function SearchEngineSetting() {
                 {isAdding ? (
                   <>
                     <Loader2Icon className="mr-2 size-4 animate-spin" />
-                    Adding...
+                    {t('browsing.searchEngine.adding')}
                   </>
                 ) : (
-                  'Add Search Engine'
+                  t('browsing.searchEngine.addTitle')
                 )}
               </Button>
               <Button
                 variant="secondary"
                 onClick={() => setIsAddDialogOpen(false)}
               >
-                Cancel
+                {t('browsing.searchEngine.cancel')}
               </Button>
             </DialogFooter>
           </DialogContent>
@@ -300,6 +302,7 @@ interface PageSettingProps {
 }
 
 function PageSettingComponent({ type, title, description }: PageSettingProps) {
+  const { t } = useTranslation('settings');
   const preferences = useKartonState((s) => s.preferences);
   const updatePreferences = useKartonProcedure((p) => p.preferences.update);
 
@@ -356,9 +359,11 @@ function PageSettingComponent({ type, title, description }: PageSettingProps) {
         <RadioLabel>
           <Radio value="home" />
           <div className="flex flex-col">
-            <span className="font-medium text-foreground">StageVibe Home</span>
+            <span className="font-medium text-foreground">
+              {t('browsing.page.homeTitle')}
+            </span>
             <span className="text-muted-foreground text-xs">
-              Open the StageVibe home page
+              {t('browsing.page.homeDescription')}
             </span>
           </div>
         </RadioLabel>
@@ -366,9 +371,11 @@ function PageSettingComponent({ type, title, description }: PageSettingProps) {
         <RadioLabel>
           <Radio value="custom" />
           <div className="flex flex-col">
-            <span className="font-medium text-foreground">Custom URL</span>
+            <span className="font-medium text-foreground">
+              {t('browsing.page.customTitle')}
+            </span>
             <span className="text-muted-foreground text-xs">
-              Open a specific URL
+              {t('browsing.page.customDescription')}
             </span>
           </div>
         </RadioLabel>
@@ -377,7 +384,7 @@ function PageSettingComponent({ type, title, description }: PageSettingProps) {
       {pageSetting.type === 'custom' && (
         <div className="ml-6 space-y-2">
           <Input
-            placeholder="https://example.com"
+            placeholder={t('browsing.page.urlPlaceholder')}
             value={localUrl}
             onValueChange={handleUrlChange}
           />
@@ -388,21 +395,23 @@ function PageSettingComponent({ type, title, description }: PageSettingProps) {
 }
 
 function NewTabPageSetting() {
+  const { t } = useTranslation('settings');
   return (
     <PageSettingComponent
       type="newTabPage"
-      title="New Tab Page"
-      description="Choose what page opens when you create a new tab."
+      title={t('browsing.newTab.title')}
+      description={t('browsing.newTab.description')}
     />
   );
 }
 
 function StartupPageSetting() {
+  const { t } = useTranslation('settings');
   return (
     <PageSettingComponent
       type="startupPage"
-      title="On Browser Start"
-      description="Choose what page opens when stagewise starts."
+      title={t('browsing.startup.title')}
+      description={t('browsing.startup.description')}
     />
   );
 }
@@ -411,32 +420,8 @@ function StartupPageSetting() {
 // Permission Defaults Setting Component
 // =============================================================================
 
-/** Human-readable labels for permission types */
-const permissionTypeLabels: Record<ConfigurablePermissionType, string> = {
-  media: 'Camera & Microphone',
-  geolocation: 'Location',
-  notifications: 'Notifications',
-  fullscreen: 'Fullscreen',
-  bluetooth: 'Bluetooth',
-  hid: 'HID Devices',
-  serial: 'Serial Ports',
-  usb: 'USB Devices',
-  'clipboard-read': 'Clipboard Read',
-  'display-capture': 'Screen Capture',
-  midi: 'MIDI Devices',
-  'idle-detection': 'Idle Detection',
-  'speaker-selection': 'Speaker Selection',
-  'storage-access': 'Storage Access',
-};
-
-/** Human-readable labels for permission settings */
-const permissionSettingLabels: Record<PermissionSetting, string> = {
-  [PermissionSetting.Ask]: 'Ask',
-  [PermissionSetting.Allow]: 'Allow',
-  [PermissionSetting.Block]: 'Block',
-};
-
 function PermissionDefaultsSetting() {
+  const { t } = useTranslation('settings');
   const preferences = useKartonState((s) => s.preferences);
   const updatePreferences = useKartonProcedure((p) => p.preferences.update);
 
@@ -476,8 +461,8 @@ function PermissionDefaultsSetting() {
     const options = [
       {
         value: String(PermissionSetting.Ask),
-        label: permissionSettingLabels[PermissionSetting.Ask],
-        description: 'Ask every time',
+        label: t('websitePermissions.settings.ask'),
+        description: t('browsing.permissionDefaults.askEveryTime'),
       },
     ];
 
@@ -485,15 +470,15 @@ function PermissionDefaultsSetting() {
     if (!isDevicePermission) {
       options.push({
         value: String(PermissionSetting.Allow),
-        label: permissionSettingLabels[PermissionSetting.Allow],
-        description: 'Always allow',
+        label: t('websitePermissions.settings.allow'),
+        description: t('browsing.permissionDefaults.alwaysAllow'),
       });
     }
 
     options.push({
       value: String(PermissionSetting.Block),
-      label: permissionSettingLabels[PermissionSetting.Block],
-      description: 'Always block',
+      label: t('websitePermissions.settings.block'),
+      description: t('browsing.permissionDefaults.alwaysBlock'),
     });
 
     return options;
@@ -503,10 +488,10 @@ function PermissionDefaultsSetting() {
     <div className="space-y-3">
       <div>
         <h3 className="font-medium text-base text-foreground">
-          Permission Defaults
+          {t('browsing.permissionDefaults.title')}
         </h3>
         <p className="text-muted-foreground text-sm">
-          Set the default behavior when websites request these permissions.
+          {t('browsing.permissionDefaults.description')}
         </p>
       </div>
 
@@ -517,7 +502,7 @@ function PermissionDefaultsSetting() {
             className="flex items-center justify-between gap-4"
           >
             <span className="font-medium text-foreground text-sm">
-              {permissionTypeLabels[permissionType]}
+              {t(`websitePermissions.types.${permissionType}`)}
             </span>
             <Select
               value={String(
@@ -544,6 +529,7 @@ function PermissionDefaultsSetting() {
 // =============================================================================
 
 function WebsitePermissionOverrides() {
+  const { t } = useTranslation('settings');
   const preferences = useKartonState((s) => s.preferences);
   const setSettingsRoute = useKartonProcedure(
     (p) => p.appScreen.setSettingsRoute,
@@ -580,16 +566,16 @@ function WebsitePermissionOverrides() {
       <div className="space-y-3">
         <div>
           <h3 className="font-medium text-base text-foreground">
-            Website-Specific Settings
+            {t('browsing.overrides.title')}
           </h3>
           <p className="text-muted-foreground text-sm">
-            Sites with custom permission settings will appear here.
+            {t('browsing.overrides.emptyDescription')}
           </p>
         </div>
 
         <div className="rounded-lg border border-border/30 bg-surface-1/50 p-4">
           <p className="text-center text-muted-foreground text-sm">
-            No websites have custom permission settings yet.
+            {t('browsing.overrides.empty')}
           </p>
         </div>
       </div>
@@ -600,10 +586,10 @@ function WebsitePermissionOverrides() {
     <div className="space-y-3">
       <div>
         <h3 className="font-medium text-base text-foreground">
-          Website-Specific Settings
+          {t('browsing.overrides.title')}
         </h3>
         <p className="text-muted-foreground text-sm">
-          Sites with custom permission settings. Click to view or edit.
+          {t('browsing.overrides.description')}
         </p>
       </div>
 
@@ -620,7 +606,7 @@ function WebsitePermissionOverrides() {
                 {host}
               </span>
               <span className="text-muted-foreground text-xs">
-                {count} custom permission{count !== 1 ? 's' : ''}
+                {t('browsing.overrides.count', { count })}
               </span>
             </div>
             <ChevronRightIcon className="size-4 text-muted-foreground" />
@@ -636,6 +622,7 @@ function WebsitePermissionOverrides() {
 // =============================================================================
 
 export function BrowsingSettingsSection() {
+  const { t } = useTranslation('settings');
   return (
     <div className="h-full w-full">
       {/* Content */}
@@ -643,12 +630,16 @@ export function BrowsingSettingsSection() {
         <div className="mx-auto max-w-3xl space-y-8">
           {/* Header */}
           <div>
-            <h1 className="font-semibold text-foreground text-xl">General</h1>
+            <h1 className="font-semibold text-foreground text-xl">
+              {t('browsing.general')}
+            </h1>
           </div>
           {/* General Section */}
           <section className="space-y-6">
             <div>
-              <h2 className="font-medium text-foreground text-lg">General</h2>
+              <h2 className="font-medium text-foreground text-lg">
+                {t('browsing.general')}
+              </h2>
             </div>
 
             <SearchEngineSetting />
@@ -667,9 +658,11 @@ export function BrowsingSettingsSection() {
           {/* Privacy Section */}
           <section className="space-y-6">
             <div>
-              <h2 className="font-medium text-foreground text-lg">Privacy</h2>
+              <h2 className="font-medium text-foreground text-lg">
+                {t('browsing.privacy.title')}
+              </h2>
               <p className="text-muted-foreground text-sm">
-                Manage your privacy and data sharing preferences.
+                {t('browsing.privacy.description')}
               </p>
             </div>
 
