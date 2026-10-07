@@ -45,6 +45,7 @@ import { CommandCenterOverlay } from './_components/command-center-overlay';
 import { CommandCenterPanel } from './_components/command-center-panel';
 import { CommandCenterResults } from './_components/command-center-results';
 import type { FileSearchFilterState } from './sources/use-file-command-items';
+import { useTranslation } from 'react-i18next';
 
 function stringArraysEqual(a: string[], b: string[]): boolean {
   if (a.length !== b.length) return false;
@@ -63,6 +64,7 @@ function hasActiveInputSelection(input: HTMLInputElement | null): boolean {
 const commandCenterModalActiveAttribute = 'data-command-center-modal-active';
 
 export function CommandCenter() {
+  const { t } = useTranslation('commandCenter');
   const {
     isOpen,
     query,
@@ -208,7 +210,7 @@ export function CommandCenter() {
   } | null>(null);
   const [renamingAgentId, setRenamingAgentId] = useState<string | null>(null);
   const [hasInputSelection, setHasInputSelection] = useState(false);
-  const filesSectionLabel = fileIsRecent ? 'Last changed' : 'Files';
+  const filesSectionLabel = fileIsRecent ? t('lastChanged') : t('modes.files');
   // The gitignored toggle is only meaningful when a currently-searched
   // workspace is a git repository / worktree.
   const canToggleGitignored = useMemo(() => {
