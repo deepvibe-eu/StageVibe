@@ -77,6 +77,7 @@ import {
 } from 'react';
 
 import { cn } from '@ui/utils';
+import { useTranslation } from 'react-i18next';
 import { useIsTruncated } from '@ui/hooks/use-is-truncated';
 import { Input } from '@stagewise/stage-ui/components/input';
 import { Button, buttonVariants } from '@stagewise/stage-ui/components/button';
@@ -140,6 +141,7 @@ function VendorApiKeyInput({
   instance: ProviderInstance;
   onSaved?: () => void;
 }) {
+  const { t } = useTranslation('settings');
   const openExternalUrl = useKartonProcedure((p) => p.openExternalUrl);
   const setProviderInstanceApiKey = useKartonProcedure(
     (p) => p.preferences.setProviderInstanceApiKey,
@@ -185,7 +187,7 @@ function VendorApiKeyInput({
       } catch {
         setValidated({
           success: false,
-          error: 'Validation request failed. Please try again.',
+          error: t('modelsProviders.apiKey.validationFailed'),
         });
         return;
       } finally {
@@ -229,15 +231,15 @@ function VendorApiKeyInput({
   return (
     <div className="space-y-1">
       <p className="flex items-center font-medium text-muted-foreground text-xs">
-        API Key
+        {t('modelsProviders.apiKey.label')}
         {isValidating && (
           <span className="ml-1.5 font-normal text-subtle-foreground">
-            validating...
+            {t('modelsProviders.apiKey.validating')}
           </span>
         )}
         {!isValidating && validated?.success && (
           <span className="ml-1.5 font-normal text-success-foreground">
-            Updated
+            {t('modelsProviders.apiKey.updated')}
           </span>
         )}
       </p>
@@ -248,7 +250,7 @@ function VendorApiKeyInput({
           placeholder={
             hasKey || validated
               ? '••••••••••••••••••••••••••••••••'
-              : 'Enter API key...'
+              : t('modelsProviders.apiKey.placeholder')
           }
           onValueChange={(v) => {
             setApiKeyInput(v);
@@ -276,11 +278,11 @@ function VendorApiKeyInput({
             onClick={() => void handleSave(apiKeyInput)}
             disabled={isValidating || isSaving}
           >
-            Save
+            {t('modelsProviders.apiKey.save')}
           </Button>
         ) : hasKey ? (
           <Button variant="ghost" size="sm" onClick={handleClear}>
-            Clear
+            {t('modelsProviders.apiKey.clear')}
           </Button>
         ) : null}
       </div>
@@ -290,7 +292,10 @@ function VendorApiKeyInput({
       {!hasKey && !(validated && !validated.success) && getApiKeyUrl && (
         <p className="text-subtle-foreground text-xs">
           <span className="inline-flex items-center gap-1">
-            {helpText ?? `Get your ${displayInfo.displayName} API key`}
+            {helpText ??
+              t('modelsProviders.apiKey.getKey', {
+                name: displayInfo.displayName,
+              })}
             <button
               type="button"
               onClick={() => void openExternalUrl(getApiKeyUrl)}
@@ -319,6 +324,7 @@ function VendorApiKeyInput({
  * this only surfaces it.
  */
 function VendorBaseUrlInput({ instance }: { instance: ProviderInstance }) {
+  const { t } = useTranslation('settings');
   const updateProviderInstance = useKartonProcedure(
     (p) => p.preferences.updateProviderInstance,
   );
@@ -337,7 +343,7 @@ function VendorBaseUrlInput({ instance }: { instance: ProviderInstance }) {
   const handleSave = async (next: string) => {
     const trimmed = next.trim();
     if (trimmed && !/^https?:\/\//i.test(trimmed)) {
-      setError('The base URL must start with http:// or https://.');
+      setError(t('modelsProviders.baseUrl.invalid'));
       return;
     }
     if (trimmed === savedBaseUrl) return;
@@ -352,7 +358,7 @@ function VendorBaseUrlInput({ instance }: { instance: ProviderInstance }) {
       const failureMessage =
         cause instanceof Error
           ? cause.message
-          : 'Failed to refresh models from this endpoint.';
+          : t('modelsProviders.baseUrl.refreshFailed');
       let rollbackMessage: string | undefined;
       try {
         await updateProviderInstance(instance.id, { baseUrl: savedBaseUrl });
@@ -360,12 +366,15 @@ function VendorBaseUrlInput({ instance }: { instance: ProviderInstance }) {
         rollbackMessage =
           rollbackCause instanceof Error
             ? rollbackCause.message
-            : 'unknown rollback error';
+            : t('modelsProviders.baseUrl.rollbackUnknown');
       }
       setBaseUrl(savedBaseUrl);
       setError(
         rollbackMessage
-          ? `${failureMessage} Failed to restore the previous endpoint: ${rollbackMessage}`
+          ? t('modelsProviders.baseUrl.rollbackFailed', {
+              message: failureMessage,
+              rollback: rollbackMessage,
+            })
           : failureMessage,
       );
     } finally {
@@ -377,7 +386,7 @@ function VendorBaseUrlInput({ instance }: { instance: ProviderInstance }) {
   return (
     <div className="space-y-2 rounded-lg border border-derived p-3">
       <p className="font-medium text-muted-foreground text-xs">
-        Base URL override
+        {t('modelsProviders.baseUrl.overrideLabel')}
       </p>
       <div className="flex gap-2">
         <Input
@@ -405,13 +414,18 @@ function VendorBaseUrlInput({ instance }: { instance: ProviderInstance }) {
             disabled={isSaving}
             onClick={() => void handleSave(baseUrl)}
           >
-            {isSaving ? 'Saving...' : 'Save'}
+            {isSaving
+              ? t('modelsProviders.baseUrl.saving')
+              : t('modelsProviders.baseUrl.save')}
           </Button>
         )}
       </div>
       <p className="text-subtle-foreground text-xs">
-        Optional. Leave empty to use this provider&apos;s default endpoint
-        {defaultBaseUrl ? ` (${defaultBaseUrl})` : ''}.
+        {defaultBaseUrl
+          ? t('modelsProviders.baseUrl.hintWithDefault', {
+              url: defaultBaseUrl,
+            })
+          : t('modelsProviders.baseUrl.hint')}
       </p>
       {error && <TruncatedErrorText text={error} />}
     </div>
@@ -433,6 +447,7 @@ function ProviderInstanceCard({
   onRename?: () => void;
   onDelete?: () => void;
 }) {
+  const { t } = useTranslation('settings');
   const subscription = useKartonState((s) => s.userAccount.subscription);
   const openExternalUrl = useKartonProcedure((p) => p.openExternalUrl);
   const getUsageLimits = useKartonProcedure(
@@ -494,11 +509,13 @@ function ProviderInstanceCard({
             )}
             {!!usageLimits.length && (
               <p className="mt-1 truncate text-subtle-foreground text-xs">
-                Usage ·{' '}
+                {t('modelsProviders.card.usage')}{' '}
                 {usageLimits
-                  .map(
-                    ({ label, usedPercent }) =>
-                      `${label} ${Math.max(0, Math.round(100 - usedPercent))}% left`,
+                  .map(({ label, usedPercent }) =>
+                    t('modelsProviders.card.percentLeft', {
+                      label,
+                      percent: Math.max(0, Math.round(100 - usedPercent)),
+                    }),
                   )
                   .join(' · ')}
               </p>
@@ -517,7 +534,7 @@ function ProviderInstanceCard({
       {isStagewise && isFreePlan && (
         <div className="flex items-center justify-between gap-2">
           <p className="text-warning-foreground text-xs">
-            Requires Pro or Ultra plan
+            {t('modelsProviders.card.requiresPlan')}
           </p>
           <Button
             variant="ghost"
@@ -527,7 +544,7 @@ function ProviderInstanceCard({
               void openExternalUrl(consoleUrl);
             }}
           >
-            Upgrade to Pro
+            {t('modelsProviders.card.upgrade')}
             <IconArrowUpRightOutline18 className="size-3" />
           </Button>
         </div>
@@ -570,7 +587,7 @@ function ProviderInstanceCard({
                 onClick={onRename}
               >
                 <IconPenOutline18 className="size-3.5 shrink-0" />
-                <span>Rename provider</span>
+                <span>{t('modelsProviders.card.rename')}</span>
               </MenuBase.Item>
             )}
             {onDelete && (
@@ -584,7 +601,7 @@ function ProviderInstanceCard({
                 onClick={onDelete}
               >
                 <IconTrashOutline18 className="size-3.5 shrink-0" />
-                <span>Delete provider</span>
+                <span>{t('modelsProviders.card.delete')}</span>
               </MenuBase.Item>
             )}
           </MenuBase.Popup>
@@ -635,6 +652,7 @@ function ProviderTypeSection({
   onSelect: (typeId: ProviderInstanceTypeId) => void;
   children?: React.ReactNode;
 }) {
+  const { t } = useTranslation('settings');
   if (types.length === 0 && !children) return null;
 
   return (
@@ -672,8 +690,10 @@ function ProviderTypeSection({
               {instanceCount > 0 && (
                 <span className="shrink-0 text-2xs text-subtle-foreground">
                   {isConnectedLocalAgent && instanceCount === 1
-                    ? 'Connected'
-                    : `${instanceCount} connected`}
+                    ? t('modelsProviders.type.connected')
+                    : t('modelsProviders.type.connectedCount', {
+                        count: instanceCount,
+                      })}
                 </span>
               )}
             </button>
@@ -692,6 +712,7 @@ function AddProviderGrid({
   onClose: () => void;
   onConnected: (instanceId: string) => void;
 }) {
+  const { t } = useTranslation('settings');
   const addProviderInstance = useKartonProcedure(
     (p) => p.preferences.addProviderInstance,
   );
@@ -801,7 +822,7 @@ function AddProviderGrid({
         }
         onConnected(result.instanceId);
       } catch {
-        setError('Connection failed. Please try again.');
+        setError(t('modelsProviders.add.connectionFailed'));
       } finally {
         setIsConnecting(false);
       }
@@ -980,14 +1001,16 @@ function AddProviderGrid({
                 <IconChevronLeftOutline18 className="size-4" />
               </Button>
               {selected === 'custom'
-                ? 'Add Custom Endpoint'
-                : `Connect ${selectedDisplayName}`}
+                ? t('modelsProviders.add.customEndpointTitle')
+                : t('modelsProviders.add.connectTitle', {
+                    name: selectedDisplayName,
+                  })}
             </DialogTitle>
           ) : (
             <>
-              <DialogTitle>Add Provider</DialogTitle>
+              <DialogTitle>{t('modelsProviders.add.title')}</DialogTitle>
               <DialogDescription>
-                Connect a coding agent or model source.
+                {t('modelsProviders.add.description')}
               </DialogDescription>
             </>
           )}
@@ -1154,7 +1177,7 @@ function AddProviderGrid({
                             'shrink-0',
                           )}
                         >
-                          Create key
+                          {t('modelsProviders.apiKey.createKey')}
                         </button>
                       )}
                     </span>
@@ -3451,6 +3474,7 @@ export function CodingPlanEndpointConnection({
 }: {
   instance: ProviderInstance;
 }) {
+  const { t } = useTranslation('settings');
   const updateProviderInstance = useKartonProcedure(
     (p) => p.preferences.updateProviderInstance,
   );
@@ -3490,7 +3514,7 @@ export function CodingPlanEndpointConnection({
       const failureMessage =
         cause instanceof Error
           ? cause.message
-          : 'Failed to refresh models from this endpoint.';
+          : t('modelsProviders.baseUrl.refreshFailed');
       let rollbackMessage: string | undefined;
       try {
         await updateProviderInstance(instance.id, { baseUrl: savedBaseUrl });
@@ -3498,12 +3522,15 @@ export function CodingPlanEndpointConnection({
         rollbackMessage =
           rollbackCause instanceof Error
             ? rollbackCause.message
-            : 'unknown rollback error';
+            : t('modelsProviders.baseUrl.rollbackUnknown');
       }
       setBaseUrl(savedBaseUrl);
       setError(
         rollbackMessage
-          ? `${failureMessage} Failed to restore the previous endpoint: ${rollbackMessage}`
+          ? t('modelsProviders.baseUrl.rollbackFailed', {
+              message: failureMessage,
+              rollback: rollbackMessage,
+            })
           : failureMessage,
       );
     } finally {
@@ -3543,7 +3570,9 @@ export function CodingPlanEndpointConnection({
             disabled={!baseUrl.trim() || isSaving}
             onClick={() => void handleSave()}
           >
-            {isSaving ? 'Saving...' : 'Save'}
+            {isSaving
+              ? t('modelsProviders.baseUrl.saving')
+              : t('modelsProviders.baseUrl.save')}
           </Button>
         )}
       </div>
@@ -3876,10 +3905,12 @@ export function ModelsProvidersSection() {
           <section className="space-y-4">
             <div className="flex items-center justify-between">
               <div>
-                <h2 className="font-medium text-foreground text-lg">Providers</h2>
+                <h2 className="font-medium text-foreground text-lg">
+                  Providers
+                </h2>
                 <p className="text-muted-foreground text-sm">
-                  Configure how the agent connects to LLM providers. Add API keys,
-                  connect coding plans, or set up custom endpoints.
+                  Configure how the agent connects to LLM providers. Add API
+                  keys, connect coding plans, or set up custom endpoints.
                 </p>
               </div>
               <Button

@@ -506,6 +506,49 @@
       "deleteConfirm": "The following custom models use this provider and will stop working:\n\n{{names}}\n\nDelete anyway?"
     }
   },
+  "modelsProviders": {
+    "apiKey": {
+      "label": "API Key",
+      "validating": "validating...",
+      "updated": "Updated",
+      "placeholder": "Enter API key...",
+      "save": "Save",
+      "clear": "Clear",
+      "getKey": "Get your {{name}} API key",
+      "createKey": "Create key",
+      "validationFailed": "Validation request failed. Please try again."
+    },
+    "baseUrl": {
+      "invalid": "The base URL must start with http:// or https://.",
+      "refreshFailed": "Failed to refresh models from this endpoint.",
+      "rollbackUnknown": "unknown rollback error",
+      "rollbackFailed": "{{message}} Failed to restore the previous endpoint: {{rollback}}",
+      "overrideLabel": "Base URL override",
+      "saving": "Saving...",
+      "save": "Save",
+      "hint": "Optional. Leave empty to use this provider's default endpoint.",
+      "hintWithDefault": "Optional. Leave empty to use this provider's default endpoint ({{url}})."
+    },
+    "card": {
+      "usage": "Usage ·",
+      "percentLeft": "{{label}} {{percent}}% left",
+      "requiresPlan": "Requires Pro or Ultra plan",
+      "upgrade": "Upgrade to Pro",
+      "rename": "Rename provider",
+      "delete": "Delete provider"
+    },
+    "type": {
+      "connected": "Connected",
+      "connectedCount": "{{count}} connected"
+    },
+    "add": {
+      "connectionFailed": "Connection failed. Please try again.",
+      "customEndpointTitle": "Add Custom Endpoint",
+      "connectTitle": "Connect {{name}}",
+      "title": "Add Provider",
+      "description": "Connect a coding agent or model source."
+    }
+  },
   "personalization": {
     "title": "Personalization",
     "appearance": {
