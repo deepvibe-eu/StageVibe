@@ -4,6 +4,7 @@ import { Checkbox } from '@stagewise/stage-ui/components/checkbox';
 import { OverlayScrollbar } from '@stagewise/stage-ui/components/overlay-scrollbar';
 import { useKartonProcedure } from '@ui/hooks/use-karton';
 import { Loader2Icon } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 type DataType =
   | 'history'
@@ -17,66 +18,21 @@ type DataType =
   | 'cacheStorage'
   | 'permissionExceptions';
 
-interface DataOption {
-  id: DataType;
-  label: string;
-  description: string;
-}
-
-const dataOptions: DataOption[] = [
-  {
-    id: 'history',
-    label: 'Browsing history',
-    description: 'URLs, visits, and search terms',
-  },
-  {
-    id: 'downloads',
-    label: 'Download history',
-    description: 'List of downloaded files (not the files themselves)',
-  },
-  {
-    id: 'cookies',
-    label: 'Cookies',
-    description: 'Site cookies and login sessions',
-  },
-  {
-    id: 'cache',
-    label: 'Cached images and files',
-    description: 'HTTP cache for faster page loading',
-  },
-  {
-    id: 'storage',
-    label: 'Local storage',
-    description: 'localStorage and sessionStorage data',
-  },
-  {
-    id: 'indexedDB',
-    label: 'IndexedDB',
-    description: 'Structured data stored by websites',
-  },
-  {
-    id: 'cacheStorage',
-    label: 'Cache Storage',
-    description: 'Cache API storage used by web apps',
-  },
-  {
-    id: 'serviceWorkers',
-    label: 'Service Workers',
-    description: 'Background scripts that power offline functionality',
-  },
-  {
-    id: 'favicons',
-    label: 'Cached favicons',
-    description: 'Site icons and images',
-  },
-  {
-    id: 'permissionExceptions',
-    label: 'Site permission settings',
-    description: 'Saved Allow/Block choices for camera, location, etc.',
-  },
+const dataOptionIds: DataType[] = [
+  'history',
+  'downloads',
+  'cookies',
+  'cache',
+  'storage',
+  'indexedDB',
+  'cacheStorage',
+  'serviceWorkers',
+  'favicons',
+  'permissionExceptions',
 ];
 
 export function ClearDataSection() {
+  const { t } = useTranslation('settings');
   const [selectedTypes, setSelectedTypes] = useState<Set<DataType>>(
     new Set([
       'history',
@@ -116,7 +72,7 @@ export function ClearDataSection() {
     if (selectedTypes.size === 0) {
       setResult({
         success: false,
-        message: 'Please select at least one data type to clear',
+        message: t('clearData.selectError'),
       });
       return;
     }
@@ -153,46 +109,51 @@ export function ClearDataSection() {
         const clearedItems: string[] = [];
         if (response.historyEntriesCleared) {
           clearedItems.push(
-            `${response.historyEntriesCleared} history ${response.historyEntriesCleared === 1 ? 'entry' : 'entries'}`,
+            t('clearData.items.history', {
+              count: response.historyEntriesCleared,
+            }),
           );
         }
         if (response.downloadsCleared === true) {
-          clearedItems.push('downloads');
+          clearedItems.push(t('clearData.items.downloads'));
         }
         if (response.faviconsCleared) {
-          clearedItems.push(`${response.faviconsCleared} favicons`);
+          clearedItems.push(
+            t('clearData.items.favicons', { count: response.faviconsCleared }),
+          );
         }
         if (response.cookiesCleared) {
-          clearedItems.push('cookies');
+          clearedItems.push(t('clearData.items.cookies'));
         }
         if (response.cacheCleared) {
-          clearedItems.push('cache');
+          clearedItems.push(t('clearData.items.cache'));
         }
         if (response.storageCleared) {
-          clearedItems.push('storage');
+          clearedItems.push(t('clearData.items.storage'));
         }
         if (response.permissionExceptionsCleared) {
-          clearedItems.push('site permission settings');
+          clearedItems.push(t('clearData.items.permissionExceptions'));
         }
 
         setResult({
           success: true,
           message:
             clearedItems.length > 0
-              ? `Successfully cleared ${clearedItems.join(', ')}`
-              : 'Data cleared successfully',
+              ? t('clearData.successCleared', {
+                  items: clearedItems.join(', '),
+                })
+              : t('clearData.success'),
         });
       } else {
         setResult({
           success: false,
-          message: response.error || 'Failed to clear data',
+          message: response.error || t('clearData.failed'),
         });
       }
     } catch (error) {
       setResult({
         success: false,
-        message:
-          error instanceof Error ? error.message : 'Failed to clear data',
+        message: error instanceof Error ? error.message : t('clearData.failed'),
       });
     } finally {
       setIsClearing(false);
@@ -207,36 +168,36 @@ export function ClearDataSection() {
           {/* Header */}
           <div>
             <h1 className="font-semibold text-foreground text-xl">
-              Clear Data
+              {t('clearData.title')}
             </h1>
           </div>
           {/* Data Selection Section */}
           <section className="space-y-4">
             <div>
               <h2 className="font-medium text-foreground text-lg">
-                Select data to clear
+                {t('clearData.selectTitle')}
               </h2>
             </div>
 
             <div className="grid gap-3 sm:grid-cols-2">
-              {dataOptions.map((option) => (
+              {dataOptionIds.map((id) => (
                 <label
-                  key={option.id}
+                  key={id}
                   className="flex cursor-pointer select-none items-start gap-3 rounded-lg border border-derived bg-background p-2.5 transition-colors hover:bg-hover-derived"
-                  htmlFor={option.id}
+                  htmlFor={id}
                 >
                   <Checkbox
-                    id={option.id}
-                    checked={selectedTypes.has(option.id)}
-                    onCheckedChange={() => toggleDataType(option.id)}
+                    id={id}
+                    checked={selectedTypes.has(id)}
+                    onCheckedChange={() => toggleDataType(id)}
                     className="mt-0.5"
                   />
                   <div className="flex flex-1 flex-col">
                     <span className="text-foreground text-sm">
-                      {option.label}
+                      {t(`clearData.options.${id}.label`)}
                     </span>
                     <span className="text-muted-foreground text-xs">
-                      {option.description}
+                      {t(`clearData.options.${id}.description`)}
                     </span>
                   </div>
                 </label>
@@ -256,10 +217,10 @@ export function ClearDataSection() {
                 {isClearing ? (
                   <>
                     <Loader2Icon className="mr-2 size-4 animate-spin" />
-                    Clearing...
+                    {t('clearData.clearing')}
                   </>
                 ) : (
-                  'Clear last 24 hours'
+                  t('clearData.clearLast24h')
                 )}
               </Button>
 
@@ -272,10 +233,10 @@ export function ClearDataSection() {
                 {isClearing ? (
                   <>
                     <Loader2Icon className="mr-2 size-4 animate-spin" />
-                    Clearing...
+                    {t('clearData.clearing')}
                   </>
                 ) : (
-                  'Clear all time'
+                  t('clearData.clearAllTime')
                 )}
               </Button>
             </div>

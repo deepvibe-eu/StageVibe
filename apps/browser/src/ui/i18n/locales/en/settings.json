@@ -84,6 +84,70 @@
     "optionAllowDescription": "Always allow for this site",
     "optionBlockDescription": "Always block for this site"
   },
+  "clearData": {
+    "title": "Clear Data",
+    "selectTitle": "Select data to clear",
+    "selectError": "Please select at least one data type to clear",
+    "clearing": "Clearing...",
+    "clearLast24h": "Clear last 24 hours",
+    "clearAllTime": "Clear all time",
+    "success": "Data cleared successfully",
+    "successCleared": "Successfully cleared {{items}}",
+    "failed": "Failed to clear data",
+    "options": {
+      "history": {
+        "label": "Browsing history",
+        "description": "URLs, visits, and search terms"
+      },
+      "downloads": {
+        "label": "Download history",
+        "description": "List of downloaded files (not the files themselves)"
+      },
+      "cookies": {
+        "label": "Cookies",
+        "description": "Site cookies and login sessions"
+      },
+      "cache": {
+        "label": "Cached images and files",
+        "description": "HTTP cache for faster page loading"
+      },
+      "storage": {
+        "label": "Local storage",
+        "description": "localStorage and sessionStorage data"
+      },
+      "indexedDB": {
+        "label": "IndexedDB",
+        "description": "Structured data stored by websites"
+      },
+      "cacheStorage": {
+        "label": "Cache Storage",
+        "description": "Cache API storage used by web apps"
+      },
+      "serviceWorkers": {
+        "label": "Service Workers",
+        "description": "Background scripts that power offline functionality"
+      },
+      "favicons": {
+        "label": "Cached favicons",
+        "description": "Site icons and images"
+      },
+      "permissionExceptions": {
+        "label": "Site permission settings",
+        "description": "Saved Allow/Block choices for camera, location, etc."
+      }
+    },
+    "items": {
+      "history_one": "{{count}} history entry",
+      "history_other": "{{count}} history entries",
+      "favicons_one": "{{count}} favicon",
+      "favicons_other": "{{count}} favicons",
+      "downloads": "downloads",
+      "cookies": "cookies",
+      "cache": "cache",
+      "storage": "storage",
+      "permissionExceptions": "site permission settings"
+    }
+  },
   "personalization": {
     "title": "Personalization",
     "appearance": {
