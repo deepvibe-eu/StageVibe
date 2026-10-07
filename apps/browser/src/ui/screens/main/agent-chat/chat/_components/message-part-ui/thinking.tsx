@@ -1,6 +1,7 @@
 import { cn } from '@ui/utils';
 import type { ReasoningUIPart } from '@shared/karton-contracts/ui';
 import { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { BrainIcon } from 'lucide-react';
 import { Streamdown } from '@ui/components/streamdown';
 import { ToolPartUI } from './tools/shared/tool-part-ui';
@@ -19,6 +20,7 @@ export const ThinkingPart = ({
   isLastPart?: boolean;
   capMaxHeight?: boolean;
 }) => {
+  const { t } = useTranslation('chat');
   const isStreaming = part.state === 'streaming';
 
   // Use the unified auto-expand hook
@@ -53,16 +55,17 @@ export const ThinkingPart = ({
             )}
           >
             {part.state === 'streaming' ? (
-              'Thinking...'
+              t('thinking.thinking')
             ) : part.state === 'done' && formattedThinkingDuration ? (
-              <>
-                <span className="shrink-0 truncate font-medium">Thought </span>
-                <span className={'font-normal opacity-75'}>
-                  for {formattedThinkingDuration}
-                </span>
-              </>
+              <span className="shrink-0 truncate font-medium">
+                {t('thinking.thoughtFor', {
+                  duration: formattedThinkingDuration,
+                })}
+              </span>
             ) : (
-              <span className="shrink-0 truncate font-medium">Thought</span>
+              <span className="shrink-0 truncate font-medium">
+                {t('thinking.thought')}
+              </span>
             )}
           </span>
         </>

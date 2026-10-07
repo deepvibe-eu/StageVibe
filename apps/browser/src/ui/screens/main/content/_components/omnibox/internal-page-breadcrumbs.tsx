@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 import { IconChevronRight } from '@stagewise/icons';
 import { Logo } from '@ui/components/ui/logo';
 import { useKartonState } from '@ui/hooks/use-karton';
+import { useTranslation } from 'react-i18next';
 
 interface InternalPageBreadcrumbsProps {
   url: string;
@@ -73,6 +74,7 @@ function decodePathSegment(segment: string | undefined): string | null {
 }
 
 export function InternalPageBreadcrumbs({ url }: InternalPageBreadcrumbsProps) {
+  const { t } = useTranslation('content');
   const previewAgentId = useMemo(() => {
     try {
       const parsedUrl = new URL(url);
@@ -116,7 +118,7 @@ export function InternalPageBreadcrumbs({ url }: InternalPageBreadcrumbsProps) {
           previewAgentTitle ?? (pluginId ? formatSegmentText(pluginId) : null);
 
         return [
-          { key: 'preview', label: 'Preview' },
+          { key: 'preview', label: t('breadcrumbs.preview') },
           ...(ownerLabel
             ? [{ key: `owner-${ownerLabel}`, label: ownerLabel }]
             : []),
@@ -133,7 +135,7 @@ export function InternalPageBreadcrumbs({ url }: InternalPageBreadcrumbsProps) {
     } catch {
       return [];
     }
-  }, [url, previewAgentTitle]);
+  }, [url, previewAgentTitle, t]);
 
   return (
     <div className="pointer-events-none absolute inset-0 flex size-full flex-row items-center gap-1.5 overflow-hidden px-1">
@@ -163,7 +165,9 @@ export function InternalPageBreadcrumbs({ url }: InternalPageBreadcrumbsProps) {
       ) : (
         <div className="flex shrink-0 flex-row items-center gap-1.5">
           <IconChevronRight className="size-3 shrink-0 text-muted-foreground" />
-          <span className="text-foreground text-sm">Home</span>
+          <span className="text-foreground text-sm">
+            {t('breadcrumbs.home')}
+          </span>
         </div>
       )}
     </div>

@@ -12,6 +12,7 @@ import { getBaseName } from '@shared/path-utils';
 import type { WorkspaceGitSetupRun } from '@shared/karton-contracts/ui';
 import { IconTriangleWarningOutline18 } from '@stagewise/icons';
 import { Loader2Icon } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 function formatSetupDuration(ms: number): string {
   const seconds = Math.max(0, Math.round(ms / 1000));
@@ -39,6 +40,7 @@ export function WorkspaceSetupStatusIndicator({
   setupRun?: WorkspaceGitSetupRun;
   failedClassName?: string;
 }) {
+  const { t } = useTranslation('chat');
   if (!setupRun) return null;
 
   if (setupRun.status === 'running') {
@@ -49,7 +51,7 @@ export function WorkspaceSetupStatusIndicator({
           className="size-3 shrink-0 animate-spin text-muted-foreground"
         />
         <span role="status" aria-live="polite" className="sr-only">
-          Setup running
+          {t('workspaceSetup.running')}
         </span>
       </>
     );
@@ -63,7 +65,7 @@ export function WorkspaceSetupStatusIndicator({
           className={cn('size-3 shrink-0', failedClassName)}
         />
         <span role="status" aria-live="polite" className="sr-only">
-          Setup failed
+          {t('workspaceSetup.failed')}
         </span>
       </>
     );
@@ -77,6 +79,7 @@ export function SetupRunSidePanel({
 }: {
   setupRun: WorkspaceGitSetupRun;
 }) {
+  const { t } = useTranslation('chat');
   const [now, setNow] = useState(() => Date.now());
 
   useEffect(() => {
@@ -90,10 +93,10 @@ export function SetupRunSidePanel({
   const duration = formatSetupDuration(finishedAt - setupRun.startedAt);
   const title =
     setupRun.status === 'running'
-      ? 'Worktree setup running'
+      ? t('workspaceSetup.titleRunning')
       : setupRun.status === 'failed'
-        ? 'Worktree setup failed'
-        : 'Worktree setup done';
+        ? t('workspaceSetup.titleFailed')
+        : t('workspaceSetup.titleDone');
   const hasOutput = setupRun.stdoutTail || setupRun.stderrTail;
   const scriptName = getBaseName(setupRun.scriptPath) || setupRun.scriptPath;
   const handleOpenScript = useCallback(() => {
@@ -112,8 +115,11 @@ export function SetupRunSidePanel({
         </div>
         <div className="mt-1 text-2xs text-subtle-foreground">
           {setupRun.status === 'running'
-            ? `Started at ${formatSetupTimestamp(setupRun.startedAt)} · ${duration}`
-            : `Finished in ${duration}`}
+            ? t('workspaceSetup.startedAt', {
+                time: formatSetupTimestamp(setupRun.startedAt),
+                duration,
+              })
+            : t('workspaceSetup.finishedIn', { duration })}
         </div>
       </div>
       <OverlayScrollbar
@@ -123,7 +129,7 @@ export function SetupRunSidePanel({
       >
         <div className="grid grid-cols-[auto_minmax(0,1fr)] items-start gap-x-2 gap-y-1.5 px-2.5 py-2 text-2xs">
           <span className="pt-0.5 text-subtle-foreground leading-none">
-            Script
+            {t('workspaceSetup.script')}
           </span>
           <Tooltip>
             <TooltipTrigger>
@@ -144,7 +150,9 @@ export function SetupRunSidePanel({
           </Tooltip>
           {setupRun.exitCode !== null && (
             <>
-              <span className="text-subtle-foreground leading-none">Exit</span>
+              <span className="text-subtle-foreground leading-none">
+                {t('workspaceSetup.exit')}
+              </span>
               <span className="font-mono text-muted-foreground leading-none">
                 {setupRun.exitCode}
               </span>
@@ -153,7 +161,7 @@ export function SetupRunSidePanel({
           {setupRun.message && (
             <>
               <span className="text-subtle-foreground leading-none">
-                Status
+                {t('workspaceSetup.status')}
               </span>
               <span className="text-muted-foreground leading-normal">
                 {setupRun.message}
@@ -162,18 +170,24 @@ export function SetupRunSidePanel({
           )}
 
           {setupRun.stdoutTail && (
-            <SetupOutputBlock label="Output" output={setupRun.stdoutTail} />
+            <SetupOutputBlock
+              label={t('workspaceSetup.output')}
+              output={setupRun.stdoutTail}
+            />
           )}
           {setupRun.stderrTail && (
-            <SetupOutputBlock label="Errors" output={setupRun.stderrTail} />
+            <SetupOutputBlock
+              label={t('workspaceSetup.errors')}
+              output={setupRun.stderrTail}
+            />
           )}
           {!hasOutput && (
             <>
               <span className="text-subtle-foreground leading-none">
-                Output
+                {t('workspaceSetup.output')}
               </span>
               <span className="text-muted-foreground leading-none">
-                No output captured yet.
+                {t('workspaceSetup.noOutput')}
               </span>
             </>
           )}

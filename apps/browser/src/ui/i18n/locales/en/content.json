@@ -88,6 +88,10 @@
     "stopProcessShortcut": "Stop process (Ctrl+C)",
     "openInBrowser": "Open {{endpoint}} in browser"
   },
+  "breadcrumbs": {
+    "preview": "Preview",
+    "home": "Home"
+  },
   "permissions": {
     "desc": {
       "mediaCameraMic": "wants to use your camera and microphone",

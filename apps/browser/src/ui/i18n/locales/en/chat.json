@@ -80,6 +80,33 @@
     "selectAtLeastOne": "Select at least one option",
     "otherPlaceholder": "Other (please enter)..."
   },
+  "thinking": {
+    "thinking": "Thinking...",
+    "thoughtFor": "Thought for {{duration}}",
+    "thought": "Thought"
+  },
+  "workspaceSetup": {
+    "running": "Setup running",
+    "failed": "Setup failed",
+    "titleRunning": "Worktree setup running",
+    "titleFailed": "Worktree setup failed",
+    "titleDone": "Worktree setup done",
+    "startedAt": "Started at {{time}} · {{duration}}",
+    "finishedIn": "Finished in {{duration}}",
+    "script": "Script",
+    "exit": "Exit",
+    "status": "Status",
+    "output": "Output",
+    "errors": "Errors",
+    "noOutput": "No output captured yet."
+  },
+  "mention": {
+    "tabIcon": "Tab icon",
+    "navigated": "Tab is on a different URL now.",
+    "closed": "Tab is closed.",
+    "restarted": "Browser was restarted.",
+    "openOriginal": "Open original URL in new tab"
+  },
   "errors": {
     "retry": "Retry",
     "configureOtherApiKeys": "Configure other API keys",

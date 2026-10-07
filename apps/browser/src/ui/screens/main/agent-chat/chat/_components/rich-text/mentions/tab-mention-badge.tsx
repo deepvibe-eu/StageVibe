@@ -8,6 +8,7 @@ import { useKartonState, useKartonProcedure } from '@ui/hooks/use-karton';
 import { ContextMenu } from '@base-ui/react/context-menu';
 import { Menu as MenuBase } from '@base-ui/react/menu';
 import type { TabMentionMeta } from '@shared/karton-contracts/ui/agent/metadata';
+import { useTranslation } from 'react-i18next';
 
 interface TabMentionBadgeProps {
   /** Tab ID — always available from the mention node's id attr. */
@@ -29,6 +30,7 @@ function TabFaviconMini({
   title?: string;
   className?: string;
 }) {
+  const { t } = useTranslation('chat');
   const [hasError, setHasError] = useState(false);
 
   if (!url || hasError) {
@@ -42,7 +44,7 @@ function TabFaviconMini({
   return (
     <img
       src={url}
-      alt={title || 'Tab icon'}
+      alt={title || t('mention.tabIcon')}
       onError={() => setHasError(true)}
       className={cn('size-3 shrink-0 rounded-sm', className)}
     />
@@ -66,6 +68,7 @@ export function TabMentionBadge({
   onDelete,
   viewOnly = true,
 }: TabMentionBadgeProps) {
+  const { t } = useTranslation('chat');
   const { sessionId: messageBrowserSessionId, tabs: tabSnapshots } =
     useMessageBrowserContext();
   const switchTab = useKartonProcedure((p) => p.browser.switchTab);
@@ -151,11 +154,11 @@ export function TabMentionBadge({
     const statusLine = (() => {
       switch (tabState) {
         case 'navigated':
-          return 'Tab is on a different URL now.';
+          return t('mention.navigated');
         case 'closed':
-          return 'Tab is closed.';
+          return t('mention.closed');
         case 'restarted':
-          return 'Browser was restarted.';
+          return t('mention.restarted');
         default:
           return null;
       }
@@ -169,7 +172,7 @@ export function TabMentionBadge({
         <span className="block text-muted-foreground">{statusLine}</span>
       </span>
     );
-  }, [tabState, displayData.url, tabId]);
+  }, [tabState, displayData.url, tabId, t]);
 
   const originalUrl = displayData.url;
 
@@ -240,7 +243,7 @@ export function TabMentionBadge({
                 onClick={handleOpenOriginalInNewTab}
               >
                 <ExternalLinkIcon className="size-3.5 shrink-0" />
-                <span>Open original URL in new tab</span>
+                <span>{t('mention.openOriginal')}</span>
               </MenuBase.Item>
             </MenuBase.Popup>
           </MenuBase.Positioner>
