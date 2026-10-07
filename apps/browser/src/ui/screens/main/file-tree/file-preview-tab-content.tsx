@@ -993,6 +993,7 @@ function DiffEditorPreview({
   tab: NonNullable<TabState['file']>;
   tabId: string;
 }) {
+  const { t } = useTranslation('filePreview');
   const getFileDiffContent = useKartonProcedure(
     (p) => p.toolbox.getFileDiffContent,
   );
@@ -1080,7 +1081,7 @@ function DiffEditorPreview({
         setDiffContent(content);
         diskMtimeRef.current = content?.mtimeMs ?? null;
         if (!content) {
-          setDiffError('Unable to load diff content.');
+          setDiffError(t('diffUnableLoadContent'));
           return null;
         }
         // Explicit reload discards any in-progress draft and loads the fresh
@@ -1089,9 +1090,7 @@ function DiffEditorPreview({
         setModifiedValue(content.modified);
         return { text: content.modified, mtimeMs: content.mtimeMs };
       } catch (err) {
-        setDiffError(
-          err instanceof Error ? err.message : 'Failed to load diff',
-        );
+        setDiffError(err instanceof Error ? err.message : t('diffLoadFailed'));
         return null;
       } finally {
         setIsLoading(false);
@@ -1108,7 +1107,7 @@ function DiffEditorPreview({
       diffDraftCache.delete(diffDraftKeyRef.current);
     },
     onSaveError: (err) => {
-      setDiffError(err instanceof Error ? err.message : 'Failed to save');
+      setDiffError(err instanceof Error ? err.message : t('diffSaveFailed'));
     },
   });
 
@@ -1163,7 +1162,7 @@ function DiffEditorPreview({
     // within a reasonable window instead of spinning forever.
     const safetyTimer = setTimeout(() => {
       if (!cancelled) {
-        setDiffError('Diff load timed out.');
+        setDiffError(t('diffLoadTimeout'));
         setIsLoading(false);
       }
     }, 15_000);
@@ -1196,13 +1195,11 @@ function DiffEditorPreview({
             content?.modified ??
             '',
         );
-        if (!content) setDiffError('Unable to load diff content.');
+        if (!content) setDiffError(t('diffUnableLoadContent'));
       })
       .catch((err) => {
         if (cancelled) return;
-        setDiffError(
-          err instanceof Error ? err.message : 'Failed to load diff',
-        );
+        setDiffError(err instanceof Error ? err.message : t('diffLoadFailed'));
       })
       .finally(() => {
         clearTimeout(safetyTimer);
@@ -1302,12 +1299,12 @@ function DiffEditorPreview({
                 diffMode === 'inline' &&
                   'bg-background text-foreground ring-1 ring-border-subtle',
               )}
-              aria-label="Inline diff"
+              aria-label={t('inlineDiffAria')}
               aria-pressed={diffMode === 'inline'}
               onClick={() => persistMode('inline')}
             >
               <IconTextAlignLeft2Outline18 className="size-3.5" />
-              {diffMode === 'inline' ? <span>Inline</span> : null}
+              {diffMode === 'inline' ? <span>{t('inline')}</span> : null}
             </button>
             <button
               type="button"
@@ -1316,12 +1313,12 @@ function DiffEditorPreview({
                 diffMode === 'split' &&
                   'bg-background text-foreground ring-1 ring-border-subtle',
               )}
-              aria-label="Split diff"
+              aria-label={t('splitDiffAria')}
               aria-pressed={diffMode === 'split'}
               onClick={() => persistMode('split')}
             >
               <IconSplitViewOutline18 className="size-3.5" />
-              {diffMode === 'split' ? <span>Split</span> : null}
+              {diffMode === 'split' ? <span>{t('split')}</span> : null}
             </button>
           </div>
         }
@@ -1338,12 +1335,12 @@ function DiffEditorPreview({
           <div className="flex size-full items-center justify-center text-muted-foreground text-xs">
             <div className="flex items-center gap-2">
               <Loader2Icon className="size-3.5 animate-spin" />
-              <span>Loading diff…</span>
+              <span>{t('loadingDiff')}</span>
             </div>
           </div>
         ) : diffError || !diffContent ? (
           <div className="flex size-full items-center justify-center text-error-foreground text-sm">
-            {diffError ?? 'Unable to load diff'}
+            {diffError ?? t('unableToLoadDiff')}
           </div>
         ) : (
           <DiffEditor
@@ -1542,10 +1539,11 @@ function FileEditorStatusBar({
   language: SourceLanguage;
   onLanguageChange: (language: SourceLanguage) => void;
 }) {
+  const { t } = useTranslation('filePreview');
   return (
     <div className="flex h-6 shrink-0 items-center justify-between border-border-subtle border-t bg-background pr-0.5 pl-2 text-muted-foreground text-xs">
       <span className="font-mono tabular-nums">
-        Ln {lineNumber}, Col {column}
+        {t('statusBar', { line: lineNumber, col: column })}
       </span>
       <SearchableSelect
         items={SOURCE_LANGUAGE_ITEMS}
@@ -1594,17 +1592,18 @@ function ZoomControls({
 }: {
   controller: ReturnType<typeof useZoomableViewport>;
 }) {
+  const { t } = useTranslation('filePreview');
   return (
     <>
       <div className="flex items-center px-1">
         <ToolbarTooltip
-          label="Fit image to view"
+          label={t('fitToView')}
           shortcut={HotkeyActions.CENTER_IMAGE}
         >
           <Button
             variant="ghost"
             size="icon-xs"
-            aria-label="Fit image to view"
+            aria-label={t('fitToView')}
             onClick={controller.fitToView}
           >
             <IconArrowsToCenterOutline18 className="size-4" />
@@ -1612,31 +1611,34 @@ function ZoomControls({
         </ToolbarTooltip>
       </div>
       <div className="flex items-center gap-0.5 px-1">
-        <ToolbarTooltip label="Zoom out" shortcut={HotkeyActions.ZOOM_OUT}>
+        <ToolbarTooltip label={t('zoomOut')} shortcut={HotkeyActions.ZOOM_OUT}>
           <Button
             variant="ghost"
             size="icon-xs"
-            aria-label="Zoom out"
+            aria-label={t('zoomOut')}
             onClick={controller.zoomOut}
           >
             <MinusIcon className="size-4" />
           </Button>
         </ToolbarTooltip>
-        <ToolbarTooltip label="Reset zoom" shortcut={HotkeyActions.ZOOM_RESET}>
+        <ToolbarTooltip
+          label={t('resetZoom')}
+          shortcut={HotkeyActions.ZOOM_RESET}
+        >
           <button
             type="button"
             className="min-w-10 cursor-pointer text-center text-muted-foreground text-xs hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-solid focus-visible:ring-inset"
-            aria-label="Reset zoom"
+            aria-label={t('resetZoom')}
             onClick={controller.resetZoom}
           >
             {Math.round(controller.scale * 100)}%
           </button>
         </ToolbarTooltip>
-        <ToolbarTooltip label="Zoom in" shortcut={HotkeyActions.ZOOM_IN}>
+        <ToolbarTooltip label={t('zoomIn')} shortcut={HotkeyActions.ZOOM_IN}>
           <Button
             variant="ghost"
             size="icon-xs"
-            aria-label="Zoom in"
+            aria-label={t('zoomIn')}
             onClick={controller.zoomIn}
           >
             <PlusIcon className="size-4" />
@@ -1658,6 +1660,7 @@ function ImagePreview({
   openExternalPath?: string;
   tabId: string;
 }) {
+  const { t } = useTranslation('filePreview');
   const [background, setBackground] =
     useState<ImagePreviewBackground>('default');
   const [customBackground, setCustomBackground] = useState('ffffff');
@@ -1687,27 +1690,27 @@ function ImagePreview({
                   <Button
                     variant="ghost"
                     size="icon-xs"
-                    aria-label="Image background config"
+                    aria-label={t('imageBackgroundConfig')}
                   >
                     <IconColorPaletteOutline18 className="size-4" />
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent align="end" className="w-48 gap-3 p-3">
                   <div className="font-medium text-foreground text-xs">
-                    Colors
+                    {t('colors')}
                   </div>
                   <div className="flex flex-col gap-1.5">
                     <span className="flex items-center gap-1 text-muted-foreground text-xs">
                       <IconTextBgColorOutline18 className="size-3" />
-                      Background
+                      {t('background')}
                     </span>
                     <Select<ImagePreviewBackground>
                       items={[
-                        { value: 'default', label: 'Default' },
-                        { value: 'light', label: 'Light' },
-                        { value: 'dark', label: 'Dark' },
-                        { value: 'checkerboard', label: 'Checkerboard' },
-                        { value: 'custom', label: 'Custom' },
+                        { value: 'default', label: t('bgDefault') },
+                        { value: 'light', label: t('bgLight') },
+                        { value: 'dark', label: t('bgDark') },
+                        { value: 'checkerboard', label: t('bgCheckerboard') },
+                        { value: 'custom', label: t('bgCustom') },
                       ]}
                       value={background}
                       onValueChange={(value) => setBackground(value)}
@@ -1752,7 +1755,7 @@ function ImagePreview({
           wrapperProps={{
             role: 'region',
             tabIndex: 0,
-            'aria-label': 'Image preview canvas',
+            'aria-label': t('imagePreviewCanvas'),
             'data-image-preview-canvas': 'true',
             onFocus: markFocused,
           }}
@@ -1760,10 +1763,8 @@ function ImagePreview({
           {imageError ? (
             <div className="flex flex-col items-center gap-2 text-muted-foreground">
               <TriangleAlertIcon className="size-8" />
-              <span className="text-sm">Unable to render this image.</span>
-              <span className="text-xs">
-                The file may be missing, corrupt, or unsupported.
-              </span>
+              <span className="text-sm">{t('imageRenderFailed')}</span>
+              <span className="text-xs">{t('imageMayBeMissing')}</span>
             </div>
           ) : (
             <img
@@ -1787,6 +1788,7 @@ function SvgPreview({
   preview: FilePreviewResult;
   tabId: string;
 }) {
+  const { t } = useTranslation('filePreview');
   const cacheKey = getPreviewCacheKey(
     preview.workspaceKey,
     preview.relativePath,
@@ -1988,13 +1990,13 @@ function SvgPreview({
               <>
                 <div className="h-5 w-px bg-border-subtle" />
                 <div className="flex items-center px-1">
-                  <ToolbarTooltip label="Preview config">
+                  <ToolbarTooltip label={t('previewConfig')}>
                     <Popover>
                       <PopoverTrigger>
                         <Button
                           variant="ghost"
                           size="icon-xs"
-                          aria-label="Preview config"
+                          aria-label={t('previewConfig')}
                         >
                           <IconColorPaletteOutline18 className="size-4" />
                         </Button>
