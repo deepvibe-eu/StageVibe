@@ -1,5 +1,6 @@
 import { IconCodeBranchOutline18 } from '@stagewise/icons';
 import { CheckIcon, XIcon } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import type { MountEntry } from '@shared/karton-contracts/ui';
 
 interface WorkspacePreviewSummaryProps {
@@ -11,6 +12,7 @@ export function WorkspacePreviewSummary({
   mount,
   name,
 }: WorkspacePreviewSummaryProps) {
+  const { t } = useTranslation('chat');
   const hasSkills = mount.skills.length > 0;
   const gitRef = mount.git?.branch ?? mount.git?.headSha?.slice(0, 7) ?? null;
 
@@ -43,7 +45,7 @@ export function WorkspacePreviewSummary({
       <div className="mt-2 flex flex-col gap-1 border-derived-subtle border-t pt-2">
         <div className="flex items-center gap-1.5">
           <span className="font-medium text-foreground text-xs">
-            Context files
+            {t('workspaceMention.contextFiles')}
           </span>
         </div>
         <div className="flex items-center gap-1.5">
@@ -68,7 +70,9 @@ export function WorkspacePreviewSummary({
       {hasSkills && (
         <div className="mt-2 flex flex-col gap-1 border-derived-subtle border-t pt-2">
           <div className="flex items-center gap-1.5">
-            <span className="font-medium text-foreground text-xs">Skills</span>
+            <span className="font-medium text-foreground text-xs">
+              {t('workspaceMention.skills')}
+            </span>
           </div>
           {mount.skills
             .slice()

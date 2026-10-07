@@ -940,7 +940,7 @@ export const ModelSelect = memo(function ModelSelect({
                       type="button"
                       variant="ghost"
                       size="icon-xs"
-                      aria-label="Open model settings"
+                      aria-label={t('modelSelect.openSettingsAria')}
                       className="shrink-0"
                       onClick={() =>
                         void openSettings({ section: 'models-providers' })
@@ -949,7 +949,9 @@ export const ModelSelect = memo(function ModelSelect({
                       <IconGear3Outline18 className="size-3.5" />
                     </Button>
                   </TooltipTrigger>
-                  <TooltipContent side="top">Model settings</TooltipContent>
+                  <TooltipContent side="top">
+                    {t('modelSelect.settings')}
+                  </TooltipContent>
                 </Tooltip>
               </div>
 
@@ -958,7 +960,7 @@ export const ModelSelect = memo(function ModelSelect({
                   {filteredPresets.length > 0 && (
                     <ComboboxGroup className="mt-0">
                       <ComboboxGroupLabel className="px-1.5 pb-1 font-normal text-sidebar-foreground text-xs">
-                        Presets
+                        {t('modelSelect.presets')}
                       </ComboboxGroupLabel>
                       {filteredPresets.map((preset) => (
                         <PresetItem
@@ -988,7 +990,7 @@ export const ModelSelect = memo(function ModelSelect({
 
                 {!hasFilteredResults && (
                   <div className="px-2 py-1.5 text-muted-foreground text-xs">
-                    No results
+                    {t('modelSelect.noResults')}
                   </div>
                 )}
               </ComboboxList>
@@ -1016,7 +1018,9 @@ export const ModelSelect = memo(function ModelSelect({
             }}
             initialFocus={false}
             finalFocus={false}
-            aria-label={`Model details for ${hoveredEntry.displayName}`}
+            aria-label={t('modelSelect.detailsFor', {
+              name: hoveredEntry.displayName,
+            })}
             onMouseEnter={cancelPendingClear}
             onMouseLeave={scheduleClear}
             className={cn(

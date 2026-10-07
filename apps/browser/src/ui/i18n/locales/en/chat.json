@@ -107,6 +107,27 @@
     "restarted": "Browser was restarted.",
     "openOriginal": "Open original URL in new tab"
   },
+  "modelSelect": {
+    "noResults": "No results",
+    "openSettingsAria": "Open model settings",
+    "settings": "Model settings",
+    "presets": "Presets",
+    "detailsFor": "Model details for {{name}}"
+  },
+  "elementAttachment": {
+    "scrollTo": "Scroll to element in tab",
+    "noLongerExists": "Element no longer exists in the DOM",
+    "checking": "Checking if element exists...",
+    "frameLocation": "Frame Location",
+    "withinFrame": "Located within frame (iframe, etc.)",
+    "frameTitle": "Frame Title",
+    "reactTree": "React Component Tree",
+    "relatedSources": "Related source files"
+  },
+  "workspaceMention": {
+    "contextFiles": "Context files",
+    "skills": "Skills"
+  },
   "errors": {
     "retry": "Retry",
     "configureOtherApiKeys": "Configure other API keys",

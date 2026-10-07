@@ -30,6 +30,7 @@ import type { ElementAttachmentAttrs } from '../types';
 import type { InlineNodeViewProps } from '../../shared/types';
 import { truncateLabel, InlineBadge, InlineBadgeWrapper } from '../../shared';
 import type { SelectedElement } from '@shared/selected-elements';
+import { useTranslation } from 'react-i18next';
 
 const displayedAttributes = [
   'id',
@@ -71,6 +72,7 @@ function ScreenshotThumbnail({
   src: string;
   className?: string;
 }) {
+  const { t } = useTranslation('ui');
   const [retry, setRetry] = useState(0);
   const [loaded, setLoaded] = useState(false);
   const timerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
@@ -101,7 +103,7 @@ function ScreenshotThumbnail({
       {!gaveUp && (
         <img
           src={cacheBustedSrc}
-          alt="Element screenshot"
+          alt={t('domBadge.elementScreenshot', { ns: 'ui' })}
           className={`absolute inset-0 size-full object-cover ${
             loaded ? '' : 'invisible'
           }`}
@@ -134,6 +136,7 @@ function ElementPreviewContent({
   effectiveTagName?: string;
   blobData: SwDomBlobData | null;
 }) {
+  const { t } = useTranslation(['chat', 'ui']);
   const tabs = useKartonState((s) => s.contentTabs.tabs);
   const switchTab = useKartonProcedure((p) => p.browser.switchTab);
   const scrollToElement = useKartonProcedure((p) => p.browser.scrollToElement);
@@ -311,10 +314,10 @@ function ElementPreviewContent({
           </TooltipTrigger>
           <TooltipContent>
             {isElementLocationValid
-              ? 'Scroll to element in tab'
+              ? t('elementAttachment.scrollTo')
               : elementExistenceChecked
-                ? 'Element no longer exists in the DOM'
-                : 'Checking if element exists...'}
+                ? t('elementAttachment.noLongerExists')
+                : t('elementAttachment.checking')}
           </TooltipContent>
         </Tooltip>
       )}
@@ -326,7 +329,7 @@ function ElementPreviewContent({
         {screenshotUrl && (
           <img
             src={screenshotUrl}
-            alt="Element screenshot"
+            alt={t('domBadge.elementScreenshot')}
             className="max-h-40 w-full rounded object-contain"
           />
         )}
@@ -334,7 +337,9 @@ function ElementPreviewContent({
         {/* Node type + size + inner text summary */}
         {tagLabel && (
           <div className="flex flex-col items-stretch justify-start">
-            <p className="font-medium text-foreground text-xs">Node type</p>
+            <p className="font-medium text-foreground text-xs">
+              {t('domBadge.nodeType', { ns: 'ui' })}
+            </p>
             <div className="w-full font-mono text-2xs text-muted-foreground leading-tight">
               {tagLabel}
             </div>
@@ -342,7 +347,9 @@ function ElementPreviewContent({
         )}
         {elementSize && (
           <div className="flex flex-col items-stretch justify-start">
-            <p className="font-medium text-foreground text-xs">Size</p>
+            <p className="font-medium text-foreground text-xs">
+              {t('domBadge.size', { ns: 'ui' })}
+            </p>
             <div className="w-full font-mono text-2xs text-muted-foreground leading-tight">
               {elementSize.width} × {elementSize.height}px
             </div>
@@ -350,7 +357,9 @@ function ElementPreviewContent({
         )}
         {innerTextPreview && (
           <div className="flex flex-col items-stretch justify-start">
-            <p className="font-medium text-foreground text-xs">Text</p>
+            <p className="font-medium text-foreground text-xs">
+              {t('domBadge.text', { ns: 'ui' })}
+            </p>
             <div className="line-clamp-3 w-full text-2xs text-muted-foreground leading-tight">
               {innerTextPreview}
             </div>
@@ -359,7 +368,9 @@ function ElementPreviewContent({
 
         {xpath && (
           <div className="flex flex-col items-stretch justify-start">
-            <p className="font-medium text-foreground text-xs">XPath</p>
+            <p className="font-medium text-foreground text-xs">
+              {t('domBadge.xpath', { ns: 'ui' })}
+            </p>
             <div className="w-full break-all font-mono text-2xs text-muted-foreground leading-tight">
               {xpath}
             </div>
@@ -367,7 +378,9 @@ function ElementPreviewContent({
         )}
         {pageUrl && !selectedElement && (
           <div className="flex flex-col items-stretch justify-start">
-            <p className="font-medium text-foreground text-xs">Page</p>
+            <p className="font-medium text-foreground text-xs">
+              {t('domBadge.page', { ns: 'ui' })}
+            </p>
             <div className="w-full break-all font-mono text-2xs text-muted-foreground leading-tight">
               {pageUrl}
             </div>
@@ -376,21 +389,23 @@ function ElementPreviewContent({
         {selectedElement?.frameLocation && (
           <div className="flex flex-col items-stretch justify-start">
             <p className="font-medium text-foreground text-xs">
-              Frame Location
+              {t('elementAttachment.frameLocation')}
             </p>
             <div className="w-full break-all font-mono text-2xs text-muted-foreground leading-tight">
               {selectedElement.frameLocation}
             </div>
             {!selectedElement.isMainFrame && (
               <p className="text-2xs text-muted-foreground italic leading-tight">
-                Located within frame (iframe, etc.)
+                {t('elementAttachment.withinFrame')}
               </p>
             )}
           </div>
         )}
         {selectedElement?.frameTitle && (
           <div className="flex flex-col items-stretch justify-start">
-            <p className="font-medium text-foreground text-xs">Frame Title</p>
+            <p className="font-medium text-foreground text-xs">
+              {t('elementAttachment.frameTitle')}
+            </p>
             <div className="w-full break-all font-mono text-2xs text-muted-foreground leading-tight">
               {selectedElement.frameTitle}
             </div>
@@ -434,7 +449,7 @@ function ElementPreviewContent({
           flattenedReactComponentTree.length > 0 && (
             <div className="flex flex-col items-stretch justify-start gap-0.5 leading-none">
               <p className="font-medium text-foreground text-xs">
-                React Component Tree
+                {t('elementAttachment.reactTree')}
               </p>
               <div>
                 {flattenedReactComponentTree.map((component, index) => {
@@ -464,7 +479,7 @@ function ElementPreviewContent({
         {effectiveCodeMetadata && effectiveCodeMetadata.length > 0 && (
           <div className="flex flex-col items-stretch justify-start gap-0.5">
             <p className="w-full font-medium text-foreground text-xs">
-              Related source files
+              {t('elementAttachment.relatedSources')}
             </p>
             <div className="flex w-full flex-col items-stretch gap-2">
               {effectiveCodeMetadata.slice(0, 10).map((metadata) => {
