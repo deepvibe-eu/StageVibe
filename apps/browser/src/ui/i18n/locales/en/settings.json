@@ -413,6 +413,99 @@
       "createPreset": "Create preset"
     }
   },
+  "customProviders": {
+    "title": "Custom Providers",
+    "subtitle": "Add custom API endpoints for self-hosted or third-party LLM services.",
+    "saveError": "Failed to save provider",
+    "apiSpecGroups": { "generic": "Generic", "cloud": "Cloud" },
+    "apiSpec": {
+      "openaiChatCompletions": "OpenAI (Chat Completions)",
+      "openaiResponses": "OpenAI (Responses)",
+      "anthropic": "Anthropic",
+      "google": "Google",
+      "azure": "Azure OpenAI",
+      "amazonBedrock": "Amazon Bedrock",
+      "googleVertex": "Google Vertex AI"
+    },
+    "awsAuth": {
+      "accessKeys": "Access Keys",
+      "profile": "Named Profile",
+      "defaultChain": "Default Credential Chain"
+    },
+    "bedrock": {
+      "region": "AWS Region",
+      "optionalOverride": "(optional override)",
+      "regionPlaceholder": "us-east-1",
+      "fromProfileOrEnv": "from profile / AWS_REGION",
+      "detectedRegion": "Detected region:",
+      "fromAwsRegion": " (from AWS_REGION)",
+      "authMethod": "Authentication Method",
+      "accessKeyId": "Access Key ID",
+      "secretAccessKey": "Secret Access Key",
+      "leaveBlank": "Leave blank to keep current key",
+      "enterSecret": "Enter secret access key...",
+      "profile": "AWS Profile",
+      "selectProfile": "Select a profile...",
+      "loadingProfiles": "Loading profiles…",
+      "defaultProfile": "default",
+      "notFound": "{{name}} (not found)",
+      "noProfiles": "No profiles found in ~/.aws/config or ~/.aws/credentials. Type a name manually if needed.",
+      "ssoHintPrefix": "SSO profiles require an active session. If requests fail with an expired-token error, run",
+      "ssoHintCommand": "aws sso login --profile <name>",
+      "ssoHintSuffix": "in your terminal.",
+      "defaultChainHint": "Credentials will be resolved from the standard AWS provider chain: environment variables, shared credentials file, ECS/EC2 instance metadata, and SSO.",
+      "loadProfilesFailed": "Failed to load AWS profiles"
+    },
+    "fields": {
+      "resourceName": "Resource Name",
+      "orUseBaseUrl": "(or use Base URL)",
+      "baseUrl": "Base URL",
+      "overridesResourceName": "(overrides Resource Name)",
+      "apiVersion": "API Version",
+      "apiKey": "API Key",
+      "optional": "(optional)",
+      "projectId": "Project ID",
+      "location": "Location",
+      "serviceAccount": "Service Account Credentials (JSON)",
+      "enterApiKey": "Enter API key...",
+      "keepCredentials": "Leave blank to keep current credentials"
+    },
+    "form": {
+      "name": "Name",
+      "namePlaceholder": "My Azure OpenAI",
+      "providerType": "Provider Type",
+      "credentialsReentry": "Changing provider types clears the existing credentials. Enter new credentials for this provider before saving.",
+      "modelIdMapping": "Model ID Mapping",
+      "optional": "(optional)",
+      "suggestedMapping": "Suggested mapping",
+      "suggestedMappingTooltip": "Map the built-in Claude models to the matching Bedrock cross-region inference profiles for your region. Turn off to edit the mapping manually.",
+      "mappingHint": "Map built-in model IDs to the IDs this endpoint expects, e.g. when the provider uses different naming.",
+      "invalidJson": "Invalid JSON",
+      "saveChanges": "Save Changes",
+      "addProvider": "Add Provider",
+      "cancel": "Cancel"
+    },
+    "dialog": {
+      "editTitle": "Edit Provider",
+      "addTitle": "Add Custom Provider",
+      "description": "Configure a custom API endpoint for LLM services."
+    },
+    "card": {
+      "profileMode": "profile:{{name}}",
+      "defaultChain": "default chain",
+      "accessKeys": "access keys",
+      "fromProfile": "from profile",
+      "fromEnvironment": "from environment",
+      "noProject": "no project",
+      "notConfigured": "not configured",
+      "noUrl": "No URL set"
+    },
+    "list": {
+      "empty": "No custom providers configured yet.",
+      "addProvider": "Add Provider",
+      "deleteConfirm": "The following custom models use this provider and will stop working:\n\n{{names}}\n\nDelete anyway?"
+    }
+  },
   "personalization": {
     "title": "Personalization",
     "appearance": {
