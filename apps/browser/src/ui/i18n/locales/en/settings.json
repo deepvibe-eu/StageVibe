@@ -246,6 +246,21 @@
       "description": "Manage your privacy and data sharing preferences."
     }
   },
+  "history": {
+    "title": "History",
+    "searchPlaceholder": "Search history",
+    "untitled": "Untitled",
+    "copyLink": "Copy link",
+    "copied": "Copied!",
+    "pageCount_one": "{{count}} page",
+    "pageCount_other": "{{count}} pages",
+    "loadFailed": "Failed to load history",
+    "loadMoreFailed": "Failed to load more history",
+    "techDetails": "Technical details (dev mode)",
+    "retry": "Retry",
+    "noMatch": "No history found matching your search",
+    "empty": "No history yet"
+  },
   "personalization": {
     "title": "Personalization",
     "appearance": {

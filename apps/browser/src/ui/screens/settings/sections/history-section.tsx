@@ -17,6 +17,8 @@ import type {
   FaviconBitmapResult,
 } from '@shared/karton-contracts/pages-api/types';
 import { List } from 'react-window';
+import { useTranslation } from 'react-i18next';
+import i18n from '@ui/i18n';
 
 // =============================================================================
 // Constants
@@ -62,7 +64,7 @@ type Row = DateHeaderRow | OriginGroupHeaderRow | EntryRow;
 // =============================================================================
 
 function formatDate(date: Date): string {
-  return date.toLocaleDateString('en-US', {
+  return date.toLocaleDateString(i18n.resolvedLanguage ?? undefined, {
     weekday: 'long',
     year: 'numeric',
     month: 'long',
@@ -139,7 +141,7 @@ function historyToRows(history: HistoryResult[]): Row[] {
             type: 'entry',
             id: e.visitId,
             time: formatTime(e.visitTime),
-            title: e.title || 'Untitled',
+            title: e.title || i18n.t('settings:history.untitled'),
             url: e.url,
             faviconUrl: e.faviconUrl,
             groupId,
@@ -151,7 +153,7 @@ function historyToRows(history: HistoryResult[]): Row[] {
           type: 'entry',
           id: e.visitId,
           time: formatTime(e.visitTime),
-          title: e.title || 'Untitled',
+          title: e.title || i18n.t('settings:history.untitled'),
           url: e.url,
           faviconUrl: e.faviconUrl,
           groupId: null,
@@ -254,16 +256,19 @@ function RowComponent({
     role: 'listitem';
   };
 } & RowProps) {
-  const [copyTooltipText, setCopyTooltipText] = useState('Copy link');
+  const { t } = useTranslation('settings');
+  const [copied, setCopied] = useState(false);
 
   if (index === 0) {
     return (
       <div style={style} className="flex items-start pb-8">
         <div className="flex w-full items-center gap-24">
-          <h1 className="font-semibold text-foreground text-xl">History</h1>
+          <h1 className="font-semibold text-foreground text-xl">
+            {t('history.title')}
+          </h1>
           <Input
             type="text"
-            placeholder="Search history"
+            placeholder={t('history.searchPlaceholder')}
             value={searchText}
             onValueChange={onSearchTextChange}
           />
@@ -302,7 +307,7 @@ function RowComponent({
             {row.origin}
           </span>
           <span className="text-muted-foreground text-xs">
-            {row.entryCount} {row.entryCount === 1 ? 'page' : 'pages'}
+            {t('history.pageCount', { count: row.entryCount })}
           </span>
         </div>
       </div>
@@ -312,8 +317,8 @@ function RowComponent({
   const handleCopyUrl = async (e: React.MouseEvent) => {
     e.stopPropagation();
     await navigator.clipboard.writeText(row.url);
-    setCopyTooltipText('Copied!');
-    setTimeout(() => setCopyTooltipText('Copy link'), 1500);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1500);
   };
 
   return (
@@ -343,7 +348,9 @@ function RowComponent({
               <LinkIcon className="size-4" />
             </Button>
           </TooltipTrigger>
-          <TooltipContent>{copyTooltipText}</TooltipContent>
+          <TooltipContent>
+            {copied ? t('history.copied') : t('history.copyLink')}
+          </TooltipContent>
         </Tooltip>
       </div>
     </div>
@@ -355,6 +362,7 @@ function RowComponent({
 // =============================================================================
 
 export function HistorySection() {
+  const { t } = useTranslation('settings');
   const [searchText, setSearchText] = useState('');
   const [debouncedSearchText, setDebouncedSearchText] = useState('');
   const [history, setHistory] = useState<HistoryResult[]>([]);
@@ -475,7 +483,7 @@ export function HistorySection() {
       } catch (err) {
         if (!cancelled) {
           setError(
-            err instanceof Error ? err : new Error('Failed to load history'),
+            err instanceof Error ? err : new Error(t('history.loadFailed')),
           );
           setIsLoading(false);
         }
@@ -486,7 +494,7 @@ export function HistorySection() {
     return () => {
       cancelled = true;
     };
-  }, [debouncedSearchText, fetchFavicons]);
+  }, [debouncedSearchText, fetchFavicons, t]);
 
   // Load more history (infinite scroll)
   const loadMoreHistory = useCallback(async () => {
@@ -617,7 +625,7 @@ export function HistorySection() {
               {import.meta.env.DEV && error.stack && (
                 <details className="mt-4 text-left">
                   <summary className="cursor-pointer text-muted-foreground text-xs">
-                    Technical details (dev mode)
+                    {t('history.techDetails')}
                   </summary>
                   <pre className="mt-2 max-h-48 overflow-auto rounded bg-surface-1 p-2 text-muted-foreground text-xs">
                     {error.stack}
@@ -647,21 +655,19 @@ export function HistorySection() {
                   setError(
                     err instanceof Error
                       ? err
-                      : new Error('Failed to load history'),
+                      : new Error(t('history.loadFailed')),
                   );
                   setIsLoading(false);
                 }
               }}
             >
-              Retry
+              {t('history.retry')}
             </Button>
           </div>
         ) : rows.length === 0 ? (
           <div className="flex h-full items-center justify-center">
             <p className="text-muted-foreground text-sm">
-              {searchText
-                ? 'No history found matching your search'
-                : 'No history yet'}
+              {searchText ? t('history.noMatch') : t('history.empty')}
             </p>
           </div>
         ) : containerSize.height > 0 ? (
