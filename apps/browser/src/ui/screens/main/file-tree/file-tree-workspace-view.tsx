@@ -51,6 +51,7 @@ import {
   updateFileTreeSelection,
 } from './file-tree-selection';
 import { type FileTreeRow, useFileTreeEntries } from './use-file-tree-entries';
+import { useTranslation } from 'react-i18next';
 
 const getParentDirectory = (relativePath: string): string => {
   const slashIndex = relativePath.lastIndexOf('/');
@@ -143,6 +144,7 @@ export function FileTreeWorkspaceView({
   workspaceKey,
   onPreviewTargetChange,
 }: FileTreeWorkspaceViewProps) {
+  const { t } = useTranslation('fileTree');
   const setDirectoryExpanded = useKartonProcedure(
     (p) => p.fileTree.setDirectoryExpanded,
   );
@@ -435,8 +437,8 @@ export function FileTreeWorkspaceView({
         if (!result.success) {
           toast({
             id: `file-tree-rename-error-${Date.now()}`,
-            title: 'Rename failed',
-            message: result.error ?? 'Could not rename the item.',
+            title: t('toast.renameFailed'),
+            message: result.error ?? t('toast.renameError'),
             type: 'error',
             actions: [],
           });
@@ -483,8 +485,8 @@ export function FileTreeWorkspaceView({
         if (!result.success || !result.relativePath) {
           toast({
             id: `file-tree-create-error-${Date.now()}`,
-            title: 'New file failed',
-            message: result.error ?? 'Could not create a new file.',
+            title: t('toast.newFileFailed'),
+            message: result.error ?? t('toast.newFileError'),
             type: 'error',
             actions: [],
           });
@@ -515,8 +517,8 @@ export function FileTreeWorkspaceView({
         if (!result.success || !result.relativePath) {
           toast({
             id: `file-tree-create-folder-error-${Date.now()}`,
-            title: 'New folder failed',
-            message: result.error ?? 'Could not create a new folder.',
+            title: t('toast.newFolderFailed'),
+            message: result.error ?? t('toast.newFolderError'),
             type: 'error',
             actions: [],
           });
@@ -582,8 +584,8 @@ export function FileTreeWorkspaceView({
         if (failed) {
           toast({
             id: `file-tree-paste-error-${Date.now()}`,
-            title: 'Paste failed',
-            message: failed.error ?? 'Could not paste the item.',
+            title: t('toast.pasteFailed'),
+            message: failed.error ?? t('toast.pasteError'),
             type: 'error',
             actions: [],
           });
@@ -625,8 +627,8 @@ export function FileTreeWorkspaceView({
         if (failed) {
           toast({
             id: `file-tree-move-error-${Date.now()}`,
-            title: 'Move failed',
-            message: failed.error ?? 'Could not move the item.',
+            title: t('toast.moveFailed'),
+            message: failed.error ?? t('toast.moveError'),
             type: 'error',
             actions: [],
           });
@@ -648,8 +650,8 @@ export function FileTreeWorkspaceView({
       const actionPaths = getActionPaths(relativePath);
       const confirmed = window.confirm(
         actionPaths.length === 1
-          ? `Delete ${actionPaths[0]}?`
-          : `Delete ${actionPaths.length} items?`,
+          ? t('confirmDeleteFile', { path: actionPaths[0] })
+          : t('confirmDeleteItems', { count: actionPaths.length }),
       );
       if (!confirmed) return;
       void Promise.all(
@@ -659,8 +661,8 @@ export function FileTreeWorkspaceView({
         if (failed) {
           toast({
             id: `file-tree-delete-error-${Date.now()}`,
-            title: 'Delete failed',
-            message: failed.error ?? 'Could not delete the item.',
+            title: t('toast.deleteFailed'),
+            message: failed.error ?? t('toast.deleteError'),
             type: 'error',
             actions: [],
           });
@@ -1025,7 +1027,7 @@ export function FileTreeWorkspaceView({
   if (!workspaceKey) {
     return (
       <div className="flex size-full items-center justify-center px-3 text-center text-muted-foreground text-xs">
-        No mounted workspaces.
+        {t('noWorkspaces')}
       </div>
     );
   }
@@ -1167,7 +1169,9 @@ export function FileTreeWorkspaceView({
               onClick={() => handleCreateFile(contextCreateDirectory)}
             >
               <FilePlusIcon className="size-3.5 shrink-0" />
-              <span className="min-w-0 flex-1 truncate">New File</span>
+              <span className="min-w-0 flex-1 truncate">
+                {t('menu.newFile')}
+              </span>
             </MenuBase.Item>
             <MenuBase.Item
               className={contextMenuItemClassName}
@@ -1175,7 +1179,9 @@ export function FileTreeWorkspaceView({
               onClick={() => handleCreateFolder(contextCreateDirectory)}
             >
               <FolderPlusIcon className="size-3.5 shrink-0" />
-              <span className="min-w-0 flex-1 truncate">New Folder</span>
+              <span className="min-w-0 flex-1 truncate">
+                {t('menu.newFolder')}
+              </span>
             </MenuBase.Item>
             <MenuBase.Separator className="my-0.5 h-px bg-border-subtle" />
             <MenuBase.Item
@@ -1188,7 +1194,9 @@ export function FileTreeWorkspaceView({
               }}
             >
               <PencilIcon className="size-3.5 shrink-0" />
-              <span className="min-w-0 flex-1 truncate">Rename</span>
+              <span className="min-w-0 flex-1 truncate">
+                {t('menu.rename')}
+              </span>
               <ShortcutCombo
                 value="F2"
                 size="xs"
@@ -1204,7 +1212,7 @@ export function FileTreeWorkspaceView({
               }}
             >
               <CopyIcon className="size-3.5 shrink-0" />
-              <span className="min-w-0 flex-1 truncate">Copy</span>
+              <span className="min-w-0 flex-1 truncate">{t('menu.copy')}</span>
               <ShortcutCombo
                 value={contextMenuShortcut('C')}
                 size="xs"
@@ -1220,7 +1228,7 @@ export function FileTreeWorkspaceView({
               }}
             >
               <ScissorsIcon className="size-3.5 shrink-0" />
-              <span className="min-w-0 flex-1 truncate">Cut</span>
+              <span className="min-w-0 flex-1 truncate">{t('menu.cut')}</span>
               <ShortcutCombo
                 value={contextMenuShortcut('X')}
                 size="xs"
@@ -1234,7 +1242,7 @@ export function FileTreeWorkspaceView({
               onClick={() => handlePaste(contextPasteDirectory)}
             >
               <ClipboardPasteIcon className="size-3.5 shrink-0" />
-              <span className="min-w-0 flex-1 truncate">Paste</span>
+              <span className="min-w-0 flex-1 truncate">{t('menu.paste')}</span>
               <ShortcutCombo
                 value={contextMenuShortcut('V')}
                 size="xs"
@@ -1250,7 +1258,9 @@ export function FileTreeWorkspaceView({
               }}
             >
               <Trash2Icon className="size-3.5 shrink-0" />
-              <span className="min-w-0 flex-1 truncate">Delete</span>
+              <span className="min-w-0 flex-1 truncate">
+                {t('menu.delete')}
+              </span>
               <ShortcutCombo
                 value="Delete"
                 size="xs"
@@ -1267,7 +1277,9 @@ export function FileTreeWorkspaceView({
               }}
             >
               <ClipboardIcon className="size-3.5 shrink-0" />
-              <span className="min-w-0 flex-1 truncate">Copy path</span>
+              <span className="min-w-0 flex-1 truncate">
+                {t('menu.copyPath')}
+              </span>
             </MenuBase.Item>
             <MenuBase.Separator className="my-0.5 h-px bg-border-subtle" />
             <MenuSubmenu>
@@ -1277,7 +1289,9 @@ export function FileTreeWorkspaceView({
                 disabled={!contextAbsolutePath}
               >
                 <ExternalLinkIcon className="size-3.5 shrink-0" />
-                <span className="min-w-0 flex-1 truncate">Open in…</span>
+                <span className="min-w-0 flex-1 truncate">
+                  {t('menu.openIn')}
+                </span>
               </MenuSubmenuTrigger>
               {contextAbsolutePath && (
                 <MenuSubmenuContent
@@ -1349,6 +1363,7 @@ export const FileTreeRowView = memo(function FileTreeRowView({
   onDragTargetChange,
   onLoadMore,
 }: FileTreeRowViewProps) {
+  const { t } = useTranslation('fileTree');
   if (row.type === 'loading') {
     return (
       <div
@@ -1356,7 +1371,7 @@ export const FileTreeRowView = memo(function FileTreeRowView({
         style={{ paddingLeft: 8 + row.depth * 14 }}
       >
         <Loader2Icon className="size-3 animate-spin" />
-        <span>Loading…</span>
+        <span>{t('loading')}</span>
       </div>
     );
   }
@@ -1381,7 +1396,7 @@ export const FileTreeRowView = memo(function FileTreeRowView({
         style={{ marginLeft: 4 + row.depth * 14 }}
         onClick={() => onLoadMore(row.directoryPath)}
       >
-        Load more
+        {t('loadMore')}
       </Button>
     );
   }

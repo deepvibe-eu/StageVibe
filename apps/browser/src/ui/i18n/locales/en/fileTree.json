@@ -1,0 +1,37 @@
+{
+  "hideTree": "Hide file tree",
+  "files": "Files",
+  "changedFiles": "Changed files",
+  "searchInContent": "Search in content",
+  "searchFiles": "Search for files",
+  "noWorkspaces": "No mounted workspaces.",
+  "loading": "Loading…",
+  "loadMore": "Load more",
+  "confirmDeleteFile": "Delete {{path}}?",
+  "confirmDeleteItems": "Delete {{count}} items?",
+  "toast": {
+    "renameFailed": "Rename failed",
+    "renameError": "Could not rename the item.",
+    "newFileFailed": "New file failed",
+    "newFileError": "Could not create a new file.",
+    "newFolderFailed": "New folder failed",
+    "newFolderError": "Could not create a new folder.",
+    "pasteFailed": "Paste failed",
+    "pasteError": "Could not paste the item.",
+    "moveFailed": "Move failed",
+    "moveError": "Could not move the item.",
+    "deleteFailed": "Delete failed",
+    "deleteError": "Could not delete the item."
+  },
+  "menu": {
+    "newFile": "New File",
+    "newFolder": "New Folder",
+    "rename": "Rename",
+    "copy": "Copy",
+    "cut": "Cut",
+    "paste": "Paste",
+    "delete": "Delete",
+    "copyPath": "Copy path",
+    "openIn": "Open in…"
+  }
+}

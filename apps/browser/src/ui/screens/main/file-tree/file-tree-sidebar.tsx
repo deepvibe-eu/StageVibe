@@ -34,8 +34,10 @@ import {
 } from './file-tree-utils';
 import { Tutorial } from '@ui/components/tutorial';
 import { OpenInIdeMenu } from '@ui/components/open-in-ide-menu-items';
+import { useTranslation } from 'react-i18next';
 
 export function FileTreeSidebar() {
+  const { t } = useTranslation('fileTree');
   const [openAgent] = useOpenAgent();
   const workspaceMounts = useKartonState(
     useComparingSelector(
@@ -244,7 +246,7 @@ export function FileTreeSidebar() {
               className="size-7 shrink-0"
               variant="ghost"
               size="icon-sm"
-              aria-label="Hide file tree"
+              aria-label={t('hideTree')}
               onClick={() => setVisible(false)}
             >
               <XIcon className="size-4" />
@@ -252,7 +254,7 @@ export function FileTreeSidebar() {
           </TooltipTrigger>
           <TooltipContent>
             <span className="flex items-center gap-1.5">
-              <span>Hide file tree</span>
+              <span>{t('hideTree')}</span>
               <HotkeyCombo action={HotkeyActions.TOGGLE_FILE_TREE} size="xs" />
             </span>
           </TooltipContent>
@@ -279,12 +281,12 @@ export function FileTreeSidebar() {
                   onClick={() => setViewMode('files')}
                 >
                   <IconFolder5Outline18 className="size-3.5" />
-                  {viewMode === 'files' && <span>Files</span>}
+                  {viewMode === 'files' && <span>{t('files')}</span>}
                 </button>
               </TooltipTrigger>
               <TooltipContent>
                 <span className="flex items-center gap-1.5">
-                  <span>Files</span>
+                  <span>{t('files')}</span>
                   <HotkeyCombo
                     action={HotkeyActions.TOGGLE_FILE_TREE_FILES}
                     size="xs"
@@ -317,7 +319,7 @@ export function FileTreeSidebar() {
                 </TooltipTrigger>
                 <TooltipContent>
                   <span className="flex items-center gap-1.5">
-                    <span>Changed files</span>
+                    <span>{t('changedFiles')}</span>
                     <HotkeyCombo
                       action={HotkeyActions.TOGGLE_FILE_TREE_DIFF}
                       size="xs"
@@ -334,7 +336,7 @@ export function FileTreeSidebar() {
                   className="size-7 shrink-0"
                   variant="ghost"
                   size="icon-sm"
-                  aria-label="Search in content"
+                  aria-label={t('searchInContent')}
                   onClick={() => openFileSearch(true)}
                 >
                   <IconFileSearchOutline18 className="size-4" />
@@ -342,7 +344,7 @@ export function FileTreeSidebar() {
               </TooltipTrigger>
               <TooltipContent>
                 <span className="flex items-center gap-1.5">
-                  <span>Search in content</span>
+                  <span>{t('searchInContent')}</span>
                   <HotkeyCombo
                     action={HotkeyActions.OPEN_CONTENT_FILE_SEARCH}
                     size="xs"
@@ -356,7 +358,7 @@ export function FileTreeSidebar() {
                   className="size-7 shrink-0"
                   variant="ghost"
                   size="icon-sm"
-                  aria-label="Search files"
+                  aria-label={t('searchFiles')}
                   onClick={() => openFileSearch(false)}
                 >
                   <IconFolderSearchOutline18 className="size-4" />
@@ -364,7 +366,7 @@ export function FileTreeSidebar() {
               </TooltipTrigger>
               <TooltipContent>
                 <span className="flex items-center gap-1.5">
-                  <span>Search for files</span>
+                  <span>{t('searchFiles')}</span>
                   <HotkeyCombo
                     action={HotkeyActions.OPEN_FILE_SEARCH}
                     size="xs"

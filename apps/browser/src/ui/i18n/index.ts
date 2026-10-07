@@ -7,6 +7,7 @@ import enChat from './locales/en/chat.json';
 import enSidebar from './locales/en/sidebar.json';
 import enTools from './locales/en/tools.json';
 import enContent from './locales/en/content.json';
+import enFileTree from './locales/en/fileTree.json';
 import deCommon from './locales/de/common.json';
 import deSettings from './locales/de/settings.json';
 import deChat from './locales/de/chat.json';
@@ -29,6 +30,7 @@ export const NAMESPACES = [
   'sidebar',
   'tools',
   'content',
+  'fileTree',
 ] as const;
 
 void i18n
@@ -43,6 +45,7 @@ void i18n
         sidebar: enSidebar,
         tools: enTools,
         content: enContent,
+        fileTree: enFileTree,
       },
       de: {
         common: deCommon,
