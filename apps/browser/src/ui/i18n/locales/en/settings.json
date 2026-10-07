@@ -27,6 +27,27 @@
       "default": "Loud"
     }
   },
+  "archived": {
+    "title": "Archived chats",
+    "description": "Archived agents are stopped and hidden from your chat list.",
+    "searchAria": "Search archived chats",
+    "searchPlaceholder": "Search archived chats",
+    "loading": "Loading archived chats",
+    "loadFailed": "Failed to load archived chats.",
+    "loadFailedRetry": "Couldn’t load archived chats. Please try again.",
+    "noMatch": "No matching archived chats.",
+    "empty": "Chats you archive will appear here.",
+    "untitled": "Untitled chat",
+    "deleteAria": "Permanently delete {{title}}",
+    "unarchive": "Unarchive",
+    "showMore": "Show more",
+    "deleteFailed": "Failed to permanently delete the chat.",
+    "unarchiveFailed": "Failed to unarchive the chat.",
+    "deleteDialogTitle": "Permanently delete chat?",
+    "deleteDialogDescription": "This deletes the chat history and attachments. This action cannot be undone.",
+    "deletePermanently": "Delete permanently",
+    "cancel": "Cancel"
+  },
   "personalization": {
     "title": "Personalization",
     "appearance": {

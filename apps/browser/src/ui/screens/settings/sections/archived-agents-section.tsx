@@ -15,10 +15,12 @@ import { useKartonProcedure } from '@ui/hooks/use-karton';
 import { getBaseName } from '@shared/path-utils';
 import { FolderIcon, Loader2Icon, SearchIcon, Trash2Icon } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const ARCHIVED_PAGE_SIZE = 25;
 
 export function ArchivedAgentsSection() {
+  const { t } = useTranslation('settings');
   const getArchivedAgents = useKartonProcedure(
     (p) => p.agents.getAgentsHistoryList,
   );
@@ -60,7 +62,7 @@ export function ArchivedAgentsSection() {
       } catch (cause) {
         if (cancelled) return;
         console.error('Failed to load archived chats:', cause);
-        setError('Failed to load archived chats.');
+        setError(t('archived.loadFailed'));
       } finally {
         if (!cancelled) setLoading(false);
       }
@@ -70,7 +72,7 @@ export function ArchivedAgentsSection() {
     return () => {
       cancelled = true;
     };
-  }, [getArchivedAgents, limit, query, reloadToken]);
+  }, [getArchivedAgents, limit, query, reloadToken, t]);
 
   async function runEntryMutation(
     id: string,
@@ -100,7 +102,7 @@ export function ArchivedAgentsSection() {
     await runEntryMutation(
       deleteTargetId,
       () => deleteAgent(deleteTargetId),
-      'Failed to permanently delete the chat.',
+      t('archived.deleteFailed'),
     );
   }
 
@@ -110,17 +112,17 @@ export function ArchivedAgentsSection() {
         <div className="mx-auto max-w-4xl space-y-6">
           <div className="space-y-1">
             <h1 className="font-semibold text-foreground text-xl">
-              Archived chats
+              {t('archived.title')}
             </h1>
             <p className="text-muted-foreground text-sm">
-              Archived agents are stopped and hidden from your chat list.
+              {t('archived.description')}
             </p>
           </div>
 
           <div className="relative">
             <Input
-              aria-label="Search archived chats"
-              placeholder="Search archived chats"
+              aria-label={t('archived.searchAria')}
+              placeholder={t('archived.searchPlaceholder')}
               value={searchQuery}
               onValueChange={(value) => {
                 setSearchQuery(value);
@@ -142,16 +144,16 @@ export function ArchivedAgentsSection() {
             {loading && entries.length === 0 ? (
               <div className="flex min-h-40 items-center justify-center gap-2 text-muted-foreground text-sm">
                 <Loader2Icon className="size-5 animate-spin" />
-                <span>Loading archived chats</span>
+                <span>{t('archived.loading')}</span>
               </div>
             ) : entries.length === 0 && !hasMore ? (
               <div className="flex min-h-40 items-center justify-center px-6 text-center text-muted-foreground text-sm">
                 <p>
                   {error
-                    ? 'Couldn’t load archived chats. Please try again.'
+                    ? t('archived.loadFailedRetry')
                     : query
-                      ? 'No matching archived chats.'
-                      : 'Chats you archive will appear here.'}
+                      ? t('archived.noMatch')
+                      : t('archived.empty')}
                 </p>
               </div>
             ) : (
@@ -171,7 +173,7 @@ export function ArchivedAgentsSection() {
                     >
                       <div className="min-w-0 flex-1">
                         <p className="truncate font-medium text-foreground text-sm">
-                          {entry.title || 'Untitled chat'}
+                          {entry.title || t('archived.untitled')}
                         </p>
                         <div className="mt-0.5 flex min-w-0 items-center gap-2 text-muted-foreground text-xs">
                           <span>{archivedAt}</span>
@@ -192,7 +194,9 @@ export function ArchivedAgentsSection() {
                       <Button
                         variant="ghost"
                         size="icon-xs"
-                        aria-label={`Permanently delete ${entry.title || 'Untitled chat'}`}
+                        aria-label={t('archived.deleteAria', {
+                          title: entry.title || t('archived.untitled'),
+                        })}
                         disabled={pendingId !== null}
                         onClick={() => setDeleteTargetId(entry.id)}
                       >
@@ -206,14 +210,14 @@ export function ArchivedAgentsSection() {
                           void runEntryMutation(
                             entry.id,
                             () => unarchiveAgent(entry.id),
-                            'Failed to unarchive the chat.',
+                            t('archived.unarchiveFailed'),
                           )
                         }
                       >
                         {pendingId === entry.id ? (
                           <Loader2Icon className="size-3.5 animate-spin" />
                         ) : null}
-                        Unarchive
+                        {t('archived.unarchive')}
                       </Button>
                     </div>
                   );
@@ -228,7 +232,7 @@ export function ArchivedAgentsSection() {
                         setLimit((current) => current + ARCHIVED_PAGE_SIZE)
                       }
                     >
-                      Show more
+                      {t('archived.showMore')}
                     </Button>
                   </div>
                 ) : null}
@@ -247,22 +251,21 @@ export function ArchivedAgentsSection() {
         <DialogContent>
           <DialogClose />
           <DialogHeader>
-            <DialogTitle>Permanently delete chat?</DialogTitle>
+            <DialogTitle>{t('archived.deleteDialogTitle')}</DialogTitle>
             <DialogDescription>
-              This deletes the chat history and attachments. This action cannot
-              be undone.
+              {t('archived.deleteDialogDescription')}
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
             <Button variant="destructive" size="sm" onClick={handleDelete}>
-              Delete permanently
+              {t('archived.deletePermanently')}
             </Button>
             <Button
               variant="ghost"
               size="sm"
               onClick={() => setDeleteTargetId(null)}
             >
-              Cancel
+              {t('archived.cancel')}
             </Button>
           </DialogFooter>
         </DialogContent>
