@@ -10,6 +10,7 @@ import {
 } from '@stagewise/stage-ui/components/dialog';
 import { Loader2Icon } from 'lucide-react';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import type { FileTabUnsavedEditEntry } from '../../file-tree/file-tab-unsaved-edits';
 
 type UnsavedFileCloseDialogProps = {
@@ -25,6 +26,7 @@ export function UnsavedFileCloseDialog({
   onCancelWithoutSave,
   onSaveAndClose,
 }: UnsavedFileCloseDialogProps) {
+  const { t } = useTranslation('content');
   const [isSaving, setIsSaving] = useState(false);
 
   return (
@@ -35,10 +37,10 @@ export function UnsavedFileCloseDialog({
       <DialogContent>
         {!isSaving && <DialogClose />}
         <DialogHeader>
-          <DialogTitle>Unsaved file edits</DialogTitle>
+          <DialogTitle>{t('unsavedClose.title')}</DialogTitle>
           <DialogDescription>
             {entry
-              ? `${entry.relativePath} has unsaved edits. What should happen before closing it?`
+              ? t('unsavedClose.description', { path: entry.relativePath })
               : ''}
           </DialogDescription>
         </DialogHeader>
@@ -55,7 +57,7 @@ export function UnsavedFileCloseDialog({
             {isSaving ? (
               <Loader2Icon className="mr-2 size-3 animate-spin" />
             ) : null}
-            Save and close
+            {t('unsavedClose.saveAndClose')}
           </Button>
           <Button
             variant="secondary"
@@ -63,7 +65,7 @@ export function UnsavedFileCloseDialog({
             onClick={onCancelWithoutSave}
             disabled={isSaving}
           >
-            Close without save
+            {t('unsavedClose.closeWithoutSave')}
           </Button>
         </DialogFooter>
       </DialogContent>

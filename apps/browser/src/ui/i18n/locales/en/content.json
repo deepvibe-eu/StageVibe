@@ -17,5 +17,32 @@
     "light": "Light",
     "dark": "Dark",
     "system": "System ({{mode}})"
+  },
+  "search": {
+    "placeholder": "Search in tab...",
+    "previousAria": "Previous search result",
+    "previousMatch": "Previous match",
+    "nextAria": "Next search result",
+    "nextMatch": "Next match",
+    "closeAria": "Close search",
+    "close": "Close search"
+  },
+  "basicAuth": {
+    "signInRequired": "Sign in required",
+    "realm": "Realm: {{realm}}",
+    "username": "Username",
+    "usernamePlaceholder": "Enter username",
+    "password": "Password",
+    "passwordPlaceholder": "Enter password",
+    "signIn": "Sign in"
+  },
+  "unsavedClose": {
+    "title": "Unsaved file edits",
+    "description": "{{path}} has unsaved edits. What should happen before closing it?",
+    "saveAndClose": "Save and close",
+    "closeWithoutSave": "Close without save"
+  },
+  "preview": {
+    "toggleChatPanel": "Toggle chat panel"
   }
 }

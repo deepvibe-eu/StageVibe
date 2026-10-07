@@ -24,6 +24,7 @@ import {
   DialogDescription,
   DialogClose,
 } from '@stagewise/stage-ui/components/dialog';
+import { useTranslation } from 'react-i18next';
 
 interface BasicAuthDialogProps {
   request: AuthenticationRequest;
@@ -31,6 +32,7 @@ interface BasicAuthDialogProps {
 }
 
 export function BasicAuthDialog({ request, container }: BasicAuthDialogProps) {
+  const { t } = useTranslation('content');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -85,7 +87,7 @@ export function BasicAuthDialog({ request, container }: BasicAuthDialogProps) {
           <div className="flex size-8 items-center justify-center rounded-full bg-surface-1">
             <IconLockKeyFillDuo18 className="size-4 text-primary-foreground" />
           </div>
-          <DialogTitle>Sign in required</DialogTitle>
+          <DialogTitle>{t('basicAuth.signInRequired')}</DialogTitle>
           <DialogDescription>{request.host}</DialogDescription>
         </DialogHeader>
 
@@ -93,7 +95,7 @@ export function BasicAuthDialog({ request, container }: BasicAuthDialogProps) {
         {request.realm && (
           <div className="-mt-4 rounded-md bg-surface-1 px-3 py-3">
             <p className="mt-1 text-muted-foreground text-xs">
-              Realm: {request.realm}
+              {t('basicAuth.realm', { realm: request.realm })}
             </p>
           </div>
         )}
@@ -106,26 +108,26 @@ export function BasicAuthDialog({ request, container }: BasicAuthDialogProps) {
           }}
         >
           <FormField>
-            <FormFieldLabel>Username</FormFieldLabel>
+            <FormFieldLabel>{t('basicAuth.username')}</FormFieldLabel>
             <Input
               autoFocus
               ref={usernameInputRef}
               type="text"
               value={username}
               onValueChange={setUsername}
-              placeholder="Enter username"
+              placeholder={t('basicAuth.usernamePlaceholder')}
               autoComplete="username"
               disabled={isSubmitting}
             />
           </FormField>
 
           <FormField>
-            <FormFieldLabel>Password</FormFieldLabel>
+            <FormFieldLabel>{t('basicAuth.password')}</FormFieldLabel>
             <Input
               type="password"
               value={password}
               onValueChange={setPassword}
-              placeholder="Enter password"
+              placeholder={t('basicAuth.passwordPlaceholder')}
               autoComplete="current-password"
               disabled={isSubmitting}
             />
@@ -140,7 +142,7 @@ export function BasicAuthDialog({ request, container }: BasicAuthDialogProps) {
             onClick={handleSubmit}
             disabled={isSubmitting}
           >
-            Sign in
+            {t('basicAuth.signIn')}
           </Button>
         </DialogFooter>
       </DialogContent>
