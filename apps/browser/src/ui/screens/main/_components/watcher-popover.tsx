@@ -29,6 +29,8 @@ import {
   useKartonState,
 } from '@ui/hooks/use-karton';
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import i18n from '@ui/i18n';
 
 type ActiveWatcherSession = ShellSessionSnapshot & {
   watcher: NonNullable<ShellSessionSnapshot['watcher']>;
@@ -41,6 +43,7 @@ type WatcherGroup = {
 };
 
 export function WatcherPopover() {
+  const { t } = useTranslation('content');
   const [open, setOpen] = useState(false);
   const [now, setNow] = useState(Date.now);
   const [copiedWatcherKey, setCopiedWatcherKey] = useState<string | null>(null);
@@ -72,7 +75,7 @@ export function WatcherPopover() {
       Object.fromEntries(
         Object.entries(state.agents.instances).map(([id, agent]) => [
           id,
-          agent.state.title || 'Agent chat',
+          agent.state.title || i18n.t('content:watcher.agentChat'),
         ]),
       ),
     ),
@@ -87,12 +90,12 @@ export function WatcherPopover() {
       if (sessions.length === 0) continue;
       nextGroups.push({
         agentId,
-        title: agentTitles[agentId] ?? 'Agent chat',
+        title: agentTitles[agentId] ?? t('watcher.agentChat'),
         sessions,
       });
     }
     return nextGroups;
-  }, [agentTitles, shellsByAgent]);
+  }, [agentTitles, shellsByAgent, t]);
   const watcherCount = groups.reduce(
     (count, group) => count + group.sessions.length,
     0,
@@ -137,7 +140,7 @@ export function WatcherPopover() {
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger>
-        <Button variant="ghost" size="sm" aria-label="Show active watchers">
+        <Button variant="ghost" size="sm" aria-label={t('watcher.showActive')}>
           <IconEyeOutline18 className="size-4" />
           <span className="rounded-full bg-surface-2 px-1.5 font-mono text-[0.625rem] tabular-nums">
             {watcherCount}
@@ -146,7 +149,7 @@ export function WatcherPopover() {
       </PopoverTrigger>
       <PopoverContent side="bottom" align="end" className="w-80 gap-2 p-2">
         <div className="flex h-6 items-center px-1">
-          <PopoverTitle>Watchers</PopoverTitle>
+          <PopoverTitle>{t('watcher.title')}</PopoverTitle>
         </div>
         <PopoverClose />
         <OverlayScrollbar
@@ -169,7 +172,7 @@ export function WatcherPopover() {
                   <span className="truncate">{group.title}</span>
                   {group.agentId === openAgent && (
                     <span className="shrink-0 text-2xs text-subtle-foreground">
-                      (Open)
+                      {t('watcher.open')}
                     </span>
                   )}
                 </button>
@@ -197,20 +200,26 @@ export function WatcherPopover() {
                                 <Button
                                   variant="ghost"
                                   size="icon-xs"
-                                  aria-label={`Show chat for ${watcher.title}`}
+                                  aria-label={t('watcher.showChatFor', {
+                                    title: watcher.title,
+                                  })}
                                   onClick={() => selectChat(group.agentId)}
                                 >
                                   <IconArrowUpRightOutline18 className="size-3" />
                                 </Button>
                               </TooltipTrigger>
-                              <TooltipContent>Show chat</TooltipContent>
+                              <TooltipContent>
+                                {t('watcher.showChat')}
+                              </TooltipContent>
                             </Tooltip>
                             <Tooltip>
                               <TooltipTrigger>
                                 <Button
                                   variant="ghost"
                                   size="icon-xs"
-                                  aria-label={`Stop ${watcher.title}`}
+                                  aria-label={t('watcher.stopTitle', {
+                                    title: watcher.title,
+                                  })}
                                   onClick={() =>
                                     void killShellSession(
                                       group.agentId,
@@ -221,7 +230,9 @@ export function WatcherPopover() {
                                   <IconPowerOffOutline18 className="size-3" />
                                 </Button>
                               </TooltipTrigger>
-                              <TooltipContent>Stop watcher</TooltipContent>
+                              <TooltipContent>
+                                {t('watcher.stopWatcher')}
+                              </TooltipContent>
                             </Tooltip>
                           </div>
                         </div>
@@ -236,14 +247,22 @@ export function WatcherPopover() {
                         title={watcher.command}
                       >
                         <span className="min-w-0 flex-1 truncate py-1 font-mono text-foreground">
-                          {watcher.command || 'Command unavailable'}
+                          {watcher.command || t('watcher.commandUnavailable')}
                         </span>
                         <Tooltip>
                           <TooltipTrigger>
                             <Button
                               variant="ghost"
                               size="icon-xs"
-                              aria-label={`${hasCopied ? 'Copied' : 'Copy'} script for ${watcher.title}`}
+                              aria-label={
+                                hasCopied
+                                  ? t('watcher.copiedScriptFor', {
+                                      title: watcher.title,
+                                    })
+                                  : t('watcher.copyScriptFor', {
+                                      title: watcher.title,
+                                    })
+                              }
                               disabled={!watcher.command}
                               onClick={() =>
                                 void copyWatcherCommand(
@@ -260,19 +279,25 @@ export function WatcherPopover() {
                             </Button>
                           </TooltipTrigger>
                           <TooltipContent>
-                            {hasCopied ? 'Copied' : 'Copy script'}
+                            {hasCopied
+                              ? t('watcher.copied')
+                              : t('watcher.copyScript')}
                           </TooltipContent>
                         </Tooltip>
                       </div>
                       <div className="flex gap-1 text-muted-foreground tabular-nums">
                         <span>
-                          running {formatDuration(now - watcher.startedAt)}
+                          {t('watcher.running', {
+                            duration: formatDuration(now - watcher.startedAt),
+                          })}
                         </span>
                         <span aria-hidden="true">·</span>
                         <span>
                           {remainingMs > 0
-                            ? `expires in ${formatDuration(remainingMs)}`
-                            : 'expiring'}
+                            ? t('watcher.expiresIn', {
+                                duration: formatDuration(remainingMs),
+                              })
+                            : t('watcher.expiring')}
                         </span>
                       </div>
                     </div>

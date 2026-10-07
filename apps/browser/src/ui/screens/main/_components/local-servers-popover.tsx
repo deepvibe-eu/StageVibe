@@ -37,6 +37,8 @@ import {
 import { useTabUIState } from '@ui/hooks/use-tab-ui-state';
 import { Globe2 } from 'lucide-react';
 import { type ReactNode, useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import i18n from '@ui/i18n';
 import { getWorkspaceLocation } from '../_lib/workspace-location';
 
 const REFRESH_INTERVAL_MS = 5_000;
@@ -105,6 +107,7 @@ export function LocalServersPopover({
 }: {
   trailingContent?: ReactNode;
 }) {
+  const { t } = useTranslation('content');
   const [open, setOpen] = useState(false);
   const [skipCloseTransition, setSkipCloseTransition] = useState(false);
   const [servers, setServers] = useState<RunningServer[]>([]);
@@ -138,7 +141,7 @@ export function LocalServersPopover({
       Object.fromEntries(
         Object.entries(state.agents.instances).map(([id, agent]) => [
           id,
-          agent.state.title || 'Agent chat',
+          agent.state.title || i18n.t('content:servers.agentChat'),
         ]),
       ),
     ),
@@ -294,7 +297,9 @@ export function LocalServersPopover({
     const id = agentId ?? 'global';
     const group = groupsByAgent.get(id) ?? {
       id,
-      title: agentId ? (agentTitles[agentId] ?? 'Agent chat') : 'Global',
+      title: agentId
+        ? (agentTitles[agentId] ?? t('servers.agentChat'))
+        : t('servers.global'),
       agentId,
       servers: [],
     };
@@ -313,7 +318,7 @@ export function LocalServersPopover({
         }}
       >
         <PopoverTrigger>
-          <Button variant="ghost" size="sm" aria-label="Show local servers">
+          <Button variant="ghost" size="sm" aria-label={t('servers.showLocal')}>
             <IconServerOutline18 className="size-4" />
             <span className="rounded-full bg-surface-2 px-1.5 font-mono text-[0.625rem] tabular-nums">
               {portCount}
@@ -326,7 +331,9 @@ export function LocalServersPopover({
           className={cn('w-72 gap-2 p-2', skipCloseTransition && 'duration-0')}
         >
           <div className="flex h-6 items-center px-1">
-            <PopoverTitle className="mr-auto">Local servers</PopoverTitle>
+            <PopoverTitle className="mr-auto">
+              {t('servers.title')}
+            </PopoverTitle>
           </div>
           <PopoverClose />
 
@@ -353,7 +360,7 @@ export function LocalServersPopover({
                         <span className="truncate">{group.title}</span>
                         {group.agentId === openAgent && (
                           <span className="shrink-0 text-2xs text-subtle-foreground">
-                            (Open)
+                            {t('servers.open')}
                           </span>
                         )}
                       </button>
@@ -375,7 +382,9 @@ export function LocalServersPopover({
                       const LocationIcon = location.isGit
                         ? IconCodeBranchOutline18
                         : IconFolderOutline18;
-                      const targetLabel = isAgent ? 'chat' : 'terminal';
+                      const targetLabel = isAgent
+                        ? t('servers.showChat')
+                        : t('servers.showTerminal');
 
                       return (
                         <div
@@ -390,7 +399,7 @@ export function LocalServersPopover({
                                     <IconSideProfileSparkleOutline18 className="mr-0.5 size-3 shrink-0 cursor-help text-muted-foreground" />
                                   </TooltipTrigger>
                                   <TooltipContent>
-                                    Started by an agent shell
+                                    {t('servers.startedByAgent')}
                                   </TooltipContent>
                                 </Tooltip>
                               )}
@@ -413,27 +422,27 @@ export function LocalServersPopover({
                                   <Button
                                     variant="ghost"
                                     size="icon-xs"
-                                    aria-label={`Show ${targetLabel}`}
+                                    aria-label={targetLabel}
                                     onClick={() => void selectServer(server)}
                                   >
                                     <IconArrowUpRightOutline18 className="size-3" />
                                   </Button>
                                 </TooltipTrigger>
-                                <TooltipContent>{`Show ${targetLabel}`}</TooltipContent>
+                                <TooltipContent>{targetLabel}</TooltipContent>
                               </Tooltip>
                               <Tooltip>
                                 <TooltipTrigger>
                                   <Button
                                     variant="ghost"
                                     size="icon-xs"
-                                    aria-label="Stop process"
+                                    aria-label={t('servers.stopProcess')}
                                     onClick={() => void stopServer(server)}
                                   >
                                     <IconPowerOffOutline18 className="size-3" />
                                   </Button>
                                 </TooltipTrigger>
                                 <TooltipContent>
-                                  Stop process (Ctrl+C)
+                                  {t('servers.stopProcessShortcut')}
                                 </TooltipContent>
                               </Tooltip>
                             </div>
@@ -457,7 +466,9 @@ export function LocalServersPopover({
                                       variant="secondary"
                                       size="xs"
                                       className="pl-1.25 font-mono text-2xs"
-                                      aria-label={`Open ${endpointLabel} in browser`}
+                                      aria-label={t('servers.openInBrowser', {
+                                        endpoint: endpointLabel,
+                                      })}
                                       onClick={() =>
                                         void openEndpoint(server, endpoint)
                                       }
@@ -469,7 +480,9 @@ export function LocalServersPopover({
                                     </Button>
                                   </TooltipTrigger>
                                   <TooltipContent>
-                                    {`Open ${endpointLabel} in browser`}
+                                    {t('servers.openInBrowser', {
+                                      endpoint: endpointLabel,
+                                    })}
                                   </TooltipContent>
                                 </Tooltip>
                               );
