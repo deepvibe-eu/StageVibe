@@ -4,11 +4,12 @@ import { normalizePath } from '@shared/path-utils';
 import { getWorkspaceLocation } from '../../_lib/workspace-location';
 import type { TerminalCommandItem } from '../command-center-model';
 import { filterAndRankCommandCenterItems } from '../command-center-search';
+import i18n from '@ui/i18n';
 
 const terminalIcon = <IconSquareTerminalOutline18 className="size-4" />;
 
 function shellTitle(type?: string) {
-  if (!type) return 'Shell';
+  if (!type) return i18n.t('commandCenter:shell');
   if (type === 'powershell') return 'PowerShell';
   return type.charAt(0).toUpperCase() + type.slice(1);
 }
@@ -43,8 +44,9 @@ export function useTerminalCommandItems(query: string) {
       );
       const agentTitle = (agentId: string | null) =>
         agentId
-          ? state.agents.instances[agentId]?.state.title || 'Agent chat'
-          : 'Global';
+          ? state.agents.instances[agentId]?.state.title ||
+            i18n.t('commandCenter:agentChat')
+          : i18n.t('commandCenter:globalAgent');
       const description = (
         cwd: string,
         agentId: string | null,
@@ -69,8 +71,12 @@ export function useTerminalCommandItems(query: string) {
           id: `terminal-tab:${tab.id}`,
           kind: 'terminal',
           mode: 'terminals',
-          title: `${tab.title.trim() || 'Terminal'} · ${agentTitle(tab.agentInstanceId)}`,
-          subtitle: description(tab.cwd, tab.agentInstanceId, 'Manual'),
+          title: `${tab.title.trim() || i18n.t('commandCenter:terminal')} · ${agentTitle(tab.agentInstanceId)}`,
+          subtitle: description(
+            tab.cwd,
+            tab.agentInstanceId,
+            i18n.t('commandCenter:sourceManual') as 'Manual',
+          ),
           keywords: ['terminal', 'manual', tab.cwd],
           icon: terminalIcon,
           owner: {
@@ -90,7 +96,11 @@ export function useTerminalCommandItems(query: string) {
             kind: 'terminal',
             mode: 'terminals',
             title: `${shellTitle(toolbox.shells?.shellType)} · ${agentTitle(agentInstanceId)}`,
-            subtitle: description(session.cwd, agentInstanceId, 'Agent'),
+            subtitle: description(
+              session.cwd,
+              agentInstanceId,
+              i18n.t('commandCenter:sourceAgent') as 'Agent',
+            ),
             keywords: ['terminal', 'agent', session.cwd],
             icon: terminalIcon,
             owner: {

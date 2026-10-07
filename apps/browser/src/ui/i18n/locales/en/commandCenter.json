@@ -27,5 +27,58 @@
   "copyUrl": "Copy URL",
   "close": "Close",
   "showingResultsFor": "Showing results for {{label}}",
-  "showResultsFor": "Show results for"
+  "showResultsFor": "Show results for",
+  "untitledTab": "Untitled Tab",
+  "globalAgent": "Global",
+  "agentChat": "Agent chat",
+  "terminal": "Terminal",
+  "shell": "Shell",
+  "sourceAgent": "Agent",
+  "sourceManual": "Manual",
+  "exportMarkdown": "Export current chat as Markdown…",
+  "exportMarkdownSubtitle": "Save the full conversation to a file",
+  "copyMarkdown": "Copy current chat as Markdown",
+  "copyMarkdownSubtitle": "Put the full conversation on the clipboard",
+  "settings": {
+    "modelsProviders": {
+      "title": "Models & Providers",
+      "subtitle": "Configure model providers and coding plans"
+    },
+    "apiKeys": {
+      "title": "Set API Keys",
+      "subtitle": "Connect Anthropic, OpenAI, Google, and other providers"
+    },
+    "customProviders": {
+      "title": "Custom Providers",
+      "subtitle": "Manage custom model endpoints"
+    },
+    "agentGeneral": {
+      "title": "General Mate Settings",
+      "subtitle": "Configure default mate behavior"
+    },
+    "skillsContext": {
+      "title": "Skills & Context files",
+      "subtitle": "Manage skill and context file preferences"
+    },
+    "worktrees": {
+      "title": "Worktrees",
+      "subtitle": "Manage worktree setup scripts"
+    },
+    "plugins": {
+      "title": "Plugins",
+      "subtitle": "Configure bundled and enabled plugins"
+    },
+    "personalization": {
+      "title": "Personalization",
+      "subtitle": "Configure UI size, theme colors, notifications, and dock behavior"
+    },
+    "browsing": {
+      "title": "Browsing Settings",
+      "subtitle": "Configure browser behavior and permissions"
+    },
+    "history": {
+      "title": "History",
+      "subtitle": "Open browsing history"
+    }
+  }
 }

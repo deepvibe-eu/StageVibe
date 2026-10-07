@@ -4,6 +4,7 @@ import type { TabState } from '@shared/karton-contracts/ui';
 import { CommandCenterTabFavicon } from '../_components/command-center-tab-favicon';
 import type { TabCommandItem } from '../command-center-model';
 import { filterAndRankCommandCenterItems } from '../command-center-search';
+import i18n from '@ui/i18n';
 
 function tabsEqual(a: TabCommandItem[], b: TabCommandItem[]) {
   if (a.length !== b.length) return false;
@@ -30,7 +31,7 @@ function tabsEqual(a: TabCommandItem[], b: TabCommandItem[]) {
 function tabTitle(tab: TabState) {
   if (tab.title.trim()) return tab.title;
   if (tab.url.trim()) return tab.url;
-  return 'Untitled Tab';
+  return i18n.t('commandCenter:untitledTab');
 }
 
 export function useTabCommandItems(query: string) {

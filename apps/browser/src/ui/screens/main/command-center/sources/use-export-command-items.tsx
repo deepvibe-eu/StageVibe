@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { IconCopyOutline18, IconDownload4Outline18 } from '@stagewise/icons';
 import { useOpenAgent } from '@ui/hooks/use-open-chat';
+import { useTranslation } from 'react-i18next';
 import type { ActionCommandItem } from '../command-center-model';
 import { filterAndRankCommandCenterItems } from '../command-center-search';
 
@@ -10,6 +11,7 @@ import { filterAndRankCommandCenterItems } from '../command-center-search';
  * center's `executeItem` via the shared Markdown export helpers.
  */
 export function useExportCommandItems(query: string) {
+  const { t } = useTranslation('commandCenter');
   const [openAgent] = useOpenAgent();
   const enabled = openAgent !== null && openAgent !== undefined;
 
@@ -19,8 +21,8 @@ export function useExportCommandItems(query: string) {
         id: 'export-chat-markdown',
         kind: 'action',
         mode: 'global',
-        title: 'Export current chat as Markdown…',
-        subtitle: 'Save the full conversation to a file',
+        title: t('exportMarkdown'),
+        subtitle: t('exportMarkdownSubtitle'),
         keywords: ['export', 'markdown', 'chat', 'conversation', 'save', 'md'],
         icon: <IconDownload4Outline18 className="size-4" />,
       },
@@ -28,13 +30,13 @@ export function useExportCommandItems(query: string) {
         id: 'copy-chat-markdown',
         kind: 'action',
         mode: 'global',
-        title: 'Copy current chat as Markdown',
-        subtitle: 'Put the full conversation on the clipboard',
+        title: t('copyMarkdown'),
+        subtitle: t('copyMarkdownSubtitle'),
         keywords: ['copy', 'markdown', 'chat', 'conversation', 'clipboard'],
         icon: <IconCopyOutline18 className="size-4" />,
       },
     ],
-    [],
+    [t],
   );
 
   const items = useMemo(

@@ -12,6 +12,7 @@ import {
   IconServerOutline18,
 } from '@stagewise/icons';
 import { PaletteIcon } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import type { SettingCommandItem } from '../command-center-model';
 import {
   commandCenterSettings,
@@ -19,7 +20,9 @@ import {
 } from '../command-center-settings';
 import { filterAndRankCommandCenterItems } from '../command-center-search';
 
-function iconForSetting(setting: CommandCenterSettingDefinition) {
+function iconForSetting(setting: {
+  iconName: CommandCenterSettingDefinition['iconName'];
+}) {
   const className = 'size-4';
   switch (setting.iconName) {
     case 'models':
@@ -45,15 +48,18 @@ function iconForSetting(setting: CommandCenterSettingDefinition) {
 }
 
 export function useSettingsCommandItems(query: string) {
+  const { t } = useTranslation('commandCenter');
   const allItems = useMemo<SettingCommandItem[]>(
     () =>
-      commandCenterSettings.map((setting) => ({
+      commandCenterSettings.map(({ key, ...setting }) => ({
         ...setting,
+        title: t(`settings.${key}.title`),
+        subtitle: t(`settings.${key}.subtitle`),
         kind: 'setting',
         mode: 'settings',
         icon: iconForSetting(setting),
       })),
-    [],
+    [t],
   );
 
   const items = useMemo(
