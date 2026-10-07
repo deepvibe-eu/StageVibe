@@ -33,6 +33,7 @@ import {
   TooltipTrigger,
 } from '@stagewise/stage-ui/components/tooltip';
 import { ReleaseNotes } from '@ui/components/release-notes';
+import { useTranslation } from 'react-i18next';
 
 enablePatches();
 
@@ -50,6 +51,7 @@ function CollapsibleOtherVersions({
 }: {
   versions: Record<string, string | undefined>;
 }) {
+  const { t } = useTranslation('settings');
   const [expanded, setExpanded] = useState(false);
   const entries = Object.entries(versions);
   const initialCount = 8;
@@ -67,17 +69,21 @@ function CollapsibleOtherVersions({
         {displayEntries.map(([key, value]) => (
           <div key={key} className="min-w-0">
             <span className="text-muted-foreground text-xs">{key}</span>
-            <div className="truncate text-xs">{value ?? 'N/A'}</div>
+            <div className="truncate text-xs">
+              {value ?? t('about.otherVersions.na')}
+            </div>
           </div>
         ))}
       </div>
       {hasMore && (
         <button
           type="button"
-          className="text-left text-xs text-muted-foreground hover:text-foreground"
+          className="text-left text-muted-foreground text-xs hover:text-foreground"
           onClick={() => setExpanded(!expanded)}
         >
-          {expanded ? 'Show Less' : 'View All'}
+          {expanded
+            ? t('about.otherVersions.showLess')
+            : t('about.otherVersions.viewAll')}
         </button>
       )}
     </div>
@@ -85,6 +91,7 @@ function CollapsibleOtherVersions({
 }
 
 function AppUpdateStatus() {
+  const { t } = useTranslation('settings');
   const autoUpdate = useKartonState((s) => s.autoUpdate);
   const checkForUpdates = useKartonProcedure(
     (p) => p.autoUpdate.checkForUpdates,
@@ -103,20 +110,22 @@ function AppUpdateStatus() {
         return (
           <Button variant="ghost" size="sm" className="px-0" disabled>
             <IconRefreshAnticlockwiseOutline18 className="size-3 animate-spin" />
-            Checking for Updates
+            {t('about.update.checking')}
           </Button>
         );
       case 'downloading':
         return (
           <Button variant="secondary" size="sm" disabled>
             <LoaderCircleIcon className="size-3.5 animate-spin" />
-            Downloading Update...
+            {t('about.update.downloading')}
           </Button>
         );
       case 'not-available':
         return (
           <>
-            <span className="text-muted-foreground text-sm">Up to date</span>
+            <span className="text-muted-foreground text-sm">
+              {t('about.update.upToDate')}
+            </span>
             <Button
               variant="ghost"
               size="sm"
@@ -124,14 +133,14 @@ function AppUpdateStatus() {
               onClick={() => checkForUpdates()}
             >
               <IconRefreshAnticlockwiseOutline18 className="size-3" />
-              Check Again
+              {t('about.update.checkAgain')}
             </Button>
           </>
         );
       case 'ready':
         return (
           <Button size="sm" onClick={() => quitAndInstall()}>
-            Install Update & Restart
+            {t('about.update.installRestart')}
           </Button>
         );
       case 'error':
@@ -145,7 +154,7 @@ function AppUpdateStatus() {
             onClick={() => checkForUpdates()}
           >
             <IconRefreshAnticlockwiseOutline18 className="size-3" />
-            Check for Updates
+            {t('about.update.check')}
           </Button>
         );
     }
@@ -157,10 +166,11 @@ function AppUpdateStatus() {
     <div className="flex flex-col gap-3">
       {updateInfo?.releaseName && (
         <p className="text-muted-foreground text-sm">
-          Update {updateInfo.releaseName}{' '}
           {autoUpdate.status === 'downloading'
-            ? 'is downloading'
-            : 'is ready to install'}
+            ? t('about.update.downloadingName', {
+                name: updateInfo.releaseName,
+              })
+            : t('about.update.readyName', { name: updateInfo.releaseName })}
         </p>
       )}
       {autoUpdate.status === 'error' && autoUpdate.errorMessage && (
@@ -181,6 +191,7 @@ function AppUpdateStatus() {
 }
 
 function UpdateChannelSetting() {
+  const { t } = useTranslation('settings');
   const preferences = useKartonState((s) => s.preferences);
   const appInfo = useKartonState((s) => s.appInfo);
   const channelLocked = useKartonState(
@@ -207,10 +218,10 @@ function UpdateChannelSetting() {
     <div className="flex flex-col gap-4">
       <div className="flex flex-col gap-1">
         <h3 className="font-medium text-base text-foreground">
-          Update Channel
+          {t('about.channel.title')}
         </h3>
         <p className="text-muted-foreground text-sm">
-          Choose which pre-release channel to receive updates from.
+          {t('about.channel.description')}
         </p>
       </div>
 
@@ -222,9 +233,11 @@ function UpdateChannelSetting() {
         <RadioLabel>
           <Radio value="beta" />
           <div className="flex flex-col">
-            <span className="font-medium text-foreground">Beta</span>
+            <span className="font-medium text-foreground">
+              {t('about.channel.beta')}
+            </span>
             <span className="text-muted-foreground text-xs">
-              More stable pre-release updates
+              {t('about.channel.betaDescription')}
             </span>
           </div>
         </RadioLabel>
@@ -232,9 +245,11 @@ function UpdateChannelSetting() {
         <RadioLabel>
           <Radio value="alpha" />
           <div className="flex flex-col">
-            <span className="font-medium text-foreground">Alpha</span>
+            <span className="font-medium text-foreground">
+              {t('about.channel.alpha')}
+            </span>
             <span className="text-muted-foreground text-xs">
-              Bleeding-edge updates including alpha and beta releases
+              {t('about.channel.alphaDescription')}
             </span>
           </div>
         </RadioLabel>
@@ -252,6 +267,7 @@ function LicenseTextDialog({
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }) {
+  const { t } = useTranslation('settings');
   if (!entry) return null;
 
   return (
@@ -275,7 +291,7 @@ function LicenseTextDialog({
                       buttonVariants({ variant: 'ghost', size: 'icon-md' }),
                       'w-min p-0',
                     )}
-                    aria-label="GitHub Repository"
+                    aria-label={t('about.licenseDialog.githubRepository')}
                   >
                     <IconGithub className="size-4" />
                   </a>
@@ -292,7 +308,7 @@ function LicenseTextDialog({
             </pre>
           ) : (
             <p className="text-muted-foreground text-sm italic">
-              No license text available for this package.
+              {t('about.licenseDialog.noText')}
             </p>
           )}
         </div>
@@ -302,6 +318,7 @@ function LicenseTextDialog({
 }
 
 function OpenSourceLicenses() {
+  const { t } = useTranslation('settings');
   const [licenses, setLicenses] = useState<LicenseEntry[] | null>(null);
   const [loading, setLoading] = useState(false);
   const [expanded, setExpanded] = useState(false);
@@ -364,11 +381,10 @@ function OpenSourceLicenses() {
       <div className="flex items-start justify-between gap-4">
         <div className="flex flex-col gap-1">
           <h3 className="font-medium text-base text-foreground">
-            Open Source Licenses
+            {t('about.licenses.title')}
           </h3>
           <p className="text-muted-foreground text-sm">
-            This software incorporates open source packages. View their licenses
-            below.
+            {t('about.licenses.description')}
           </p>
         </div>
         <Button
@@ -378,7 +394,11 @@ function OpenSourceLicenses() {
           onClick={expanded ? () => setExpanded(false) : loadLicenses}
           disabled={loading}
         >
-          {loading ? 'Loading...' : expanded ? 'Collapse' : 'View All'}
+          {loading
+            ? t('about.licenses.loading')
+            : expanded
+              ? t('about.licenses.collapse')
+              : t('about.licenses.viewAll')}
         </Button>
       </div>
 
@@ -396,7 +416,7 @@ function OpenSourceLicenses() {
                 </span>
               ))}
               <span className="rounded-md bg-surface-1 px-2 py-1 text-muted-foreground text-xs">
-                Total{' '}
+                {t('about.licenses.total')}{' '}
                 <span className="font-medium text-foreground">
                   {licenses.length}
                 </span>
@@ -409,13 +429,13 @@ function OpenSourceLicenses() {
             value={search}
             onValueChange={(val) => setSearch(val as string)}
             debounce={150}
-            placeholder="Search packages or licenses..."
+            placeholder={t('about.licenses.searchPlaceholder')}
           />
 
           <div className="scrollbar-subtle h-[400px] overflow-y-auto rounded-lg border border-border-subtle">
             {filteredLicenses.length === 0 ? (
               <div className="flex h-full items-center justify-center text-muted-foreground text-sm">
-                No packages found matching &ldquo;{search}&rdquo;
+                {t('about.licenses.noMatch', { search })}
               </div>
             ) : (
               filteredLicenses.map((entry) => (
@@ -449,7 +469,7 @@ function OpenSourceLicenses() {
                             size: 'icon-xs',
                           }),
                         )}
-                        title="View repository"
+                        title={t('about.licenses.viewRepository')}
                       >
                         <ExternalLinkIcon className="size-3.5" />
                       </a>
@@ -458,7 +478,7 @@ function OpenSourceLicenses() {
                       variant="ghost"
                       size="icon-xs"
                       onClick={() => handleViewLicense(entry)}
-                      title="View license text"
+                      title={t('about.licenses.viewLicenseText')}
                     >
                       <ScrollTextIcon className="size-3.5" />
                     </Button>
@@ -473,14 +493,14 @@ function OpenSourceLicenses() {
       <div className="mt-4 space-y-1 text-center text-muted-foreground text-xs">
         <hr className="border-border/30" />
         <br />
-        You can support our work by fueling us with{' '}
+        {t('about.licenses.support')}{' '}
         <a
           href="https://ko-fi.com/modestcoder"
           target="_blank"
           rel="noopener noreferrer"
           className="underline hover:text-foreground"
         >
-          ☕️☕️ coffee ☕️☕️
+          {t('about.licenses.supportLink')}
         </a>
         .
       </div>
@@ -495,6 +515,7 @@ function OpenSourceLicenses() {
 }
 
 function AppDataManagement() {
+  const { t } = useTranslation('settings');
   const openFolder = useKartonProcedure((p) => p.appData.openFolder);
   const resetAppData = useKartonProcedure((p) => p.appData.reset);
   const appInfo = useKartonState((s) => s.appInfo);
@@ -503,36 +524,33 @@ function AppDataManagement() {
     <div className="flex flex-col gap-4">
       <div className="flex items-start justify-between gap-4">
         <div className="flex flex-col gap-1">
-          <h3 className="font-medium text-base text-foreground">App Data</h3>
+          <h3 className="font-medium text-base text-foreground">
+            {t('about.appData.title')}
+          </h3>
           <p className="text-muted-foreground text-sm">
-            Open the data folder for troubleshooting or reset StageVibe to a clean
-            setup.
+            {t('about.appData.description')}
           </p>
         </div>
         <div className="flex shrink-0 items-center gap-2">
           <Button variant="secondary" size="sm" onClick={() => openFolder()}>
-            Open Folder
+            {t('about.appData.openFolder')}
           </Button>
           <Button
             variant="destructive"
             size="sm"
             onClick={() => {
-              if (
-                window.confirm(
-                  'Delete all app data and restart? This cannot be undone. Your installation identifier will be retained.',
-                )
-              )
+              if (window.confirm(t('about.appData.deleteConfirm')))
                 resetAppData();
             }}
           >
-            Delete App Data
+            {t('about.appData.delete')}
           </Button>
         </div>
       </div>
       {appInfo.appDataPath && (
         <div className="grid grid-cols-[140px_1fr] gap-x-4">
           <span className="font-medium text-muted-foreground text-sm">
-            Data Path
+            {t('about.appData.dataPath')}
           </span>
           <span className="break-all text-foreground text-sm">
             {appInfo.appDataPath}
@@ -544,6 +562,7 @@ function AppDataManagement() {
 }
 
 export function AboutSection() {
+  const { t } = useTranslation('settings');
   const appInfo = useKartonState((s) => s.appInfo);
   const [appLicenseOpen, setAppLicenseOpen] = useState(false);
 
@@ -554,7 +573,9 @@ export function AboutSection() {
         <div className="mx-auto flex w-full max-w-3xl shrink-0 flex-col gap-8">
           {/* Header */}
           <div>
-            <h1 className="font-semibold text-foreground text-xl">About</h1>
+            <h1 className="font-semibold text-foreground text-xl">
+              {t('about.title')}
+            </h1>
           </div>
           {/* App Name Section */}
           <div className="flex flex-col gap-2">
@@ -599,7 +620,7 @@ export function AboutSection() {
             <div className="flex flex-col gap-y-3">
               <div className="grid grid-cols-[140px_1fr] gap-x-4">
                 <span className="font-medium text-muted-foreground text-sm">
-                  Bundle ID
+                  {t('about.fields.bundleId')}
                 </span>
                 <span className="break-all text-foreground text-sm">
                   {appInfo.bundleId}
@@ -608,7 +629,7 @@ export function AboutSection() {
 
               <div className="grid grid-cols-[140px_1fr] gap-x-4">
                 <span className="font-medium text-muted-foreground text-sm">
-                  Release Channel
+                  {t('about.fields.releaseChannel')}
                 </span>
                 <span className="text-foreground text-sm capitalize">
                   {appInfo.releaseChannel}
@@ -617,7 +638,7 @@ export function AboutSection() {
 
               <div className="grid grid-cols-[140px_1fr] gap-x-4">
                 <span className="font-medium text-muted-foreground text-sm">
-                  Platform
+                  {t('about.fields.platform')}
                 </span>
                 <span className="text-foreground text-sm capitalize">
                   {appInfo.platform}
@@ -626,14 +647,14 @@ export function AboutSection() {
 
               <div className="grid grid-cols-[140px_1fr] gap-x-4">
                 <span className="font-medium text-muted-foreground text-sm">
-                  Architecture
+                  {t('about.fields.architecture')}
                 </span>
                 <span className="text-foreground text-sm">{appInfo.arch}</span>
               </div>
 
               <div className="grid grid-cols-[140px_1fr] gap-x-4">
                 <span className="font-medium text-muted-foreground text-sm">
-                  Author
+                  {t('about.fields.author')}
                 </span>
                 <span className="text-foreground text-sm">
                   {appInfo.author}
@@ -642,7 +663,7 @@ export function AboutSection() {
 
               <div className="grid grid-cols-[140px_1fr] gap-x-4">
                 <span className="font-medium text-muted-foreground text-sm">
-                  Copyright
+                  {t('about.fields.copyright')}
                 </span>
                 <span className="text-foreground text-sm">
                   {appInfo.copyright}
@@ -651,7 +672,7 @@ export function AboutSection() {
 
               <div className="grid grid-cols-[140px_1fr] gap-x-4">
                 <span className="font-medium text-muted-foreground text-sm">
-                  License
+                  {t('about.fields.license')}
                 </span>
                 <div className="flex items-center gap-2">
                   <span className="font-mono text-foreground text-sm">
@@ -663,7 +684,7 @@ export function AboutSection() {
                     onClick={() => {
                       setAppLicenseOpen(true);
                     }}
-                    title="View full license text"
+                    title={t('about.viewFullLicense')}
                   >
                     <ScrollTextIcon className="size-3.5" />
                   </Button>
@@ -672,7 +693,7 @@ export function AboutSection() {
 
               <div className="grid grid-cols-[140px_1fr] gap-x-4">
                 <span className="font-medium text-muted-foreground text-sm">
-                  Homepage
+                  {t('about.fields.homepage')}
                 </span>
                 <a
                   href="https://deepvibe.eu/stagevibe"
@@ -689,7 +710,7 @@ export function AboutSection() {
 
               <div className="grid grid-cols-[140px_1fr] gap-x-4">
                 <span className="font-medium text-muted-foreground text-sm">
-                  Other Versions
+                  {t('about.fields.otherVersions')}
                 </span>
                 <div className="text-foreground text-sm">
                   {Object.keys(appInfo.otherVersions).length > 0 ? (
@@ -697,7 +718,9 @@ export function AboutSection() {
                       versions={appInfo.otherVersions}
                     />
                   ) : (
-                    <span className="text-muted-foreground">No additional versions</span>
+                    <span className="text-muted-foreground">
+                      {t('about.otherVersions.none')}
+                    </span>
                   )}
                 </div>
               </div>

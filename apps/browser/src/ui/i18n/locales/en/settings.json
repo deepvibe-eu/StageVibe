@@ -261,6 +261,71 @@
     "noMatch": "No history found matching your search",
     "empty": "No history yet"
   },
+  "about": {
+    "title": "About",
+    "fields": {
+      "bundleId": "Bundle ID",
+      "releaseChannel": "Release Channel",
+      "platform": "Platform",
+      "architecture": "Architecture",
+      "author": "Author",
+      "copyright": "Copyright",
+      "license": "License",
+      "homepage": "Homepage",
+      "otherVersions": "Other Versions"
+    },
+    "otherVersions": {
+      "na": "N/A",
+      "showLess": "Show Less",
+      "viewAll": "View All",
+      "none": "No additional versions"
+    },
+    "update": {
+      "checking": "Checking for Updates",
+      "downloading": "Downloading Update...",
+      "upToDate": "Up to date",
+      "checkAgain": "Check Again",
+      "installRestart": "Install Update & Restart",
+      "check": "Check for Updates",
+      "downloadingName": "Update {{name}} is downloading",
+      "readyName": "Update {{name}} is ready to install"
+    },
+    "channel": {
+      "title": "Update Channel",
+      "description": "Choose which pre-release channel to receive updates from.",
+      "beta": "Beta",
+      "betaDescription": "More stable pre-release updates",
+      "alpha": "Alpha",
+      "alphaDescription": "Bleeding-edge updates including alpha and beta releases"
+    },
+    "licenseDialog": {
+      "githubRepository": "GitHub Repository",
+      "noText": "No license text available for this package."
+    },
+    "licenses": {
+      "title": "Open Source Licenses",
+      "description": "This software incorporates open source packages. View their licenses below.",
+      "loading": "Loading...",
+      "collapse": "Collapse",
+      "viewAll": "View All",
+      "total": "Total",
+      "searchPlaceholder": "Search packages or licenses...",
+      "noMatch": "No packages found matching \"{{search}}\"",
+      "viewRepository": "View repository",
+      "viewLicenseText": "View license text",
+      "support": "You can support our work by fueling us with",
+      "supportLink": "☕️☕️ coffee ☕️☕️"
+    },
+    "appData": {
+      "title": "App Data",
+      "description": "Open the data folder for troubleshooting or reset StageVibe to a clean setup.",
+      "openFolder": "Open Folder",
+      "delete": "Delete App Data",
+      "deleteConfirm": "Delete all app data and restart? This cannot be undone. Your installation identifier will be retained.",
+      "dataPath": "Data Path"
+    },
+    "viewFullLicense": "View full license text"
+  },
   "personalization": {
     "title": "Personalization",
     "appearance": {
