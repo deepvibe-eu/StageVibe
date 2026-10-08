@@ -42,7 +42,7 @@ export const Omnibox = ({
 }) => {
   const { t } = useTranslation('chat');
   const displayedTabUrl =
-    tab?.url === 'stagewise://internal/home' ? '' : tab?.url;
+    tab?.url === 'stagevibe://internal/home' ? '' : tab?.url;
 
   const goto = useKartonProcedure((p) => p.browser.goto);
   const movePanelToForeground = useKartonProcedure(
@@ -116,7 +116,7 @@ export const Omnibox = ({
   }, [tab?.isLoading, navigationPending]);
 
   const shouldShowBreadcrumbs = displayedTabUrl?.startsWith(
-    'stagewise://internal/',
+    'stagevibe://internal/',
   );
 
   useEffect(() => {

@@ -4,7 +4,8 @@ import path from 'node:path';
 import { DisposableService } from './disposable';
 import { AUTH_CALLBACK_SCHEME } from './auth/callback-scheme';
 
-const STABLE_APP_SCHEME = 'stagewise';
+const STABLE_APP_SCHEME = 'stagevibe';
+const LEGACY_STABLE_APP_SCHEME = 'stagewise';
 
 /**
  * Service responsible for registering the app as the default protocol client for auth callback URLs.
@@ -30,7 +31,11 @@ export class URIHandlerService extends DisposableService {
 
   private async initialize(): Promise<void> {
     const schemes = Array.from(
-      new Set([STABLE_APP_SCHEME, AUTH_CALLBACK_SCHEME]),
+      new Set([
+        STABLE_APP_SCHEME,
+        LEGACY_STABLE_APP_SCHEME,
+        AUTH_CALLBACK_SCHEME,
+      ]),
     );
 
     for (const scheme of schemes) {

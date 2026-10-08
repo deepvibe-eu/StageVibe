@@ -156,7 +156,7 @@ function CreatePlanSettledCard({ part }: { part: WritePart }) {
   const handleOpenPlan = useCallback(() => {
     if (contentCollapsed) setContentCollapsed(false);
 
-    const baseUrl = `stagewise://internal/plan/${encodeURIComponent(filename)}`;
+    const baseUrl = `stagevibe://internal/plan/${encodeURIComponent(filename)}`;
     const existingTab = Object.values(tabs).find((tab) =>
       tab.url.startsWith(baseUrl),
     );

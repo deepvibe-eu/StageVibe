@@ -328,7 +328,7 @@ export class TabErrorHandler {
     params.set('errorMessage', errorMessage);
     params.set('tabId', this.tabId);
 
-    return `stagewise://internal${ERROR_PAGE_PATH}?${params.toString()}`;
+    return `stagevibe://internal${ERROR_PAGE_PATH}?${params.toString()}`;
   }
 
   /**

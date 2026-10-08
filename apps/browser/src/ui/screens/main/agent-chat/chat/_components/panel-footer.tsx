@@ -439,7 +439,7 @@ export const ChatPanelFooter = memo(function ChatPanelFooter({
       activeTabData.agentInstanceId !== openAgent;
     return (
       (activeTabData.type === undefined || activeTabData.type === 'browser') &&
-      !activeTabData.url?.startsWith('stagewise://internal/') &&
+      !activeTabData.url?.startsWith('stagevibe://internal/') &&
       !ownedByOtherAgent
     );
   }, [activeTabData, openAgent, contentCollapsed]);
@@ -840,7 +840,7 @@ export const ChatPanelFooter = memo(function ChatPanelFooter({
   const effectiveCanSendMessage = canSendMessage && enableInputField;
 
   const hasOpenedInternalPage =
-    activeTabUrl?.startsWith('stagewise://internal/') ?? false;
+    activeTabUrl?.startsWith('stagevibe://internal/') ?? false;
 
   // Refs for values read at call time inside handleSubmit.
   // This keeps handleSubmit's dependency array stable (no localInputState,

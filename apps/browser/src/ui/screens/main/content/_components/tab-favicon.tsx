@@ -13,12 +13,12 @@ import { FileIcon } from '@ui/components/file-icon';
 
 export function TabFavicon({ tabState }: { tabState: TabState }) {
   const isAppPreview = useMemo(
-    () => tabState?.url?.startsWith('stagewise://internal/preview/') ?? false,
+    () => tabState?.url?.startsWith('stagevibe://internal/preview/') ?? false,
     [tabState?.url],
   );
 
   const isStagewisePage = useMemo(
-    () => tabState?.url?.startsWith('stagewise://internal/') ?? false,
+    () => tabState?.url?.startsWith('stagevibe://internal/') ?? false,
     [tabState?.url],
   );
 

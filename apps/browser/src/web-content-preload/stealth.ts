@@ -10,7 +10,11 @@
 export function injectStealthOverrides(): void {
   // Skip injection on internal pages
   try {
-    if (window.location.protocol === 'stagewise:') return;
+    if (
+      window.location.protocol === 'stagevibe:' ||
+      window.location.protocol === 'stagewise:'
+    )
+      return;
   } catch {
     // If location access fails, skip injection
     return;

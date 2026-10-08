@@ -25,7 +25,10 @@ export function seedIsolatedDevProfile(
   // Prefer the current layout; fall back to the pre-rebrand `stagewise-dev`
   // profile so isolated instances keep seeding after the StageVibe rename.
   const source = [
-    { userData: path.join(appDataDirectory, 'stagevibe-dev'), root: 'stagevibe' },
+    {
+      userData: path.join(appDataDirectory, 'stagevibe-dev'),
+      root: 'stagevibe',
+    },
     {
       userData: path.join(appDataDirectory, 'stagewise-dev'),
       root: 'stagewise',

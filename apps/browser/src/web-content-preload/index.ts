@@ -28,7 +28,7 @@ declare global {
  */
 const IS_VALID_PAGES_CONTEXT = (() => {
   try {
-    return window.location.origin === 'stagewise://internal';
+    return window.location.origin === 'stagevibe://internal';
   } catch {
     return false;
   }

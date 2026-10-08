@@ -42,7 +42,7 @@ export type SignInOptionsPanelProps = {
   className?: string;
 };
 
-const LAST_USED_SIGN_IN_METHOD_KEY = 'stagewise:last-used-sign-in-method';
+const LAST_USED_SIGN_IN_METHOD_KEY = 'stagevibe:last-used-sign-in-method';
 function getHandoffProviderLabel(
   provider: SocialAuthProvider | 'email' | null,
 ) {
@@ -319,7 +319,7 @@ export function SignInOptionsPanel({
     setError(null);
     setLoading(true);
 
-    // In solver mode (stagewise://), acquire the token on demand
+    // In solver mode (stagevibe://), acquire the token on demand
     let token = turnstileToken;
     if (turnstileSolverMode) {
       token = await solveTurnstileToken();

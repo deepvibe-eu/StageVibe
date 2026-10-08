@@ -926,7 +926,7 @@ export function AgentsList() {
   const handleOpenWorkspaceInFileManager = useCallback(
     (workspacePath: string) => {
       window.open(
-        `stagewise://reveal-file/${encodeURIComponent(workspacePath)}`,
+        `stagevibe://reveal-file/${encodeURIComponent(workspacePath)}`,
         '_blank',
       );
     },

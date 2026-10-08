@@ -79,7 +79,8 @@ export function InternalPageBreadcrumbs({ url }: InternalPageBreadcrumbsProps) {
     try {
       const parsedUrl = new URL(url);
       if (
-        parsedUrl.protocol !== 'stagewise:' ||
+        (parsedUrl.protocol !== 'stagevibe:' &&
+          parsedUrl.protocol !== 'stagewise:') ||
         parsedUrl.host !== 'internal' ||
         !parsedUrl.pathname.startsWith('/preview/')
       ) {
@@ -105,7 +106,8 @@ export function InternalPageBreadcrumbs({ url }: InternalPageBreadcrumbsProps) {
         .filter((segment) => segment.length > 0);
 
       if (
-        parsedUrl.protocol === 'stagewise:' &&
+        (parsedUrl.protocol === 'stagevibe:' ||
+          parsedUrl.protocol === 'stagewise:') &&
         parsedUrl.host === 'internal' &&
         pathnameSegments[0] === 'preview'
       ) {

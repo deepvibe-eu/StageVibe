@@ -162,8 +162,10 @@ export function parseNavigationInput(
 ): NavigationTarget {
   const trimmed = input.trim();
 
-  // Check if it starts with stagewise:/ - always treat as URL, never search
-  if (trimmed.toLowerCase().startsWith('stagewise:/')) {
+  // Check if it starts with stagevibe:/ (or legacy stagewise:/) - always
+  // treat as URL, never search
+  const lowered = trimmed.toLowerCase();
+  if (lowered.startsWith('stagevibe:/') || lowered.startsWith('stagewise:/')) {
     return { type: 'url', url: trimmed };
   }
 

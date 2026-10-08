@@ -41,18 +41,19 @@ const visualAssetChannel =
 const getAuthCallbackScheme = (): string => {
   switch (buildConstants.__APP_RELEASE_CHANNEL__) {
     case 'release':
-      return 'stagewise';
+      return 'stagevibe';
     case 'prerelease':
-      return 'stagewise-prerelease';
+      return 'stagevibe-prerelease';
     case 'nightly':
-      return 'stagewise-nightly';
+      return 'stagevibe-nightly';
     default:
-      return 'stagewise-dev';
+      return 'stagevibe-dev';
   }
 };
 
 const protocolSchemes = Array.from(
-  new Set(['stagewise', getAuthCallbackScheme()]),
+  // `stagewise` stays registered so pre-rename deep links keep routing here.
+  new Set(['stagevibe', getAuthCallbackScheme(), 'stagewise']),
 );
 
 const linuxMimeTypes = protocolSchemes.map(
@@ -355,8 +356,8 @@ const config: ForgeConfig = {
     appCategoryType: 'public.app-category.developer-tools',
     protocols: [
       {
-        name: 'stagewise',
-        schemes: ['stagewise'],
+        name: 'stagevibe',
+        schemes: ['stagevibe', 'stagewise'],
       },
     ],
     // macOS code signing (only for non-dev builds)

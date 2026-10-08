@@ -902,7 +902,7 @@ function WorkspacePreviewCardContent({
       event.stopPropagation();
       event.preventDefault();
       window.open(
-        `stagewise://reveal-file/${encodeURIComponent(mount.path)}`,
+        `stagevibe://reveal-file/${encodeURIComponent(mount.path)}`,
         '_blank',
       );
     },

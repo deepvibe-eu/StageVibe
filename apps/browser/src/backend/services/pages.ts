@@ -37,7 +37,7 @@ declare const PAGES_VITE_DEV_SERVER_URL: string;
 declare const PAGES_VITE_NAME: string;
 
 /**
- * Service responsible for the stagewise:// protocol handler for the pages
+ * Service responsible for the stagevibe:// protocol handler for the pages
  * renderer (internal pages: history, downloads, plans) and the
  * PagesApi Karton contract for communication with those pages.
  */
@@ -126,13 +126,13 @@ export class PagesService extends DisposableService {
     // Get the default browsing session used by tabs (same partition as tab-controller)
     const ses = session.fromPartition('persist:browser-content');
 
-    ses.protocol.handle('stagewise', (request) => {
+    ses.protocol.handle('stagevibe', (request) => {
       let normalizedRequestUrl = request.url;
       if (
-        normalizedRequestUrl === 'stagewise://' ||
+        normalizedRequestUrl === 'stagevibe://' ||
         normalizedRequestUrl.endsWith('://')
       )
-        normalizedRequestUrl = 'stagewise://internal/';
+        normalizedRequestUrl = 'stagevibe://internal/';
 
       let url: URL;
       try {
@@ -141,14 +141,14 @@ export class PagesService extends DisposableService {
         this.logger.error(
           `[PagesService] Failed to parse URL: ${err}. Redirecting to not-found page.`,
         );
-        return Response.redirect('stagewise://internal/not-found', 302);
+        return Response.redirect('stagevibe://internal/not-found', 302);
       }
 
       if (url.hostname !== 'internal') {
         this.logger.debug(
           `[PagesService] Redirecting request with origin: ${url.hostname} to not-found page. Only "internal" origin is allowed.`,
         );
-        return Response.redirect('stagewise://internal/not-found', 302);
+        return Response.redirect('stagevibe://internal/not-found', 302);
       }
 
       if (PAGES_VITE_DEV_SERVER_URL) {
@@ -187,7 +187,7 @@ export class PagesService extends DisposableService {
     });
 
     this.logger.debug(
-      '[PagesService] Registered stagewise protocol handler for browsing session',
+      '[PagesService] Registered stagevibe protocol handler for browsing session',
     );
 
     // workspace:// protocol
@@ -698,6 +698,7 @@ export class PagesService extends DisposableService {
     this.kartonServer.removeServerProcedureHandler('trustCertificateAndReload');
 
     const ses = session.fromPartition('persist:browser-content');
+    ses.protocol.unhandle('stagevibe');
     ses.protocol.unhandle('stagewise');
     ses.protocol.unhandle('workspace');
     ses.protocol.unhandle('plans');

@@ -140,7 +140,7 @@ const tabStateSchema = z.object({
 
 type PersistedTabState = z.infer<typeof tabStateSchema>;
 
-const LEGACY_DIFF_REVIEW_URL_PREFIX = 'stagewise://internal/diff-review/';
+const LEGACY_DIFF_REVIEW_URL_PREFIX = 'stagevibe://internal/diff-review/';
 
 /**
  * Anonymous URL classification for telemetry. Returns coarse booleans
@@ -1481,7 +1481,7 @@ export class WindowLayoutService extends DisposableService {
       // For internal pages, check if a non-active tab with the same URL already
       // exists AND is visible to the requesting agent (global or matching).
       // If the active tab already has this URL, we still create a new tab.
-      if (targetUrl?.startsWith('stagewise://')) {
+      if (targetUrl?.startsWith('stagevibe://')) {
         const existingTab = Object.entries(this.tabs).find(([id, tab]) => {
           if (id === this.activeTabId) return false;
           if (tab.getState().url !== targetUrl) return false;

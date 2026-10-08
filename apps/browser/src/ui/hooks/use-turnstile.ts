@@ -32,7 +32,7 @@ const TURNSTILE_SITE_KEY = import.meta.env.VITE_TURNSTILE_SITE_KEY ?? '';
  * When `VITE_TURNSTILE_SITE_KEY` is not set, the hook is inert —
  * `enabled` is false and `token` stays null.
  *
- * On the custom `stagewise://` scheme, the widget cannot be rendered
+ * On the custom `stagevibe://` scheme, the widget cannot be rendered
  * directly (custom-scheme origins are not reliable challenge targets).
  * Instead, the hook delegates to `window.__solveTurnstile()` — a global
  * solver registered by `turnstile-solver.ts` that renders an off-screen
@@ -40,7 +40,9 @@ const TURNSTILE_SITE_KEY = import.meta.env.VITE_TURNSTILE_SITE_KEY ?? '';
  */
 export function useTurnstile() {
   const isSolverMode =
-    window.location.protocol === 'stagewise:' && !!TURNSTILE_SITE_KEY;
+    (window.location.protocol === 'stagevibe:' ||
+      window.location.protocol === 'stagewise:') &&
+    !!TURNSTILE_SITE_KEY;
   const enabled = !!TURNSTILE_SITE_KEY;
 
   const [token, setToken] = useState<string | null>(null);

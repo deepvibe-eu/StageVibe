@@ -69,7 +69,11 @@ function isSameAppReferer(
 ): boolean {
   try {
     const refererUrl = new URL(referer);
-    if (refererUrl.protocol === 'stagewise:') return true;
+    if (
+      refererUrl.protocol === 'stagevibe:' ||
+      refererUrl.protocol === 'stagewise:'
+    )
+      return true;
     if (refererUrl.protocol !== 'app:') return false;
 
     const refererIdentity = getAppIdentity(refererUrl);
@@ -101,7 +105,8 @@ function isTrustedAppProtocolRequest(
   if (origin && origin !== 'null') {
     try {
       const originProtocol = new URL(origin).protocol;
-      if (originProtocol === 'stagewise:') return true;
+      if (originProtocol === 'stagevibe:' || originProtocol === 'stagewise:')
+        return true;
       if (originProtocol !== 'app:') return false;
       return hasTrustedReferer;
     } catch {

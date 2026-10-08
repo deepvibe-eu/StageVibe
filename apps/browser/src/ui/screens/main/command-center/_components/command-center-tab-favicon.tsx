@@ -11,7 +11,7 @@ export function CommandCenterTabFavicon({
   title: string;
   url: string;
 }) {
-  const isStagewisePage = url.startsWith('stagewise://internal/');
+  const isStagewisePage = url.startsWith('stagevibe://internal/');
   const faviconUrl = useMemo(
     () => faviconUrls.find((value) => value.trim())?.trim() ?? null,
     [faviconUrls],

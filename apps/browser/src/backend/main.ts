@@ -11,6 +11,7 @@ import { FilePickerService } from './services/file-picker';
 import { FileTreeService } from './services/file-tree';
 import { AppMenuService } from './services/app-menu';
 import { URIHandlerService } from './services/uri-handler';
+import { ALL_CALLBACK_PROTOCOLS } from './services/auth/callback-scheme';
 import { IdentifierService } from './services/identifier';
 import { Logger } from './services/logger';
 import {
@@ -496,7 +497,7 @@ export async function main({ launchOptions: { verbose } }: MainParameters) {
     windowLayoutService,
   );
 
-  // URIHandlerService registers the app as the default protocol client for stagewise://
+  // URIHandlerService registers the app as the default protocol client for stagevibe://
   // URL handling is done in main.ts via setupUrlHandlers() and handleCommandLineUrls()
   await URIHandlerService.create(logger);
 
@@ -1411,10 +1412,7 @@ function isOpenableUrl(url: string): boolean {
     return (
       parsed.protocol === 'http:' ||
       parsed.protocol === 'https:' ||
-      parsed.protocol === 'stagewise:' ||
-      parsed.protocol === 'stagewise-prerelease:' ||
-      parsed.protocol === 'stagewise-nightly:' ||
-      parsed.protocol === 'stagewise-dev:'
+      ALL_CALLBACK_PROTOCOLS.has(parsed.protocol)
     );
   } catch {
     return false;
@@ -1422,7 +1420,7 @@ function isOpenableUrl(url: string): boolean {
 }
 
 /**
- * Extracts URLs from command line arguments (http, https, or stagewise://)
+ * Extracts URLs from command line arguments (http, https, or stagevibe://)
  */
 function extractUrlsFromArgs(argv: string[]): string[] {
   const urls: string[] = [];
@@ -1444,16 +1442,11 @@ const MAX_QUEUED_AUTH_CALLBACK_URLS = 5;
 function isAuthCallbackUrl(url: string): boolean {
   try {
     const parsed = new URL(url);
-    if (
-      parsed.protocol !== 'stagewise:' &&
-      parsed.protocol !== 'stagewise-prerelease:' &&
-      parsed.protocol !== 'stagewise-nightly:' &&
-      parsed.protocol !== 'stagewise-dev:'
-    ) {
+    if (!ALL_CALLBACK_PROTOCOLS.has(parsed.protocol)) {
       return false;
     }
     // Auth callback URLs have /auth in the path.
-    // Normalize: stagewise://auth/callback → hostname='auth', pathname='/callback',
+    // Normalize: stagevibe://auth/callback → hostname='auth', pathname='/callback',
     // so reconstruct the full path the same way auth/index.ts does.
     const callbackPath = parsed.hostname
       ? `/${parsed.hostname}${parsed.pathname}`

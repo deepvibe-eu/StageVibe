@@ -327,8 +327,8 @@ export function SidebarExperienceSurvey() {
         onDismiss={handleDismissFounderCall}
       >
         <div className="pr-7 font-medium text-foreground text-xs leading-relaxed">
-          Tell our founders what you think about StageVibe and get 1 month Pro for
-          free!
+          Tell our founders what you think about StageVibe and get 1 month Pro
+          for free!
         </div>
         <Button
           variant="primary"

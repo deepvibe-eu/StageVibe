@@ -4,13 +4,13 @@
  */
 
 /** The home page URL - displayed when opening a new tab or on startup */
-export const HOME_PAGE_URL = 'stagewise://internal/home';
+export const HOME_PAGE_URL = 'stagevibe://internal/home';
 
 /**
- * Checks if a URL is an internal stagewise URL.
+ * Checks if a URL is an internal stagevibe URL (or a legacy stagewise URL).
  */
 export function isInternalUrl(url: string): boolean {
-  return url.startsWith('stagewise://');
+  return url.startsWith('stagevibe://') || url.startsWith('stagewise://');
 }
 
 /**

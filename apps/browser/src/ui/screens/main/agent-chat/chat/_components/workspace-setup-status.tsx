@@ -101,7 +101,7 @@ export function SetupRunSidePanel({
   const scriptName = getBaseName(setupRun.scriptPath) || setupRun.scriptPath;
   const handleOpenScript = useCallback(() => {
     window.open(
-      `stagewise://reveal-file/${encodeURIComponent(setupRun.scriptPath)}`,
+      `stagevibe://reveal-file/${encodeURIComponent(setupRun.scriptPath)}`,
       '_blank',
     );
   }, [setupRun.scriptPath]);

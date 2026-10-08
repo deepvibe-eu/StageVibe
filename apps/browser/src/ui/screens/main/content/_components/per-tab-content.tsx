@@ -37,10 +37,10 @@ export const PerTabContent = forwardRef<PerTabContentRef, PerTabContentProps>(
     const devAppPreviewContainerRef = useRef<HTMLDivElement>(null);
 
     const isInternalPage = useMemo(() => {
-      // Consider a page "internal" if it's a stagewise:// URL or if an error page is displayed
+      // Consider a page "internal" if it's a stagevibe:// URL or if an error page is displayed
       // (Error pages show the failed URL but are still internal pages)
       const isInternalUrl =
-        tab?.url?.startsWith('stagewise://internal/') ?? false;
+        tab?.url?.startsWith('stagevibe://internal/') ?? false;
       const isErrorPageDisplayed = tab?.error?.isErrorPageDisplayed ?? false;
       return isInternalUrl || isErrorPageDisplayed;
     }, [tab?.url, tab?.error?.isErrorPageDisplayed]);

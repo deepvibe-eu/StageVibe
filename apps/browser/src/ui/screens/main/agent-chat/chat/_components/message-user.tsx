@@ -565,7 +565,7 @@ export const MessageUser = memo(
     }, [tabs, activeTabId]);
 
     const hasOpenedInternalPage = useMemo(() => {
-      return activeTab?.url?.startsWith('stagewise://internal/') ?? false;
+      return activeTab?.url?.startsWith('stagevibe://internal/') ?? false;
     }, [activeTab?.url]);
 
     const hasVisibleBrowsingTab = useMemo(() => {
@@ -576,7 +576,7 @@ export const MessageUser = memo(
         activeTab.agentInstanceId !== openAgent;
       return (
         (activeTab.type === undefined || activeTab.type === 'browser') &&
-        !activeTab.url?.startsWith('stagewise://internal/') &&
+        !activeTab.url?.startsWith('stagevibe://internal/') &&
         !ownedByOtherAgent
       );
     }, [activeTab, openAgent, contentCollapsed]);

@@ -86,15 +86,23 @@ export function convertOmniboxInputToUrl(
 export function categorizeUrlInput(
   input: string,
 ): 'url' | 'url-like' | 'search' {
-  // Check if it starts with stagewise:/ - always treat as URL
-  if (input.toLowerCase().startsWith('stagewise:/')) {
+  // Check if it starts with stagevibe:/ (or legacy stagewise:/) - always
+  // treat as URL
+  const lowered = input.toLowerCase();
+  if (lowered.startsWith('stagevibe:/') || lowered.startsWith('stagewise:/')) {
     return 'url';
   }
 
   // Check if it's already a valid URL with a known web protocol
   try {
     const parsedUrl = new URL(input);
-    const knownProtocols = ['http:', 'https:', 'file:', 'stagewise:'];
+    const knownProtocols = [
+      'http:',
+      'https:',
+      'file:',
+      'stagevibe:',
+      'stagewise:',
+    ];
     // Only treat as valid URL if it has a known web protocol
     if (knownProtocols.includes(parsedUrl.protocol)) {
       return 'url';

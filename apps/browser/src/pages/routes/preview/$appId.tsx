@@ -92,7 +92,7 @@ function PreviewPage() {
         src={src}
         className="size-full border-0 bg-background"
         // Keep app:// same-origin semantics for mini-app storage and app-local
-        // fetches. The parent shell is stagewise://internal, so this does not
+        // fetches. The parent shell is stagevibe://internal, so this does not
         // make preview content same-origin with the privileged shell.
         sandbox="allow-scripts allow-same-origin"
         title={`${appId} preview`}

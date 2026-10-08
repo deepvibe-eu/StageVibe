@@ -12,7 +12,7 @@ export const nativeFileManagerLabel = (() => {
 })();
 
 /**
- * Generates a `stagewise://open-folder-in-ide/` URL. The backend handler
+ * Generates a `stagevibe://open-folder-in-ide/` URL. The backend handler
  * reads the directory, finds the first file alphabetically, and opens it
  * in the target IDE. If the folder is empty, it reveals in the native
  * file manager instead.
@@ -24,7 +24,7 @@ export const getFolderIDEUrl = (
   const clean = absFolderPath.endsWith('/')
     ? absFolderPath.slice(0, -1)
     : absFolderPath;
-  return `stagewise://open-folder-in-ide/${clean}?ide=${ide}`;
+  return `stagevibe://open-folder-in-ide/${clean}?ide=${ide}`;
 };
 
 export const IDE_SELECTION_ITEMS: Record<OpenFilesInIde, string> = {
@@ -67,7 +67,7 @@ export const getIDEFileUrl = (
       url = `kiro://file/${absFilePath}`;
       break;
     case 'fileManager':
-      url = `stagewise://reveal-file/${encodeURIComponent(absFilePath)}`;
+      url = `stagevibe://reveal-file/${encodeURIComponent(absFilePath)}`;
       break;
   }
   if (lineNumber) url += `:${lineNumber}`;

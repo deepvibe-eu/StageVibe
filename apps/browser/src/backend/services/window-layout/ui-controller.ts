@@ -476,12 +476,12 @@ export class UIController extends EventEmitter<UIControllerEventMap> {
 
     view.setBackgroundColor('#00000000');
 
-    // Intercept non-http navigations in the UI frame (e.g. stagewise://reveal-file/)
+    // Intercept non-http navigations in the UI frame (e.g. stagevibe://reveal-file/)
     view.webContents.on('will-navigate', (event, url) => {
-      if (url.startsWith('stagewise://reveal-file/')) {
+      if (url.startsWith('stagevibe://reveal-file/')) {
         event.preventDefault();
         const filePath = decodeURIComponent(
-          url.replace('stagewise://reveal-file/', '').replace(/:\d+$/, ''),
+          url.replace('stagevibe://reveal-file/', '').replace(/:\d+$/, ''),
         );
         this.logger.debug(
           `[UIController] Revealing file in folder: ${filePath}`,
@@ -489,18 +489,18 @@ export class UIController extends EventEmitter<UIControllerEventMap> {
         revealPathInFileManager(filePath);
         return;
       }
-      if (url.startsWith('stagewise://open-folder-in-ide/')) {
+      if (url.startsWith('stagevibe://open-folder-in-ide/')) {
         event.preventDefault();
         void openFolderFirstFileInIde(url, this.logger);
       }
     });
 
     view.webContents.setWindowOpenHandler((details) => {
-      // Intercept stagewise://reveal-file/ to show file in native file manager
-      if (details.url.startsWith('stagewise://reveal-file/')) {
+      // Intercept stagevibe://reveal-file/ to show file in native file manager
+      if (details.url.startsWith('stagevibe://reveal-file/')) {
         const filePath = decodeURIComponent(
           details.url
-            .replace('stagewise://reveal-file/', '')
+            .replace('stagevibe://reveal-file/', '')
             .replace(/:\d+$/, ''),
         );
         this.logger.debug(
@@ -510,9 +510,9 @@ export class UIController extends EventEmitter<UIControllerEventMap> {
         return { action: 'deny' };
       }
 
-      // Intercept stagewise://open-folder-in-ide/ — find first file in
+      // Intercept stagevibe://open-folder-in-ide/ — find first file in
       // the directory and open it in the IDE, or reveal in Finder/Explorer.
-      if (details.url.startsWith('stagewise://open-folder-in-ide/')) {
+      if (details.url.startsWith('stagevibe://open-folder-in-ide/')) {
         void openFolderFirstFileInIde(details.url, this.logger);
         return { action: 'deny' };
       }

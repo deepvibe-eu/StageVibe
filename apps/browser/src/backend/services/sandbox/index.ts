@@ -507,7 +507,7 @@ export class SandboxService extends DisposableService {
           const previewTitle = encodePreviewTitleParam(msg.title);
           if (previewTitle) params.set('title', previewTitle);
 
-          const url = `stagewise://internal/preview/${encodeURIComponent(msg.appId)}?${params.toString()}`;
+          const url = `stagevibe://internal/preview/${encodeURIComponent(msg.appId)}?${params.toString()}`;
           const setActive = msg.setActive ?? true;
           const activeTabApp = this.activeTabApps.get(msg.agentId);
           const reusableTabId =

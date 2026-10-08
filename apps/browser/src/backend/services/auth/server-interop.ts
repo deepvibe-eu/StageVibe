@@ -17,7 +17,7 @@ const CONSOLE_URL =
   process.env.STAGEWISE_CONSOLE_URL || 'https://console.stagewise.io';
 const ELECTRON_CLIENT_ID = 'electron';
 const STAGEWISE_PRODUCTION_API_ORIGIN = 'https://api.stagewise.io';
-const STABLE_AUTH_CALLBACK_SCHEME = 'stagewise';
+const STABLE_AUTH_CALLBACK_SCHEME = 'stagevibe';
 // @better-auth/electron stores Electron OAuth PKCE code verifiers in this
 // process-global map keyed by OAuth state. Our API-hosted handoff constructs
 // the same PKCE request manually, so it must seed the official store before
@@ -41,15 +41,15 @@ function getOrigin(url: string): string | null {
 
 function shouldUseStableHostedApiAuthScheme(): boolean {
   return (
-    AUTH_CALLBACK_SCHEME === 'stagewise-dev' &&
+    AUTH_CALLBACK_SCHEME === 'stagevibe-dev' &&
     getOrigin(API_URL) === STAGEWISE_PRODUCTION_API_ORIGIN
   );
 }
 
 // The hosted production API trusts the production Electron origin. Local dev
-// builds normally use `stagewise-dev:/`, which makes hosted auth endpoints fail
-// with "invalid origin". When a dev build targets the hosted API, use the
-// stable auth origin while still keeping `stagewise-dev` for non-hosted APIs.
+// builds normally use `stagevibe-dev:/`, which makes hosted auth endpoints
+// fail with "invalid origin". When a dev build targets the hosted API, use the
+// stable auth origin while still keeping `stagevibe-dev` for non-hosted APIs.
 export const API_AUTH_CALLBACK_SCHEME = shouldUseStableHostedApiAuthScheme()
   ? STABLE_AUTH_CALLBACK_SCHEME
   : AUTH_CALLBACK_SCHEME;
@@ -123,7 +123,7 @@ export async function openSocialAuthInSystemBrowser(
  * `@better-auth/electron` global store, and opens the console with the
  * PKCE params in the query string. The console completes the email OTP
  * flow on a valid origin (where Turnstile works), then redirects back
- * to the app's callback scheme (e.g. `stagewise://`, `stagewise-nightly://`)
+ * to the app's callback scheme (e.g. `stagevibe://`, `stagewise-nightly://`)
  * with the electron handoff token.
  */
 export async function openEmailAuthInSystemBrowser(): Promise<void> {

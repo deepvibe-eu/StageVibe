@@ -29,7 +29,7 @@ export function FileContextMenu({
     if (!resolvePath) return;
     const abs = resolvePath(relativePath);
     if (!abs) return;
-    window.open(`stagewise://reveal-file/${encodeURIComponent(abs)}`, '_blank');
+    window.open(`stagevibe://reveal-file/${encodeURIComponent(abs)}`, '_blank');
   };
 
   return (

@@ -26,7 +26,9 @@ if (started) {
 
 // Keep the dev identity stable so isolated profiles can read safeStorage data
 // copied from the default dev profile. Window titles still use __APP_NAME__.
-app.setName(__APP_RELEASE_CHANNEL__ === 'dev' ? 'StageVibe (Dev)' : __APP_NAME__);
+app.setName(
+  __APP_RELEASE_CHANNEL__ === 'dev' ? 'StageVibe (Dev)' : __APP_NAME__,
+);
 if (process.platform === 'win32') {
   app.setAppUserModelId(
     `com.squirrel.${__APP_BASE_NAME__}.${__APP_BASE_NAME__}`,
@@ -43,6 +45,19 @@ app.setPath('sessionData', path.join(app.getPath('userData'), 'session'));
 // Register custom protocols as privileged (must happen before app.ready)
 protocol.registerSchemesAsPrivileged([
   {
+    scheme: 'stagevibe',
+    privileges: {
+      standard: true,
+      secure: true,
+      allowServiceWorkers: true,
+      codeCache: true,
+      stream: true,
+      supportFetchAPI: true,
+      corsEnabled: true,
+    },
+  },
+  {
+    // Legacy scheme kept privileged so pre-rename internal URLs keep working.
     scheme: 'stagewise',
     privileges: {
       standard: true,

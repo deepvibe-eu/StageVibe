@@ -13,6 +13,7 @@ import { getIDEFileUrl } from '@shared/ide-url';
 const BROWSER_HANDLED_PROTOCOLS = new Set([
   'http:',
   'https:',
+  'stagevibe:',
   'stagewise:',
   'app:',
 ]);
@@ -21,7 +22,7 @@ const BROWSER_HANDLED_PROTOCOLS = new Set([
  * Protocols that app UI links may open in internal browsing tabs.
  * External web links from the UI should use the user's default browser.
  */
-const UI_INTERNAL_TAB_PROTOCOLS = new Set(['stagewise:', 'app:']);
+const UI_INTERNAL_TAB_PROTOCOLS = new Set(['stagevibe:', 'stagewise:', 'app:']);
 
 /**
  * Check if the browser can handle the given URL's protocol.
@@ -65,7 +66,7 @@ export function shouldOpenUiUrlInInternalTab(url: string): boolean {
 }
 
 /**
- * Handles `stagewise://open-folder-in-ide/<absPath>?ide=<ide>` URLs.
+ * Handles `stagevibe://open-folder-in-ide/<absPath>?ide=<ide>` URLs.
  * Reads the directory, picks the alphabetically first file, and opens it
  * in the requested IDE. Falls back to revealing the folder in
  * Finder / Explorer if no files exist.
@@ -95,7 +96,7 @@ export async function openFolderFirstFileInIde(
   url: string,
   logger: Logger,
 ): Promise<void> {
-  const withoutScheme = url.replace('stagewise://open-folder-in-ide/', '');
+  const withoutScheme = url.replace('stagevibe://open-folder-in-ide/', '');
   const qIdx = withoutScheme.indexOf('?');
   const folderPath = qIdx >= 0 ? withoutScheme.slice(0, qIdx) : withoutScheme;
   const params = new URLSearchParams(
@@ -114,7 +115,7 @@ export async function openFolderFirstFileInIde(
       const target = path.join(folderPath, files[0]);
       const ideUrl = getIDEFileUrl(target, ide);
       logger.debug(`[openFolderFirstFileInIde] Opening first file: ${target}`);
-      if (ideUrl.startsWith('stagewise://reveal-file/')) {
+      if (ideUrl.startsWith('stagevibe://reveal-file/')) {
         revealPathInFileManager(target);
       } else {
         shell.openExternal(ideUrl);

@@ -14,9 +14,9 @@ export declare global {
       | ((element: Element, backendNodeId: number) => TrackedElement)
       | undefined;
     /**
-     * PagesAPI karton connection - only available on stagewise://internal origin
+     * PagesAPI karton connection - only available on stagevibe://internal origin
      * This is exposed via contextBridge and is only available when the page
-     * origin is "stagewise://internal". The origin check is performed securely
+     * origin is "stagevibe://internal". The origin check is performed securely
      * in the isolated world (preload script) and cannot be spoofed.
      */
     stagewisePagesApi?:

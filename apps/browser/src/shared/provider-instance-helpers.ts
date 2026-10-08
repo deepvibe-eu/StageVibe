@@ -298,7 +298,9 @@ export function vendorHasApiKey(
  * Note: Stagewise instances are NOT considered configured by default -
  * they require a non-free subscription which is checked separately via userAccount.
  */
-export function isProviderInstanceConfigured(instance: ProviderInstance): boolean {
+export function isProviderInstanceConfigured(
+  instance: ProviderInstance,
+): boolean {
   if (instance.typeId === 'coding-plan') {
     return true;
   }

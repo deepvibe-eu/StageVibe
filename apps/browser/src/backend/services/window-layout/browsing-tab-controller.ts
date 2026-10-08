@@ -985,7 +985,7 @@ export class BrowsingTabController extends EventEmitter<TabControllerEventMap> {
       wc.isDestroyed() ||
       wc.isLoading() ||
       this.currentState.error !== null ||
-      this.currentState.url.startsWith('stagewise://internal/')
+      this.currentState.url.startsWith('stagevibe://internal/')
     ) {
       return null;
     }
@@ -1389,12 +1389,12 @@ export class BrowsingTabController extends EventEmitter<TabControllerEventMap> {
   private setupEventListeners() {
     const wc = this.webContentsView.webContents;
 
-    // Intercept stagewise://reveal-file/ to show file in native file manager
+    // Intercept stagevibe://reveal-file/ to show file in native file manager
     wc.on('will-navigate', (event, url) => {
-      if (url.startsWith('stagewise://reveal-file/')) {
+      if (url.startsWith('stagevibe://reveal-file/')) {
         event.preventDefault();
         const filePath = decodeURIComponent(
-          url.replace('stagewise://reveal-file/', '').replace(/:\d+$/, ''),
+          url.replace('stagevibe://reveal-file/', '').replace(/:\d+$/, ''),
         );
         this.logger.debug(
           `[TabController] Revealing file in folder: ${filePath}`,
@@ -1402,7 +1402,7 @@ export class BrowsingTabController extends EventEmitter<TabControllerEventMap> {
         revealPathInFileManager(filePath);
         return;
       }
-      if (url.startsWith('stagewise://open-folder-in-ide/')) {
+      if (url.startsWith('stagevibe://open-folder-in-ide/')) {
         event.preventDefault();
         void openFolderFirstFileInIde(url, this.logger);
         return;
@@ -1663,11 +1663,11 @@ export class BrowsingTabController extends EventEmitter<TabControllerEventMap> {
     });
 
     wc.setWindowOpenHandler((details) => {
-      // Intercept stagewise://reveal-file/ to show file in native file manager
-      if (details.url.startsWith('stagewise://reveal-file/')) {
+      // Intercept stagevibe://reveal-file/ to show file in native file manager
+      if (details.url.startsWith('stagevibe://reveal-file/')) {
         const filePath = decodeURIComponent(
           details.url
-            .replace('stagewise://reveal-file/', '')
+            .replace('stagevibe://reveal-file/', '')
             .replace(/:\d+$/, ''),
         );
         this.logger.debug(
@@ -1677,9 +1677,9 @@ export class BrowsingTabController extends EventEmitter<TabControllerEventMap> {
         return { action: 'deny' };
       }
 
-      // Intercept stagewise://open-folder-in-ide/ — find first file in
+      // Intercept stagevibe://open-folder-in-ide/ — find first file in
       // the directory and open it in the IDE, or reveal in Finder/Explorer.
-      if (details.url.startsWith('stagewise://open-folder-in-ide/')) {
+      if (details.url.startsWith('stagevibe://open-folder-in-ide/')) {
         void openFolderFirstFileInIde(details.url, this.logger);
         return { action: 'deny' };
       }
@@ -3084,11 +3084,11 @@ export class BrowsingTabController extends EventEmitter<TabControllerEventMap> {
   /*
    * Logs a navigation to history service.
    * Uses pendingNavigation if set, otherwise defaults to LINK transition.
-   * Skips logging for internal stagewise:// URLs.
+   * Skips logging for internal stagevibe:// URLs.
    */
   private async logNavigationToHistory(url: string): Promise<void> {
     // Skip internal URLs
-    if (url.startsWith('stagewise://')) {
+    if (url.startsWith('stagevibe://')) {
       this.pendingNavigation = null;
       return;
     }

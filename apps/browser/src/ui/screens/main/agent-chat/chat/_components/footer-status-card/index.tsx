@@ -207,7 +207,7 @@ export function StatusCard() {
     (filename: string) => {
       if (contentCollapsed) setContentCollapsed(false);
 
-      const baseUrl = `stagewise://internal/plan/${encodeURIComponent(filename)}`;
+      const baseUrl = `stagevibe://internal/plan/${encodeURIComponent(filename)}`;
 
       // Reuse existing plan tab for this plan if one is already open
       const existingTab = Object.values(tabs).find((tab) =>
