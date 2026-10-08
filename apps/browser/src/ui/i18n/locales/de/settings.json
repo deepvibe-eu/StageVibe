@@ -389,7 +389,7 @@
     "contextCompressionDescription": "Modelle zur Komprimierung des Konversationsverlaufs.",
     "presetsTitle": "Voreinstellungen",
     "presetsDescription": "Benannte Modellkonfigurationen für einfaches Wechseln. Wird oben im Modellauswahl angezeigt.",
-    "addPreset": "Voreinstellung hinzufügen",
+    "addPreset": "Voreinstellung",
     "noPresets": "Keine Voreinstellungen konfiguriert.",
     "noPresetsHint": "Erstelle eine Voreinstellung, um schnell zwischen Modellkonfigurationen zu wechseln.",
     "editor": {
@@ -661,7 +661,7 @@
       "title": "Modelle & Anbieter",
       "providers": "Anbieter",
       "providersDescription": "Konfiguriere, wie der Agent eine Verbindung zu LLM-Anbietern herstellt. Füge API-Schlüssel hinzu, verbinde Coding-Pläne oder richte benutzerdefinierte Endpunkte ein.",
-      "addProvider": "Anbieter hinzufügen"
+      "addProvider": "Anbieter"
     }
   },
   "worktree": {

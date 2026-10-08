@@ -389,7 +389,7 @@
     "contextCompressionDescription": "Modèles utilisés pour compresser l'historique de conversation.",
     "presetsTitle": "Préréglages",
     "presetsDescription": "Configurations de modèle nommées pour basculer en un clic. Affichées en haut du sélecteur de modèle.",
-    "addPreset": "Ajouter un préréglage",
+    "addPreset": "Préréglage",
     "noPresets": "Aucun préréglage configuré.",
     "noPresetsHint": "Créez un préréglage pour basculer rapidement entre les configurations de modèle.",
     "editor": {
@@ -658,7 +658,7 @@
       "title": "Modèles et fournisseurs",
       "providers": "Fournisseurs",
       "providersDescription": "Configurez comment l'agent se connecte aux fournisseurs LLM. Ajoutez des clés API, connectez des plans de codage ou configurez des points de terminaison personnalisés.",
-      "addProvider": "Ajouter un fournisseur"
+      "addProvider": "Fournisseur"
     }
   },
   "worktree": {

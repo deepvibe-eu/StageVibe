@@ -389,7 +389,7 @@
     "contextCompressionDescription": "Modelos usados para comprimir el historial de conversación.",
     "presetsTitle": "Presets",
     "presetsDescription": "Configuraciones de modelos nombradas para cambio con un clic. Mostradas en la parte superior del selector de modelos.",
-    "addPreset": "Agregar preset",
+    "addPreset": "Preset",
     "noPresets": "No hay presets configurados.",
     "noPresetsHint": "Crea un preset para cambiar rápidamente entre configuraciones de modelo.",
     "editor": {
@@ -661,7 +661,7 @@
       "title": "Modelos y Proveedores",
       "providers": "Proveedores",
       "providersDescription": "Configura cómo el agente se conecta a proveedores LLM. Agrega claves API, conecta planes de código o configura endpoints personalizados.",
-      "addProvider": "Agregar Proveedor"
+      "addProvider": "Proveedor"
     }
   },
   "worktree": {
