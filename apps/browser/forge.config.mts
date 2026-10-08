@@ -360,8 +360,9 @@ const config: ForgeConfig = {
         schemes: ['stagevibe', 'stagewise'],
       },
     ],
-    // macOS code signing (only for non-dev builds)
-    ...(buildConstants.__APP_RELEASE_CHANNEL__ !== 'dev'
+    // macOS code signing (non-dev builds with a signing identity configured)
+    ...(buildConstants.__APP_RELEASE_CHANNEL__ !== 'dev' &&
+    process.env.APPLE_SIGNING_IDENTITY
       ? {
           osxSign: {
             optionsForFile: (_filePath) => {
@@ -369,13 +370,19 @@ const config: ForgeConfig = {
                 entitlements: 'etc/macos/entitlements.plist',
               };
             },
-            identity: process.env.APPLE_SIGNING_IDENTITY!,
+            identity: process.env.APPLE_SIGNING_IDENTITY,
           },
-          osxNotarize: {
-            appleId: process.env.APPLE_ID!,
-            appleIdPassword: process.env.APPLE_PASSWORD!,
-            teamId: process.env.APPLE_TEAM_ID!,
-          },
+          ...(process.env.APPLE_ID &&
+          process.env.APPLE_PASSWORD &&
+          process.env.APPLE_TEAM_ID
+            ? {
+                osxNotarize: {
+                  appleId: process.env.APPLE_ID,
+                  appleIdPassword: process.env.APPLE_PASSWORD,
+                  teamId: process.env.APPLE_TEAM_ID,
+                },
+              }
+            : {}),
         }
       : {}),
     // Windows code signing via Azure Trusted Signing (only when configured)
