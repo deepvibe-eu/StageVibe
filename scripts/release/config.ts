@@ -10,12 +10,12 @@ import type { PackageConfig } from './types.js';
  */
 export const packages: PackageConfig[] = [
   {
-    name: 'stagewise',
+    name: 'stagevibe',
     path: 'apps/browser/package.json',
-    scope: 'stagewise',
+    scope: 'stagevibe',
     publishToNpm: false,
     createGithubRelease: true,
-    tagPrefix: 'stagewise@',
+    tagPrefix: 'stagevibe@',
     prereleaseEnabled: true,
   },
   {

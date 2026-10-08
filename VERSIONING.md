@@ -31,22 +31,22 @@ All commits MUST follow the Conventional Commits specification with a **mandator
 
 Scopes are auto-detected from workspace packages. Use the **exact** package name:
 
-- `stagewise` - The desktop browser app (apps/browser, package name is `stagewise`)
+- `stagevibe` - The desktop browser app (apps/browser, package name is `stagevibe`)
 - `karton` - The karton package (packages/karton)
 - `stage-ui` - Stage UI components (packages/stage-ui)
 
-**Important:** Sub-scopes like `stagewise-ui` are NOT valid. Use the parent package scope. Use `stagewise` (not `browser`) for changes to the Electron app — the folder is still `apps/browser` but the package, tag prefix, and scope are all `stagewise`.
+**Important:** Sub-scopes like `stagevibe-ui` are NOT valid. Use the parent package scope. Use `stagevibe` (not `browser`) for changes to the Electron app — the folder is still `apps/browser` but the package, tag prefix, and scope are all `stagevibe`.
 
 ### Examples
 
 ```bash
 # Good
-feat(stagewise): add dark mode toggle
+feat(stagevibe): add dark mode toggle
 fix(karton): resolve connection timeout issue
-docs(stagewise): update installation guide
+docs(stagevibe): update installation guide
 
 # Bad - will be rejected
-feat(stagewise-ui): add button component  # Sub-scope not allowed
+feat(stagevibe-ui): add button component  # Sub-scope not allowed
 feat: add new feature                     # Missing scope
 ```
 
@@ -55,7 +55,7 @@ feat: add new feature                     # Missing scope
 Add `BREAKING CHANGE:` in the commit footer or `!` after the type:
 
 ```
-feat(stagewise)!: redesign navigation
+feat(stagevibe)!: redesign navigation
 
 BREAKING CHANGE: Navigation API has changed. Update your code accordingly.
 ```
@@ -115,23 +115,23 @@ Examples:
 
 ```bash
 # Interactive mode - prompts for channel selection
-pnpm version:stagewise
+pnpm version:stagevibe
 pnpm version:karton
 
 # Direct channel specification
-pnpm version:stagewise:alpha
-pnpm version:stagewise:beta
-pnpm version:stagewise:release
+pnpm version:stagevibe:alpha
+pnpm version:stagevibe:beta
+pnpm version:stagevibe:release
 
 pnpm version:karton:alpha
 pnpm version:karton:beta
 pnpm version:karton:release
 
 # Dry run - preview without making changes
-pnpm tsx scripts/release/index.ts --package stagewise --dry-run
+pnpm tsx scripts/release/index.ts --package stagevibe --dry-run
 
 # Abandon current prerelease and start new version cycle
-pnpm tsx scripts/release/index.ts --package stagewise --channel alpha --new-cycle
+pnpm tsx scripts/release/index.ts --package stagevibe --channel alpha --new-cycle
 ```
 
 ### CI (GitHub Actions)
@@ -139,7 +139,7 @@ pnpm tsx scripts/release/index.ts --package stagewise --channel alpha --new-cycl
 Releases are driven by a two-step workflow:
 
 1. **Prepare Release** (manual, `.github/workflows/prepare-release.yml`) — run from the Actions tab with inputs:
-   - `package`: `stagewise` or `karton`
+   - `package`: `stagevibe` or `karton`
    - `channel`: `alpha`, `beta`, or `release`
    - `new-cycle` (optional): abandon the current prerelease and start a fresh cycle
 
@@ -163,7 +163,7 @@ Nightly releases are separate from the release PR flow. `.github/workflows/night
 4. Generate/update CHANGELOG.md
 5. Commit and tag the release
 6. Build artifacts (cross-platform for stagewise)
-7. Create GitHub Release (stagewise) or publish to npm (karton)
+7. Create GitHub Release (stagevibe) or publish to npm (karton)
 
 ### Recovery: Failed Release Builds
 
@@ -173,7 +173,7 @@ If a release fails after the version bump (e.g., build fails on one platform):
 
 1. Fix the issue in a new commit
 2. Go to **Actions** > **Retry Failed Release**
-3. Enter the tag name (e.g., `stagewise@1.0.0-alpha001`)
+3. Enter the tag name (e.g., `stagevibe@1.0.0-alpha001`)
 4. Click **Run workflow**
 
 This will rebuild and publish without bumping the version again.
@@ -182,8 +182,8 @@ This will rebuild and publish without bumping the version again.
 
 ```bash
 # Delete the tag locally and remotely
-git tag -d stagewise@1.0.0-alpha001
-git push origin :refs/tags/stagewise@1.0.0-alpha001
+git tag -d stagevibe@1.0.0-alpha001
+git push origin :refs/tags/stagevibe@1.0.0-alpha001
 
 # Revert the version bump commit
 git revert HEAD
@@ -201,11 +201,11 @@ Just run another release - it will create the next version (e.g., `alpha002` ins
 
 ### stagewise (Electron App)
 
-- **Source path:** `apps/browser/` (folder name preserved for historical reasons; the package itself is `stagewise`)
+- **Source path:** `apps/browser/` (folder name preserved for historical reasons; the package itself is `stagevibe`)
 - **Distribution:** GitHub Releases with release notes
 - **npm:** Not published (desktop app)
-- **Tags:** `stagewise@<version>`
-- **Commit scope:** `stagewise`
+- **Tags:** `stagevibe@<version>`
+- **Commit scope:** `stagevibe`
 
 ### karton (npm Package)
 
@@ -331,9 +331,9 @@ When promoting from beta to release, prerelease changelog entries are consolidat
 
 This error occurs when there are no commits with the specified package scope since the last release. Make sure:
 
-1. Your commits use the correct scope: `feat(stagewise): ...`
+1. Your commits use the correct scope: `feat(stagevibe): ...`
 2. There are actual changes to release
-3. Sub-scopes like `stagewise-ui` need to be changed to `stagewise`
+3. Sub-scopes like `stagevibe-ui` need to be changed to `stagevibe`
 
 ### "Cannot downgrade channel"
 
@@ -344,7 +344,7 @@ If you need to add new features during beta, use `--new-cycle` to abandon the cu
 
 ```bash
 # Current: 1.0.1-beta001, want to start fresh alpha
-pnpm version:stagewise --channel alpha --new-cycle
+pnpm version:stagevibe --channel alpha --new-cycle
 
 # Result: 1.1.0-alpha001 (or 1.0.2-alpha001 depending on commit types)
 ```

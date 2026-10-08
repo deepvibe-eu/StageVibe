@@ -66,7 +66,7 @@ PY
 
 ## Logs
 
-The app logs to the terminal that started it (`pnpm -F stagewise start:fast`, or
+The app logs to the terminal that started it (`pnpm -F stagevibe start:fast`, or
 the packaged binary). Useful markers:
 
 - `[BaseAgent:<id>] Compressing history …`, `[history-compression] …` —

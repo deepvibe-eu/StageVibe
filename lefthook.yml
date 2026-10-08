@@ -11,7 +11,7 @@ pre-commit:
     - name: biome-check
       run: pnpm check
     - name: typecheck-browser
-      run: pnpm -F stagewise typecheck
+      run: pnpm -F stagevibe typecheck
       glob: "apps/browser/**/*.{ts,tsx}"
     - name: generate-theme-colors
       run: pnpm -F @stagewise/stage-ui generate:theme-colors && git add apps/browser/src/backend/shared/theme-colors.ts

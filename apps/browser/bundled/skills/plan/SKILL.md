@@ -62,5 +62,5 @@ user-facing terminology has shifted to "skill". The rename touches 3 files and 6
 
 - [ ] Verify typecheck passes
 
-  Run `pnpm -F stagewise typecheck` for both `tsconfig.ui.json` and `tsconfig.backend.json`.
+  Run `pnpm -F stagevibe typecheck` for both `tsconfig.ui.json` and `tsconfig.backend.json`.
 ```

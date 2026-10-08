@@ -51,7 +51,7 @@ async function getStablePackageVersion(): Promise<string> {
   const packageJson = JSON.parse(await readFile(packageJsonPath, 'utf-8'));
   const version = packageJson.version;
   if (typeof version !== 'string' || !semver.valid(version)) {
-    throw new Error(`Invalid stagewise package version: ${String(version)}`);
+    throw new Error(`Invalid stagevibe package version: ${String(version)}`);
   }
   return version;
 }
@@ -60,7 +60,7 @@ async function getNextCounter(
   baseVersion: string,
   date: string,
 ): Promise<number> {
-  const tagPrefix = `stagewise@${baseVersion}-nightly${date}c`;
+  const tagPrefix = `stagevibe@${baseVersion}-nightly${date}c`;
   const { stdout } = await exec(
     `git tag --list "${tagPrefix}*" --sort=-version:refname`,
   );
@@ -112,7 +112,7 @@ async function main(): Promise<void> {
     ? Number.parseInt(values.counter, 10)
     : await getNextCounter(baseVersion, date);
   const version = `${baseVersion}-nightly${date}c${formatCounter(counter)}`;
-  const tag = `stagewise@${version}`;
+  const tag = `stagevibe@${version}`;
 
   if (!semver.valid(version)) {
     throw new Error(`Generated invalid nightly version: ${version}`);

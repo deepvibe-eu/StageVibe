@@ -18,12 +18,12 @@ run with uncommitted changes.
 export PATH="$HOME/.local/node22/bin:$PATH"
 
 # preview first
-pnpm tsx scripts/release/index.ts --package stagewise --channel release --dry-run
+pnpm tsx scripts/release/index.ts --package stagevibe --channel release --dry-run
 
 # for real (asks for confirmation)
-pnpm version:stagewise:release        # final release
-pnpm version:stagewise:beta           # prerelease
-pnpm version:stagewise:alpha          # early testing
+pnpm version:stagevibe:release        # final release
+pnpm version:stagevibe:beta           # prerelease
+pnpm version:stagevibe:alpha          # early testing
 ```
 
 Version formats and the channel rules (including the 999 counter cap) are in
@@ -33,10 +33,10 @@ Version formats and the channel rules (including the 999 counter cap) are in
 
 ```bash
 git add apps/browser/package.json CHANGELOG.md
-git commit -m "chore(stagewise): release <version>"
-git tag -a "stagewise@<version>" -m "stagewise@<version>"
+git commit -m "chore(stagevibe): release <version>"
+git tag -a "stagevibe@<version>" -m "stagevibe@<version>"
 git push origin custom
-git push origin "stagewise@<version>"
+git push origin "stagevibe@<version>"
 ```
 
 ## 3. Build the artefacts
@@ -46,15 +46,15 @@ git push origin "stagewise@<version>"
 its generator, so prefer AppImage and zip.
 
 ```bash
-pnpm -F stagewise make --targets AppImage
-pnpm -F stagewise make --targets zip
+pnpm -F stagevibe make --targets AppImage
+pnpm -F stagevibe make --targets zip
 # artefacts land in apps/browser/out/dev/make/<target>/x64/
 ```
 
 ## 4. Publish on Gitea
 
 1. Open the repository on Gitea → **Releases** → **New release**.
-2. Choose the tag created above (`stagewise@<version>`).
+2. Choose the tag created above (`stagevibe@<version>`).
 3. Paste the changelog section for this version as the release notes.
 4. Attach the artefacts from `apps/browser/out/dev/make/…`.
 5. Publish.

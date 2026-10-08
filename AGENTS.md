@@ -24,13 +24,13 @@ This file provides guidance to AI coding agents when working with code in this r
 - `pnpm -F <package-name> test` - Run tests for a specific package (e.g., `pnpm -F @stagewise/karton test`)
 
 ### Browser App Specific
-- `pnpm -F stagewise start` - Start the Electron browser app with typechecking
-- `pnpm -F stagewise start:fast` - Start the Electron browser app without the initial typecheck
-- `pnpm -F stagewise start:isolated` - Start with an isolated development profile
-- `pnpm -F stagewise storybook` - Start Storybook for browser UI components
-- `pnpm -F stagewise typecheck` - Typecheck browser UI, backend, web-content preload, and Storybook code
+- `pnpm -F stagevibe start` - Start the Electron browser app with typechecking
+- `pnpm -F stagevibe start:fast` - Start the Electron browser app without the initial typecheck
+- `pnpm -F stagevibe start:isolated` - Start with an isolated development profile
+- `pnpm -F stagevibe storybook` - Start Storybook for browser UI components
+- `pnpm -F stagevibe typecheck` - Typecheck browser UI, backend, web-content preload, and Storybook code
 - `pnpm --dir apps/browser exec tsc -p tsconfig.pages.json --noEmit` - Typecheck Chromium pages separately
-- `pnpm -F stagewise test` - Run browser app tests
+- `pnpm -F stagevibe test` - Run browser app tests
 
 ### Maintenance
 - `pnpm clean` - Clean root node_modules
@@ -45,7 +45,7 @@ Stagewise is a pnpm workspace and Turborepo monorepo. The product is an open-sou
 
 ```
 apps/
-  browser/        - Electron app and main product (package `stagewise`)
+  browser/        - Electron app and main product (package `stagevibe`)
   stagewise-cli/  - Headless host for the extracted agent packages
 
 packages/
@@ -100,7 +100,7 @@ Naming conventions:
 Types: `build`, `chore`, `ci`, `docs`, `feat`, `fix`, `perf`, `refactor`, `revert`, `style`, `test`
 
 Scopes use pnpm workspace package basenames without the `@stagewise/` prefix:
-- `stagewise` - apps/browser
+- `stagevibe` - apps/browser
 - `stagewise-cli` - apps/stagewise-cli
 - `agent-core` - packages/agent-core
 - `agent-shell` - packages/agent-shell
@@ -114,7 +114,7 @@ Scopes use pnpm workspace package basenames without the `@stagewise/` prefix:
 
 Examples:
 ```bash
-feat(stagewise): add isolated profile selector
+feat(stagevibe): add isolated profile selector
 fix(agent-core): preserve mount state during retry
 chore(global): update workspace tooling
 ```

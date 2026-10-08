@@ -55,7 +55,7 @@ jobs:
         run: pnpm build
 
       - name: Typecheck browser app
-        run: pnpm -F stagewise typecheck
+        run: pnpm -F stagevibe typecheck
 
       - name: Tests
         run: pnpm test

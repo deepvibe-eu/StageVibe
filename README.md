@@ -146,7 +146,7 @@ compacted regions; file export opens a native save dialog
 Portable AppImage on Linux:
 
 ```bash
-pnpm -F stagewise make --targets AppImage
+pnpm -F stagevibe make --targets AppImage
 # -> apps/browser/out/dev/make/AppImage/x64/*.AppImage
 ```
 
@@ -174,11 +174,11 @@ profiles fall back to the legacy `stagewise-dev` profile when seeding.
 export PATH="$HOME/.local/node22/bin:$PATH"   # Node >= 22.12 for tooling
 pnpm install
 
-pnpm -F stagewise start:fast   # build workspace packages + start the app
-pnpm -F stagewise start        # same, with typecheck first
+pnpm -F stagevibe start:fast   # build workspace packages + start the app
+pnpm -F stagevibe start        # same, with typecheck first
 pnpm build                     # build all workspace packages
-pnpm -F stagewise package      # unpacked app
-pnpm -F stagewise make --targets AppImage
+pnpm -F stagevibe package      # unpacked app
+pnpm -F stagevibe make --targets AppImage
 ```
 
 Note: the toolchain runs on Node 22+, while the packaged app runs on
