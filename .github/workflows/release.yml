@@ -1,8 +1,10 @@
 name: Release StageVibe
 
-# Manual release build. Trigger from Actions > Release StageVibe.
-# Builds macOS (arm64 + x64), Windows and Linux artifacts and optionally
-# attaches them to a GitHub Release tagged `stagevibe@<version>`.
+# Builds release artifacts for macOS (arm64 + x64), Windows and Linux.
+#
+# Triggers:
+#   - push a tag `stagevibe@<version>`  -> build artifacts only
+#   - manual (workflow_dispatch)        -> optionally also create a GitHub Release
 #
 # Required repository configuration (Settings > Secrets and variables > Actions):
 #   vars:    API_URL, VITE_API_URL, STAGEWISE_CONSOLE_URL,
@@ -10,15 +12,14 @@ name: Release StageVibe
 #            VITE_TURNSTILE_SITE_KEY, POSTHOG_CLI_HOST, VITE_DISABLE_TELEMETRY
 #   secrets: POSTHOG_API_KEY, VITE_POSTHOG_API_KEY, POSTHOG_CLI_API_KEY,
 #            POSTHOG_CLI_PROJECT_ID, NUCLEO_LICENSE_KEY
-#   macOS signing (required for signed notarized builds):
+#   macOS signing (optional, for signed + notarized builds):
 #            APPLE_ID, APPLE_PASSWORD, APPLE_TEAM_ID, APPLE_SIGNING_IDENTITY,
 #            MACOS_CERT_P12_BASE64, MACOS_CERT_P12_PASSWORD
 #   Windows signing (optional, Azure Trusted Signing):
 #            AZURE_TENANT_ID, AZURE_CLIENT_ID, AZURE_CLIENT_SECRET,
 #            AZURE_ACCOUNT_NAME, AZURE_ACCOUNT_ENDPOINT_URI,
 #            AZURE_CERTIFICATE_PROFILE_NAME
-# If the macOS signing secrets are absent the build will fail at signing; set
-# the signing identity only when the certificate is imported.
+# Without the macOS/Windows signing secrets the builds are produced unsigned.
 
 on:
   workflow_dispatch:
@@ -46,14 +47,52 @@ on:
         required: false
         default: true
         type: boolean
+  push:
+    tags:
+      - "stagevibe@*"
 
 concurrency:
-  group: release-${{ inputs.version }}-${{ inputs.ref }}
+  group: release-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
+  meta:
+    name: Resolve version and channel
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.meta.outputs.version }}
+      channel: ${{ steps.meta.outputs.channel }}
+      ref: ${{ steps.meta.outputs.ref }}
+      tag: ${{ steps.meta.outputs.tag }}
+      create_release: ${{ steps.meta.outputs.create_release }}
+    steps:
+      - id: meta
+        shell: bash
+        run: |
+          if [ "${GITHUB_EVENT_NAME}" = "workflow_dispatch" ]; then
+            echo "version=${{ inputs.version }}" >> "$GITHUB_OUTPUT"
+            echo "channel=${{ inputs.channel }}" >> "$GITHUB_OUTPUT"
+            echo "ref=${{ inputs.ref }}" >> "$GITHUB_OUTPUT"
+            echo "tag=stagevibe@${{ inputs.version }}" >> "$GITHUB_OUTPUT"
+            echo "create_release=${{ inputs.create_release }}" >> "$GITHUB_OUTPUT"
+          else
+            tag="${GITHUB_REF_NAME}"
+            echo "version=${tag#stagevibe@}" >> "$GITHUB_OUTPUT"
+            echo "channel=release" >> "$GITHUB_OUTPUT"
+            echo "ref=${GITHUB_SHA}" >> "$GITHUB_OUTPUT"
+            echo "tag=${tag}" >> "$GITHUB_OUTPUT"
+            echo "create_release=false" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Summary
+        run: |
+          echo "version=${{ steps.meta.outputs.version }}"
+          echo "channel=${{ steps.meta.outputs.channel }}"
+          echo "tag=${{ steps.meta.outputs.tag }}"
+          echo "create_release=${{ steps.meta.outputs.create_release }}"
+
   build:
     name: Build ${{ matrix.artifact }}
+    needs: meta
     runs-on: ${{ matrix.os }}
     permissions:
       contents: read
@@ -93,7 +132,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ inputs.ref }}
+          ref: ${{ needs.meta.outputs.ref }}
           fetch-depth: 0
 
       - uses: pnpm/action-setup@v4
@@ -117,7 +156,7 @@ jobs:
             fs.writeFileSync(path, `${JSON.stringify(pkg, null, 2)}\n`);
           '
         env:
-          RELEASE_VERSION: ${{ inputs.version }}
+          RELEASE_VERSION: ${{ needs.meta.outputs.version }}
 
       - name: Import macOS signing certificate
         if: runner.os == 'macOS' && secrets.MACOS_CERT_P12_BASE64 != ''
@@ -167,8 +206,8 @@ jobs:
         run: pnpm make --arch=${{ matrix.arch }}
         env:
           BUILD_MODE: production
-          RELEASE_CHANNEL: ${{ inputs.channel == 'release' && 'release' || inputs.channel == 'nightly' && 'nightly' || 'prerelease' }}
-          APP_VERSION_OVERRIDE: ${{ inputs.version }}
+          RELEASE_CHANNEL: ${{ needs.meta.outputs.channel }}
+          APP_VERSION_OVERRIDE: ${{ needs.meta.outputs.version }}
           APPLE_ID: ${{ secrets.APPLE_ID }}
           APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
           APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
@@ -190,8 +229,8 @@ jobs:
 
   release:
     name: GitHub Release
-    needs: build
-    if: ${{ inputs.create_release }}
+    needs: [meta, build]
+    if: ${{ needs.meta.outputs.create_release == 'true' }}
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -209,8 +248,8 @@ jobs:
 
       - uses: softprops/action-gh-release@v2
         with:
-          tag_name: stagevibe@${{ inputs.version }}
-          name: StageVibe ${{ inputs.version }}
-          prerelease: ${{ inputs.channel != 'release' }}
+          tag_name: ${{ needs.meta.outputs.tag }}
+          name: StageVibe ${{ needs.meta.outputs.version }}
+          prerelease: ${{ needs.meta.outputs.channel != 'release' }}
           generate_release_notes: true
           files: release/*
