@@ -144,7 +144,7 @@ function DefaultLayoutInner({ show }: { show: boolean }) {
   useEffect(() => {
     const panel = browserTreePanelRef.current;
     if (!panel) return;
-    const shouldShow = !contentCollapsed && hasVisibleTabs;
+    const shouldShow = !contentCollapsed && (hasVisibleTabs || fileTreeVisible);
     const isPanelCollapsed = panel.isCollapsed();
     if (shouldShow && isPanelCollapsed) {
       const restoreSize = contentSizeRef.current;
@@ -155,7 +155,7 @@ function DefaultLayoutInner({ show }: { show: boolean }) {
       if (currentSize > 0) contentSizeRef.current = currentSize;
       panel.collapse();
     }
-  }, [contentCollapsed, hasVisibleTabs]);
+  }, [contentCollapsed, hasVisibleTabs, fileTreeVisible]);
 
   const fileTreeSizeRef = useRef(readPanelSize(fileTreePanelSizeKey, 15));
   const contentSizeRef = useRef(readPanelSize(contentPanelSizeKey, 85));
@@ -398,8 +398,12 @@ function DefaultLayoutInner({ show }: { show: boolean }) {
                       id="browser-tree-panel"
                       ref={browserTreePanelRef}
                       order={1}
-                      defaultSize={hasVisibleTabs ? contentSizeRef.current : 0}
-                      minSize={hasVisibleTabs ? 5 : 0}
+                      defaultSize={
+                        hasVisibleTabs || fileTreeVisible
+                          ? contentSizeRef.current
+                          : 0
+                      }
+                      minSize={hasVisibleTabs || fileTreeVisible ? 5 : 0}
                       collapsible
                       collapsedSize={0}
                       className={cn(
