@@ -1,0 +1,216 @@
+name: Release StageVibe
+
+# Manual release build. Trigger from Actions > Release StageVibe.
+# Builds macOS (arm64 + x64), Windows and Linux artifacts and optionally
+# attaches them to a GitHub Release tagged `stagevibe@<version>`.
+#
+# Required repository configuration (Settings > Secrets and variables > Actions):
+#   vars:    API_URL, VITE_API_URL, STAGEWISE_CONSOLE_URL,
+#            VITE_STAGEWISE_CONSOLE_URL, LLM_PROXY_URL, UPDATE_SERVER_ORIGIN,
+#            VITE_TURNSTILE_SITE_KEY, POSTHOG_CLI_HOST, VITE_DISABLE_TELEMETRY
+#   secrets: POSTHOG_API_KEY, VITE_POSTHOG_API_KEY, POSTHOG_CLI_API_KEY,
+#            POSTHOG_CLI_PROJECT_ID, NUCLEO_LICENSE_KEY
+#   macOS signing (required for signed notarized builds):
+#            APPLE_ID, APPLE_PASSWORD, APPLE_TEAM_ID, APPLE_SIGNING_IDENTITY,
+#            MACOS_CERT_P12_BASE64, MACOS_CERT_P12_PASSWORD
+#   Windows signing (optional, Azure Trusted Signing):
+#            AZURE_TENANT_ID, AZURE_CLIENT_ID, AZURE_CLIENT_SECRET,
+#            AZURE_ACCOUNT_NAME, AZURE_ACCOUNT_ENDPOINT_URI,
+#            AZURE_CERTIFICATE_PROFILE_NAME
+# If the macOS signing secrets are absent the build will fail at signing; set
+# the signing identity only when the certificate is imported.
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version to build, without the tag prefix (e.g. 1.0.1)"
+        required: true
+        type: string
+      channel:
+        description: "Release channel"
+        required: true
+        type: choice
+        default: release
+        options:
+          - release
+          - prerelease
+          - nightly
+      ref:
+        description: "Git ref to build from"
+        required: false
+        default: main
+        type: string
+      create_release:
+        description: "Create/update a GitHub Release with the artifacts"
+        required: false
+        default: true
+        type: boolean
+
+concurrency:
+  group: release-${{ inputs.version }}-${{ inputs.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Build ${{ matrix.artifact }}
+    runs-on: ${{ matrix.os }}
+    permissions:
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: macos-26
+            arch: arm64
+            artifact: stagevibe-macos-arm64
+          - os: macos-26-intel
+            arch: x64
+            artifact: stagevibe-macos-x64
+          - os: windows-latest
+            arch: x64
+            artifact: stagevibe-windows-x64
+          - os: ubuntu-latest
+            arch: x64
+            artifact: stagevibe-linux-x64
+    env:
+      NODE_OPTIONS: "--max-old-space-size=8192"
+      NUCLEO_LICENSE_KEY: ${{ secrets.NUCLEO_LICENSE_KEY }}
+      POSTHOG_API_KEY: ${{ secrets.POSTHOG_API_KEY }}
+      VITE_POSTHOG_API_KEY: ${{ secrets.VITE_POSTHOG_API_KEY }}
+      API_URL: ${{ vars.API_URL }}
+      VITE_API_URL: ${{ vars.VITE_API_URL }}
+      STAGEWISE_CONSOLE_URL: ${{ vars.STAGEWISE_CONSOLE_URL }}
+      VITE_STAGEWISE_CONSOLE_URL: ${{ vars.VITE_STAGEWISE_CONSOLE_URL }}
+      LLM_PROXY_URL: ${{ vars.LLM_PROXY_URL }}
+      VITE_DISABLE_TELEMETRY: ${{ vars.VITE_DISABLE_TELEMETRY }}
+      UPDATE_SERVER_ORIGIN: ${{ vars.UPDATE_SERVER_ORIGIN }}
+      VITE_TURNSTILE_SITE_KEY: ${{ vars.VITE_TURNSTILE_SITE_KEY }}
+      POSTHOG_CLI_API_KEY: ${{ secrets.POSTHOG_CLI_API_KEY }}
+      POSTHOG_CLI_PROJECT_ID: ${{ secrets.POSTHOG_CLI_PROJECT_ID }}
+      POSTHOG_CLI_HOST: ${{ vars.POSTHOG_CLI_HOST }}
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref }}
+          fetch-depth: 0
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.30.3
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Apply release version to package metadata
+        run: |
+          node -e '
+            const fs = require("node:fs");
+            const path = "apps/browser/package.json";
+            const pkg = JSON.parse(fs.readFileSync(path, "utf8"));
+            pkg.version = process.env.RELEASE_VERSION;
+            fs.writeFileSync(path, `${JSON.stringify(pkg, null, 2)}\n`);
+          '
+        env:
+          RELEASE_VERSION: ${{ inputs.version }}
+
+      - name: Import macOS signing certificate
+        if: runner.os == 'macOS' && secrets.MACOS_CERT_P12_BASE64 != ''
+        uses: apple-actions/import-codesign-certs@v3
+        with:
+          p12-file-base64: ${{ secrets.MACOS_CERT_P12_BASE64 }}
+          p12-password: ${{ secrets.MACOS_CERT_P12_PASSWORD }}
+
+      - name: Set up Windows code signing (Azure Trusted Signing)
+        if: runner.os == 'Windows' && secrets.AZURE_ACCOUNT_ENDPOINT_URI != ''
+        shell: pwsh
+        run: |
+          $nugetDir = "${{ runner.temp }}\nuget"
+          New-Item -ItemType Directory -Force -Path $nugetDir | Out-Null
+          nuget install Microsoft.Trusted.Signing.Client -Version 1.0.95 -OutputDirectory $nugetDir -Source https://api.nuget.org/v3/index.json
+
+          $dlibPath = Get-ChildItem -Path $nugetDir -Recurse -Filter "Azure.CodeSigning.Dlib.dll" |
+            Where-Object { $_.FullName -match "x64" } |
+            Select-Object -First 1 -ExpandProperty FullName
+          if (-not $dlibPath) { Write-Error "Failed to find Azure.CodeSigning.Dlib.dll"; exit 1 }
+
+          $sdkPath = "C:\Program Files (x86)\Windows Kits\10\bin"
+          $signtoolPath = Get-ChildItem -Path $sdkPath -Recurse -Filter "signtool.exe" |
+            Where-Object { $_.FullName -match "x64" } |
+            Sort-Object { [version]($_.Directory.Parent.Name -replace '^(\d+\.\d+\.\d+\.\d+).*', '$1') } -Descending |
+            Select-Object -First 1 -ExpandProperty FullName
+          if (-not $signtoolPath) { Write-Error "Failed to find signtool.exe in Windows SDK"; exit 1 }
+
+          $metadataPath = "${{ runner.temp }}\metadata.json"
+          $metadataContent = @"
+          {
+            "Endpoint": "${{ secrets.AZURE_ACCOUNT_ENDPOINT_URI }}",
+            "CodeSigningAccountName": "${{ secrets.AZURE_ACCOUNT_NAME }}",
+            "CertificateProfileName": "${{ secrets.AZURE_CERTIFICATE_PROFILE_NAME }}"
+          }
+          "@
+          [System.IO.File]::WriteAllText($metadataPath, $metadataContent.Trim(), [System.Text.UTF8Encoding]::new($false))
+
+          echo "SIGNTOOL_PATH=$signtoolPath" >> $env:GITHUB_ENV
+          echo "AZURE_CODE_SIGNING_DLIB=$dlibPath" >> $env:GITHUB_ENV
+          echo "AZURE_METADATA_JSON=$metadataPath" >> $env:GITHUB_ENV
+
+      - run: pnpm build
+
+      - name: Build distributables
+        working-directory: apps/browser
+        run: pnpm make --arch=${{ matrix.arch }}
+        env:
+          BUILD_MODE: production
+          RELEASE_CHANNEL: ${{ inputs.channel == 'release' && 'release' || inputs.channel == 'nightly' && 'nightly' || 'prerelease' }}
+          APP_VERSION_OVERRIDE: ${{ inputs.version }}
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+          APPLE_SIGNING_IDENTITY: ${{ secrets.APPLE_SIGNING_IDENTITY }}
+          AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+          AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+
+      - name: List build output
+        working-directory: apps/browser
+        shell: bash
+        run: find out -type f \( -name "*.dmg" -o -name "*.exe" -o -name "*.nupkg" -o -name "RELEASES*" -o -name "*.deb" -o -name "*.rpm" -o -name "*.zip" -o -name "*.AppImage" \) 2>/dev/null || true
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.artifact }}
+          path: apps/browser/out/*/make/
+          if-no-files-found: warn
+
+  release:
+    name: GitHub Release
+    needs: build
+    if: ${{ inputs.create_release }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: Collect artifacts
+        shell: bash
+        run: |
+          mkdir -p release
+          find artifacts -type f \( -name "*.dmg" -o -name "*.exe" -o -name "*.nupkg" -o -name "RELEASES*" -o -name "*.deb" -o -name "*.rpm" -o -name "*.zip" -o -name "*.AppImage" \) -exec cp {} release/ \;
+          ls -la release/
+
+      - uses: softprops/action-gh-release@v2
+        with:
+          tag_name: stagevibe@${{ inputs.version }}
+          name: StageVibe ${{ inputs.version }}
+          prerelease: ${{ inputs.channel != 'release' }}
+          generate_release_notes: true
+          files: release/*
