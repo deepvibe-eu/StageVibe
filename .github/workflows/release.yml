@@ -1,10 +1,11 @@
 name: Release StageVibe
 
-# Builds release artifacts for macOS (arm64 + x64), Windows and Linux.
+# Builds release artifacts for macOS (arm64 + x64) and Windows.
+# Linux is built locally and uploaded to the release manually.
 #
 # Triggers:
-#   - push a tag `stagevibe@<version>`  -> build artifacts only
-#   - manual (workflow_dispatch)        -> optionally also create a GitHub Release
+#   - push a tag `stagevibe@<version>`  -> build and create/update the GitHub Release
+#   - manual (workflow_dispatch)        -> build, optionally create a GitHub Release
 #
 # Required repository configuration (Settings > Secrets and variables > Actions):
 #   vars:    API_URL, VITE_API_URL, STAGEWISE_CONSOLE_URL,
@@ -81,7 +82,7 @@ jobs:
             echo "channel=release" >> "$GITHUB_OUTPUT"
             echo "ref=${GITHUB_SHA}" >> "$GITHUB_OUTPUT"
             echo "tag=${tag}" >> "$GITHUB_OUTPUT"
-            echo "create_release=false" >> "$GITHUB_OUTPUT"
+            echo "create_release=true" >> "$GITHUB_OUTPUT"
           fi
       - name: Summary
         run: |
@@ -109,9 +110,6 @@ jobs:
           - os: windows-latest
             arch: x64
             artifact: stagevibe-windows-x64
-          - os: ubuntu-latest
-            arch: x64
-            artifact: stagevibe-linux-x64
     env:
       NODE_OPTIONS: "--max-old-space-size=8192"
       NUCLEO_LICENSE_KEY: ${{ secrets.NUCLEO_LICENSE_KEY }}
