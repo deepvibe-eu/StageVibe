@@ -647,7 +647,9 @@
       "enterBaseUrl": "Base-URL eingeben...",
       "saving": "Wird gespeichert...",
       "save": "Speichern",
-      "hint": "Bearbeite die Base-URL und klicke auf Speichern, um verfügbare Modelle erneut zu entdecken."
+      "hint": "Bearbeite die Base-URL und klicke auf Speichern, um verfügbare Modelle erneut zu entdecken.",
+      "apiKeyLabel": "Ollama-Cloud-API-Schlüssel (optional)",
+      "apiKeyHint": "Nur für Ollama Cloud (ollama.com) nötig. Für einen lokalen Server leer lassen."
     },
     "detail": {
       "providerName": "Anbietername",

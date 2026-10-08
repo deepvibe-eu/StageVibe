@@ -644,7 +644,9 @@
       "enterBaseUrl": "Enter base URL...",
       "saving": "Saving...",
       "save": "Save",
-      "hint": "Edit the base URL and click Save to re-discover available models."
+      "hint": "Edit the base URL and click Save to re-discover available models.",
+      "apiKeyLabel": "Ollama Cloud API key (optional)",
+      "apiKeyHint": "Only required for Ollama Cloud (ollama.com). Leave empty for a local server."
     },
     "detail": {
       "providerName": "Provider name",

@@ -644,7 +644,9 @@
       "enterBaseUrl": "Entrer l'URL de base…",
       "saving": "Enregistrement…",
       "save": "Enregistrer",
-      "hint": "Modifiez l'URL de base et cliquez sur Enregistrer pour redécouvrir les modèles disponibles."
+      "hint": "Modifiez l'URL de base et cliquez sur Enregistrer pour redécouvrir les modèles disponibles.",
+      "apiKeyLabel": "Clé API Ollama Cloud (facultative)",
+      "apiKeyHint": "Nécessaire uniquement pour Ollama Cloud (ollama.com). Laisser vide pour un serveur local."
     },
     "detail": {
       "providerName": "Nom du fournisseur",

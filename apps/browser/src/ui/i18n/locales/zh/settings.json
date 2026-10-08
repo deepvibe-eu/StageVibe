@@ -647,7 +647,9 @@
       "enterBaseUrl": "输入 Base URL…",
       "saving": "正在保存…",
       "save": "保存",
-      "hint": "编辑 Base URL 并点击保存以重新发现可用模型。"
+      "hint": "编辑 Base URL 并点击保存以重新发现可用模型。",
+      "apiKeyLabel": "Ollama Cloud API 密钥（可选）",
+      "apiKeyHint": "仅 Ollama Cloud（ollama.com）需要。本地服务器可留空。"
     },
     "detail": {
       "providerName": "提供商名称",
