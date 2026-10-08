@@ -21,6 +21,7 @@ import {
   getFileTreeWorkspaceMountsForAgent,
 } from './file-tree-utils';
 import { DiffLineStats } from '@ui/components/diff-line-stats';
+import { useContentCollapsedOptional } from '../_components/content-collapsed-context';
 
 // Cache diff totals per workspace across mount/unmount cycles to
 // prevent flicker when the toggle button moves between containers.
@@ -31,6 +32,7 @@ export function FileTreeToggleButton() {
   const visible = useKartonState((s) => s.fileTree.visible);
   const setVisible = useKartonProcedure((p) => p.fileTree.setVisible);
   const [openAgent] = useOpenAgent();
+  const contentCollapsed = useContentCollapsedOptional();
   const getWorkspaceDiffSummary = useKartonProcedure(
     (p) => p.toolbox.getWorkspaceDiffSummary,
   );
@@ -124,7 +126,13 @@ export function FileTreeToggleButton() {
           variant="ghost"
           size={showDiff ? 'sm' : 'icon-sm'}
           aria-label={label}
-          onClick={() => setVisible(!visible)}
+          onClick={() => {
+            const next = !visible;
+            setVisible(next);
+            // Opening the file tree must also un-collapse the browser-tree
+            // panel it lives in, matching the new-tab/content toggles.
+            if (next) contentCollapsed?.setCollapsed(false);
+          }}
           className={showDiff ? 'gap-1 rounded-full px-2' : undefined}
         >
           <Icon className="size-4 shrink-0" />
