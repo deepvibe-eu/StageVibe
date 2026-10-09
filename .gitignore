@@ -49,3 +49,7 @@ storybook-static
 .stagewise/*
 !.stagewise/worktree-setup.sh
 !.stagewise/worktree-setup.ps1
+
+# Flatpak
+.flatpak-builder/
+packaging/flatpak/build-dir/
