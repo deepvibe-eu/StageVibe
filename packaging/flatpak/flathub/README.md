@@ -6,16 +6,14 @@ Linux zip and installs it via `org.electronjs.Electron2.BaseApp`.
 
 ## Before submitting
 
-1. **Upload the Linux zip** to the GitHub release so the source URL resolves:
-   `https://github.com/deepvibe-eu/StageVibe/releases/download/stagevibe@1.0.1/stagevibe-linux-x64-1.0.1.zip`
-   (asset name `stagevibe-linux-x64-1.0.1.zip`, from `pnpm -F stagevibe make:release`).
-2. **Update `sha256`** in `eu.deepvibe.StageVibe.yml` if the zip is rebuilt:
-   ```sh
-   sha256sum apps/browser/out/release/make/zip/linux/x64/stagevibe-linux-x64-1.0.1.zip
-   ```
-3. **Add screenshots** to `eu.deepvibe.StageVibe.metainfo.xml` (`<screenshots>`
-   with png/jpg `<image>` URLs). Flathub mirrors them from the given URLs.
-4. Verify AppStream: `appstreamcli validate eu.deepvibe.StageVibe.metainfo.xml`.
+- The Linux zip is released and its `sha256` matches the pinned value. If the
+  zip is rebuilt, update the hash in `eu.deepvibe.StageVibe.yml`:
+  ```sh
+  sha256sum apps/browser/out/release/make/zip/linux/x64/stagevibe-linux-x64-1.0.1.zip
+  ```
+- Screenshots are referenced in `eu.deepvibe.StageVibe.metainfo.xml` (raw
+  `main` URLs; Flathub mirrors them).
+- Verify AppStream: `appstreamcli validate eu.deepvibe.StageVibe.metainfo.xml`.
 
 ## Submit
 
@@ -32,12 +30,21 @@ git push -u origin eu.deepvibe.StageVibe
 # open the PR against flathub/flathub
 ```
 
-## App id
+## App id & verification
 
-`eu.deepvibe.StageVibe` requires control of the `deepvibe.eu` domain. If that
-is not available, switch to `io.github.<owner>.StageVibe` (D-Bus names cannot
-contain `-`, so `deepvibe-eu` becomes `deepvibe_eu`) and update the id in the
-manifest, desktop file and metainfo.
+`eu.deepvibe.StageVibe` maps to the `deepvibe.eu` domain. Flathub verifies
+**domain ownership** — it is not a website subpage and is unrelated to the
+CMS. Either of these proves control:
+
+- Serve the (per-app, Flathub-generated) token at
+  `https://deepvibe.eu/.well-known/org.flathub.VerifiedApps.txt` — one token
+  per line, HTTPS mandatory, redirects followed, or
+- add a DNS TXT record `_flathub.deepvibe.eu` with the token as value.
+
+The token is generated in the Flathub Developer Portal after the app is
+accepted. The `io.github.<owner>.StageVibe` route (verified via GitHub login)
+is an alternative, but app-id segments cannot contain `-`, so the GitHub org
+`deepvibe-eu` is not directly usable — the domain route is the clean choice.
 
 ## Notes
 
