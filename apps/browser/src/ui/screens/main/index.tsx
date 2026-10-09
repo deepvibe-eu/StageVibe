@@ -373,6 +373,7 @@ function DefaultLayoutInner({ show }: { show: boolean }) {
                       those two, not the chat. */}
                   <ResizablePanelGroup
                     direction="horizontal"
+                    autoSaveId="stagewise-main-horizontal"
                     className="h-full gap-1.5"
                   >
                     <ResizablePanel
