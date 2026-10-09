@@ -84,6 +84,20 @@ describe('buildChatSystemPrompt', () => {
     }
   });
 
+  it('injects the current date and time into the environment section', () => {
+    const host = makeHost();
+    const registry = new DomainAdapterRegistry();
+    const now = new Date('2026-10-09T05:28:00.000Z');
+    const prompt = buildChatSystemPrompt({
+      host,
+      domainAdapterRegistry: registry,
+      agentType: AgentTypes.CHAT,
+      now,
+    });
+
+    expect(prompt).toContain('Current date and time: 2026-10-09T05:28:00.000Z');
+  });
+
   it('emits only the baseline when the host registered no profile for this agent type', () => {
     const host = createTestAgentHost();
     const registry = new DomainAdapterRegistry();

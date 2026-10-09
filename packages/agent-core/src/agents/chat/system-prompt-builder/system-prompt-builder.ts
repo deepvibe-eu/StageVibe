@@ -25,6 +25,12 @@ export interface BuildChatSystemPromptArgs {
    * don't use this builder are unaffected.
    */
   agentType: AgentTypes;
+  /**
+   * Current time, rendered into the `<environment>` section so the agent
+   * knows "now". Defaults to `new Date()`; the getter is re-invoked on
+   * every step, so the value stays fresh.
+   */
+  now?: Date;
 }
 
 /**
@@ -76,6 +82,7 @@ export function buildChatSystemPrompt(args: BuildChatSystemPromptArgs): string {
   ];
 
   const environmentBody = [
+    renderCurrentTime(args.now ?? new Date()),
     EnvPreambleDefault.trim(),
     fragments.environmentPreamble?.trim() ?? '',
     ...adapterSections,
@@ -98,6 +105,20 @@ export function buildChatSystemPrompt(args: BuildChatSystemPromptArgs): string {
     `<output-style>\n${outputStyleBody}\n</output-style>`,
     `<authorities>\n${fragments.authorities ?? AuthoritiesDefault}\n</authorities>`,
   ].join('\n');
+}
+
+function renderCurrentTime(now: Date): string {
+  const iso = now.toISOString();
+  const local = now.toLocaleString('en-US', {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    timeZoneName: 'short',
+  });
+  return `Current date and time: ${iso} (local: ${local})`;
 }
 
 function renderProtocolsTable(protocols: readonly OutputProtocol[]): string {
