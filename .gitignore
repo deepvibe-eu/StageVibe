@@ -54,5 +54,8 @@ storybook-static
 .flatpak-builder/
 packaging/flatpak/build-dir/
 
-# Local AI-agent guidance (not published)
+# Local AI-agent tooling (not published)
 /AGENTS.md
+/CLAUDE.md
+/.agents/
+/skills-lock.json
