@@ -18,6 +18,13 @@
     </ul>
   </description>
   <launchable type="desktop-id">eu.deepvibe.StageVibe.desktop</launchable>
+  <screenshots>
+    <screenshot type="default">
+      <caption>StageVibe workspace with the agent, editor and file tree</caption>
+      <image type="source" width="1280" height="629">https://raw.githubusercontent.com/deepvibe-eu/StageVibe/main/.github/assets/screenshot-demo.png</image>
+      <image type="thumbnail" width="624" height="351">https://raw.githubusercontent.com/deepvibe-eu/StageVibe/main/.github/assets/screenshot-demo-thumb.png</image>
+    </screenshot>
+  </screenshots>
   <content_rating type="oars-1.1" />
   <url type="homepage">https://github.com/deepvibe-eu/StageVibe</url>
   <url type="vcs-browser">https://github.com/deepvibe-eu/StageVibe</url>
