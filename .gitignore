@@ -50,10 +50,6 @@ storybook-static
 !.stagewise/worktree-setup.sh
 !.stagewise/worktree-setup.ps1
 
-# Flatpak
-.flatpak-builder/
-packaging/flatpak/build-dir/
-
 # Local AI-agent tooling (not published)
 /AGENTS.md
 /CLAUDE.md
