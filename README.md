@@ -5,7 +5,7 @@
   <img src=".github/assets/stagevibe-mark-black.png" alt="StageVibe" height="72" />
 </picture>
 
-<h3>The Agentic IDE for Open-Source Models</h3>
+<h3>An Agentic IDE for Open-Source Models</h3>
 
 
 
