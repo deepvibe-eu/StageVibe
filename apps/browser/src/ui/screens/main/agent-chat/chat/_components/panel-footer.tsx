@@ -824,10 +824,6 @@ export const ChatPanelFooter = memo(function ChatPanelFooter({
     else setChatInputActive(false);
   }, [elementSelectionActive, stopContextSelector]);
 
-  const isVerboseMode = useKartonState(
-    (s) => s.appInfo.releaseChannel === 'dev',
-  );
-
   const enableInputField = useMemo(() => {
     // Only disable input if agent is not connected or reconnecting
     // Input is now always enabled when connected (allows typing while agent works)
@@ -2041,9 +2037,7 @@ export const ChatPanelFooter = memo(function ChatPanelFooter({
             showModelSelect
             onModelChange={handleModelChange}
             onStop={canStopAgent ? stableAbortAgent : undefined}
-            showContextUsageRing={
-              !!displayedUsedTokens && (isVerboseMode || contextUsed > 80)
-            }
+            showContextUsageRing={!!displayedUsedTokens}
             contextUsedPercentage={contextUsed}
             contextUsedKb={displayedUsedTokens ? displayedUsedTokens / 1000 : 0}
             contextMaxKb={maxTokens ? maxTokens / 1000 : 0}
