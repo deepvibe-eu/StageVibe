@@ -61,14 +61,19 @@ function parseThemeDefaultBlock(css: string): ColorVariables {
 function parseDarkModeBlock(css: string): ColorVariables {
   const vars: ColorVariables = {};
 
-  // Match @media (prefers-color-scheme: dark) { :root { ... } } blocks
-  const darkBlockRegex =
-    /@media\s*\(\s*prefers-color-scheme\s*:\s*dark\s*\)\s*\{[\s\S]*?:root\s*\{([^}]+)\}/g;
-  const matches = css.matchAll(darkBlockRegex);
+  // Support both dark-mode conventions used across the CSS files:
+  //   @media (prefers-color-scheme: dark) { :root { ... } }
+  //   :root.dark { ... }
+  const darkBlockRegexes = [
+    /@media\s*\(\s*prefers-color-scheme\s*:\s*dark\s*\)\s*\{[\s\S]*?:root\s*\{([^}]+)\}/g,
+    /:root\.dark\s*\{([^}]+)\}/g,
+  ];
 
-  for (const match of matches) {
-    const blockContent = match[1] ?? '';
-    extractVariables(blockContent, vars);
+  for (const darkBlockRegex of darkBlockRegexes) {
+    for (const match of css.matchAll(darkBlockRegex)) {
+      const blockContent = match[1] ?? '';
+      extractVariables(blockContent, vars);
+    }
   }
 
   return vars;
@@ -234,21 +239,42 @@ function resolveVariable(
 // =============================================================================
 
 /**
+ * Evaluate simple `calc(...)` expressions (multiplication of numbers) inside a
+ * color string. The palette expresses chroma as e.g.
+ * `calc(0.0015 * var(--base-chroma-scale))`, which becomes
+ * `calc(0.0015 * 1)` after variable resolution and must be collapsed to a plain
+ * number before it can be parsed as an OKLCH component.
+ */
+function evaluateCalc(colorString: string): string {
+  return colorString.replace(/calc\(([^()]*)\)/g, (_match, inner: string) => {
+    const factors = inner
+      .split('*')
+      .map((part) => Number.parseFloat(part.trim()));
+    if (factors.length === 0 || factors.some((n) => Number.isNaN(n))) {
+      return inner;
+    }
+    return String(factors.reduce((acc, n) => acc * n, 1));
+  });
+}
+
+/**
  * Convert an OKLCH color string to hex
  */
 function oklchToHex(oklchString: string): string {
+  const normalized = evaluateCalc(oklchString);
+
   // Parse oklch(L C H) format - handle various spacing patterns
-  const match = oklchString.match(
+  const match = normalized.match(
     /oklch\(\s*([\d.]+)\s+([\d.]+)\s+([\d.]+)\s*\)/,
   );
   if (!match) {
     // Try to parse as any color format culori supports
-    const parsed = parse(oklchString);
+    const parsed = parse(normalized);
     if (parsed) {
       const hex = formatHex(parsed);
       return hex || '#000000';
     }
-    console.warn(`Could not parse color: ${oklchString}`);
+    console.warn(`Could not parse color: ${normalized}`);
     return '#000000';
   }
 

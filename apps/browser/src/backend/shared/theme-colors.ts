@@ -17,9 +17,9 @@ export const THEME_COLORS = {
     },
   },
   dark: {
-    background: '#1e1e1d', // theme.css: --color-app-background → --color-base-800
+    background: '#2d2c2c', // theme.css: --color-app-background → --color-base-700
     titleBarOverlay: {
-      color: '#1e1e1d', // theme.css: --color-app-background → --color-base-800
+      color: '#2d2c2c', // theme.css: --color-app-background → --color-base-700
       symbolColor: '#d8d7d6', // theme.css: --color-foreground → --color-base-200
     },
   },
