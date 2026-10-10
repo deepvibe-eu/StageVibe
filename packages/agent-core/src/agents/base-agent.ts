@@ -2078,10 +2078,7 @@ export abstract class BaseAgent<
           parsedPlanLimit ||
           parsedModelRestricted ||
           parsedSubscriptionRequired ||
-          this.isZaiBillingOrQuotaError(
-            parsedProviderError,
-            modelWithOptions.reasoningSignatureSource,
-          )
+          this.isProviderBillingOrQuotaError(parsedProviderError)
             ? null
             : this.parseUpstreamOverloadError(error);
         const parsedOverload: Extract<
@@ -3717,13 +3714,23 @@ export abstract class BaseAgent<
       }
     }
 
-    const errInBody = (body?.error ?? undefined) as
-      | Record<string, unknown>
-      | undefined;
+    // `error` may be an object (`{ error: { message, code } }`), a bare
+    // string (`{ error: "monthly usage limit reached" }`, e.g. Ollama), or
+    // absent with a top-level `message`. Handle all three so the actionable
+    // upstream text survives classification.
+    const rawError = body?.error;
+    const errInBody =
+      typeof rawError === 'object' && rawError !== null
+        ? (rawError as Record<string, unknown>)
+        : undefined;
     const message =
       typeof errInBody?.message === 'string'
         ? (errInBody.message as string)
-        : undefined;
+        : typeof rawError === 'string'
+          ? rawError
+          : typeof body?.message === 'string'
+            ? (body.message as string)
+            : undefined;
     const rawCode = errInBody?.code;
     const providerCode =
       typeof rawCode === 'string'
@@ -3736,24 +3743,40 @@ export abstract class BaseAgent<
     return { message, statusCode, providerCode };
   }
 
-  private isZaiBillingOrQuotaError(
+  private isProviderBillingOrQuotaError(
     providerError: ProviderApiError | null,
-    reasoningSignatureSource?: ReasoningSignatureSource,
   ): boolean {
-    if (reasoningSignatureSource?.provider !== 'z-ai') return false;
+    if (!providerError) return false;
 
-    const message = providerError?.message?.toLowerCase() ?? '';
-    const code = providerError?.providerCode;
+    const message = providerError.message?.toLowerCase() ?? '';
+    const code = providerError.providerCode;
 
-    // Keep Z.ai billing/resource-package failures generic so the UI shows
-    // the actionable upstream message instead of "temporarily unavailable".
-    return (
-      // Z.ai: { error: { code: '1113', message: 'Insufficient balance...' } }
-      code === '1113' ||
-      message.includes('insufficient balance') ||
-      message.includes('no resource package') ||
-      message.includes('please recharge')
-    );
+    // Z.ai: { error: { code: '1113', message: 'Insufficient balance...' } }
+    if (code === '1113') return true;
+
+    // Provider-agnostic hard limits: billing, quota, plan exhaustion. A 429
+    // that carries one of these is NOT a transient rate limit — retrying or
+    // advancing the model fallback cannot help, so keep the error generic and
+    // surface the actionable upstream message instead of "temporarily
+    // unavailable". Ollama Cloud, for example, returns `429` with
+    // "monthly usage limit reached".
+    // Deliberately narrow: only phrases that unambiguously mean "no more
+    // allowance / no money". Generic words like "quota" are avoided because
+    // transient rate-limit bodies (e.g. Gemini's "RESOURCE_EXHAUSTED (e.g.
+    // check quota)") legitimately belong to the overload/fallback path.
+    const billingPhrases = [
+      'insufficient balance',
+      'no resource package',
+      'please recharge',
+      'monthly usage limit',
+      'usage limit',
+      'out of credits',
+      'insufficient credits',
+      'insufficient funds',
+      'exceeded your current quota',
+      'payment required',
+    ];
+    return billingPhrases.some((phrase) => message.includes(phrase));
   }
 
   /**
