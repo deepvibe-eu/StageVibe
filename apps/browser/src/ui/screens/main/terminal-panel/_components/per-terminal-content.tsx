@@ -11,6 +11,11 @@ import '@xterm/xterm/css/xterm.css';
 
 const BASE_FONT_SIZE = 13;
 
+// How much to darken the panel colour behind the terminal (0..1). Kept small
+// so the terminal reads as part of the workspace — just a touch darker than
+// the surrounding panels, and it adapts to light/dark automatically.
+const TERMINAL_BG_DARKEN = 0.4;
+
 interface PerTerminalContentProps {
   terminalId: string;
   isActive: boolean;
@@ -179,23 +184,27 @@ export function PerTerminalContent({
   } as const;
 
   const getTheme = () => {
+    const styles = getComputedStyle(document.documentElement);
     const isDark = document.documentElement.classList.contains('dark');
+    const fg = styles.getPropertyValue('--color-foreground').trim();
     const ansi = (hue: number, l: number, c: number) =>
       `oklch(${l} ${c} ${hue})`;
     const neutral = (l: number) => ansi(HUES.base, l, 0.002);
 
-    // Classic terminal look: a background clearly darker than the window and
-    // green foreground, independent of the app theme.
-    const terminalBackground = isDark ? '#080d09' : '#0a1410';
-    const terminalForeground = '#7ef0a1';
+    // Terminal look: a translucent black overlay composited over the panel
+    // colour (`--color-background`, set on the container) so the terminal is
+    // only *slightly* darker than the surrounding panels and adapts to
+    // light/dark. Foreground follows the app theme (no forced green).
+    const terminalBackground = `rgba(0, 0, 0, ${TERMINAL_BG_DARKEN})`;
+    const terminalForeground = fg || (isDark ? '#e0e0e0' : '#1a1a1a');
 
     return {
       background: terminalBackground,
       foreground: terminalForeground,
       cursor: terminalForeground,
       selectionBackground: isDark
-        ? 'rgba(126,240,161,0.22)'
-        : 'rgba(126,240,161,0.28)',
+        ? 'rgba(255,255,255,0.18)'
+        : 'rgba(0,0,0,0.14)',
       black: neutral(isDark ? 0.25 : 0.92),
       red: ansi(HUES.red, isDark ? 0.55 : 0.45, isDark ? 0.16 : 0.14),
       green: ansi(HUES.green, isDark ? 0.55 : 0.45, isDark ? 0.14 : 0.16),
@@ -242,6 +251,9 @@ export function PerTerminalContent({
       lineHeight: 1,
       cursorBlink: true,
       scrollback: 5000,
+      // Let the translucent terminal background composite over the panel
+      // colour set on the container, instead of painting an opaque one.
+      allowTransparency: true,
       allowProposedApi: true,
     });
 
@@ -451,7 +463,10 @@ export function PerTerminalContent({
       onFocusCapture={markTerminalFocused}
       onPointerDown={markTerminalFocused}
     >
-      <div ref={containerRef} className="size-full overflow-hidden" />
+      <div
+        ref={containerRef}
+        className="size-full overflow-hidden bg-background"
+      />
     </div>
   );
 }
