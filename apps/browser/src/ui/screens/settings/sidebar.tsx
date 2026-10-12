@@ -1,4 +1,5 @@
 import { useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@stagewise/stage-ui/components/button';
 import { cn } from '@ui/utils';
 import { useKartonProcedure, useKartonState } from '@ui/hooks/use-karton';
@@ -11,12 +12,13 @@ import { SidebarTitlebarRow } from '../main/_components/sidebar-titlebar-row';
 import { SidebarSettingsButton } from '../main/_components/sidebar-settings-button';
 import {
   SETTINGS_NAV_GROUPS,
-  getSettingsSectionLabel,
+  getSettingsSectionLabelKey,
   isSectionActive,
 } from './settings-route';
 import type { SettingsRootSection } from './settings-route';
 
 export function SettingsSidebar() {
+  const { t } = useTranslation('settings');
   const counterScale = useUiZoomCounterScale();
   const isMacOs = useKartonState((s) => s.appInfo.platform === 'darwin');
   const activeRoute = useKartonState((s) => s.appScreen.settingsRoute);
@@ -45,7 +47,7 @@ export function SettingsSidebar() {
             }
             onClick={() => closeSettings()}
           >
-            ← Back
+            ← {t('nav.back')}
           </Button>
         </div>
       </SidebarTitlebarRow>
@@ -57,9 +59,9 @@ export function SettingsSidebar() {
         <nav className="scrollbar-subtle flex min-h-0 flex-1 flex-col gap-px overflow-y-auto pt-2 pr-1.5 pb-3.5 pl-0.5">
           {SETTINGS_NAV_GROUPS.map((group, gi) => (
             <div key={gi} className="flex flex-col gap-px pt-4 first:pt-0">
-              {group.label && (
+              {group.labelKey && (
                 <div className="shrink-0 px-1.5 pb-1 font-normal text-sidebar-foreground text-xs">
-                  {group.label}
+                  {t(group.labelKey)}
                 </div>
               )}
               {group.items.map((item) => {
@@ -78,7 +80,7 @@ export function SettingsSidebar() {
                   >
                     {item.icon}
                     <span className="truncate">
-                      {getSettingsSectionLabel(item.section)}
+                      {t(getSettingsSectionLabelKey(item.section))}
                     </span>
                   </button>
                 );

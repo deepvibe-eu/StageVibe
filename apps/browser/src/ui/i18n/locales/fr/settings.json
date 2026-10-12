@@ -1,4 +1,28 @@
 {
+  "nav": {
+    "back": "Retour",
+    "groups": {
+      "assistant": "Assistant",
+      "personal": "Personnel",
+      "browsing": "Navigation"
+    },
+    "sections": {
+      "modelsProviders": "Modèles et fournisseurs",
+      "customProviders": "Fournisseurs personnalisés",
+      "general": "Général",
+      "skillsContext": "Skills et fichiers de contexte",
+      "worktreeSetup": "Worktrees",
+      "plugins": "Extensions",
+      "personalization": "Personnalisation",
+      "browsing": "Général",
+      "history": "Historique",
+      "archivedAgents": "Discussions archivées",
+      "websitePermissions": "Autorisations de site",
+      "clearData": "Effacer les données",
+      "account": "Compte",
+      "about": "À propos"
+    }
+  },
   "general": {
     "title": "Général",
     "powerSave": {

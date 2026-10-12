@@ -18,19 +18,22 @@ export type SettingsRoute =
   | { section: Exclude<SettingsSection, 'website-permissions'> }
   | { section: 'website-permissions'; host: string };
 
-export const SETTINGS_SECTION_LABELS: Record<SettingsSection, string> = {
-  'models-providers': 'Models & Providers',
-  'custom-providers': 'Custom Providers',
-  'agent-general': 'General',
-  'skills-context': 'Skills & Context files',
-  'worktree-setup': 'Worktrees',
-  plugins: 'Plugins',
-  personalization: 'Personalization',
-  browsing: 'General',
-  history: 'History',
-  'archived-agents': 'Archived chats',
-  'website-permissions': 'Website Permissions',
-  'clear-data': 'Clear data',
-  account: 'Account',
-  about: 'About',
+// i18n keys (namespace: "settings") for each section's navigation label.
+// Resolve them with t(SETTINGS_SECTION_LABEL_KEYS[section]) in the "settings"
+// namespace. Kept as keys here so the shared module stays free of i18n state.
+export const SETTINGS_SECTION_LABEL_KEYS: Record<SettingsSection, string> = {
+  'models-providers': 'nav.sections.modelsProviders',
+  'custom-providers': 'nav.sections.customProviders',
+  'agent-general': 'nav.sections.general',
+  'skills-context': 'nav.sections.skillsContext',
+  'worktree-setup': 'nav.sections.worktreeSetup',
+  plugins: 'nav.sections.plugins',
+  personalization: 'nav.sections.personalization',
+  browsing: 'nav.sections.browsing',
+  history: 'nav.sections.history',
+  'archived-agents': 'nav.sections.archivedAgents',
+  'website-permissions': 'nav.sections.websitePermissions',
+  'clear-data': 'nav.sections.clearData',
+  account: 'nav.sections.account',
+  about: 'nav.sections.about',
 };

@@ -14,10 +14,11 @@ import {
   ArchiveIcon,
 } from 'lucide-react';
 import type { SettingsSection, SettingsRoute } from '@shared/settings-route';
-import { SETTINGS_SECTION_LABELS } from '@shared/settings-route';
+import { SETTINGS_SECTION_LABEL_KEYS } from '@shared/settings-route';
 
 export type SettingsNavGroup = {
-  label: string;
+  /** i18n key (namespace "settings") for the group heading; '' = no heading. */
+  labelKey: string;
   items: SettingsNavItem[];
 };
 
@@ -33,7 +34,7 @@ export type SettingsNavItem = {
 
 export const SETTINGS_NAV_GROUPS: SettingsNavGroup[] = [
   {
-    label: 'Assistant',
+    labelKey: 'nav.groups.assistant',
     items: [
       {
         section: 'agent-general',
@@ -62,7 +63,7 @@ export const SETTINGS_NAV_GROUPS: SettingsNavGroup[] = [
     ],
   },
   {
-    label: 'Personal',
+    labelKey: 'nav.groups.personal',
     items: [
       {
         section: 'personalization',
@@ -71,7 +72,7 @@ export const SETTINGS_NAV_GROUPS: SettingsNavGroup[] = [
     ],
   },
   {
-    label: 'Browsing',
+    labelKey: 'nav.groups.browsing',
     items: [
       {
         section: 'browsing',
@@ -88,7 +89,7 @@ export const SETTINGS_NAV_GROUPS: SettingsNavGroup[] = [
     ],
   },
   {
-    label: '',
+    labelKey: '',
     items: [
       {
         section: 'account',
@@ -102,8 +103,8 @@ export const SETTINGS_NAV_GROUPS: SettingsNavGroup[] = [
   },
 ];
 
-export function getSettingsSectionLabel(section: SettingsSection): string {
-  return SETTINGS_SECTION_LABELS[section];
+export function getSettingsSectionLabelKey(section: SettingsSection): string {
+  return SETTINGS_SECTION_LABEL_KEYS[section];
 }
 
 export function isSectionActive(

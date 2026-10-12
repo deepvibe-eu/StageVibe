@@ -1,4 +1,28 @@
 {
+  "nav": {
+    "back": "Назад",
+    "groups": {
+      "assistant": "Ассистент",
+      "personal": "Личное",
+      "browsing": "Просмотр"
+    },
+    "sections": {
+      "modelsProviders": "Модели и провайдеры",
+      "customProviders": "Пользовательские провайдеры",
+      "general": "Общие",
+      "skillsContext": "Навыки и файлы контекста",
+      "worktreeSetup": "Worktree",
+      "plugins": "Плагины",
+      "personalization": "Персонализация",
+      "browsing": "Общие",
+      "history": "История",
+      "archivedAgents": "Архивные чаты",
+      "websitePermissions": "Разрешения сайтов",
+      "clearData": "Очистить данные",
+      "account": "Аккаунт",
+      "about": "О программе"
+    }
+  },
   "general": {
     "title": "Общие",
     "powerSave": {

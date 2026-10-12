@@ -1,4 +1,28 @@
 {
+  "nav": {
+    "back": "返回",
+    "groups": {
+      "assistant": "助手",
+      "personal": "个人",
+      "browsing": "浏览"
+    },
+    "sections": {
+      "modelsProviders": "模型与提供商",
+      "customProviders": "自定义提供商",
+      "general": "通用",
+      "skillsContext": "技能与上下文文件",
+      "worktreeSetup": "Worktree",
+      "plugins": "插件",
+      "personalization": "个性化",
+      "browsing": "通用",
+      "history": "历史记录",
+      "archivedAgents": "已归档的对话",
+      "websitePermissions": "网站权限",
+      "clearData": "清除数据",
+      "account": "账户",
+      "about": "关于"
+    }
+  },
   "general": {
     "title": "通用",
     "powerSave": {

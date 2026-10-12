@@ -1,4 +1,28 @@
 {
+  "nav": {
+    "back": "Zurück",
+    "groups": {
+      "assistant": "Assistent",
+      "personal": "Persönlich",
+      "browsing": "Browsing"
+    },
+    "sections": {
+      "modelsProviders": "Modelle & Anbieter",
+      "customProviders": "Eigene Anbieter",
+      "general": "Allgemein",
+      "skillsContext": "Skills & Kontextdateien",
+      "worktreeSetup": "Worktrees",
+      "plugins": "Plugins",
+      "personalization": "Personalisierung",
+      "browsing": "Allgemein",
+      "history": "Verlauf",
+      "archivedAgents": "Archivierte Chats",
+      "websitePermissions": "Website-Berechtigungen",
+      "clearData": "Daten löschen",
+      "account": "Konto",
+      "about": "Über"
+    }
+  },
   "general": {
     "title": "Allgemein",
     "powerSave": {
