@@ -16,6 +16,32 @@ const BASE_FONT_SIZE = 13;
 // the surrounding panels, and it adapts to light/dark automatically.
 const TERMINAL_BG_DARKEN = 0.4;
 
+/**
+ * Resolves `color` (any CSS colour, incl. oklch/var()) and returns it darkened
+ * by `amount` (0..1) as an opaque `rgb()`. The DOM is used to resolve the
+ * colour so we don't have to parse formats ourselves; xterm's WebGL renderer
+ * ignores alpha, hence an opaque rgb instead of an rgba() overlay.
+ */
+function darkenColor(color: string, amount: number, fallback: string): string {
+  if (!color) return fallback;
+  try {
+    const el = document.createElement('div');
+    el.style.color = color;
+    document.body.appendChild(el);
+    const resolved = getComputedStyle(el).color;
+    el.remove();
+    const match = resolved.match(/rgba?\(([^)]+)\)/);
+    if (!match || !match[1]) return fallback;
+    const [r = 0, g = 0, b = 0] = match[1]
+      .split(',')
+      .map((v) => Number.parseFloat(v));
+    const f = 1 - amount;
+    return `rgb(${Math.round(r * f)}, ${Math.round(g * f)}, ${Math.round(b * f)})`;
+  } catch {
+    return fallback;
+  }
+}
+
 interface PerTerminalContentProps {
   terminalId: string;
   isActive: boolean;
@@ -191,11 +217,15 @@ export function PerTerminalContent({
       `oklch(${l} ${c} ${hue})`;
     const neutral = (l: number) => ansi(HUES.base, l, 0.002);
 
-    // Terminal look: a translucent black overlay composited over the panel
-    // colour (`--color-background`, set on the container) so the terminal is
-    // only *slightly* darker than the surrounding panels and adapts to
-    // light/dark. Foreground follows the app theme (no forced green).
-    const terminalBackground = `rgba(0, 0, 0, ${TERMINAL_BG_DARKEN})`;
+    // Terminal look: the panel colour (--color-background) darkened a touch,
+    // resolved to an opaque rgb so it works with the WebGL renderer (which
+    // ignores alpha). It adapts to light/dark automatically. Foreground
+    // follows the app theme (no forced green).
+    const terminalBackground = darkenColor(
+      styles.getPropertyValue('--color-background').trim(),
+      TERMINAL_BG_DARKEN,
+      isDark ? '#101010' : '#e4e4e2',
+    );
     const terminalForeground = fg || (isDark ? '#e0e0e0' : '#1a1a1a');
 
     return {
@@ -251,9 +281,6 @@ export function PerTerminalContent({
       lineHeight: 1,
       cursorBlink: true,
       scrollback: 5000,
-      // Let the translucent terminal background composite over the panel
-      // colour set on the container, instead of painting an opaque one.
-      allowTransparency: true,
       allowProposedApi: true,
     });
 
@@ -463,10 +490,7 @@ export function PerTerminalContent({
       onFocusCapture={markTerminalFocused}
       onPointerDown={markTerminalFocused}
     >
-      <div
-        ref={containerRef}
-        className="size-full overflow-hidden bg-background"
-      />
+      <div ref={containerRef} className="size-full overflow-hidden" />
     </div>
   );
 }
