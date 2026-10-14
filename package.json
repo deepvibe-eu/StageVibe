@@ -103,7 +103,7 @@
     "better-auth": "^1.6.10",
     "gray-matter": "^4.0.3",
     "node-pty": "^1.1.0",
-    "tsx": "^4.20.3"
+    "tsx": "^4.23.15"
   },
   "config": {
     "forge": "./forge.config.mts"
